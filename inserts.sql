@@ -5,3 +5,5 @@ INSERT INTO Produtos (id_Produtos, Nome_Produto, Modelo, Tamanho , Genero, Preco
 
 INSERT INTO Vendas (id_Vendas, Total, Mtd_Pagamento, id_Clientes, id_Funcionarios)
 VALUES (?, ?, ?, ?, ?);
+
+INSERT INTO Clientes (id_Clientes, Nome_Cliente, Data_Nasc, Cpf , Telefone, Email) VALUES (?, ?, ?, ?, ?, ?);

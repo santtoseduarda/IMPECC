@@ -9,5 +9,4 @@
 ### O sistema de venda local apresenta uma loja de roupa fitness, filtrado para todos os públicos que prezam por uma vestimenta confortável para a prática de atividades físicas. O sistema tem o objetivo de auxiliar e facilitar a venda de roupas fitness no comércio local, proporcionando um processo organizado e prático para a comercialização desses produtos na loja.
 
 ## Imagem
-![IMPECC](https://github.com/santtoseduarda/IMPECC/assets/144947320/7f29e21a-39f2-4407-bd4c-9a653535be85)
-
+![IMPECC](https://github.com/santtoseduarda/IMPECC/assets/144947320/60f94d23-edad-4c28-90e9-f22fa285a1dc)

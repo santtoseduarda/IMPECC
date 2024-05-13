@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS impecc.Produtos (
   Modelo VARCHAR(45) NOT NULL,
   Tamanho VARCHAR(45) NOT NULL,
   Genero VARCHAR(45) NOT NULL,
-  Preco DECIMAL(4,2) NOT NULL,
+  Preco DECIMAL(100, 2) NOT NULL,
   Fornecedor VARCHAR(45) NOT NULL,
   Qntd_Estoque INT NOT NULL,
   PRIMARY KEY (id_Produtos)
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS impecc.Funcionarios (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS impecc.Vendas (
   id_Vendas INT NOT NULL AUTO_INCREMENT,
-  Total DECIMAL NOT NULL,
+  Total DECIMAL(100, 2) NOT NULL,
   Mtd_Pagamento VARCHAR(45) NOT NULL,
   id_Clientes INT NOT NULL,
   id_Funcionarios INT NOT NULL,

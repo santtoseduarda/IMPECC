@@ -1,4 +1,4 @@
-DELETE FROM Produtos WHERE id_Produto = ?;
+DELETE FROM Produtos WHERE id_Produtos = ?;
 <<<<<<< Updated upstream
 
 <<<<<<< Updated upstream

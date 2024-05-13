@@ -37,3 +37,7 @@ INSERT INTO Historico_de_Vendas (Qtd_Venda)
 VALUES (2);
 INSERT INTO Historico_de_Vendas (Qtd_Venda)
 VALUES (4);
+
+insert into Funcionarios (Nome_Funcionario, Cargo , Email , Senha ) values ('Camili', 'caixa', 'camilli@gmail.com', '479');
+insert into Funcionarios (Nome_Funcionario, Cargo , Email , Senha ) values ('Eduarda', 'atendente', 'eduarda@gmail.com', '159');
+insert into Funcionarios (Nome_Funcionario, Cargo , Email , Senha ) values ('Isabelle', 'caixa', 'isabelle@gmail.com', '365');

@@ -6,3 +6,4 @@ SELECT * FROM Vendas;
 
 SELECT * FROM Historico_de_Vendas;
 
+SELECT * FROM Clientes;

@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS impecc.`Produtos` (
   `Preco` DECIMAL NULL,
   `Fornecedor` VARCHAR(45) NOT NULL,
   `Qntd_Estoque` INT NOT NULL,
-  PRIMARY KEY (`id_Produtos`))
+  PRIMARY KEY (`id_Produtos`)
+  );
 
 -- -----------------------------------------------------
 -- Table impecc.`Clientes`
@@ -27,7 +28,8 @@ CREATE TABLE IF NOT EXISTS impecc.`Clientes` (
   `Cpf` VARCHAR(45) NOT NULL,
   `Telefone` VARCHAR(45) NOT NULL,
   `Email` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_Clientes`))
+  PRIMARY KEY (`id_Clientes`)
+  );
 
 -- -----------------------------------------------------
 -- Table impecc.`Funcionarios`
@@ -38,7 +40,8 @@ CREATE TABLE IF NOT EXISTS impecc.`Funcionarios` (
   `Cargo` VARCHAR(45) NOT NULL,
   `Email` VARCHAR(45) NOT NULL,
   `Senha` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_Funcionarios`))
+  PRIMARY KEY (`id_Funcionarios`)
+  );
 
 -- -----------------------------------------------------
 -- Table impecc.`Vendas`

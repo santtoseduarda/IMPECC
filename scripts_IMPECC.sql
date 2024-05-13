@@ -9,7 +9,7 @@ USE impecc;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS mydb.Produtos (
     id_Produtos INT NOT NULL,
-    Nome_Cliente VARCHAR(45) NOT NULL,
+    Nome_Produto VARCHAR(45) NOT NULL,
     Modelo VARCHAR(45) NOT NULL,
     Tamanho VARCHAR(45) NOT NULL,
     Genero VARCHAR(45) NOT NULL,

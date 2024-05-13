@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS impecc.Produtos (
   Modelo VARCHAR(45) NOT NULL,
   Tamanho VARCHAR(45) NOT NULL,
   Genero VARCHAR(45) NOT NULL,
-  Preco DECIMAL NULL,
+  Preco DECIMAL(4,2) NOT NULL,
   Fornecedor VARCHAR(45) NOT NULL,
   Qntd_Estoque INT NOT NULL,
   PRIMARY KEY (id_Produtos)

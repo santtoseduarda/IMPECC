@@ -10,18 +10,22 @@ import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaLogin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtLogin;
+	private JTextField tctSenha;
 
 	/**
 	 * Launch the application.
@@ -63,43 +67,66 @@ public class TelaLogin extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Login");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
-		panel.add(lblNewLabel, "cell 0 1 4 1,alignx center");
+		panel.add(lblNewLabel, "cell 0 0 4 2,alignx center,aligny center");
 		
 		JLabel lblNewLabel_1 = new JLabel("Login:");
 		panel.add(lblNewLabel_1, "cell 1 3");
 		
-		textField = new JTextField();
-		panel.add(textField, "cell 1 4 2 1,growx");
-		textField.setColumns(10);
+		txtLogin = new JTextField();
+		panel.add(txtLogin, "cell 1 4 2 1,growx");
+		txtLogin.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Senha:");
 		panel.add(lblNewLabel_2, "cell 1 5");
 		
-		textField_1 = new JTextField();
-		panel.add(textField_1, "cell 1 6 2 1,growx");
-		textField_1.setColumns(10);
+		tctSenha = new JTextField();
+		panel.add(tctSenha, "cell 1 6 2 1,growx");
+		tctSenha.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Acessar");
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBackground(new Color(255, 0, 0));
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnAcessar = new JButton("Acessar");
+		btnAcessar.setForeground(new Color(255, 255, 255));
+		btnAcessar.setBackground(new Color(255, 0, 0));
+		btnAcessar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnAcessar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		
-		JButton btnNewButton_2 = new JButton("Esqueceu sua senha?");
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JLabel btnOlho = new JLabel("");
+		btnOlho.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		
+		btnOlho.setIcon(new ImageIcon(new ImageIcon("src/img/olho.png").getImage().getScaledInstance(17, 18, Image.SCALE_DEFAULT)));
+
+		btnOlho.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				//clique do olho
+				System.out.print("dsdsdsd");
+			}
+		});
+		panel.add(btnOlho, "cell 3 6");
+		
+		JLabel btnEsqueceuSenha = new JLabel("Esqueceu sua senha?");
+		btnEsqueceuSenha.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				//mostrar tela de esquecer a senha..
+				
+				
+			}
+		});
+		btnEsqueceuSenha.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		panel.add(btnEsqueceuSenha, "cell 1 7");
+		panel.add(btnAcessar, "cell 1 9 2 1,alignx center");
+		
+		JButton btnCadastre = new JButton("Cadastre-se");
+		btnCadastre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_2.setBackground(new Color(69, 69, 69, 40));
-		btnNewButton_2.setFont(new Font("Tahoma", Font.ITALIC, 10));
-		panel.add(btnNewButton_2, "cell 1 7");
-		panel.add(btnNewButton, "cell 1 9 2 1,alignx center");
-		
-		JButton btnNewButton_1 = new JButton("Cadastre-se");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		panel.add(btnNewButton_1, "cell 1 11 2 1,alignx center");
+		btnCadastre.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		panel.add(btnCadastre, "cell 1 11 2 1,alignx center");
 	}
 }

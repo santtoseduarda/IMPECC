@@ -44,21 +44,21 @@ public class TelaLogin extends JFrame {
 	 */
 	public TelaLogin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 580, 299);
+		setBounds(100, 100, 933, 737);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(69, 69, 69, 30));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow][][][][200px,grow][][][][grow]", "[grow 50][][][][grow][][][][grow 50]"));
+		contentPane.setLayout(new MigLayout("", "[grow][][][][200px,grow][][][][grow]", "[grow 50][grow][grow 50]"));
 		
-		JLabel lblNewLabel_4 = new JLabel("");
-		lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\Aluno\\Downloads\\logoromover-removebg-preview 1.png"));
-		contentPane.add(lblNewLabel_4, "cell 4 1,alignx center");
+		JLabel lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\Aluno\\Downloads\\logoromover-removebg-preview 1.png"));
+		contentPane.add(lblNewLabel_3, "cell 4 0,alignx center,aligny center");
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(69, 69, 69, 40));
-		contentPane.add(panel, "cell 3 4 3 1,grow");
+		contentPane.add(panel, "cell 3 1 3 1,grow");
 		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[grow][][][][][][][][][][][][grow]"));
 		
 		JLabel lblNewLabel = new JLabel("Login");
@@ -79,10 +79,6 @@ public class TelaLogin extends JFrame {
 		panel.add(textField_1, "cell 1 6 2 1,growx");
 		textField_1.setColumns(10);
 		
-		JLabel lblNewLabel_3 = new JLabel("Esqueceu sua senha?");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		panel.add(lblNewLabel_3, "cell 1 7,alignx left,aligny baseline");
-		
 		JButton btnNewButton = new JButton("Acessar");
 		btnNewButton.setForeground(new Color(255, 255, 255));
 		btnNewButton.setBackground(new Color(255, 0, 0));
@@ -91,6 +87,15 @@ public class TelaLogin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		
+		JButton btnNewButton_2 = new JButton("Esqueceu sua senha?");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_2.setBackground(new Color(69, 69, 69, 40));
+		btnNewButton_2.setFont(new Font("Tahoma", Font.ITALIC, 10));
+		panel.add(btnNewButton_2, "cell 1 7");
 		panel.add(btnNewButton, "cell 1 9 2 1,alignx center");
 		
 		JButton btnNewButton_1 = new JButton("Cadastre-se");

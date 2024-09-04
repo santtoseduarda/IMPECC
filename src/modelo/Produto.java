@@ -1,15 +1,12 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Produto {
-	
-	// id automático
-	// id fornecedor
 
-	// tamanho não seria uma lista?
-	// exemplos: P - 5 peças | M - 3 peças
-
+	// id fornecedor = chave estrangeira
+	private int id_Produto; 	// id automático	
 	private String nomeProduto;
 	private String marca;
 	private String modelo;
@@ -18,8 +15,22 @@ public class Produto {
 	private Long codBarra;
 	private Double custo;
 	private Long qtdEstoque;
+	private ArrayList<Integer> tamanho;
 	private String descProduto;
 	private LocalDate dataEntrada;
+	
+	public int getId_Produto() {
+		return id_Produto;
+	}
+	public void setId_Produto(int id_Produto) {
+		this.id_Produto = id_Produto;
+	}
+	public ArrayList<Integer> getTamanho() {
+		return tamanho;
+	}
+	public void setTamanho(ArrayList<Integer> tamanho) {
+		this.tamanho = tamanho;
+	}
 	
 	public String getNomeProduto() {
 		return nomeProduto;

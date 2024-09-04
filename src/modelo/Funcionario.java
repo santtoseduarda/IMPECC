@@ -1,14 +1,11 @@
 package modelo;
 
-public class Funcionario {
+public class Funcionario extends Cliente{
 	
-	// id automático
-
-	// extends de Cliente?
-
+	private int id_Funcionario;
 	private String nomeFuncionario;
-	private String login; // Varchar
-	private String senha; // Varchar
+	private char login;
+	private char senha;
 	
 	public String getNomeFuncionario() {
 		return nomeFuncionario;
@@ -16,16 +13,16 @@ public class Funcionario {
 	public void setNomeFuncionario(String nomeFuncionario) {
 		this.nomeFuncionario = nomeFuncionario;
 	}
-	public String getLogin() {
+	public char getLogin() {
 		return login;
 	}
-	public void setLogin(String login) {
+	public void setLogin(char login) {
 		this.login = login;
 	}
-	public String getSenha() {
+	public char getSenha() {
 		return senha;
 	}
-	public void setSenha(String senha) {
+	public void setSenha(char senha) {
 		this.senha = senha;
 	}
 	

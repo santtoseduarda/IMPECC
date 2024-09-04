@@ -7,7 +7,7 @@ public class Cliente {
 	private String nomeCliente;
 	private long cpf;
 	private String email;
-	private Long telefone; // string?
+	private char telefone;
 	private LocalDate dataNasc;
 	
 	public String getNomeCliente() {
@@ -28,10 +28,10 @@ public class Cliente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Long getTelefone() {
+	public char getTelefone() {
 		return telefone;
 	}
-	public void setTelefone(Long telefone) {
+	public void setTelefone(char telefone) {
 		this.telefone = telefone;
 	}
 	public LocalDate getDataNasc() {

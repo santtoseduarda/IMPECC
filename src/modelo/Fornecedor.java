@@ -1,11 +1,16 @@
 package modelo;
 
-public class Fornecedor {
+public class Fornecedor extends Cliente{
 
 	private Long cnpj;
 
-	// nome, telefone,
+	public Long getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(Long cnpj) {
+		this.cnpj = cnpj;
+	}
+
 	
-	// verificar se é String ou varchar mesmo
-	// verificar se seria Double mesmo ou deveria ser Float
 }

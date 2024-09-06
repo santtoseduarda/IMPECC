@@ -29,5 +29,4 @@ public class Venda {
 		this.mtd_Pagamento = mtd_Pagamento;
 	}
 	
-
 }

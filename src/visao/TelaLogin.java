@@ -57,7 +57,7 @@ public class TelaLogin extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[grow][][][][200px,grow][][][][grow]", "[grow 50][grow][grow 50]"));
 		
 		JLabel lblNewLabel_3 = new JLabel("");
-		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\Aluno\\Downloads\\logoromover-removebg-preview 1.png"));
+		lblNewLabel_3.setIcon(new ImageIcon(new ImageIcon("src/img/logo.png").getImage().getScaledInstance(230, 110, Image.SCALE_DEFAULT)));
 		contentPane.add(lblNewLabel_3, "cell 4 0,alignx center,aligny center");
 		
 		JPanel panel = new JPanel();
@@ -102,7 +102,7 @@ public class TelaLogin extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				//clique do olho
-				System.out.print("dsdsdsd");
+				System.out.print("mostrar senha");
 			}
 		});
 		panel.add(btnOlho, "cell 3 6");
@@ -114,6 +114,7 @@ public class TelaLogin extends JFrame {
 				
 				//mostrar tela de esquecer a senha..
 				
+				System.out.print("esqueceu");
 				
 			}
 		});

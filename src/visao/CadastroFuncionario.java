@@ -16,6 +16,8 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CadastroFuncionario extends JFrame {
 
@@ -60,6 +62,12 @@ public class CadastroFuncionario extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[grow][][grow][][grow][][grow]", "[][][grow][][][][][][][][][][][][][][][][][grow]"));
 		
 		JLabel bntVoltar = new JLabel("");
+		bntVoltar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("Voltar");
+			}
+		});
 		bntVoltar.setIcon(new ImageIcon(new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT)));		
 		contentPane.add(bntVoltar, "cell 0 0 2 2,alignx left,aligny center");
 		

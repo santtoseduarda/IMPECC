@@ -10,6 +10,7 @@ import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Image;
 
 import javax.swing.JTextField;
@@ -19,6 +20,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class TelaLogin extends JFrame {
 
@@ -47,6 +52,33 @@ public class TelaLogin extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaLogin() {
+		
+		Font fontRegular = null;
+		Font fontBold = null;
+		
+		BufferedInputStream fontRegulaFile = null;
+		BufferedInputStream fontBoldFile = null;
+
+		try {
+			fontRegulaFile = new BufferedInputStream( new FileInputStream("src/fontes/Carlito-Regular.TTF"));
+			fontBoldFile = new BufferedInputStream( new FileInputStream("src/fontes/Carlito-Bold.TTF"));
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    try {
+			fontRegular = Font.createFont(Font.TRUETYPE_FONT, fontRegulaFile);
+			fontBold= Font.createFont(Font.TRUETYPE_FONT, fontBoldFile);
+
+		} catch (FontFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 933, 737);
 		contentPane = new JPanel();
@@ -66,10 +98,11 @@ public class TelaLogin extends JFrame {
 		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[grow][][][][][][][][][][][][grow]"));
 		
 		JLabel lblNewLabel = new JLabel("Login");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblNewLabel.setFont(fontBold.deriveFont(Font.PLAIN, 50));
 		panel.add(lblNewLabel, "cell 0 0 4 2,alignx center,aligny center");
 		
 		JLabel lblNewLabel_1 = new JLabel("Login:");
+		lblNewLabel_1.setFont(fontRegular.deriveFont(Font.PLAIN, 20));
 		panel.add(lblNewLabel_1, "cell 1 3");
 		
 		txtLogin = new JTextField();
@@ -77,6 +110,7 @@ public class TelaLogin extends JFrame {
 		txtLogin.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Senha:");
+		lblNewLabel_2.setFont(fontRegular.deriveFont(Font.PLAIN, 20));
 		panel.add(lblNewLabel_2, "cell 1 5");
 		
 		tctSenha = new JTextField();
@@ -86,7 +120,7 @@ public class TelaLogin extends JFrame {
 		JButton btnAcessar = new JButton("Acessar");
 		btnAcessar.setForeground(new Color(255, 255, 255));
 		btnAcessar.setBackground(new Color(255, 0, 0));
-		btnAcessar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnAcessar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAcessar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -118,7 +152,7 @@ public class TelaLogin extends JFrame {
 				
 			}
 		});
-		btnEsqueceuSenha.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		btnEsqueceuSenha.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(btnEsqueceuSenha, "cell 1 7");
 		panel.add(btnAcessar, "cell 1 9 2 1,alignx center");
 		
@@ -127,7 +161,7 @@ public class TelaLogin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnCadastre.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnCadastre.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		panel.add(btnCadastre, "cell 1 11 2 1,alignx center");
 	}
 }

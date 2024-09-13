@@ -12,7 +12,12 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.awt.Font;
+import java.awt.FontFormatException;
 
 public class TelaInicial extends JFrame {
 
@@ -38,6 +43,36 @@ public class TelaInicial extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaInicial() {
+		
+		//fonte
+		Font fontRegular = null;
+		Font fontBold = null;
+		
+		BufferedInputStream fontRegulaFile = null;
+		BufferedInputStream fontBoldFile = null;
+
+		try {
+			fontRegulaFile = new BufferedInputStream( new FileInputStream("src/fontes/Carlito-Regular.TTF"));
+			fontBoldFile = new BufferedInputStream( new FileInputStream("src/fontes/Carlito-Bold.TTF"));
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        try {
+			fontRegular = Font.createFont(Font.TRUETYPE_FONT, fontRegulaFile);
+			fontBold= Font.createFont(Font.TRUETYPE_FONT, fontBoldFile);
+
+		} catch (FontFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+               
+        
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 905, 571);
 		contentPane = new JPanel();
@@ -60,7 +95,7 @@ public class TelaInicial extends JFrame {
 		contentPane.add(lblCarrinho, "cell 1 3");
 		
 		JLabel lblVendas = new JLabel("Vendas");
-		lblVendas.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblVendas.setFont(fontRegular.deriveFont(Font.PLAIN, 24));
 		lblVendas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -79,7 +114,7 @@ public class TelaInicial extends JFrame {
 		contentPane.add(lblCaixa, "cell 1 5");
 		
 		JLabel lblProdutos = new JLabel("Produtos");
-		lblProdutos.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblProdutos.setFont(fontRegular.deriveFont(Font.PLAIN, 24));
 		lblProdutos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -98,7 +133,7 @@ public class TelaInicial extends JFrame {
 		contentPane.add(lblClientes, "cell 1 7");
 		
 		JLabel lblCliente = new JLabel("Clientes");
-		lblCliente.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCliente.setFont(fontRegular.deriveFont(Font.PLAIN, 24));
 		lblCliente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -117,7 +152,7 @@ public class TelaInicial extends JFrame {
 		contentPane.add(lblCaminhao, "cell 1 9");
 		
 		JLabel lblFornecedores = new JLabel("Fornecedores");
-		lblFornecedores.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblFornecedores.setFont(fontRegular.deriveFont(Font.PLAIN, 24));
 		lblFornecedores.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -136,7 +171,7 @@ public class TelaInicial extends JFrame {
 		contentPane.add(lblFuncionario, "cell 1 11");
 		
 		JLabel lblFuncionarios = new JLabel("Funcionários");
-		lblFuncionarios.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblFuncionarios.setFont(fontRegular.deriveFont(Font.PLAIN, 24));
 		lblFuncionarios.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

@@ -1,6 +1,5 @@
 -- funcionarios
-INSERT INTO Funcionarios (Nome_Funcionario, Cargo, Email, Senha) VALUES
-(?, ?, ?, ?);
+INSERT INTO Funcionarios (nome_Funcionario, email_Funcionario, celular, cpf, login, senha) VALUES (?, ?, ?, ?, ?, ?);
 
 -- produtos
 INSERT INTO Produtos (Nome_Produto, Modelo, Tamanho , Genero, Preco, Fornecedor, Qntd_Estoque) VALUES (?, ?, ?, ?, ?, ?, ?);

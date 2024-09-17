@@ -3,70 +3,70 @@ DROP DATABASE IF EXISTS impecc;
 CREATE SCHEMA IF NOT EXISTS impecc;
 USE impecc ;
 
+-- -----------------------------Fornecedor------------------------
+CREATE TABLE IF NOT EXISTS impecc.Fornecedor (
+	id_Fornecedor INT NOT NULL AUTO_INCREMENT,
+	nome_Fornecedor VARCHAR(45) NOT NULL,
+    cnpj VARCHAR(45) NOT NULL,
+	telefone_fornecedor VARCHAR(45) NOT NULL,
+	email_fornecedor VARCHAR(45) NOT NULL,
+	PRIMARY KEY (id_Fornecedor)
+);
+
 -- -----------------------------------------------------
 -- Table impecc.Produtos
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS impecc.Produtos (
-  id_Produtos INT NOT NULL AUTO_INCREMENT,
-  Nome_Produto VARCHAR(45) NOT NULL,
-  Modelo VARCHAR(45) NOT NULL,
-  Tamanho VARCHAR(45) NOT NULL,
-  Genero VARCHAR(45) NOT NULL,
-  Preco DECIMAL(100, 2) NOT NULL,
-  Fornecedor VARCHAR(45) NOT NULL,
-  Qntd_Estoque INT NOT NULL,
-  PRIMARY KEY (id_Produtos)
+  id_Produto INT NOT NULL AUTO_INCREMENT,
+  nome_Produto VARCHAR(45) NOT NULL,
+  modelo VARCHAR(45) NOT NULL,
+  tamanho VARCHAR(45) NOT NULL,
+  genero VARCHAR(45) NOT NULL,
+  preco DECIMAL(65, 2) NOT NULL,
+  qntd_Estoque INT NOT NULL,
+  id_Fornecedor INT NOT NULL,
+  PRIMARY KEY (id_Produto, id_Fornecedor),
+	FOREIGN KEY (id_Fornecedor) REFERENCES impecc.Fornecedor (id_Fornecedor)
   );
 
 -- -----------------------------------------------------
 -- Table impecc.Clientes
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS impecc.Clientes (
-  id_Clientes INT NOT NULL AUTO_INCREMENT,
-  Nome_Cliente VARCHAR(45) NOT NULL,
-  Sobrenome VARCHAR(45) NOT NULL,
-  Data_Nasc DATE NOT NULL,
-  Cpf VARCHAR(45) NOT NULL,
-  Telefone VARCHAR(45) NOT NULL,
-  Email VARCHAR(45) NOT NULL,
-  PRIMARY KEY (id_Clientes)
+  id_Cliente INT NOT NULL AUTO_INCREMENT,
+  nome_Cliente VARCHAR(45) NOT NULL,
+  data_Nasc DATE NOT NULL,
+  cpf VARCHAR(45) NOT NULL,
+  telefone_Cliente VARCHAR(45) NOT NULL,
+  email_Cliente VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id_Cliente)
   );
 
 -- -----------------------------------------------------
 -- Table impecc.Funcionarios
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS impecc.Funcionarios (
-  id_Funcionarios INT NOT NULL AUTO_INCREMENT,
-  Nome_Funcionario VARCHAR(45) NOT NULL,
-  Cargo VARCHAR(45) NOT NULL,
-  Email VARCHAR(45) NOT NULL,
-  Senha VARCHAR(45) NOT NULL,
-  PRIMARY KEY (id_Funcionarios)
+  id_Funcionario INT NOT NULL AUTO_INCREMENT,
+  nome_Funcionario VARCHAR(45) NOT NULL,
+  email_Funcionario VARCHAR(45) NOT NULL,
+  login VARCHAR(45) NOT NULL,
+  senha VARCHAR(45) NOT NULL,
+  celular VARCHAR(45) NOT NULL,
+  cpf VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id_Funcionario)
   );
 
 -- -----------------------------------------------------
 -- Table impecc.Vendas
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS impecc.Vendas (
-  id_Vendas INT NOT NULL AUTO_INCREMENT,
-  Total DECIMAL(100, 2) NOT NULL,
+  id_Venda INT NOT NULL AUTO_INCREMENT,
+  Total DECIMAL(65, 2) NOT NULL,
   Mtd_Pagamento VARCHAR(45) NOT NULL,
-  id_Clientes INT NOT NULL,
-  id_Funcionarios INT NOT NULL,
-  PRIMARY KEY (id_Vendas, id_Clientes, id_Funcionarios),
-    FOREIGN KEY (id_Clientes) REFERENCES impecc.Clientes (id_Clientes),
-    FOREIGN KEY (id_Funcionarios) REFERENCES impecc.Funcionarios (id_Funcionarios)
-    );
-
--- -----------------------------------------------------
--- Table impecc.Historico_de_Vendas
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS impecc.Historico_de_Vendas (
-  id_Historico_de_Vendas INT NOT NULL AUTO_INCREMENT,
-  Qtd_Venda INT NOT NULL,
-  id_Vendas INT NOT NULL,
-  id_Produtos INT NOT NULL,
-  PRIMARY KEY (id_Historico_de_Vendas, id_Vendas, id_Produtos),
-    FOREIGN KEY (id_Vendas) REFERENCES impecc.Vendas (id_Vendas),
-    FOREIGN KEY (id_Produtos) REFERENCES impecc.Produtos (id_Produtos)
+  id_Cliente INT NOT NULL,
+  id_Funcionario INT NOT NULL,
+  id_Produto INT NOT NULL,
+  PRIMARY KEY (id_Venda, id_Cliente, id_Funcionario, id_Produto),
+	FOREIGN KEY (id_Cliente) REFERENCES impecc.Clientes (id_Cliente),
+    FOREIGN KEY (id_Funcionario) REFERENCES impecc.Funcionarios (id_Funcionario),
+	FOREIGN KEY (id_Produto) REFERENCES impecc.Produtos (id_Produto)
     );

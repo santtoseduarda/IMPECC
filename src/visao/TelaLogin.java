@@ -5,7 +5,12 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
+
+import modelo.Funcionario;
+import modelo.Projeto;
+
 import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
@@ -30,7 +35,8 @@ public class TelaLogin extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtLogin;
-	private JTextField tctSenha;
+	private JTextField txtSenha;
+	private boolean SenhaVisivel;
 
 	/**
 	 * Launch the application.
@@ -106,6 +112,21 @@ public class TelaLogin extends JFrame {
 		panel.add(lblNewLabel_1, "cell 1 3");
 		
 		txtLogin = new JTextField();
+		txtLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				//pegar oque foi digitado no textos
+				String login = txtLogin.getText(); 
+				String senha = txtSenha.getText(); 
+				
+				// criar um objeto para usar o metodo aqui dentro da janela5
+				Funcionario entrar = new Funcionario();
+				
+				//passar os valores para esse objeto
+				entrar.setLogin(login);
+				entrar.setSenha(senha);
+			}
+		});
 		panel.add(txtLogin, "cell 1 4 2 1,growx");
 		txtLogin.setColumns(10);
 		
@@ -113,9 +134,16 @@ public class TelaLogin extends JFrame {
 		lblNewLabel_2.setFont(fontRegular.deriveFont(Font.PLAIN, 20));
 		panel.add(lblNewLabel_2, "cell 1 5");
 		
-		tctSenha = new JTextField();
-		panel.add(tctSenha, "cell 1 6 2 1,growx");
-		tctSenha.setColumns(10);
+		
+		JTextField txttSenhaVisivel = new JTextField();
+		txttSenhaVisivel.setColumns(10);
+
+		
+		txtSenha = new JPasswordField();
+		panel.add(txtSenha, "cell 1 6 2 1,growx");
+		txtSenha.setColumns(10);
+		
+		TelaLogin janelaLogin = this;
 		
 		JButton btnAcessar = new JButton("Acessar");
 		btnAcessar.setForeground(new Color(255, 255, 255));
@@ -123,6 +151,11 @@ public class TelaLogin extends JFrame {
 		btnAcessar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAcessar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
+				TelaInicial novaJanela = new TelaInicial(funcionarioLogado);
+				novaJanela.setVisible(true);
+				
+				
 			}
 		});
 		
@@ -130,13 +163,34 @@ public class TelaLogin extends JFrame {
 		btnOlho.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		
 		btnOlho.setIcon(new ImageIcon(new ImageIcon("src/img/olho.png").getImage().getScaledInstance(17, 18, Image.SCALE_DEFAULT)));
-
+		SenhaVisivel = false;
 		btnOlho.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
 				//clique do olho
-				System.out.print("mostrar senha");
+				if(SenhaVisivel == false) {
+					System.out.print("mostrar senha");
+					txttSenhaVisivel.setText(txtSenha.getText());
+
+					panel.remove(txtSenha);
+
+					panel.add(txttSenhaVisivel, "cell 1 6 2 1,growx");
+					panel.repaint();
+					SenhaVisivel = true;
+				} else {
+					System.out.print("ocular senha");
+					txtSenha.setText(txttSenhaVisivel.getText());
+
+					panel.remove(txttSenhaVisivel);
+
+					panel.add(txtSenha, "cell 1 6 2 1,growx");
+					panel.repaint();
+					SenhaVisivel = false;
+					
+				}
+				panel.validate();
+			
 			}
 		});
 		panel.add(btnOlho, "cell 3 6");

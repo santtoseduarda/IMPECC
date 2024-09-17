@@ -4,8 +4,8 @@ public class Funcionario extends Cliente{
 	
 	private int id_Funcionario;
 	private String nomeFuncionario;
-	private char login;
-	private char senha;
+	private String login;
+	private String senha;
 	
 
 	public int getId_Funcionario() {
@@ -21,16 +21,16 @@ public class Funcionario extends Cliente{
 	public void setNomeFuncionario(String nomeFuncionario) {
 		this.nomeFuncionario = nomeFuncionario;
 	}
-	public char getLogin() {
+	public String getLogin() {
 		return login;
 	}
-	public void setLogin(char login) {
+	public void setLogin(String login) {
 		this.login = login;
 	}
-	public char getSenha() {
+	public String getSenha() {
 		return senha;
 	}
-	public void setSenha(char senha) {
+	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 	

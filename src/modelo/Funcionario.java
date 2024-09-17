@@ -6,8 +6,29 @@ public class Funcionario extends Cliente{
 	private String nomeFuncionario;
 	private String login;
 	private String senha;
+	private String cpf;
+	private String celular;
+	private String email_Funcionario;
 	
 
+	public String getEmail_Funcionario() {
+		return email_Funcionario;
+	}
+	public void setEmail_Funcionario(String email_Funcionario) {
+		this.email_Funcionario = email_Funcionario;
+	}
+	public String getCpf() {
+		return cpf;
+	}
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	public String getCelular() {
+		return celular;
+	}
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
 	public int getId_Funcionario() {
 		return id_Funcionario;
 	}

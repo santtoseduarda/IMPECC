@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import modelo.Funcionario;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -30,16 +32,15 @@ public class CadastroFuncionario extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtNomeCompleto;
 	private JTextField txtEmail;
-	private JTextField textField;
-	private JTextField txtTelefone;
 	private JTextField txtCelular;
-	private JTextField txtCargo;
 	private JTextField txtLogin;
 	private JTextField txtSenha;
+	private JTextField txtCPF;
 
 	/**
 	 * Launch the application.
 	 */
+	//Lucas o Melhor
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -109,7 +110,7 @@ public class CadastroFuncionario extends JFrame {
 		contentPane.add(lblNewLabel_8, "cell 5 1 2 3");
 		
 		JLabel lblNewLabel = new JLabel("Cadastro de Funcionário");
-		lblNewLabel.setFont(fontBold.deriveFont(Font.PLAIN, 60));
+		lblNewLabel.setFont(fontBold.deriveFont(Font.PLAIN, 50));
 		contentPane.add(lblNewLabel, "cell 2 2 3 3,alignx center,aligny center");
 		
 		JLabel lblNewLabel_1 = new JLabel("Nome Completo:*");
@@ -128,68 +129,74 @@ public class CadastroFuncionario extends JFrame {
 		contentPane.add(txtEmail, "cell 4 6 2 1,growx");
 		txtEmail.setColumns(10);
 		
+		JLabel lblCelular = new JLabel("Celular:");
+		lblCelular.setFont(fontRegular.deriveFont(Font.PLAIN, 25));
+		contentPane.add(lblCelular, "cell 1 8");
+		
 		JLabel lblCPF = new JLabel("CPF:");
-		lblCPF.setFont(fontRegular.deriveFont(Font.PLAIN, 25));
-		contentPane.add(lblCPF, "cell 1 8");
-		
-		JLabel lblNewLabel_4 = new JLabel("Cargo:");
-		lblNewLabel_4.setFont(fontRegular.deriveFont(Font.PLAIN, 25));
-		contentPane.add(lblNewLabel_4, "cell 4 8");
-		
-		textField = new JTextField();
-		contentPane.add(textField, "cell 1 9 2 1,growx");
-		textField.setColumns(10);
-		
-		txtCargo = new JTextField();
-		contentPane.add(txtCargo, "cell 4 9 2 1,growx");
-		txtCargo.setColumns(10);
-		
-		JLabel lblNewLabel_3 = new JLabel("Telefone:");
-		lblNewLabel_3.setFont(fontRegular.deriveFont(Font.PLAIN, 25));
-		contentPane.add(lblNewLabel_3, "cell 1 11");
-		
-		JLabel lblNewLabel_6 = new JLabel("Login:");
-		lblNewLabel_6.setFont(fontRegular.deriveFont(Font.PLAIN, 25));
-		contentPane.add(lblNewLabel_6, "cell 4 11");
-		
-		txtTelefone = new JTextField();
-		contentPane.add(txtTelefone, "cell 1 12 2 1,growx");
-		txtTelefone.setColumns(10);
-		
-		txtLogin = new JTextField();
-		contentPane.add(txtLogin, "cell 4 12 2 1,growx");
-		txtLogin.setColumns(10);
-		
-		JLabel lbl = new JLabel("Celular:");
-		lbl.setFont(fontRegular.deriveFont(Font.PLAIN, 25));
-		contentPane.add(lbl, "cell 1 14");
-		
-		JLabel lblNewLabel_7 = new JLabel("Senha:");
-		lblNewLabel_7.setFont(fontRegular.deriveFont(Font.PLAIN, 25));
-		contentPane.add(lblNewLabel_7, "cell 4 14");
+		lblCPF.setFont(null);
+		contentPane.add(lblCPF, "cell 4 8");
 		
 		txtCelular = new JTextField();
-		contentPane.add(txtCelular, "cell 1 15 2 1,growx");
+		contentPane.add(txtCelular, "cell 1 9 2 1,growx");
 		txtCelular.setColumns(10);
 		
+		txtCPF = new JTextField();
+		txtCPF.setColumns(10);
+		contentPane.add(txtCPF, "cell 4 9 2 1,growx");
+		
+		JLabel lblLogin = new JLabel("Login:");
+		lblLogin.setFont(fontRegular.deriveFont(Font.PLAIN, 25));
+		contentPane.add(lblLogin, "cell 1 11");
+		
+		JLabel LlblSenha = new JLabel("Senha:");
+		LlblSenha.setFont(fontRegular.deriveFont(Font.PLAIN, 25));
+		contentPane.add(LlblSenha, "cell 4 11");
+		
+		txtLogin = new JTextField();
+		contentPane.add(txtLogin, "cell 1 12 2 1,growx");
+		txtLogin.setColumns(10);
+		
 		txtSenha = new JTextField();
-		contentPane.add(txtSenha, "cell 4 15 2 1,growx");
+		contentPane.add(txtSenha, "cell 4 12 2 1,growx");
 		txtSenha.setColumns(10);
 		
 		JButton btnSair = new JButton("     Sair    ");
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		contentPane.add(btnSair, "cell 1 18,alignx left");
+		contentPane.add(btnSair, "cell 1 17 1 2,alignx left,aligny bottom");
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				String login = txtLogin.getText(); 
+				String senha = txtSenha.getText(); 
+				String cpf = txtCPF.getText(); 
+				String email = txtEmail.getText(); 
+				String nomeCompleto = txtNomeCompleto.getText(); 
+				String celular = txtCelular.getText(); 
+				
+				// criar um objeto para usar o metodo aqui dentro da janela
+				Funcionario cadastro = new Funcionario();
+				
+				
+				// passar os valores para esse objeto
+				cadastro.setLogin(login);
+				cadastro.setSenha(senha);
+				cadastro.setCelular(celular);
+				cadastro.setCpf(cpf);
+				cadastro.setEmail_Funcionario(email);
+				cadastro.setNomeFuncionario(nomeCompleto);
+
+				
+				
 			}
 		});
 		btnCadastrar.setForeground(new Color(255, 255, 255));
 		btnCadastrar.setBackground(new Color(161, 0, 29));
 		btnCadastrar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		contentPane.add(btnCadastrar, "flowx,cell 5 18,alignx right");
+		contentPane.add(btnCadastrar, "flowx,cell 5 17 1 2,alignx right,aligny bottom");
 	}
 
 }

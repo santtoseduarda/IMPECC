@@ -51,6 +51,8 @@ CREATE TABLE IF NOT EXISTS impecc.Funcionarios (
   email_Funcionario VARCHAR(45) NOT NULL,
   login VARCHAR(45) NOT NULL,
   senha VARCHAR(45) NOT NULL,
+  celular VARCHAR(45) NOT NULL,
+  cpf VARCHAR(45) NOT NULL,
   PRIMARY KEY (id_Funcionario)
   );
 

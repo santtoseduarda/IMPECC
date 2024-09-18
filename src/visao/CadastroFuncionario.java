@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controle.FuncionarioDAO;
 import modelo.Funcionario;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
@@ -25,6 +26,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class CadastroFuncionario extends JFrame {
 
@@ -189,7 +191,11 @@ public class CadastroFuncionario extends JFrame {
 				cadastro.setEmail_Funcionario(email);
 				cadastro.setNomeFuncionario(nomeCompleto);
 
+				FuncionarioDAO novoFuncionario = new FuncionarioDAO();
+				FuncionarioDAO.getInstancia();
+				novoFuncionario.inserir(cadastro);
 				
+						
 				
 			}
 		});

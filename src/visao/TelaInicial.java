@@ -78,6 +78,7 @@ public class TelaInicial extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(161, 0, 29));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		 setExtendedState(JFrame.MAXIMIZED_BOTH); 
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[grow][][300][grow]", "[grow][][][][][][][][][][][][][][][grow]"));

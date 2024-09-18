@@ -150,12 +150,9 @@ public class TelaLogin extends JFrame {
 		btnAcessar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAcessar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+					
 				TelaInicial novaJanela = new TelaInicial();
 				novaJanela.setVisible(true);
-				
-				
-				
 				
 				
 			}

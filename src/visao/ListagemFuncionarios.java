@@ -18,6 +18,8 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class ListagemFuncionarios extends JFrame {
 
@@ -27,6 +29,7 @@ public class ListagemFuncionarios extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -83,7 +86,7 @@ public class ListagemFuncionarios extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 		
 		JLabel lblListagemFunc = new JLabel("Listagem de Funcionários");
 		lblListagemFunc.setForeground(new Color(255, 255, 255));
@@ -109,7 +112,7 @@ public class ListagemFuncionarios extends JFrame {
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, "cell 3 8 21 71,grow");
-		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][grow][]", "[][][][grow][][][][][][][][][][][][][][][][][][][][][][][]"));
 		
 		JLabel lblNewLabel_4 = new JLabel("ID");
 		lblNewLabel_4.setFont(fontBold.deriveFont(Font.PLAIN, 14));
@@ -162,6 +165,12 @@ public class ListagemFuncionarios extends JFrame {
 		JLabel lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\Aluno\\Downloads\\IMPECC\\src\\img\\procurar.png"));
 		panel.add(lblNewLabel_3, "cell 12 1");
+		
+		JScrollPane scrollPane = new JScrollPane();
+		panel.add(scrollPane, "cell 1 3 13 24,grow");
+		
+		table = new JTable();
+		scrollPane.setColumnHeaderView(table);
 		
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));

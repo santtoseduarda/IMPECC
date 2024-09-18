@@ -8,6 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="com.miglayout.swing_11.3.0.jar"/>
 	<classpathentry kind="lib" path="com.miglayout.core_11.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Aluno/Downloads/mysql-connector-j-9.0.0/mysql-connector-j-9.0.0/mysql-connector-j-9.0.0.jar"/>
+	<classpathentry kind="lib" path="mysql-connector-j-9.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -114,11 +114,11 @@ public class CadastroFuncionario extends JFrame {
 		contentPane.add(lblNewLabel, "cell 2 2 3 3,alignx center,aligny center");
 		
 		JLabel lblNewLabel_1 = new JLabel("Nome Completo:*");
-		lblNewLabel_1.setFont(fontRegular.deriveFont(Font.PLAIN, 25));
+		lblNewLabel_1.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		contentPane.add(lblNewLabel_1, "cell 1 5");
 		
 		JLabel lblNewLabel_2 = new JLabel("E-mail:");
-		lblNewLabel_2.setFont(fontRegular.deriveFont(Font.PLAIN, 25));
+		lblNewLabel_2.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		contentPane.add(lblNewLabel_2, "cell 4 5");
 		
 		txtNomeCompleto = new JTextField();
@@ -130,11 +130,11 @@ public class CadastroFuncionario extends JFrame {
 		txtEmail.setColumns(10);
 		
 		JLabel lblCelular = new JLabel("Celular:");
-		lblCelular.setFont(fontRegular.deriveFont(Font.PLAIN, 25));
+		lblCelular.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		contentPane.add(lblCelular, "cell 1 8");
 		
 		JLabel lblCPF = new JLabel("CPF:");
-		lblCPF.setFont(null);
+		lblCPF.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		contentPane.add(lblCPF, "cell 4 8");
 		
 		txtCelular = new JTextField();
@@ -146,11 +146,11 @@ public class CadastroFuncionario extends JFrame {
 		contentPane.add(txtCPF, "cell 4 9 2 1,growx");
 		
 		JLabel lblLogin = new JLabel("Login:");
-		lblLogin.setFont(fontRegular.deriveFont(Font.PLAIN, 25));
+		lblLogin.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		contentPane.add(lblLogin, "cell 1 11");
 		
 		JLabel LlblSenha = new JLabel("Senha:");
-		LlblSenha.setFont(fontRegular.deriveFont(Font.PLAIN, 25));
+		LlblSenha.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		contentPane.add(LlblSenha, "cell 4 11");
 		
 		txtLogin = new JTextField();
@@ -162,8 +162,8 @@ public class CadastroFuncionario extends JFrame {
 		txtSenha.setColumns(10);
 		
 		JButton btnSair = new JButton("     Sair    ");
-		btnSair.setForeground(new Color(255, 0, 0));
-		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnSair.setForeground(new Color(225, 0, 0));
+		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 22));
 		contentPane.add(btnSair, "cell 1 17 1 2,alignx left,aligny bottom");
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
@@ -193,9 +193,9 @@ public class CadastroFuncionario extends JFrame {
 				
 			}
 		});
-		btnCadastrar.setForeground(new Color(255, 255, 255));
+		btnCadastrar.setForeground(new Color(225, 225, 225));
 		btnCadastrar.setBackground(new Color(161, 0, 29));
-		btnCadastrar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnCadastrar.setFont(fontBold.deriveFont(Font.PLAIN, 22));
 		contentPane.add(btnCadastrar, "flowx,cell 5 17 1 2,alignx right,aligny bottom");
 	}
 

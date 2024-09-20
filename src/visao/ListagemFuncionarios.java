@@ -140,7 +140,7 @@ public class ListagemFuncionarios extends JFrame {
 		textField.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Aluno\\Downloads\\IMPECC\\src\\img\\procurar.png"));
+		lblNewLabel.setIcon(new ImageIcon(new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lblNewLabel, "cell 3 1,alignx trailing");
 		
 		textField_1 = new JTextField();
@@ -148,7 +148,7 @@ public class ListagemFuncionarios extends JFrame {
 		textField_1.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Aluno\\Downloads\\IMPECC\\src\\img\\procurar.png"));
+		lblNewLabel_1.setIcon(new ImageIcon(new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lblNewLabel_1, "cell 6 1");
 		
 		textField_2 = new JTextField();
@@ -156,7 +156,7 @@ public class ListagemFuncionarios extends JFrame {
 		textField_2.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\Aluno\\Downloads\\IMPECC\\src\\img\\procurar.png"));
+		lblNewLabel_2.setIcon(new ImageIcon(new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lblNewLabel_2, "cell 9 1");
 		
 		textField_3 = new JTextField();
@@ -164,7 +164,7 @@ public class ListagemFuncionarios extends JFrame {
 		textField_3.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("");
-		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\Aluno\\Downloads\\IMPECC\\src\\img\\procurar.png"));
+		lblNewLabel_3.setIcon(new ImageIcon(new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lblNewLabel_3, "cell 12 1");
 		
 		JScrollPane scrollPane = new JScrollPane();

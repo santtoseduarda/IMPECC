@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
+import controle.FuncionarioDAO;
 import modelo.Funcionario;
 
 import java.awt.Color;
@@ -84,6 +85,8 @@ public class TelaLogin extends JFrame {
 			e.printStackTrace();
 		}
 	    
+	    TelaLogin janelaLogin = this;
+	    
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 933, 737);
 		contentPane = new JPanel();
@@ -142,7 +145,7 @@ public class TelaLogin extends JFrame {
 		panel.add(txtSenha, "cell 1 6 2 1,growx");
 		txtSenha.setColumns(10);
 		
-		TelaLogin janelaLogin = this;
+		
 		
 		JButton btnAcessar = new JButton("Acessar");
 		btnAcessar.setForeground(new Color(255, 255, 255));
@@ -150,11 +153,27 @@ public class TelaLogin extends JFrame {
 		btnAcessar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAcessar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					
-				TelaInicial novaJanela = new TelaInicial();
-				novaJanela.setVisible(true);
+				
+				String login = txtLogin.getText();
+		        String senha = txtSenha.getText();
+		        
+		        FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 				
 				
+				 if (funcionarioDAO.verificarLogin(login, senha)) {
+					 
+			            // Se a verificação for bem-sucedida, abre a tela inicial
+			            TelaInicial novaJanela = new TelaInicial();
+			            novaJanela.setVisible(true);
+			            dispose(); // Fecha a tela de login
+			            
+			        } else {
+			            // Se o login ou a senha estiverem errados, mostra uma mensagem de erro
+			            javax.swing.JOptionPane.showMessageDialog(null,
+			                    "Login ou senha incorretos!",
+			                    "Erro de login",
+			                    javax.swing.JOptionPane.ERROR_MESSAGE);
+			        }
 			}
 		});
 		
@@ -212,6 +231,10 @@ public class TelaLogin extends JFrame {
 		JButton btnCadastre = new JButton("Cadastre-se");
 		btnCadastre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				CadastroFuncionario janelaLogin = new CadastroFuncionario();
+				janelaLogin.setVisible(true);
+				
 			}
 		});
 		btnCadastre.setFont(fontBold.deriveFont(Font.PLAIN, 25));

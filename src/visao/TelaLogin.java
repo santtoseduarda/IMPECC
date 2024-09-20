@@ -114,21 +114,6 @@ public class TelaLogin extends JFrame {
 		panel.add(lblNewLabel_1, "cell 1 3");
 		
 		txtLogin = new JTextField();
-		txtLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				//pegar oque foi digitado no textos
-				String login = txtLogin.getText(); 
-				String senha = txtSenha.getText(); 
-				
-				// criar um objeto para usar o metodo aqui dentro da janela5
-				Funcionario entrar = new Funcionario();
-				
-				//passar os valores para esse objeto
-				entrar.setLogin(login);
-				entrar.setSenha(senha);
-			}
-		});
 		panel.add(txtLogin, "cell 1 4 2 1,growx");
 		txtLogin.setColumns(10);
 		
@@ -234,6 +219,7 @@ public class TelaLogin extends JFrame {
 				
 				CadastroFuncionario janelaLogin = new CadastroFuncionario();
 				janelaLogin.setVisible(true);
+				dispose();
 				
 			}
 		});

@@ -161,6 +161,7 @@ public class CadastroFuncionario extends JFrame {
 
 				TelaLogin janelaCadastro = new TelaLogin();
 				janelaCadastro.setVisible(true);
+				dispose();
 
 			}
 		});
@@ -201,6 +202,7 @@ public class CadastroFuncionario extends JFrame {
 					
 					TelaLogin janelaCadastro = new TelaLogin();
 					janelaCadastro.setVisible(true);
+					dispose();
 					
 					
 				}

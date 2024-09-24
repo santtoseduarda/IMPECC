@@ -258,7 +258,7 @@ public class CadastroFuncionarios extends JFrame {
 					FuncionarioDAO.getInstancia();
 					novoFuncionario.inserir(cadastro);
 					
-					TelaLogin janelaCadastro = new TelaLogin();
+					ListagemFuncionarios janelaCadastro = new ListagemFuncionarios();
 					janelaCadastro.setVisible(true);
 					dispose();
 					

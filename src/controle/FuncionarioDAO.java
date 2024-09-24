@@ -1,5 +1,11 @@
 package controle;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,23 +76,11 @@ public class FuncionarioDAO {
 		return false;
 	}
 
-	public static void main(String[] args) {
-		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-
-		// Exemplo de como inserir um funcionário
-		Funcionario novoFuncionario = new Funcionario();
-		if (funcionarioDAO.inserir(novoFuncionario)) {
-			System.out.println("Funcionário inserido com sucesso.");
-		} else {
-			System.out.println("Falha ao inserir funcionário.");
-		}
-
-	}
 
 	public boolean verificarLogin(String login, String senha) {
 
 		Connection conn = ConexaoBanco.getConexaoMySQL(); // Estabelecer conexão com o banco
-		
+
 		String verificacao = "SELECT * FROM funcionarios WHERE login = ? AND senha = ?";
 
 		try {
@@ -103,4 +97,47 @@ public class FuncionarioDAO {
 			return false; // Retorna falso em caso de erro
 		}
 	}
+	
+	
+	public ArrayList<Funcionario> buscarFuncionarios(){
+
+		ArrayList<Funcionario> listaFuncionarios = new ArrayList <Funcionario>();
+		Statement stmt1 = null;
+
+		Connection conn = ConexaoBanco.getConexaoMySQL();
+
+		try {
+			stmt1 = (Statement) conn.createStatement();
+			ResultSet res1 = null;
+			res1 = stmt1.executeQuery("Select * from funcionarios");
+
+			//Conta o numero de registros do ResultSet no BD
+			int count = 0;
+			while (res1.next()) {
+				
+				Funcionario f = new Funcionario();
+				f.setId_Funcionario(res1.getInt("id_Funcionario"));
+				f.setNomeFuncionario(res1.getString("nome_Funcionario"));
+				f.setEmail_Funcionario(res1.getString("email_Funcionario"));
+				f.setLogin(res1.getString("login"));
+				f.setCelular(res1.getString("celular"));
+				f.setCpf(res1.getString("cpf"));
+				listaFuncionarios.add(f);
+				
+			}
+			System.out.println("Número de registros: " + count);
+			
+
+			res1.close();
+			stmt1.close();
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return listaFuncionarios;
+
+	}
+	
 }

@@ -8,6 +8,8 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,6 +23,10 @@ import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import controle.FuncionarioDAO;
+import modelo.Funcionario;
 
 public class ListagemFuncionarios extends JFrame {
 
@@ -171,7 +177,17 @@ public class ListagemFuncionarios extends JFrame {
 		panel.add(scrollPane, "cell 1 3 13 14,grow");
 		
 		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"ID", "Nome", "Email", "Celular", "CPF", "Login"
+			}
+		));
 		scrollPane.setViewportView(table);
+		atualizarTabela();
+		
+		
 		
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
@@ -240,6 +256,27 @@ public class ListagemFuncionarios extends JFrame {
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 21 80 1 2,aligny bottom");
+	}
+
+	private void atualizarTabela() {
+		
+		 DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
+	        modeloTabela.setRowCount(0); // Limpa a tabela
+
+	        FuncionarioDAO fdao = new FuncionarioDAO();
+	        ArrayList <Funcionario> listaFuncionarios = fdao.buscarFuncionarios();
+	        for (Funcionario f : listaFuncionarios) {
+	            modeloTabela.addRow(new Object[] {
+	            		f.getId_Funcionario(),
+		                f.getNomeFuncionario(),
+		                f.getEmail_Funcionario(),
+		                f.getCelular(),
+		                f.getCpf(),
+		                f.getLogin()
+	            });
+	        }
+	        
+		
 	}
 
 }

@@ -6,6 +6,9 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import modelo.Funcionario;
+
 import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
@@ -171,11 +174,18 @@ public class TelaInicial extends JFrame {
 		lblFuncionario.setIcon(new ImageIcon(new ImageIcon("src/img/funcionario.png").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
 		contentPane.add(lblFuncionario, "cell 1 11");
 		
+		TelaInicial janelaInicial = this;
+		
 		JLabel lblFuncionarios = new JLabel("Funcionários");
 		lblFuncionarios.setFont(fontRegular.deriveFont(Font.PLAIN, 24));
 		lblFuncionarios.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+	            
+	            ListagemFuncionarios janelaInicial = new ListagemFuncionarios();
+				janelaInicial.setVisible(true);
+				dispose();
+				
 				//tela inicial para abrir em Funcionarios
 			}
 		});

@@ -12,17 +12,29 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controle.FuncionarioDAO;
+import modelo.Funcionario;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class CadastroFuncionarios extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
+    private JTextField txtNomeCompleto;
+    private JTextField txtCPF;
+    private JTextField txtEmail;
+    private JTextField txtLogin;
+    private JTextField txtCelular;
+    private JTextField txtSenha;
 
     /**
      * Launch the application.
@@ -71,7 +83,7 @@ public class CadastroFuncionarios extends JFrame {
         contentPane.setForeground(new Color(255, 0, 0));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
-        contentPane.setLayout(new MigLayout("", "[][][][][grow][][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
+        contentPane.setLayout(new MigLayout("", "[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
         
 
 		JLabel lblcadastroFunc = new JLabel("Cadastro de Funcionários");
@@ -96,8 +108,58 @@ public class CadastroFuncionarios extends JFrame {
 		lblVendas.setForeground(new Color(255, 255, 255));
 		lblVendas.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblVendas, "cell 2 3,alignx left,aligny center");
-       
-   
+		
+
+		JPanel panel = new JPanel();
+		contentPane.add(panel, "cell 3 2 27 83,grow");
+		panel.setLayout(new MigLayout("", "[grow][][][grow][grow 50][grow][][][grow]", "[][grow][][][][][grow 20][][][grow 20][][][grow 20][][][][][][][][][][grow]"));
+		
+		JLabel lblNewLabel_6 = new JLabel("");
+		lblNewLabel_6.setIcon(new ImageIcon(new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
+		panel.add(lblNewLabel_6, "cell 0 0");
+		
+		JLabel lblNewLabel_1 = new JLabel("Nome Completo:");
+		panel.add(lblNewLabel_1, "cell 1 4");
+		
+		JLabel lblNewLabel_2 = new JLabel("Email");
+		panel.add(lblNewLabel_2, "cell 5 4");
+		
+		txtNomeCompleto = new JTextField();
+		panel.add(txtNomeCompleto, "cell 1 5 3 1,growx");
+		txtNomeCompleto.setColumns(10);
+		
+		txtEmail = new JTextField();
+		panel.add(txtEmail, "cell 5 5 3 1,growx");
+		txtEmail.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("Celular:");
+		panel.add(lblNewLabel_3, "cell 1 7");
+		
+		JLabel lblCPF = new JLabel("CPF:");
+		panel.add(lblCPF, "cell 5 7");
+		
+		txtCelular = new JTextField();
+		panel.add(txtCelular, "cell 1 8 3 1,growx");
+		txtCelular.setColumns(10);
+		
+		txtCPF = new JTextField();
+		panel.add(txtCPF, "cell 5 8 3 1,growx");
+		txtCPF.setColumns(10);
+		
+		JLabel lblNewLabel_4 = new JLabel("Login:");
+		panel.add(lblNewLabel_4, "cell 1 10");
+		
+		JLabel lblNewLabel_5 = new JLabel("Senha:");
+		panel.add(lblNewLabel_5, "cell 5 10");
+		
+		txtLogin = new JTextField();
+		panel.add(txtLogin, "cell 1 11 3 1,growx");
+		txtLogin.setColumns(10);
+		
+		txtSenha = new JTextField();
+		panel.add(txtSenha, "cell 5 11 3 1,growx");
+		txtSenha.setColumns(10);
+		
         JLabel lblLinha = new JLabel("");
         lblLinha.setIcon(new ImageIcon(new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
         contentPane.add(lblLinha, "cell 1 4 2 1");
@@ -160,12 +222,70 @@ public class CadastroFuncionarios extends JFrame {
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSair, "cell 2 83 1 4,aligny bottom");
+	
 		
 		JButton btnAdicionar = new JButton("Adicionar Funcionário");
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnAdicionar, "cell 24 85 1 2,aligny bottom");
+		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
+		btnAdicionar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String login = txtLogin.getText();
+				String senha = txtSenha.getText();
+				String cpf = txtCPF.getText();
+				String email = txtEmail.getText();
+				String nomeCompleto = txtNomeCompleto.getText();
+				String celular = txtCelular.getText();
+
+				if (login.isEmpty() || senha.isEmpty() || cpf.isEmpty() || email.isEmpty() || nomeCompleto.isEmpty()|| celular.isEmpty()) {
+					javax.swing.JOptionPane.showMessageDialog(null, 
+						    "Todos os campos obrigatórios (*) devem ser preenchidos!", 
+						    "Erro de cadastro", // Adicionei o título da janela
+						    javax.swing.JOptionPane.ERROR_MESSAGE);
+				} else {
+
+					Funcionario cadastro = new Funcionario();
+
+					cadastro.setLogin(login);
+					cadastro.setSenha(senha);
+					cadastro.setCelular(celular);
+					cadastro.setCpf(cpf);
+					cadastro.setEmail_Funcionario(email);
+					cadastro.setNomeFuncionario(nomeCompleto);
+
+					FuncionarioDAO novoFuncionario = new FuncionarioDAO();
+					FuncionarioDAO.getInstancia();
+					novoFuncionario.inserir(cadastro);
+					
+					TelaLogin janelaCadastro = new TelaLogin();
+					janelaCadastro.setVisible(true);
+					dispose();
+					
+					
+				}
+			}
+		});
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnCancelar.setForeground(Color.RED);
+		btnCancelar.setBackground(Color.WHITE);
+		contentPane.add(btnCancelar, "cell 21 85 1 4,aligny center");
+		
+		JButton btnLimparCampos = new JButton("Limpar Campos");
+		btnLimparCampos .setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnLimparCampos.setForeground(Color.RED);
+		btnLimparCampos.setBackground(Color.WHITE);
+		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
+		
+		
+		
+		
 		
     }
 }

@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -60,6 +62,8 @@ public class ListagemFuncionarios extends JFrame {
 	 * Create the frame.
 	 */
 	public ListagemFuncionarios() {
+		
+		ListagemFuncionarios janelaListagemFuncionarios = this;
 
 		Font fontRegular = null;
 		Font fontBold = null;
@@ -259,6 +263,22 @@ public class ListagemFuncionarios extends JFrame {
 		contentPane.add(lblLinha5, "cell 1 19 2 1");
 
 		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int resposta = JOptionPane.showConfirmDialog(janelaListagemFuncionarios, 
+			            "Você realmente deseja sair?", "Confirmação", 
+			            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			        
+			        // Verifica a resposta
+			        if (resposta == JOptionPane.YES_OPTION) {
+			        	TelaLogin janelaListagemFuncionarios = new TelaLogin();
+						janelaListagemFuncionarios.setVisible(true);
+						dispose(); // Fecha a tela de login
+			        }
+				
+				
+			}
+		});
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));

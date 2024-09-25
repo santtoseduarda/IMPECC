@@ -371,8 +371,10 @@ public class ListagemFuncionarios extends JFrame {
 	            modeloTabela.addRow(new Object[] {
 	                f.getId_Funcionario(),
 	                f.getNomeFuncionario(),
+	                f.getEmail_Funcionario(),
+	                f.getCelular(),
 	                f.getCpf(),
-	                f.getLogin()
+	                f.getLogin(),
 	            });
 	        }
 	    }

@@ -29,7 +29,7 @@ public class Funcionario extends Cliente {
 
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 
-			throw new IllegalArgumentException("E-mail inválido.");
+			//throw new IllegalArgumentException("E-mail inválido.");
 
 		}
 
@@ -54,7 +54,7 @@ public class Funcionario extends Cliente {
 
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 
-			throw new IllegalArgumentException("CPF inválido.");
+		//	throw new IllegalArgumentException("CPF inválido.");
 
 		}
 	}
@@ -78,7 +78,7 @@ public class Funcionario extends Cliente {
 
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 
-			throw new IllegalArgumentException("Celular inválido.");
+		//	throw new IllegalArgumentException("Celular inválido.");
 
 		}
 	}

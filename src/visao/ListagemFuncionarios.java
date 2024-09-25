@@ -371,8 +371,6 @@ public class ListagemFuncionarios extends JFrame {
 	            modeloTabela.addRow(new Object[] {
 	                f.getId_Funcionario(),
 	                f.getNomeFuncionario(),
-	                f.getEmail_Funcionario(),
-	                f.getCelular(),
 	                f.getCpf(),
 	                f.getLogin()
 	            });
@@ -388,8 +386,13 @@ public class ListagemFuncionarios extends JFrame {
 		FuncionarioDAO fdao = new FuncionarioDAO();
 		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios();
 		for (Funcionario f : listaFuncionarios) {
-			modeloTabela.addRow(new Object[] { f.getId_Funcionario(), f.getNomeFuncionario(), f.getEmail_Funcionario(),
-					f.getCelular(), f.getCpf(), f.getLogin() });
+			modeloTabela.addRow(new Object[] { 
+					f.getId_Funcionario(), 
+					f.getNomeFuncionario(), 
+					f.getEmail_Funcionario(),
+					f.getCelular(), 
+					f.getCpf(), 
+					f.getLogin() });
 		}
 
 	}

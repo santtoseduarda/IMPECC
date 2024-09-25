@@ -31,6 +31,8 @@ import controle.FuncionarioDAO;
 import modelo.Funcionario;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ListagemFuncionarios extends JFrame {
 
@@ -128,6 +130,12 @@ public class ListagemFuncionarios extends JFrame {
 		contentPane.add(lblVendas, "cell 2 8,alignx left,aligny center");
 
 		JPanel panel = new JPanel();
+		panel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				pesquisarPorCampo("ID", textField.getText());
+			}
+		});
 		contentPane.add(panel, "cell 3 8 21 72,grow");
 		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][grow][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
@@ -156,37 +164,63 @@ public class ListagemFuncionarios extends JFrame {
 		panel.add(textField, "cell 2 1,growx");
 		textField.setColumns(10);
 
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(
+		JLabel lupa1 = new JLabel("");
+		lupa1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				  pesquisarPorCampo("ID", textField.getText());
+			}
+		});
+		lupa1.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
-		panel.add(lblNewLabel, "cell 3 1,alignx trailing");
+		panel.add(lupa1, "cell 3 1,alignx trailing");
 
 		textField_1 = new JTextField();
 		panel.add(textField_1, "cell 5 1,growx");
 		textField_1.setColumns(10);
 
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(
+		JLabel lupa2 = new JLabel("");
+		lupa2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				  pesquisarPorCampo("Nome", textField_1.getText());
+			}
+		});
+		lupa2.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
-		panel.add(lblNewLabel_1, "cell 6 1");
+		panel.add(lupa2, "cell 6 1");
 
 		textField_2 = new JTextField();
 		panel.add(textField_2, "cell 8 1,growx");
 		textField_2.setColumns(10);
 
-		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon(
+		JLabel lupa3 = new JLabel("");
+		lupa3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				  pesquisarPorCampo("CPF", textField_2.getText());
+			}
+		});
+		lupa3.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
-		panel.add(lblNewLabel_2, "cell 9 1");
+		panel.add(lupa3, "cell 9 1");
 
 		textField_3 = new JTextField();
 		panel.add(textField_3, "cell 11 1,growx");
 		textField_3.setColumns(10);
 
-		JLabel lblNewLabel_3 = new JLabel("");
-		lblNewLabel_3.setIcon(new ImageIcon(
+		JLabel lupa4 = new JLabel("");
+		lupa4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				  pesquisarPorCampo("Login", textField_3.getText());
+			}
+				// TODO Auto-generated method stub
+				
+		});
+		lupa4.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
-		panel.add(lblNewLabel_3, "cell 12 1");
+		panel.add(lupa4, "cell 12 1");
 
 		JScrollPane scrollPane = new JScrollPane();
 		panel.add(scrollPane, "cell 1 3 13 14,grow");
@@ -298,6 +332,52 @@ public class ListagemFuncionarios extends JFrame {
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 21 80 1 2,aligny bottom");
+	}
+
+	private void pesquisarPorCampo(String campo, String valor) {
+	    DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
+	    modeloTabela.setRowCount(0); // Limpa a tabela
+
+	    FuncionarioDAO fdao = new FuncionarioDAO();
+	    ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios();
+	   
+	    for (Funcionario f : listaFuncionarios) {
+	        boolean adiciona = false;
+
+	        switch (campo) {
+	            case "ID":
+	                if (String.valueOf(f.getId_Funcionario()).contains(valor)) {
+	                    adiciona = true;
+	                }
+	                break;
+	            case "Nome":
+	                if (f.getNomeFuncionario().toLowerCase().contains(valor.toLowerCase())) {
+	                    adiciona = true;
+	                }
+	                break;
+	            case "CPF":
+	                if (f.getCpf().contains(valor)) {
+	                    adiciona = true;
+	                }
+	                break;
+	            case "Login":
+	                if (f.getLogin().toLowerCase().contains(valor.toLowerCase())) {
+	                    adiciona = true;
+	                }
+	                break;
+	        }
+
+	        if (adiciona) {
+	            modeloTabela.addRow(new Object[] {
+	                f.getId_Funcionario(),
+	                f.getNomeFuncionario(),
+	                f.getEmail_Funcionario(),
+	                f.getCelular(),
+	                f.getCpf(),
+	                f.getLogin()
+	            });
+	        }
+	    }
 	}
 
 	private void atualizarTabela() {

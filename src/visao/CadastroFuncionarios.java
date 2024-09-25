@@ -17,6 +17,8 @@ import controle.FuncionarioDAO;
 import modelo.Funcionario;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,6 +26,8 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CadastroFuncionarios extends JFrame {
 
@@ -56,6 +60,9 @@ public class CadastroFuncionarios extends JFrame {
 	 * Create the frame.
 	 */
 	public CadastroFuncionarios() {
+
+		CadastroFuncionarios janelaCadastroFuncionarios = this;
+
 		setTitle("Cadastro Funcionário");
 		Font fontRegular = null;
 		Font fontBold = null;
@@ -115,10 +122,18 @@ public class CadastroFuncionarios extends JFrame {
 		panel.setLayout(new MigLayout("", "[grow][][][grow][grow 50][grow][][][grow]",
 				"[][grow][][][][][grow 20][][][grow 20][][][grow 20][][][][][][][][][][grow]"));
 
-		JLabel lblNewLabel_6 = new JLabel("");
-		lblNewLabel_6.setIcon(new ImageIcon(
+		JLabel lblvoltar = new JLabel("");
+		lblvoltar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ListagemFuncionarios novaJanela = new ListagemFuncionarios();
+				novaJanela.setVisible(true);
+				dispose();
+			}
+		});
+		lblvoltar.setIcon(new ImageIcon(
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
-		panel.add(lblNewLabel_6, "cell 0 0");
+		panel.add(lblvoltar, "cell 0 0");
 
 		JLabel lblNewLabel_1 = new JLabel("Nome Completo:");
 		panel.add(lblNewLabel_1, "cell 1 4");
@@ -228,6 +243,21 @@ public class CadastroFuncionarios extends JFrame {
 		contentPane.add(lblLinha5, "cell 1 15 2 1");
 
 		JButton btnSair = new JButton("Sair");
+		btnSair.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int resposta = JOptionPane.showConfirmDialog(janelaCadastroFuncionarios, "Você realmente deseja sair?",
+						"Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+				// Verifica a resposta
+				if (resposta == JOptionPane.YES_OPTION) {
+					TelaLogin CadastroFuncionarios = new TelaLogin();
+					CadastroFuncionarios.setVisible(true);
+					dispose(); // Fecha a tela de login
+				}
+
+			}
+		});
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
@@ -276,16 +306,6 @@ public class CadastroFuncionarios extends JFrame {
 				}
 			}
 		});
-
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnCancelar.setForeground(Color.RED);
-		btnCancelar.setBackground(Color.WHITE);
-		contentPane.add(btnCancelar, "cell 21 85 1 4,aligny center");
 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
 		btnLimparCampos.addActionListener(new ActionListener() {

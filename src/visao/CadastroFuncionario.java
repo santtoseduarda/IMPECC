@@ -111,7 +111,7 @@ public class CadastroFuncionario extends JFrame {
 		lblNewLabel_1.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		contentPane.add(lblNewLabel_1, "cell 1 5");
 
-		JLabel lblNewLabel_2 = new JLabel("E-mail:*");
+		JLabel lblNewLabel_2 = new JLabel("E-mail:* email@exemplo.com");
 		lblNewLabel_2.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		contentPane.add(lblNewLabel_2, "cell 4 5");
 
@@ -123,11 +123,11 @@ public class CadastroFuncionario extends JFrame {
 		contentPane.add(txtEmail, "cell 4 6 2 1,growx");
 		txtEmail.setColumns(10);
 
-		JLabel lblCelular = new JLabel("Celular:*");
+		JLabel lblCelular = new JLabel("Celular:* (00)00000-0000");
 		lblCelular.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		contentPane.add(lblCelular, "cell 1 8");
 
-		JLabel lblCPF = new JLabel("CPF:*");
+		JLabel lblCPF = new JLabel("CPF:* 000.000.000-00");
 		lblCPF.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		contentPane.add(lblCPF, "cell 4 8");
 

@@ -76,7 +76,6 @@ public class FuncionarioDAO {
 		return false;
 	}
 
-
 	public boolean verificarLogin(String login, String senha) {
 
 		Connection conn = ConexaoBanco.getConexaoMySQL(); // Estabelecer conexão com o banco
@@ -97,47 +96,44 @@ public class FuncionarioDAO {
 			return false; // Retorna falso em caso de erro
 		}
 	}
-	
-	
-	public ArrayList<Funcionario> buscarFuncionarios(){
 
-		ArrayList<Funcionario> listaFuncionarios = new ArrayList <Funcionario>();
+	public ArrayList<Funcionario> buscarFuncionarios(String campo, String valor) {
+
+		ArrayList<Funcionario> listaFuncionarios = new ArrayList<Funcionario>();
 		Statement stmt1 = null;
 
 		Connection conn = ConexaoBanco.getConexaoMySQL();
 
 		try {
-			stmt1 = (Statement) conn.createStatement();
-			ResultSet res1 = null;
-			res1 = stmt1.executeQuery("Select * from funcionarios");
 
-			//Conta o numero de registros do ResultSet no BD
-			int count = 0;
-			while (res1.next()) {
-				
-				Funcionario f = new Funcionario();
-				f.setId_Funcionario(res1.getInt("id_Funcionario"));
-				f.setNomeFuncionario(res1.getString("nome_Funcionario"));
-				f.setEmail_Funcionario(res1.getString("email_Funcionario"));
-				f.setLogin(res1.getString("login"));
-				f.setCelular(res1.getString("celular"));
-				f.setCpf(res1.getString("cpf"));
-				listaFuncionarios.add(f);
-				
+			String sql = "SELECT * FROM funcionarios";
+			PreparedStatement pst = conn.prepareStatement(sql);
+			if (campo.isEmpty() == false) {
+				sql = "SELECT * FROM funcionarios WHERE " + campo + " LIKE ?";
+				pst = conn.prepareStatement(sql);
+				pst.setString(1, "%" + valor + "%"); // Usando % para permitir busca parcial
 			}
-			System.out.println("Número de registros: " + count);
-			
+			System.out.println(pst);
+			ResultSet rs = pst.executeQuery();
 
-			res1.close();
-			stmt1.close();
-			conn.close();
+			// Iterando sobre o resultado e adicionando à lista de funcionários
+			while (rs.next()) {
+				Funcionario f = new Funcionario();
+				f.setId_Funcionario(rs.getInt("id_Funcionario"));
+				f.setNomeFuncionario(rs.getString("nome_Funcionario"));
+				f.setEmail_Funcionario(rs.getString("email_Funcionario"));
+				f.setCpf(rs.getString("cpf"));
+				f.setCelular(rs.getString("celular"));
+				f.setLogin(rs.getString("login"));
+				listaFuncionarios.add(f);
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return listaFuncionarios;
 
 	}
-	
+
 }

@@ -133,7 +133,7 @@ public class ListagemFuncionarios extends JFrame {
 		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				pesquisarPorCampo("ID", textField.getText());
+				pesquisarPorCampo("id_Funcionario", textField.getText());
 			}
 		});
 		contentPane.add(panel, "cell 3 8 21 72,grow");
@@ -168,7 +168,7 @@ public class ListagemFuncionarios extends JFrame {
 		lupa1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("ID", textField.getText());
+				  pesquisarPorCampo("id_Funcionario", textField.getText());
 			}
 		});
 		lupa1.setIcon(new ImageIcon(
@@ -183,7 +183,7 @@ public class ListagemFuncionarios extends JFrame {
 		lupa2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("Nome", textField_1.getText());
+				  pesquisarPorCampo("nome_Funcionario", textField_1.getText());
 			}
 		});
 		lupa2.setIcon(new ImageIcon(
@@ -198,7 +198,7 @@ public class ListagemFuncionarios extends JFrame {
 		lupa3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("CPF", textField_2.getText());
+				  pesquisarPorCampo("cpf", textField_2.getText());
 			}
 		});
 		lupa3.setIcon(new ImageIcon(
@@ -213,7 +213,7 @@ public class ListagemFuncionarios extends JFrame {
 		lupa4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("Login", textField_3.getText());
+				  pesquisarPorCampo("login", textField_3.getText());
 			}
 				// TODO Auto-generated method stub
 				
@@ -229,7 +229,7 @@ public class ListagemFuncionarios extends JFrame {
 		table.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "ID", "Nome", "Email", "Celular", "CPF", "Login" }));
 		scrollPane.setViewportView(table);
-		atualizarTabela();
+		atualizarTabela("", "");
 
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(
@@ -324,8 +324,12 @@ public class ListagemFuncionarios extends JFrame {
 
 				CadastroFuncionarios janelaFuncionarios = new CadastroFuncionarios();
 				janelaFuncionarios.setVisible(true);
-				dispose(); // Fecha a tela de login
-
+				dispose();
+				
+				 ListagemFuncionarios janelaListagem = new ListagemFuncionarios();
+			        janelaListagem.atualizarTabela("", ""); // Atualiza com todos os funcionários
+			        janelaListagem.setVisible(true);
+			        
 			}
 		});
 		btnAdicionar.setForeground(new Color(255, 0, 0));
@@ -339,64 +343,43 @@ public class ListagemFuncionarios extends JFrame {
 	    modeloTabela.setRowCount(0); // Limpa a tabela
 
 	    FuncionarioDAO fdao = new FuncionarioDAO();
-	    ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios();
+	    ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios(campo, valor); // Passando o campo e o valor
 	   
 	    for (Funcionario f : listaFuncionarios) {
-	        boolean adiciona = false;
 
-	        switch (campo) {
-	            case "ID":
-	                if (String.valueOf(f.getId_Funcionario()).contains(valor)) {
-	                    adiciona = true;
-	                }
-	                break;
-	            case "Nome":
-	                if (f.getNomeFuncionario().toLowerCase().contains(valor.toLowerCase())) {
-	                    adiciona = true;
-	                }
-	                break;
-	            case "CPF":
-	                if (f.getCpf().contains(valor)) {
-	                    adiciona = true;
-	                }
-	                break;
-	            case "Login":
-	                if (f.getLogin().toLowerCase().contains(valor.toLowerCase())) {
-	                    adiciona = true;
-	                }
-	                break;
-	        }
-
-	        if (adiciona) {
-	            modeloTabela.addRow(new Object[] {
+	        modeloTabela.addRow(new Object[]{
 	                f.getId_Funcionario(),
 	                f.getNomeFuncionario(),
 	                f.getEmail_Funcionario(),
 	                f.getCelular(),
 	                f.getCpf(),
 	                f.getLogin(),
-	            });
-	        }
+	        });
 	    }
 	}
 
-	private void atualizarTabela() {
+	private void atualizarTabela(String campo, String valor) {
 
 		DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
 		modeloTabela.setRowCount(0); // Limpa a tabela
 
 		FuncionarioDAO fdao = new FuncionarioDAO();
-		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios();
-		for (Funcionario f : listaFuncionarios) {
-			modeloTabela.addRow(new Object[] { 
-					f.getId_Funcionario(), 
-					f.getNomeFuncionario(), 
-					f.getEmail_Funcionario(),
-					f.getCelular(), 
-					f.getCpf(), 
-					f.getLogin() });
-		}
-
+		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios(campo, valor);
+		
+		
+		 if (listaFuncionarios != null && !listaFuncionarios.isEmpty()) {
+		        for (Funcionario f : listaFuncionarios) {
+		            // Adiciona os dados do funcionário na tabela
+		            modeloTabela.addRow(new Object[] {
+		                f.getId_Funcionario(),
+		                f.getNomeFuncionario(),
+		                f.getEmail_Funcionario(),
+		                f.getCelular(),
+		                f.getCpf(),
+		                f.getLogin()
+		            });
+		        }
+		    }
 	}
 
 }

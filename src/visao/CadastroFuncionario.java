@@ -10,6 +10,8 @@ import controle.FuncionarioDAO;
 import modelo.Funcionario;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
@@ -173,46 +175,63 @@ public class CadastroFuncionario extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				String login = txtLogin.getText();
-				String senha = txtSenha.getText();
-				String cpf = txtCPF.getText();
-				String email = txtEmail.getText();
-				String nomeCompleto = txtNomeCompleto.getText();
-				String celular = txtCelular.getText();
-
-				if (login.isEmpty() || senha.isEmpty() || cpf.isEmpty() || email.isEmpty() || nomeCompleto.isEmpty()|| celular.isEmpty()) {
-					javax.swing.JOptionPane.showMessageDialog(null, 
-						    "Todos os campos obrigatórios (*) devem ser preenchidos!", 
-						    "Erro de cadastro", // Adicionei o título da janela
-						    javax.swing.JOptionPane.ERROR_MESSAGE);
-				} else {
-
+				if (validarCampos()) {
 					Funcionario cadastro = new Funcionario();
-
-					cadastro.setLogin(login);
-					cadastro.setSenha(senha);
-					cadastro.setCelular(celular);
-					cadastro.setCpf(cpf);
-					cadastro.setEmail_Funcionario(email);
-					cadastro.setNomeFuncionario(nomeCompleto);
+					cadastro.setLogin(txtLogin.getText());
+					cadastro.setSenha(txtSenha.getText());
+					cadastro.setCelular(txtCelular.getText());
+					cadastro.setCpf(txtCPF.getText());
+					cadastro.setEmail_Funcionario(txtEmail.getText());
+					cadastro.setNomeFuncionario(txtNomeCompleto.getText());
 
 					FuncionarioDAO novoFuncionario = new FuncionarioDAO();
-					FuncionarioDAO.getInstancia();
-					novoFuncionario.inserir(cadastro);
-					
-					TelaLogin janelaCadastro = new TelaLogin();
-					janelaCadastro.setVisible(true);
-					dispose();
-					
-					
+					try {
+						novoFuncionario.inserir(cadastro);
+						TelaLogin janelaLogin = new TelaLogin();
+						janelaLogin.setVisible(true);
+						dispose();
+						
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
+								JOptionPane.ERROR_MESSAGE);
+					}
 				}
-
 			}
 		});
 		btnCadastrar.setForeground(new Color(225, 225, 225));
 		btnCadastrar.setBackground(new Color(161, 0, 29));
 		btnCadastrar.setFont(fontBold.deriveFont(Font.PLAIN, 22));
 		contentPane.add(btnCadastrar, "flowx,cell 5 17 1 2,alignx right,aligny bottom");
+	}
+
+	private boolean validarCampos() {
+		 String login = txtLogin.getText();
+	        String senha = txtSenha.getText();
+	        String cpf = txtCPF.getText();
+	        String email = txtEmail.getText();
+	        String nomeCompleto = txtNomeCompleto.getText();
+	        String celular = txtCelular.getText();
+
+	        if (login.isEmpty() || senha.isEmpty() || cpf.isEmpty() || email.isEmpty() || nomeCompleto.isEmpty() || celular.isEmpty()) {
+	            JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+	            return false;
+	        }
+
+	        if (!cpf.matches("\\d{11}")) {
+	            JOptionPane.showMessageDialog(null, "CPF inválido. Deve ter 11 dígitos numéricos.", "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+	            return false;
+	        }
+
+	        if (!email.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+	            JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.", "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+	            return false;
+	        }
+
+	        if (!celular.matches("\\d{11}")) {
+	            JOptionPane.showMessageDialog(null, "Celular inválido. Deve ter 11 dígitos numéricos.", "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+	            return false;
+	        }
+		return true;
 	}
 
 }

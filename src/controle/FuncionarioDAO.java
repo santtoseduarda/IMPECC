@@ -136,4 +136,29 @@ public class FuncionarioDAO {
 
 	}
 
+	public boolean excluirFuncionario(int idFuncionario) {
+		// TODO Auto-generated method stub
+		
+		
+		Connection conn = ConexaoBanco.getConexaoMySQL(); // Estabelecer conexão com o banco
+	    String sql = "DELETE FROM funcionarios WHERE id_Funcionario = ?"; // SQL para excluir pelo ID
+
+	    try {
+	    	PreparedStatement pst = conn.prepareStatement(sql);
+	    	
+	    	pst.setInt(1, idFuncionario); //pega o id
+	        int linhasAfetadas = pst.executeUpdate();  //faz o delete
+
+	        return linhasAfetadas > 0;
+
+	         
+	    }catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			
+			return false;
+		}
+	}
+
+	
 }

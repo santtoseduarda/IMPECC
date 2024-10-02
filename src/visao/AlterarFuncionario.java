@@ -87,7 +87,7 @@ public class AlterarFuncionario extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
 
-		JLabel lblcadastroFunc = new JLabel("Cadastro de Funcionários");
+		JLabel lblcadastroFunc = new JLabel("Editar Dados do Funcionário");
 		lblcadastroFunc.setForeground(new Color(255, 255, 255));
 		lblcadastroFunc.setFont(fontBold.deriveFont(Font.PLAIN, 45));
 		contentPane.add(lblcadastroFunc, "cell 3 1");
@@ -293,8 +293,8 @@ public class AlterarFuncionario extends JFrame {
 					FuncionarioDAO.getInstancia();
 					novoFuncionario.inserir(cadastro);
 
-					ListagemFuncionarios janelaCadastro = new ListagemFuncionarios();
-					janelaCadastro.setVisible(true);
+					ListagemFuncionarios janelaAlterarFuncionario = new ListagemFuncionarios();
+					janelaAlterarFuncionario.setVisible(true);
 					dispose();
 
 				}

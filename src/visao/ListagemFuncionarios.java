@@ -325,9 +325,7 @@ public class ListagemFuncionarios extends JFrame {
 				janelaFuncionarios.setVisible(true);
 				dispose();
 				
-				 ListagemFuncionarios janelaListagem = new ListagemFuncionarios();
-			        janelaListagem.atualizarTabela("", ""); // Atualiza com todos os funcionários
-			        janelaListagem.setVisible(true);
+			
 			        
 			}
 		});
@@ -335,6 +333,10 @@ public class ListagemFuncionarios extends JFrame {
 		JButton btnAdicionar_2 = new JButton("Editar");
 		btnAdicionar_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AlterarFuncionario janelaListagemFuncionario = new AlterarFuncionario();
+				janelaListagemFuncionario.setVisible(true);
+				dispose();
+				
 			}
 		});
 		btnAdicionar_2.setForeground(new Color(255, 0, 0));

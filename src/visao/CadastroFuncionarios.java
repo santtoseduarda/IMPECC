@@ -243,6 +243,10 @@ public class CadastroFuncionarios extends JFrame {
 		contentPane.add(lblLinha5, "cell 1 15 2 1");
 
 		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnSair.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

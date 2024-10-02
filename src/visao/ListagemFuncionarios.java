@@ -8,7 +8,6 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -22,7 +21,6 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import javax.swing.JSpinner;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -43,6 +41,7 @@ public class ListagemFuncionarios extends JFrame {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTable table;
+	private ArrayList<Funcionario> tabelaFuncionario;
 
 	/**
 	 * Launch the application.
@@ -330,22 +329,31 @@ public class ListagemFuncionarios extends JFrame {
 			}
 		});
 		
-		JButton btnAdicionar_2 = new JButton("Editar");
-		btnAdicionar_2.addActionListener(new ActionListener() {
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AlterarFuncionario janelaListagemFuncionario = new AlterarFuncionario();
-				janelaListagemFuncionario.setVisible(true);
-				dispose();
-				
-			}
+			        int posicaoSelecionada = table.getSelectedRow();
+			        if (posicaoSelecionada >= 0) {
+			            FuncionarioDAO dao = new FuncionarioDAO();
+			            dao.tabelaFuncionario.get(posicaoSelecionada);
+			    
+			            AlterarFuncionario alterarFuncionario = new AlterarFuncionario();
+			           // dao.mostrarDados(posicaoSelecionada);
+			            alterarFuncionario.setVisible(true);
+			            dispose();
+			            
+			        } else {
+			            JOptionPane.showMessageDialog(null, "Selecione um funcionário para editar.");
+			        }
+			    }
 		});
-		btnAdicionar_2.setForeground(new Color(255, 0, 0));
-		btnAdicionar_2.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnAdicionar_2.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnAdicionar_2, "cell 19 80 1 2");
+		btnEditar.setForeground(new Color(255, 0, 0));
+		btnEditar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnEditar.setBackground(new Color(255, 255, 255));
+		contentPane.add(btnEditar, "cell 19 80 1 2");
 		
-		JButton btnAdicionar_1 = new JButton("Excluir");
-		btnAdicionar_1.addActionListener(new ActionListener() {
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				int posicaoSelecionada = table.getSelectedRow();
@@ -380,10 +388,10 @@ public class ListagemFuncionarios extends JFrame {
 		    }
 	
 		});
-		btnAdicionar_1.setForeground(new Color(255, 0, 0));
-		btnAdicionar_1.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnAdicionar_1.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnAdicionar_1, "cell 20 80 1 2");
+		btnExcluir.setForeground(new Color(255, 0, 0));
+		btnExcluir.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnExcluir.setBackground(new Color(255, 255, 255));
+		contentPane.add(btnExcluir, "cell 20 80 1 2");
 		
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));

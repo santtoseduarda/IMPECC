@@ -129,8 +129,8 @@ public class AlterarFuncionario extends JFrame {
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
 
-		JLabel lblNewLabel_1 = new JLabel("Nome Completo:");
-		panel.add(lblNewLabel_1, "cell 1 4");
+		JLabel lblNomeCompleto = new JLabel("Nome Completo:");
+		panel.add(lblNomeCompleto, "cell 1 4");
 
 		JLabel lblNewLabel_2 = new JLabel("Email");
 		panel.add(lblNewLabel_2, "cell 5 4");
@@ -291,7 +291,7 @@ public class AlterarFuncionario extends JFrame {
 
 					FuncionarioDAO novoFuncionario = new FuncionarioDAO();
 					FuncionarioDAO.getInstancia();
-					novoFuncionario.inserir(cadastro);
+					novoFuncionario.alterar(cadastro);
 
 					ListagemFuncionarios janelaAlterarFuncionario = new ListagemFuncionarios();
 					janelaAlterarFuncionario.setVisible(true);
@@ -318,6 +318,5 @@ public class AlterarFuncionario extends JFrame {
 		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
 
 	}
-
 
 }

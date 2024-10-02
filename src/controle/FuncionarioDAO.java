@@ -31,7 +31,7 @@ public class FuncionarioDAO {
 
 	// incluir, listar
 
-	private static ArrayList<Funcionario> tabelaFuncionario;
+	public static ArrayList<Funcionario> tabelaFuncionario;
 	private static FuncionarioDAO instancia;
 
 	// instancia
@@ -138,27 +138,51 @@ public class FuncionarioDAO {
 
 	public boolean excluirFuncionario(int idFuncionario) {
 		// TODO Auto-generated method stub
-		
-		
+
 		Connection conn = ConexaoBanco.getConexaoMySQL(); // Estabelecer conexão com o banco
-	    String sql = "DELETE FROM funcionarios WHERE id_Funcionario = ?"; // SQL para excluir pelo ID
+		String sql = "DELETE FROM funcionarios WHERE id_Funcionario = ?"; // SQL para excluir pelo ID
 
-	    try {
-	    	PreparedStatement pst = conn.prepareStatement(sql);
-	    	
-	    	pst.setInt(1, idFuncionario); //pega o id
-	        int linhasAfetadas = pst.executeUpdate();  //faz o delete
+		try {
+			PreparedStatement pst = conn.prepareStatement(sql);
 
-	        return linhasAfetadas > 0;
+			pst.setInt(1, idFuncionario); // pega o id
+			int linhasAfetadas = pst.executeUpdate(); // faz o delete
 
-	         
-	    }catch (SQLException e) {
+			return linhasAfetadas > 0;
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			
+
 			return false;
 		}
 	}
 
+	public boolean alterar(Funcionario f) {
+	    Connection conn = ConexaoBanco.getConexaoMySQL(); // Fazer a conexão com o BD
+
+	    String alterar = "UPDATE funcionarios SET nome_Funcionario = ?, email_Funcionario = ?, login = ?, senha = ?, celular = ? WHERE cpf = ?";
+
+	    PreparedStatement pst = null;
+
+	    try {
+	        pst = conn.prepareStatement(alterar);
+
+	        // Setar os valores nos placeholders "?"
+	        pst.setString(1, f.getNomeFuncionario());
+	        pst.setString(2, f.getEmail_Funcionario());
+	        pst.setString(3, f.getLogin());
+	        pst.setString(4, f.getSenha());
+	        pst.setString(5, f.getCelular());
+	        pst.setString(6, f.getCpf()); // Assume-se que o CPF é a chave única para localizar o funcionário
+
+	        int rowsUpdated = pst.executeUpdate();
+	        return rowsUpdated > 0; // Retorna true se pelo menos uma linha foi atualizada
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
 	
+	        return false;
+	    }
+	}
 }

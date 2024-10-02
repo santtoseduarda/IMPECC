@@ -101,8 +101,7 @@ public class ListagemFuncionarios extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][][][][][][][][][]",
-				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblListagemFunc = new JLabel("Listagem de Funcionários");
 		lblListagemFunc.setForeground(new Color(255, 255, 255));
@@ -332,6 +331,27 @@ public class ListagemFuncionarios extends JFrame {
 			        
 			}
 		});
+		
+		JButton btnAdicionar_2 = new JButton("Editar");
+		btnAdicionar_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAdicionar_2.setForeground(new Color(255, 0, 0));
+		btnAdicionar_2.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnAdicionar_2.setBackground(new Color(255, 255, 255));
+		contentPane.add(btnAdicionar_2, "cell 19 80 1 2");
+		
+		JButton btnAdicionar_1 = new JButton("Excluir");
+		btnAdicionar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAdicionar_1.setForeground(new Color(255, 0, 0));
+		btnAdicionar_1.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnAdicionar_1.setBackground(new Color(255, 255, 255));
+		contentPane.add(btnAdicionar_1, "cell 20 80 1 2");
+		
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));

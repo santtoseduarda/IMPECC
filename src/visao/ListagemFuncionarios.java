@@ -345,7 +345,38 @@ public class ListagemFuncionarios extends JFrame {
 		JButton btnAdicionar_1 = new JButton("Excluir");
 		btnAdicionar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
+				
+				int posicaoSelecionada = table.getSelectedRow();
+		        
+		        if (posicaoSelecionada >= 0) {
+		        	
+		            DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
+		            int idFuncionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+
+		            int confirmacao = JOptionPane.showConfirmDialog(null, 
+		                    "Você tem certeza que deseja excluir o funcionário?", "Confirmação de Exclusão", 
+		                    JOptionPane.YES_NO_OPTION);
+		            
+		            if (confirmacao == JOptionPane.YES_OPTION) {
+		            	
+		            	//vai excluir o funcionario
+		                FuncionarioDAO fdao = new FuncionarioDAO();
+		                boolean certo = fdao.excluirFuncionario(idFuncionario); 
+
+		                if (certo) {
+		                	
+		                    modeloTabela.removeRow(posicaoSelecionada);
+		                    JOptionPane.showMessageDialog(null, "Funcionário excluído com sucesso.");
+		                    
+		                } else {
+		                    JOptionPane.showMessageDialog(null, "Erro ao excluir o funcionário.");
+		                }
+		            }
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Por favor, selecione um funcionário para excluir.");
+		        }
+		    }
+	
 		});
 		btnAdicionar_1.setForeground(new Color(255, 0, 0));
 		btnAdicionar_1.setFont(fontBold.deriveFont(Font.PLAIN, 25));

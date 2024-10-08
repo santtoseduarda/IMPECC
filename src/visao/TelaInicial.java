@@ -160,7 +160,13 @@ public class TelaInicial extends JFrame {
 		lblFornecedores.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
 				//tela inicial para abrir em fornecedores
+				 
+	            ListagemFornecedor janelaInicial = new ListagemFornecedor();
+				janelaInicial.setVisible(true);
+				dispose();
+				
 			}
 		});
 		lblFornecedores.setForeground(new Color(255, 255, 255));

@@ -288,6 +288,15 @@ public class ListagemFornecedor extends JFrame {
 		contentPane.add(lblFuncionario, "cell 1 17,alignx left,aligny center");
 
 		JLabel lblFuncionarios = new JLabel("Funcionários");
+		lblFuncionarios.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ListagemFuncionarios janelaListagemFornecedor = new ListagemFuncionarios();
+	        	janelaListagemFornecedor.setVisible(true);
+				dispose(); // Fecha a tela de login
+				
+			}
+		});
 		lblFuncionarios.setForeground(new Color(255, 255, 255));
 		lblFuncionarios.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblFuncionarios, "cell 2 17");

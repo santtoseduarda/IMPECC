@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controle.FuncionarioDAO;
+import modelo.Fornecedor;
 import modelo.Funcionario;
 import net.miginfocom.swing.MigLayout;
 
@@ -115,7 +116,7 @@ public class CadastroFornecedores extends JFrame {
 		lblvoltar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ListagemFuncionarios novaJanela = new ListagemFuncionarios();
+				ListagemFornecedor novaJanela = new ListagemFornecedor();
 				novaJanela.setVisible(true);
 				dispose();
 			}
@@ -242,13 +243,46 @@ public class CadastroFornecedores extends JFrame {
 		btnSair.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSair, "cell 2 83 1 4,aligny bottom");
 
-		JButton btnAdicionar = new JButton("Adicionar Funcionário");
+		JButton btnAdicionar = new JButton("Adicionar Fornecedores");
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				String nomeFornecedor = txtNome.getText();
+				String cnpj = txtCnpj.getText();
+				String telefone_Fornecedor = txtTelefone.getText();
+				String email_Fornecedor  = txtEmail.getText();
+				
+
+				if (nomeFornecedor.isEmpty() || cnpj.isEmpty() || telefone_Fornecedor.isEmpty() || email_Fornecedor.isEmpty()) {
+					javax.swing.JOptionPane.showMessageDialog(null,
+							"Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", // Adicionei
+																											// o título
+																											// da janela
+							javax.swing.JOptionPane.ERROR_MESSAGE);
+				} else {
+
+					Fornecedor cadastroForn = new Fornecedor();
+
+					cadastroForn.setLogin(login);
+					cadastroForn.setSenha(senha);
+					cadastroForn.setCelular(celular);
+					cadastroForn.setCpf(cpf);
+					cadastroForn.setEmail_Funcionario(email);
+					cadastroForn.setNomeFuncionario(nomeCompleto);
+
+					FuncionarioDAO novoFuncionario = new FuncionarioDAO();
+					FuncionarioDAO.getInstancia();
+					novoFuncionario.inserir(cadastro);
+
+					ListagemFuncionarios janelaCadastro = new ListagemFuncionarios();
+					janelaCadastro.setVisible(true);
+					dispose();
+
+				}
 				
 			}
 		});

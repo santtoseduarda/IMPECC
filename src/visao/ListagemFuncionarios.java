@@ -27,8 +27,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import controle.FuncionarioController;
 import controle.FuncionarioDAO;
 import modelo.Funcionario;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -64,7 +66,7 @@ public class ListagemFuncionarios extends JFrame {
 	 * Create the frame.
 	 */
 	public ListagemFuncionarios() {
-		
+
 		ListagemFuncionarios janelaListagemFuncionarios = this;
 
 		Font fontRegular = null;
@@ -101,7 +103,8 @@ public class ListagemFuncionarios extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][][][][][][][][][]",
+				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblListagemFunc = new JLabel("Listagem de Funcionários");
 		lblListagemFunc.setForeground(new Color(255, 255, 255));
@@ -167,7 +170,7 @@ public class ListagemFuncionarios extends JFrame {
 		lupa1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("id_Funcionario", textField.getText());
+				pesquisarPorCampo("id_Funcionario", textField.getText());
 			}
 		});
 		lupa1.setIcon(new ImageIcon(
@@ -182,7 +185,7 @@ public class ListagemFuncionarios extends JFrame {
 		lupa2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("nome_Funcionario", textField_1.getText());
+				pesquisarPorCampo("nome_Funcionario", textField_1.getText());
 			}
 		});
 		lupa2.setIcon(new ImageIcon(
@@ -197,7 +200,7 @@ public class ListagemFuncionarios extends JFrame {
 		lupa3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("cpf", textField_2.getText());
+				pesquisarPorCampo("cpf", textField_2.getText());
 			}
 		});
 		lupa3.setIcon(new ImageIcon(
@@ -212,10 +215,10 @@ public class ListagemFuncionarios extends JFrame {
 		lupa4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("login", textField_3.getText());
+				pesquisarPorCampo("login", textField_3.getText());
 			}
-				// TODO Auto-generated method stub
-				
+			// TODO Auto-generated method stub
+
 		});
 		lupa4.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
@@ -298,18 +301,16 @@ public class ListagemFuncionarios extends JFrame {
 		JButton btnSair = new JButton("Sair");
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int resposta = JOptionPane.showConfirmDialog(janelaListagemFuncionarios, 
-			            "Você realmente deseja sair?", "Confirmação", 
-			            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-			        
-			        // Verifica a resposta
-			        if (resposta == JOptionPane.YES_OPTION) {
-			        	TelaLogin janelaListagemFuncionarios = new TelaLogin();
-						janelaListagemFuncionarios.setVisible(true);
-						dispose(); // Fecha a tela de login
-			        }
-				
-				
+				int resposta = JOptionPane.showConfirmDialog(janelaListagemFuncionarios, "Você realmente deseja sair?",
+						"Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+				// Verifica a resposta
+				if (resposta == JOptionPane.YES_OPTION) {
+					TelaLogin janelaListagemFuncionarios = new TelaLogin();
+					janelaListagemFuncionarios.setVisible(true);
+					dispose(); // Fecha a tela de login
+				}
+
 			}
 		});
 		btnSair.setForeground(new Color(255, 0, 0));
@@ -324,67 +325,71 @@ public class ListagemFuncionarios extends JFrame {
 				CadastroFuncionarios janelaFuncionarios = new CadastroFuncionarios();
 				janelaFuncionarios.setVisible(true);
 				dispose();
-				
-			
-			        
+
 			}
 		});
-		
+
 		JButton btnAdicionar_2 = new JButton("Editar");
 		btnAdicionar_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AlterarFuncionario janelaListagemFuncionario = new AlterarFuncionario();
-				janelaListagemFuncionario.setVisible(true);
+				int posicaoSelecionada = table.getSelectedRow();
+				DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
+				int id_Funcionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+				FuncionarioController fControlleer= new FuncionarioController();
+				//AlterarFuncionario janelaAlterar = new AlterarFuncionario();
+				fControlleer.alterarFuncionario(id_Funcionario);
+				//janelaAlterar.setVisible(true);
 				dispose();
-				
 			}
 		});
+
 		btnAdicionar_2.setForeground(new Color(255, 0, 0));
 		btnAdicionar_2.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar_2.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar_2, "cell 19 80 1 2");
-		
+
 		JButton btnAdicionar_1 = new JButton("Excluir");
 		btnAdicionar_1.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
-				
+
 				int posicaoSelecionada = table.getSelectedRow();
-		        
-		        if (posicaoSelecionada >= 0) {
-		        	
-		            DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
-		            int idFuncionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
 
-		            int confirmacao = JOptionPane.showConfirmDialog(null, 
-		                    "Você tem certeza que deseja excluir o funcionário?", "Confirmação de Exclusão", 
-		                    JOptionPane.YES_NO_OPTION);
-		            
-		            if (confirmacao == JOptionPane.YES_OPTION) {
-		            	
-		            	//vai excluir o funcionario
-		                FuncionarioDAO fdao = new FuncionarioDAO();
-		                boolean certo = fdao.excluirFuncionario(idFuncionario); 
+				if (posicaoSelecionada >= 0) {
 
-		                if (certo) {
-		                	
-		                    modeloTabela.removeRow(posicaoSelecionada);
-		                    JOptionPane.showMessageDialog(null, "Funcionário excluído com sucesso.");
-		                    
-		                } else {
-		                    JOptionPane.showMessageDialog(null, "Erro ao excluir o funcionário.");
-		                }
-		            }
-		        } else {
-		            JOptionPane.showMessageDialog(null, "Por favor, selecione um funcionário para excluir.");
-		        }
-		    }
-	
+					DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
+					int idFuncionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+
+					int confirmacao = JOptionPane.showConfirmDialog(null,
+							"Você tem certeza que deseja excluir o funcionário?", "Confirmação de Exclusão",
+							JOptionPane.YES_NO_OPTION);
+
+					if (confirmacao == JOptionPane.YES_OPTION) {
+
+						// vai excluir o funcionario
+						FuncionarioDAO fdao = new FuncionarioDAO();
+						boolean certo = fdao.excluirFuncionario(idFuncionario);
+
+						if (certo) {
+
+							modeloTabela.removeRow(posicaoSelecionada);
+							JOptionPane.showMessageDialog(null, "Funcionário excluído com sucesso.");
+
+						} else {
+							JOptionPane.showMessageDialog(null, "Erro ao excluir o funcionário.");
+						}
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Por favor, selecione um funcionário para excluir.");
+				}
+			}
+
 		});
 		btnAdicionar_1.setForeground(new Color(255, 0, 0));
 		btnAdicionar_1.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar_1.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar_1, "cell 20 80 1 2");
-		
+
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
@@ -392,23 +397,17 @@ public class ListagemFuncionarios extends JFrame {
 	}
 
 	private void pesquisarPorCampo(String campo, String valor) {
-	    DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
-	    modeloTabela.setRowCount(0); // Limpa a tabela
+		DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
+		modeloTabela.setRowCount(0); // Limpa a tabela
 
-	    FuncionarioDAO fdao = new FuncionarioDAO();
-	    ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios(campo, valor); // Passando o campo e o valor
-	   
-	    for (Funcionario f : listaFuncionarios) {
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios(campo, valor); // Passando o campo e o valor
 
-	        modeloTabela.addRow(new Object[]{
-	                f.getId_Funcionario(),
-	                f.getNomeFuncionario(),
-	                f.getEmail_Funcionario(),
-	                f.getCelular(),
-	                f.getCpf(),
-	                f.getLogin(),
-	        });
-	    }
+		for (Funcionario f : listaFuncionarios) {
+
+			modeloTabela.addRow(new Object[] { f.getId_Funcionario(), f.getNomeFuncionario(), f.getEmail_Funcionario(),
+					f.getCelular(), f.getCpf(), f.getLogin(), });
+		}
 	}
 
 	private void atualizarTabela(String campo, String valor) {
@@ -418,21 +417,14 @@ public class ListagemFuncionarios extends JFrame {
 
 		FuncionarioDAO fdao = new FuncionarioDAO();
 		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios(campo, valor);
-		
-		
-		 if (listaFuncionarios != null && !listaFuncionarios.isEmpty()) {
-		        for (Funcionario f : listaFuncionarios) {
-		            // Adiciona os dados do funcionário na tabela
-		            modeloTabela.addRow(new Object[] {
-		                f.getId_Funcionario(),
-		                f.getNomeFuncionario(),
-		                f.getEmail_Funcionario(),
-		                f.getCelular(),
-		                f.getCpf(),
-		                f.getLogin()
-		            });
-		        }
-		    }
+
+		if (listaFuncionarios != null && !listaFuncionarios.isEmpty()) {
+			for (Funcionario f : listaFuncionarios) {
+				// Adiciona os dados do funcionário na tabela
+				modeloTabela.addRow(new Object[] { f.getId_Funcionario(), f.getNomeFuncionario(),
+						f.getEmail_Funcionario(), f.getCelular(), f.getCpf(), f.getLogin() });
+			}
+		}
 	}
 
 }

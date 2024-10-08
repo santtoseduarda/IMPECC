@@ -13,21 +13,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.table.DefaultTableModel;
+
 import BancodeDados.Conexao;
 import BancodeDados.ConexaoBanco;
 import modelo.Funcionario;
+import visao.AlterarFuncionario;
 
 public class FuncionarioDAO {
 
-	/*
-	 * public Connection conexao = null; private PreparedStatement pst =null;
-	 * private ResultSet rs = null;
-	 */
-
-	// conexao = ConexaoBanco.getConexaoMySQL();
-
 	Statement stm1 = null; // permite fazer consultas no banco de dados
 	int res1;
+	PreparedStatement pst = null;
+	Connection conn = ConexaoBanco.getConexaoMySQL(); // Fazer a conexão com o BD
 
 	// incluir, listar
 
@@ -49,11 +47,7 @@ public class FuncionarioDAO {
 
 	public boolean inserir(Funcionario f) {
 
-		Connection conn = ConexaoBanco.getConexaoMySQL(); // Fazer a conexão com o BD
-
 		String inserir = "INSERT INTO funcionarios (nome_Funcionario, email_Funcionario, login, senha, celular, cpf) VALUES (?, ?, ?, ?, ?, ?)";
-
-		PreparedStatement pst = null;
 
 		try {
 			pst = conn.prepareStatement(inserir);
@@ -78,8 +72,6 @@ public class FuncionarioDAO {
 
 	public boolean verificarLogin(String login, String senha) {
 
-		Connection conn = ConexaoBanco.getConexaoMySQL(); // Estabelecer conexão com o banco
-
 		String verificacao = "SELECT * FROM funcionarios WHERE login = ? AND senha = ?";
 
 		try {
@@ -100,9 +92,6 @@ public class FuncionarioDAO {
 	public ArrayList<Funcionario> buscarFuncionarios(String campo, String valor) {
 
 		ArrayList<Funcionario> listaFuncionarios = new ArrayList<Funcionario>();
-		Statement stmt1 = null;
-
-		Connection conn = ConexaoBanco.getConexaoMySQL();
 
 		try {
 
@@ -113,7 +102,6 @@ public class FuncionarioDAO {
 				pst = conn.prepareStatement(sql);
 				pst.setString(1, "%" + valor + "%"); // Usando % para permitir busca parcial
 			}
-			System.out.println(pst);
 			ResultSet rs = pst.executeQuery();
 
 			// Iterando sobre o resultado e adicionando à lista de funcionários
@@ -138,27 +126,77 @@ public class FuncionarioDAO {
 
 	public boolean excluirFuncionario(int idFuncionario) {
 		// TODO Auto-generated method stub
-		
-		
-		Connection conn = ConexaoBanco.getConexaoMySQL(); // Estabelecer conexão com o banco
-	    String sql = "DELETE FROM funcionarios WHERE id_Funcionario = ?"; // SQL para excluir pelo ID
 
-	    try {
-	    	PreparedStatement pst = conn.prepareStatement(sql);
-	    	
-	    	pst.setInt(1, idFuncionario); //pega o id
-	        int linhasAfetadas = pst.executeUpdate();  //faz o delete
+		String sql = "DELETE FROM funcionarios WHERE id_Funcionario = ?"; // SQL para excluir pelo ID
 
-	        return linhasAfetadas > 0;
+		try {
+			PreparedStatement pst = conn.prepareStatement(sql);
 
-	         
-	    }catch (SQLException e) {
+			pst.setInt(1, idFuncionario); // pega o id
+			int linhasAfetadas = pst.executeUpdate(); // faz o delete
+
+			return linhasAfetadas > 0;
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			
+
 			return false;
 		}
 	}
 
-	
+
+	public boolean alterarFuncionario(Funcionario f) {
+		String alterar = "UPDATE funcionarios SET nome_Funcionario = ?, email_Funcionario = ?, login = ?, senha = ?, celular = ? WHERE cpf = ?";
+
+		try {
+			pst = conn.prepareStatement(alterar);
+			pst.setString(1, f.getNomeFuncionario()); // ajuste conforme os métodos get do seu modelo Funcionario
+			pst.setString(2, f.getEmail_Funcionario());
+			pst.setString(3, f.getLogin());
+			pst.setString(4, f.getSenha());
+			pst.setString(5, f.getCelular());
+			pst.setString(6, f.getCpf());
+			pst.executeUpdate();
+
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return false;
+	}
+
+	public Funcionario bucarFuncionario(int id_Funcionario) {
+		
+		String mostrarDados = "SELECT * FROM funcionarios WHERE id_Funcionario = ?";
+		Funcionario f = null;
+		
+		try {
+			pst = conn.prepareStatement(mostrarDados);
+	        pst.setInt(1, id_Funcionario); // Use o id_Funcionario passado como parâmetro
+
+	        ResultSet rs = pst.executeQuery(); // Aqui você deve usar executeQuery()
+
+	        if (rs.next()) { // Se houver resultados, preencha o objeto Funcionario
+	            f = new Funcionario();
+	            f.setId_Funcionario(rs.getInt("id_Funcionario")); // Adicione isso se necessário
+	            f.setNomeFuncionario(rs.getString("nome_Funcionario"));
+	            f.setEmail_Funcionario(rs.getString("email_Funcionario"));
+	            f.setLogin(rs.getString("login"));
+	            f.setSenha(rs.getString("senha"));
+	            f.setCelular(rs.getString("celular"));
+	            f.setCpf(rs.getString("cpf"));
+	            return f;
+	        }
+
+			pst.executeQuery();
+
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return null;
+
+		
+	}
 }

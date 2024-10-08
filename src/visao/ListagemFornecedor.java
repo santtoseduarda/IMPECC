@@ -34,7 +34,7 @@ public class ListagemFornecedor extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
-	private JTextField textField;
+	private JTextField txtId;
 
 	/**
 	 * Launch the application.
@@ -127,27 +127,27 @@ public class ListagemFornecedor extends JFrame {
 		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				pesquisarPorCampo("id_Fornecedor", textField.getText());
+				pesquisarPorCampo("id_Fornecedor", txtId.getText());
 			}
 		});
 		contentPane.add(panel, "cell 3 8 21 72,grow");
 		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][grow][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
-		JLabel lblNewLabel_4 = new JLabel("ID");
-		lblNewLabel_4.setFont(fontBold.deriveFont(Font.PLAIN, 14));
-		panel.add(lblNewLabel_4, "cell 2 0");
+		JLabel lblId = new JLabel("ID");
+		lblId.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		panel.add(lblId, "cell 2 0");
 
-		JLabel lblNewLabel_5 = new JLabel("Nome");
-		lblNewLabel_5.setFont(fontBold.deriveFont(Font.PLAIN, 14));
-		panel.add(lblNewLabel_5, "cell 5 0");
+		JLabel lblNome = new JLabel("Nome");
+		lblNome.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		panel.add(lblNome, "cell 5 0");
 
-		JLabel lblNewLabel_6 = new JLabel("CNPJ");
-		lblNewLabel_6.setFont(fontBold.deriveFont(Font.PLAIN, 14));
-		panel.add(lblNewLabel_6, "cell 8 0");
+		JLabel lblCnpj = new JLabel("CNPJ");
+		lblCnpj.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		panel.add(lblCnpj, "cell 8 0");
 
-		JLabel lblNewLabel_7 = new JLabel("Email");
-		lblNewLabel_7.setFont(fontBold.deriveFont(Font.PLAIN, 14));
-		panel.add(lblNewLabel_7, "cell 11 0");
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		panel.add(lblEmail, "cell 11 0");
 
 		JLabel lblPesquisar = new JLabel("Pesquisar por : ");
 		lblPesquisar.setFont(fontBold.deriveFont(Font.PLAIN, 20));
@@ -163,16 +163,16 @@ public class ListagemFornecedor extends JFrame {
 			}
 		});
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		panel.add(textField, "cell 2 1,growx");
+		txtId = new JTextField();
+		txtId.setColumns(10);
+		panel.add(txtId, "cell 2 1,growx");
 		lupa1.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa1, "cell 3 1,alignx trailing");
 
-		JTextField textField_1 = new JTextField();
-		panel.add(textField_1, "cell 5 1,growx");
-		textField_1.setColumns(10);
+		JTextField txtNome = new JTextField();
+		panel.add(txtNome, "cell 5 1,growx");
+		txtNome.setColumns(10);
 
 		JLabel lupa2 = new JLabel("");
 		lupa2.addMouseListener(new MouseAdapter() {
@@ -185,9 +185,9 @@ public class ListagemFornecedor extends JFrame {
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa2, "cell 6 1");
 
-		JTextField textField_2 = new JTextField();
-		panel.add(textField_2, "cell 8 1,growx");
-		textField_2.setColumns(10);
+		JTextField txtCnpj = new JTextField();
+		panel.add(txtCnpj, "cell 8 1,growx");
+		txtCnpj.setColumns(10);
 
 		JLabel lupa3 = new JLabel("");
 		lupa3.addMouseListener(new MouseAdapter() {
@@ -200,9 +200,9 @@ public class ListagemFornecedor extends JFrame {
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa3, "cell 9 1");
 
-		JTextField textField_3 = new JTextField();
-		panel.add(textField_3, "cell 11 1,growx");
-		textField_3.setColumns(10);
+		JTextField txtEmail = new JTextField();
+		panel.add(txtEmail, "cell 11 1,growx");
+		txtEmail.setColumns(10);
 
 		JLabel lupa4 = new JLabel("");
 		lupa4.addMouseListener(new MouseAdapter() {
@@ -331,8 +331,8 @@ public class ListagemFornecedor extends JFrame {
 			}
 		});
 		
-		JButton btnAdicionar_2 = new JButton("Editar");
-		btnAdicionar_2.addActionListener(new ActionListener() {
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AlterarFornecedor janelaListagemFornecedor = new AlterarFornecedor();
 				janelaListagemFornecedor.setVisible(true);
@@ -340,13 +340,13 @@ public class ListagemFornecedor extends JFrame {
 				
 			}
 		});
-		btnAdicionar_2.setForeground(new Color(255, 0, 0));
-		btnAdicionar_2.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnAdicionar_2.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnAdicionar_2, "cell 19 80 1 2");
+		btnEditar.setForeground(new Color(255, 0, 0));
+		btnEditar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnEditar.setBackground(new Color(255, 255, 255));
+		contentPane.add(btnEditar, "cell 19 80 1 2");
 		
-		JButton btnAdicionar_1 = new JButton("Excluir");
-		btnAdicionar_1.addActionListener(new ActionListener() {
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				int posicaoSelecionada = table.getSelectedRow();
@@ -381,10 +381,10 @@ public class ListagemFornecedor extends JFrame {
 		    }
 	
 		});
-		btnAdicionar_1.setForeground(new Color(255, 0, 0));
-		btnAdicionar_1.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnAdicionar_1.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnAdicionar_1, "cell 20 80 1 2");
+		btnExcluir.setForeground(new Color(255, 0, 0));
+		btnExcluir.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnExcluir.setBackground(new Color(255, 255, 255));
+		contentPane.add(btnExcluir, "cell 20 80 1 2");
 		
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));

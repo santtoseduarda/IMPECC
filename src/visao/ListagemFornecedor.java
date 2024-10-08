@@ -27,8 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controle.FuncionarioDAO;
-import modelo.Funcionario;
+import modelo.Fornecedor;
 import net.miginfocom.swing.MigLayout;
 
 public class ListagemFornecedor extends JFrame {
@@ -160,7 +159,7 @@ public class ListagemFornecedor extends JFrame {
 		lupa1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("id_Funcionario", textField.getText());
+				  pesquisarPorCampo("id_Fornecedor", textField.getText());
 			}
 		});
 		
@@ -179,7 +178,7 @@ public class ListagemFornecedor extends JFrame {
 		lupa2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("nome_Funcionario", textField_1.getText());
+				  pesquisarPorCampo("nome_Fornecedor", textField_1.getText());
 			}
 		});
 		lupa2.setIcon(new ImageIcon(
@@ -194,7 +193,7 @@ public class ListagemFornecedor extends JFrame {
 		lupa3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("cpf", textField_2.getText());
+				  pesquisarPorCampo("cnpj", textField_2.getText());
 			}
 		});
 		lupa3.setIcon(new ImageIcon(
@@ -209,7 +208,7 @@ public class ListagemFornecedor extends JFrame {
 		lupa4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("login", textField_3.getText());
+				  pesquisarPorCampo("email_Fornecedor", textField_3.getText());
 			}
 				// TODO Auto-generated method stub
 				
@@ -306,8 +305,8 @@ public class ListagemFornecedor extends JFrame {
 			        
 			        // Verifica a resposta
 			        if (resposta == JOptionPane.YES_OPTION) {
-			        	TelaLogin janelaListagemFuncionarios = new TelaLogin();
-						janelaListagemFuncionarios.setVisible(true);
+			        	TelaLogin janelaListagemFornecedor = new TelaLogin();
+			        	janelaListagemFornecedor.setVisible(true);
 						dispose(); // Fecha a tela de login
 			        }
 				
@@ -355,29 +354,29 @@ public class ListagemFornecedor extends JFrame {
 		        if (posicaoSelecionada >= 0) {
 		        	
 		            DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
-		            int idFuncionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+		            int idFornecedor = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
 
 		            int confirmacao = JOptionPane.showConfirmDialog(null, 
-		                    "Você tem certeza que deseja excluir o funcionário?", "Confirmação de Exclusão", 
+		                    "Você tem certeza que deseja excluir o fornecedor?", "Confirmação de Exclusão", 
 		                    JOptionPane.YES_NO_OPTION);
 		            
 		            if (confirmacao == JOptionPane.YES_OPTION) {
 		            	
-		            	//vai excluir o funcionario
-		                FuncionarioDAO fdao = new FuncionarioDAO();
-		                boolean certo = fdao.excluirFuncionario(idFuncionario); 
+		            	//vai excluir o fornecedor
+		            	FornecedorDAO frdao = new FornecedorDAO();
+		                boolean certo = frdao.excluirFornecedor(idFornecedor); 
 
 		                if (certo) {
 		                	
 		                    modeloTabela.removeRow(posicaoSelecionada);
-		                    JOptionPane.showMessageDialog(null, "Funcionário excluído com sucesso.");
+		                    JOptionPane.showMessageDialog(null, "Fornecedor excluído com sucesso.");
 		                    
 		                } else {
-		                    JOptionPane.showMessageDialog(null, "Erro ao excluir o funcionário.");
+		                    JOptionPane.showMessageDialog(null, "Erro ao excluir o fornecedor.");
 		                }
 		            }
 		        } else {
-		            JOptionPane.showMessageDialog(null, "Por favor, selecione um funcionário para excluir.");
+		            JOptionPane.showMessageDialog(null, "Por favor, selecione um fornecedor para excluir.");
 		        }
 		    }
 	
@@ -397,18 +396,17 @@ public class ListagemFornecedor extends JFrame {
 	    DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
 	    modeloTabela.setRowCount(0); // Limpa a tabela
 
-	    FuncionarioDAO fdao = new FuncionarioDAO();
-	    ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios(campo, valor); // Passando o campo e o valor
+	    FornecedorDAO frdao = new FornecedorDAO();
+	    ArrayList<Fornecedor> listaFornecedores = frdao.buscarFornecedores(campo, valor); // Passando o campo e o valor
 	   
-	    for (Funcionario f : listaFuncionarios) {
+	    for (Fornecedor fr : listaFornecedores) {
 
 	        modeloTabela.addRow(new Object[]{
-	                f.getId_Fornecedor(),
-	                f.getNomeFuncionario(),
-	                f.getEmail_Funcionario(),
-	                f.getCelular(),
-	                f.getCpf(),
-	                f.getLogin(),
+	                fr.getID(),
+	                fr.getNome_Fornecedor(),
+	                fr.getCNPJ(),
+	                fr.getEmail_Fornecedor(),
+	                fr.getTelefone_Fornecedor(),
 	        });
 	    }
 	}
@@ -418,20 +416,19 @@ public class ListagemFornecedor extends JFrame {
 		DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
 		modeloTabela.setRowCount(0); // Limpa a tabela
 
-		FuncionarioDAO fdao = new FuncionarioDAO();
-		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios(campo, valor);
+		FornecedorDAO frdao = new FornecedorDAO();
+		ArrayList<Fornecedor> listaFornecedores = frdao.buscarFornecedores(campo, valor);
 		
 		
-		 if (listaFuncionarios != null && !listaFuncionarios.isEmpty()) {
-		        for (Funcionario f : listaFuncionarios) {
-		            // Adiciona os dados do funcionário na tabela
+		 if (listaFornecedores != null && !listaFornecedores.isEmpty()) {
+		        for (Fornecedor fr : listaFornecedores) {
+		            // Adiciona os dados do fornecedor na tabela
 		            modeloTabela.addRow(new Object[] {
-		                f.getId_Funcionario(),
-		                f.getNomeFuncionario(),
-		                f.getEmail_Funcionario(),
-		                f.getCelular(),
-		                f.getCpf(),
-		                f.getLogin()
+		            		fr.getID(),
+			                fr.getNome_Fornecedor(),
+			                fr.getCNPJ(),
+			                fr.getEmail_Fornecedor(),
+			                fr.getTelefone_Fornecedor(),
 		            });
 		        }
 		    }

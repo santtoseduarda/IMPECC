@@ -4,14 +4,21 @@ import java.time.LocalDate;
 
 public class Cliente {
 
-	//coloca o id 
 	
 	
+	private int id_Cliente;
 	private String nomeCliente;
 	private String cpf_Cliente;
 	private String email;
-	private char telefone;
+	private String telefone;
 	private LocalDate dataNasc;
+	
+	public int getId_Cliente() {
+		return id_Cliente;
+	}
+	public void setId_Cliente(int id_Cliente) {
+		this.id_Cliente = id_Cliente;
+	}
 	
 	public String getNomeCliente() {
 		return nomeCliente;
@@ -31,10 +38,11 @@ public class Cliente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public char getTelefone() {
+
+	public String getTelefone() {
 		return telefone;
 	}
-	public void setTelefone(char telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 	public LocalDate getDataNasc() {

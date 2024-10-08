@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controle.FornecedorDAO;
 import modelo.Fornecedor;
 import net.miginfocom.swing.MigLayout;
 
@@ -159,7 +160,7 @@ public class ListagemFornecedor extends JFrame {
 		lupa1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("id_Fornecedor", textField.getText());
+				  pesquisarPorCampo("id_Fornecedor", txtId.getText());
 			}
 		});
 		
@@ -178,7 +179,7 @@ public class ListagemFornecedor extends JFrame {
 		lupa2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("nome_Fornecedor", textField_1.getText());
+				  pesquisarPorCampo("nome_Fornecedor", txtNome.getText());
 			}
 		});
 		lupa2.setIcon(new ImageIcon(
@@ -193,7 +194,7 @@ public class ListagemFornecedor extends JFrame {
 		lupa3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("cnpj", textField_2.getText());
+				  pesquisarPorCampo("cnpj", txtCnpj.getText());
 			}
 		});
 		lupa3.setIcon(new ImageIcon(
@@ -208,7 +209,7 @@ public class ListagemFornecedor extends JFrame {
 		lupa4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("email_Fornecedor", textField_3.getText());
+				  pesquisarPorCampo("email_Fornecedor", txtEmail.getText());
 			}
 				// TODO Auto-generated method stub
 				

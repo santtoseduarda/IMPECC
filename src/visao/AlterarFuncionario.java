@@ -38,19 +38,21 @@ public class AlterarFuncionario extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AlterarFuncionario frame = new AlterarFuncionario();
+					AlterarFuncionario frame = new AlterarFuncionario(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+
 	}
 
 	/**
 	 * Create the frame.
+	 * @param f 
 	 */
-	public AlterarFuncionario() {
+	public AlterarFuncionario(Funcionario f) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -263,40 +265,26 @@ public class AlterarFuncionario extends JFrame {
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
 		btnAdicionar.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
-				String login = txtLogin.getText();
-				String senha = txtSenha.getText();
-				String cpf = txtCPF.getText();
-				String email = txtEmail.getText();
-				String nomeCompleto = txtNomeCompleto.getText();
-				String celular = txtCelular.getText();
+				Funcionario funcionario = new Funcionario();
+				funcionario.setLogin(txtLogin.getText());
+				funcionario.setSenha(txtSenha.getText());
+				funcionario.setCelular(txtCelular.getText());
+				funcionario.setCpf(txtCPF.getText());
+				funcionario.setEmail_Funcionario(txtEmail.getText());
+				funcionario.setNomeFuncionario(txtNomeCompleto.getText());
 
-				if (login.isEmpty() || senha.isEmpty() || cpf.isEmpty() || email.isEmpty() || nomeCompleto.isEmpty()
-						|| celular.isEmpty()) {
-					javax.swing.JOptionPane.showMessageDialog(null,
-							"Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", // Adicionei
-																											// o título
-																											// da janela
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-				} else {
-
-					Funcionario cadastro = new Funcionario();
-
-					cadastro.setLogin(login);
-					cadastro.setSenha(senha);
-					cadastro.setCelular(celular);
-					cadastro.setCpf(cpf);
-					cadastro.setEmail_Funcionario(email);
-					cadastro.setNomeFuncionario(nomeCompleto);
-
-					FuncionarioDAO novoFuncionario = new FuncionarioDAO();
-					FuncionarioDAO.getInstancia();
-					novoFuncionario.inserir(cadastro);
-
-					ListagemFuncionarios janelaAlterarFuncionario = new ListagemFuncionarios();
-					janelaAlterarFuncionario.setVisible(true);
+				FuncionarioDAO funcionarioAlterado = new FuncionarioDAO();
+				try {
+					funcionarioAlterado.alterarFuncionario(funcionario);
+					TelaLogin janelaLogin = new TelaLogin();
+					janelaLogin.setVisible(true);
 					dispose();
 
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -318,6 +306,14 @@ public class AlterarFuncionario extends JFrame {
 		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
 
 	}
-
-
 }
+
+/*
+ * // Método para carregar os dados do funcionário nos campos de texto da janela
+ * public void carregarFuncionario(Funcionario f) {
+ * txtNome.setText(f.getNomeFuncionario());
+ * txtEmail.setText(f.getEmail_Funcionario()); txtLogin.setText(f.getLogin());
+ * txtSenha.setText(f.getSenha()); txtCelular.setText(f.getCelular());
+ * txtCpf.setText(f.getCpf()); this.funcionario = f; // Guarda o objeto para
+ * alterações posteriores }
+ */

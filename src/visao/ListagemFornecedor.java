@@ -403,7 +403,7 @@ public class ListagemFornecedor extends JFrame {
 	    for (Funcionario f : listaFuncionarios) {
 
 	        modeloTabela.addRow(new Object[]{
-	                f.getId_Fornecedor(),
+	               // f.getId_Fornecedor(),
 	                f.getNomeFuncionario(),
 	                f.getEmail_Funcionario(),
 	                f.getCelular(),

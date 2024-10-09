@@ -30,6 +30,12 @@ import net.miginfocom.swing.MigLayout;
 public class AlterarFuncionario extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField txtNomeCompleto;
+	private JTextField txtEmail;
+	private JTextField txtCelular;
+	private JTextField txtCPF;
+	private JTextField txtLogin;
+	private JTextField txtSenha;
 
 	/**
 	 * Launch the application.
@@ -136,11 +142,11 @@ public class AlterarFuncionario extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("Email");
 		panel.add(lblNewLabel_2, "cell 5 5");
 
-		JTextField txtNomeCompleto = new JTextField();
+		 txtNomeCompleto = new JTextField();
 		panel.add(txtNomeCompleto, "cell 1 6 3 1,growx");
 		txtNomeCompleto.setColumns(10);
 
-		JTextField txtEmail = new JTextField();
+		 txtEmail = new JTextField();
 		panel.add(txtEmail, "cell 5 6 3 1,growx");
 		txtEmail.setColumns(10);
 
@@ -150,11 +156,11 @@ public class AlterarFuncionario extends JFrame {
 		JLabel lblCPF = new JLabel("CPF:");
 		panel.add(lblCPF, "cell 5 8");
 
-		JTextField txtCelular = new JTextField();
+		txtCelular = new JTextField();
 		panel.add(txtCelular, "cell 1 9 3 1,growx");
 		txtCelular.setColumns(10);
 
-		JTextField txtCPF = new JTextField();
+		txtCPF = new JTextField();
 		panel.add(txtCPF, "cell 5 9 3 1,growx");
 		txtCPF.setColumns(10);
 
@@ -164,11 +170,11 @@ public class AlterarFuncionario extends JFrame {
 		JLabel lblNewLabel_5 = new JLabel("Senha:");
 		panel.add(lblNewLabel_5, "cell 5 11");
 
-		JTextField txtLogin = new JTextField();
+		 txtLogin = new JTextField();
 		panel.add(txtLogin, "cell 1 12 3 1,growx");
 		txtLogin.setColumns(10);
 
-		JTextField txtSenha = new JTextField();
+		 txtSenha = new JTextField();
 		panel.add(txtSenha, "cell 5 12 3 1,growx");
 		txtSenha.setColumns(10);
 
@@ -273,12 +279,13 @@ public class AlterarFuncionario extends JFrame {
 				funcionario.setCpf(txtCPF.getText());
 				funcionario.setEmail_Funcionario(txtEmail.getText());
 				funcionario.setNomeFuncionario(txtNomeCompleto.getText());
+				
 
 				FuncionarioDAO funcionarioAlterado = new FuncionarioDAO();
 				try {
 					funcionarioAlterado.alterarFuncionario(funcionario);
-					TelaLogin janelaLogin = new TelaLogin();
-					janelaLogin.setVisible(true);
+					ListagemFuncionarios janelaListagem = new ListagemFuncionarios();
+					janelaListagem.setVisible(true);
 					dispose();
 
 				} catch (Exception ex) {
@@ -303,16 +310,18 @@ public class AlterarFuncionario extends JFrame {
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);
 		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
-
+		mostrarDados(f);
 	}
-}
 
-/*
- * // Método para carregar os dados do funcionário nos campos de texto da janela
- * public void carregarFuncionario(Funcionario f) {
- * txtNome.setText(f.getNomeFuncionario());
- * txtEmail.setText(f.getEmail_Funcionario()); txtLogin.setText(f.getLogin());
- * txtSenha.setText(f.getSenha()); txtCelular.setText(f.getCelular());
- * txtCpf.setText(f.getCpf()); this.funcionario = f; // Guarda o objeto para
- * alterações posteriores }
- */
+	private void mostrarDados(Funcionario f) {
+		txtNomeCompleto.setText(f.getNomeFuncionario());
+		txtEmail.setText(f.getEmail_Funcionario());
+		txtCelular.setText(f.getCelular());
+		txtCPF.setText(f.getCpf());
+		txtLogin.setText(f.getLogin());
+		txtSenha.setText(f.getSenha());
+		
+	}
+	
+	
+}

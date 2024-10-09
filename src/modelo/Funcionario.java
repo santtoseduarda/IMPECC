@@ -1,6 +1,6 @@
  package modelo;
 
-public class Funcionario extends Cliente {
+public class Funcionario{
 
 	private int id_Funcionario;
 	private String nomeFuncionario;

@@ -1,18 +1,19 @@
 package modelo;
 
-public class Fornecedor extends Cliente{
+public class Fornecedor{
 	
-	private int ID;
+	private int ID_fornecedor;
 	private String nome_Fornecedor;
 	private String CNPJ;
 	private String telefone_Fornecedor;
 	private String email_Fornecedor;
 	
-	public int getID() {
-		return ID;
+	
+	public int getID_fornecedor() {
+		return ID_fornecedor;
 	}
-	public void setID(int iD) {
-		ID = iD;
+	public void setID_fornecedor(int iD_fornecedor) {
+		ID_fornecedor = iD_fornecedor;
 	}
 	public String getNome_Fornecedor() {
 		return nome_Fornecedor;

@@ -23,14 +23,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controle.FornecedorDAO;
 import controle.FuncionarioDAO;
+import modelo.Fornecedor;
 import modelo.Funcionario;
 import net.miginfocom.swing.MigLayout;
 
 public class AlterarFornecedor extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtTelefone;
+	private JTextField txtTelefoneFornecedor;
+	private JTextField txtEmailFornecedor;
+	private JTextField txtCnpj;
+	private JTextField txtNomeFornecedor;
 
 	/**
 	 * Launch the application.
@@ -39,7 +44,7 @@ public class AlterarFornecedor extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AlterarFornecedor frame = new AlterarFornecedor();
+					AlterarFornecedor frame = new AlterarFornecedor(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,8 +55,9 @@ public class AlterarFornecedor extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param fornecedor 
 	 */
-	public AlterarFornecedor() {
+	public AlterarFornecedor(Fornecedor fornecedor) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -132,30 +138,30 @@ public class AlterarFornecedor extends JFrame {
 		JLabel lblNome = new JLabel("Nome Completo:*");
 		panel.add(lblNome, "cell 1 5");
 
-		JTextField txtNome = new JTextField();
-		panel.add(txtNome, "cell 1 6 7 1,growx");
-		txtNome.setColumns(10);
+		 txtNomeFornecedor = new JTextField();
+		panel.add(txtNomeFornecedor, "cell 1 6 7 1,growx");
+		txtNomeFornecedor.setColumns(10);
 
 		JLabel lblCnpj = new JLabel("CNPJ:*");
 		panel.add(lblCnpj, "cell 1 8");
 
-		JTextField txtCnpj = new JTextField();
+		txtCnpj = new JTextField();
 		panel.add(txtCnpj, "cell 1 9 7 1,growx");
 		txtCnpj.setColumns(10);
 
 		JLabel lblEmail = new JLabel("E-mail:*");
 		panel.add(lblEmail, "cell 1 11");
 
-		JTextField txtEmail = new JTextField();
-		panel.add(txtEmail, "cell 1 12 7 1,growx");
-		txtEmail.setColumns(10);
+		txtEmailFornecedor = new JTextField();
+		panel.add(txtEmailFornecedor, "cell 1 12 7 1,growx");
+		txtEmailFornecedor.setColumns(10);
 		
 		JLabel lblTelefone = new JLabel("Telefone:*");
 		panel.add(lblTelefone, "cell 1 14");
 		
-		txtTelefone = new JTextField();
-		txtTelefone.setColumns(10);
-		panel.add(txtTelefone, "cell 1 15 7 1,growx");
+		txtTelefoneFornecedor = new JTextField();
+		txtTelefoneFornecedor.setColumns(10);
+		panel.add(txtTelefoneFornecedor, "cell 1 15 7 1,growx");
 
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(
@@ -249,60 +255,54 @@ public class AlterarFornecedor extends JFrame {
 		btnSalvar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSalvar, "cell 28 85 1 4,aligny center");
 		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String login = txtEmail.getText();
-				String senha = txtSenha.getText();
-				String cpf = txtCPF.getText();
-				String email = txtEmail.getText();
-				String nomeCompleto = txtNome.getText();
-				String celular = txtCnpj.getText();
+			public void actionPerformed(ActionEvent e) {				
+				Fornecedor fornecedor = new Fornecedor();
+				fornecedor.setTelefone_Fornecedor(txtTelefoneFornecedor.getText());
+				fornecedor.setCNPJ(txtCnpj.getText());
+				fornecedor.setEmail_Fornecedor(txtEmailFornecedor.getText());
+				fornecedor.setNome_Fornecedor(txtNomeFornecedor.getText());
+				
 
-				if (login.isEmpty() || senha.isEmpty() || cpf.isEmpty() || email.isEmpty() || nomeCompleto.isEmpty()
-						|| celular.isEmpty()) {
-					javax.swing.JOptionPane.showMessageDialog(null,
-							"Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", // Adicionei
-																											// o título
-																											// da janela
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-				} else {
-
-					Funcionario cadastro = new Funcionario();
-
-					cadastro.setLogin(login);
-					cadastro.setSenha(senha);
-					cadastro.setCelular(celular);
-					cadastro.setCpf(cpf);
-					cadastro.setEmail_Funcionario(email);
-					cadastro.setNomeFuncionario(nomeCompleto);
-
-					FuncionarioDAO novoFuncionario = new FuncionarioDAO();
-					FuncionarioDAO.getInstancia();
-					novoFuncionario.inserir(cadastro);
-
-					ListagemFuncionarios janelaAlterarFuncionario = new ListagemFuncionarios();
-					janelaAlterarFuncionario.setVisible(true);
+				FornecedorDAO fornecedorAlterado = new FornecedorDAO();
+				try {
+					fornecedorAlterado.alterarFornecedor(fornecedor);
+					ListagemFornecedor janelaListagem = new ListagemFornecedor();
+					janelaListagem.setVisible(true);
 					dispose();
 
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
+							JOptionPane.ERROR_MESSAGE);
 				}
+				
+				
 			}
 		});
 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
 		btnLimparCampos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtNome.setText("");
-				txtEmail.setText("");
+				txtNomeFornecedor.setText("");
+				txtEmailFornecedor.setText("");
 				txtCnpj.setText("");
-				txtCPF.setText("");
-				txtEmail.setText("");
-				txtSenha.setText("");
+				txtEmailFornecedor.setText("");
+				txtTelefoneFornecedor.setText("");
 			}
 		});
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);
 		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
+		mostrarDados(fornecedor);
 
+	}
+
+	private void mostrarDados(Fornecedor fornecedor) {
+		txtNomeFornecedor.setText(fornecedor.getNome_Fornecedor());
+		txtEmailFornecedor.setText(fornecedor.getEmail_Fornecedor());
+		txtCnpj.setText(fornecedor.getCNPJ());
+		txtEmailFornecedor.setText(fornecedor.getEmail_Fornecedor());
+		txtTelefoneFornecedor.setText(fornecedor.getTelefone_Fornecedor());
 	}
 
 

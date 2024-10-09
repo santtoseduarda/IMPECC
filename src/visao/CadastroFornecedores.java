@@ -23,7 +23,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controle.FornecedorDAO;
 import controle.FuncionarioDAO;
+import modelo.Fornecedor;
 import modelo.Funcionario;
 import net.miginfocom.swing.MigLayout;
 
@@ -249,7 +251,35 @@ public class CadastroFornecedores extends JFrame {
 		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String cnpj = txtCnpj.getText();
+				String email = txtEmail.getText();
+				String nomeCompleto = txtNome.getText();
+				String telefone = txtTelefone.getText();
 				
+				if (cnpj.isEmpty() || email.isEmpty() || nomeCompleto.isEmpty() || telefone.isEmpty()) {
+					javax.swing.JOptionPane.showMessageDialog(null,
+							"Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", // Adicionei
+																											// o título
+																											// da janela
+							javax.swing.JOptionPane.ERROR_MESSAGE);
+				} else {
+
+					Fornecedor cadastroFornecedor = new Fornecedor();
+
+					cadastroFornecedor.setCNPJ(cnpj);
+					cadastroFornecedor.setEmail_Fornecedor(email);
+					cadastroFornecedor.setNome_Fornecedor(nomeCompleto);
+					cadastroFornecedor.setTelefone_Fornecedor(telefone);
+
+					FornecedorDAO novoFornecedor = new FornecedorDAO();
+					FornecedorDAO.getInstancia();
+					novoFornecedor.inserir(cadastroFornecedor);
+
+					ListagemFornecedor janelaCadastrarFornecedor= new ListagemFornecedor();
+					janelaCadastrarFornecedor.setVisible(true);
+					dispose();
+
+				}
 			}
 		});
 

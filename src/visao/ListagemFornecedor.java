@@ -27,7 +27,9 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controle.FornecedorController;
 import controle.FornecedorDAO;
+import controle.FuncionarioController;
 import modelo.Fornecedor;
 import net.miginfocom.swing.MigLayout;
 
@@ -230,6 +232,8 @@ public class ListagemFornecedor extends JFrame {
 			}
 		));
 		scrollPane.setViewportView(table);
+		atualizarTabela("", "");
+
 
 
 		JLabel lblLinha = new JLabel("");
@@ -335,10 +339,12 @@ public class ListagemFornecedor extends JFrame {
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AlterarFornecedor janelaListagemFornecedor = new AlterarFornecedor();
-				janelaListagemFornecedor.setVisible(true);
+				int posicaoSelecionada = table.getSelectedRow();
+				DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
+				int id_Fornecedor = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+				FornecedorController fornControlleer= new FornecedorController();
+				fornControlleer.alterarFornecedor(id_Fornecedor);
 				dispose();
-				
 			}
 		});
 		btnEditar.setForeground(new Color(255, 0, 0));
@@ -403,7 +409,7 @@ public class ListagemFornecedor extends JFrame {
 	    for (Fornecedor fr : listaFornecedores) {
 
 	        modeloTabela.addRow(new Object[]{
-	                fr.getID(),
+	                fr.getID_fornecedor(),
 	                fr.getNome_Fornecedor(),
 	                fr.getCNPJ(),
 	                fr.getEmail_Fornecedor(),
@@ -425,7 +431,7 @@ public class ListagemFornecedor extends JFrame {
 		        for (Fornecedor fr : listaFornecedores) {
 		            // Adiciona os dados do fornecedor na tabela
 		            modeloTabela.addRow(new Object[] {
-		            		fr.getID(),
+		            		fr.getID_fornecedor(),
 			                fr.getNome_Fornecedor(),
 			                fr.getCNPJ(),
 			                fr.getEmail_Fornecedor(),

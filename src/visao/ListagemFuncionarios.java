@@ -29,7 +29,9 @@ import javax.swing.table.DefaultTableModel;
 
 import controle.FuncionarioController;
 import controle.FuncionarioDAO;
+import controle.ProdutoDAO;
 import modelo.Funcionario;
+import modelo.Produto;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -335,10 +337,10 @@ public class ListagemFuncionarios extends JFrame {
 				int posicaoSelecionada = table.getSelectedRow();
 				DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
 				int id_Funcionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
-				FuncionarioController fControlleer= new FuncionarioController();
-				//AlterarFuncionario janelaAlterar = new AlterarFuncionario();
+				FuncionarioController fControlleer = new FuncionarioController();
+				// AlterarFuncionario janelaAlterar = new AlterarFuncionario();
 				fControlleer.alterarFuncionario(id_Funcionario);
-				//janelaAlterar.setVisible(true);
+				// janelaAlterar.setVisible(true);
 				dispose();
 			}
 		});
@@ -398,31 +400,34 @@ public class ListagemFuncionarios extends JFrame {
 
 	private void pesquisarPorCampo(String campo, String valor) {
 		DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
-		modeloTabela.setRowCount(0); // Limpa a tabela
+		modeloTabela.setRowCount(0);
 
-		FuncionarioDAO fdao = new FuncionarioDAO();
-		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios(campo, valor); // Passando o campo e o valor
+		ProdutoDAO pdao = new ProdutoDAO();
+		ArrayList<Produto> listaProdutos = pdao.buscarProdutos(campo, valor);
 
-		for (Funcionario f : listaFuncionarios) {
+		for (Produto p : listaProdutos) {
 
-			modeloTabela.addRow(new Object[] { f.getId_Funcionario(), f.getNomeFuncionario(), f.getEmail_Funcionario(),
-					f.getCelular(), f.getCpf(), f.getLogin(), });
+			modeloTabela.addRow(new Object[] { p.getId_Produto(), p.getNomeProduto(), p.getCodBarra(), p.getTamanho(),
+					p.getGenero(), p.getPreco(), p.getFornecedor(), p.getQtdEstoque()
+
+			});
 		}
 	}
 
 	private void atualizarTabela(String campo, String valor) {
 
 		DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
-		modeloTabela.setRowCount(0); // Limpa a tabela
+		modeloTabela.setRowCount(0);
 
-		FuncionarioDAO fdao = new FuncionarioDAO();
-		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios(campo, valor);
+		ProdutoDAO pdao = new ProdutoDAO();
+		ArrayList<Produto> listaProdutos = pdao.buscarProdutos(campo, valor);
 
-		if (listaFuncionarios != null && !listaFuncionarios.isEmpty()) {
-			for (Funcionario f : listaFuncionarios) {
-				// Adiciona os dados do funcionário na tabela
-				modeloTabela.addRow(new Object[] { f.getId_Funcionario(), f.getNomeFuncionario(),
-						f.getEmail_Funcionario(), f.getCelular(), f.getCpf(), f.getLogin() });
+		if (listaProdutos != null && !listaProdutos.isEmpty()) {
+			for (Produto p : listaProdutos) {
+				// Adiciona os dados do produto na tabela
+				modeloTabela.addRow(new Object[] { p.getId_Produto(), p.getNomeProduto(), p.getCodBarra(),
+						p.getTamanho(), p.getGenero(), p.getPreco(), p.getFornecedor(), p.getQtdEstoque()
+				});
 			}
 		}
 	}

@@ -18,10 +18,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controle.FuncionarioDAO;
+import controle.ProdutoDAO;
+import modelo.Funcionario;
 import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
 
@@ -31,14 +35,11 @@ public class AlterarProduto extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AlterarProduto frame = new AlterarProduto();
+					AlterarProduto frame = new AlterarProduto(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,10 +48,6 @@ public class AlterarProduto extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 * @param p 
-	 */
 	public AlterarProduto(Produto p) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -85,7 +82,8 @@ public class AlterarProduto extends JFrame {
 		contentPane.setForeground(new Color(255, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][]",
+				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
 
 		JLabel lblcadastroFunc = new JLabel("Editar Dados do Produto");
 		lblcadastroFunc.setForeground(new Color(255, 255, 255));
@@ -113,13 +111,14 @@ public class AlterarProduto extends JFrame {
 
 		JPanel panel = new JPanel();
 		contentPane.add(panel, "cell 3 2 27 83,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][][grow][grow 50][grow][][][grow]", "[][][][][][][][][][][][grow 20][][][grow 20][][][][][grow 20][][][][][][][][][][][][][grow]"));
+		panel.setLayout(new MigLayout("", "[grow][grow][][grow][grow 50][grow][][][grow]",
+				"[][][][][][][][][][][][grow 20][][][grow 20][][][][][grow 20][][][][][][][][][][][][][grow]"));
 
 		JLabel lblvoltar = new JLabel("");
 		lblvoltar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ListagemFuncionarios novaJanela = new ListagemFuncionarios();
+				ListagemProdutos novaJanela = new ListagemProdutos();
 				novaJanela.setVisible(true);
 				dispose();
 			}
@@ -127,17 +126,17 @@ public class AlterarProduto extends JFrame {
 		lblvoltar.setIcon(new ImageIcon(
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
-				
-						JLabel lblNome = new JLabel("Nome");
-						panel.add(lblNome, "cell 1 6");
-		
-				JTextField txtNome = new JTextField();
-				panel.add(txtNome, "cell 1 7 3 1,growx");
-				txtNome.setColumns(10);
-		
+
+		JLabel lblNome = new JLabel("Nome");
+		panel.add(lblNome, "cell 1 6");
+
+		JTextField txtNome = new JTextField();
+		panel.add(txtNome, "cell 1 7 3 1,growx");
+		txtNome.setColumns(10);
+
 		JLabel lblModelo = new JLabel("Modelo");
 		panel.add(lblModelo, "cell 1 9");
-		
+
 		JTextField textModelo = new JTextField();
 		panel.add(textModelo, "cell 1 10 3 1,growx");
 		textModelo.setColumns(10);
@@ -148,34 +147,34 @@ public class AlterarProduto extends JFrame {
 		JTextField txttamanho = new JTextField();
 		panel.add(txttamanho, "cell 1 13 3 1,growx");
 		txttamanho.setColumns(10);
-		
-				JLabel lblGênero = new JLabel("Gênero");
-				panel.add(lblGênero, "cell 1 15");
-				
-						JTextField txtGenero = new JTextField();
-						panel.add(txtGenero, "cell 1 16 3 1,growx");
-						txtGenero.setColumns(10);
-										
-												JLabel lblPreço = new JLabel("Preço");
-												panel.add(lblPreço, "cell 1 18");
-								
-										JTextField txtPreço = new JTextField();
-										panel.add(txtPreço, "cell 1 19 3 1,growx");
-										txtPreço.setColumns(10);
-										
-										JLabel lblfornecedor = new JLabel("Fornecedor");
-										panel.add(lblfornecedor, "cell 1 21");
-										
-										textField_1 = new JTextField();
-										panel.add(textField_1, "cell 1 22 3 1,growx");
-										textField_1.setColumns(10);
-										
-										JLabel lblNewLabel = new JLabel("Quantida em Estoque");
-										panel.add(lblNewLabel, "cell 1 24");
-										
-										textField = new JTextField();
-										panel.add(textField, "cell 1 25 3 1,growx");
-										textField.setColumns(10);
+
+		JLabel lblGênero = new JLabel("Gênero");
+		panel.add(lblGênero, "cell 1 15");
+
+		JTextField txtGenero = new JTextField();
+		panel.add(txtGenero, "cell 1 16 3 1,growx");
+		txtGenero.setColumns(10);
+
+		JLabel lblPreço = new JLabel("Preço");
+		panel.add(lblPreço, "cell 1 18");
+
+		JTextField txtPreço = new JTextField();
+		panel.add(txtPreço, "cell 1 19 3 1,growx");
+		txtPreço.setColumns(10);
+
+		JLabel lblfornecedor = new JLabel("Fornecedor");
+		panel.add(lblfornecedor, "cell 1 21");
+
+		textField_1 = new JTextField();
+		panel.add(textField_1, "cell 1 22 3 1,growx");
+		textField_1.setColumns(10);
+
+		JLabel lblNewLabel = new JLabel("Quantida em Estoque");
+		panel.add(lblNewLabel, "cell 1 24");
+
+		textField = new JTextField();
+		panel.add(textField, "cell 1 25 3 1,growx");
+		textField.setColumns(10);
 
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(
@@ -246,7 +245,15 @@ public class AlterarProduto extends JFrame {
 		btnSair.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// Fecha a tela de login
+				int resposta = JOptionPane.showConfirmDialog(janelaAlterarProduto, "Você realmente deseja sair?",
+						"Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+				// Verifica a resposta
+				if (resposta == JOptionPane.YES_OPTION) {
+					TelaLogin janelaAlterarProduto = new TelaLogin();
+					janelaAlterarProduto.setVisible(true);
+					dispose(); //volta para tela de login
+				}
 
 			}
 		});
@@ -255,6 +262,13 @@ public class AlterarProduto extends JFrame {
 		btnSair.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSair, "cell 2 83 1 4,aligny bottom");
 
+		/*
+		
+		//AINDA FALTA ARRUMAR AS VARIAVEIS DOS PRODUTOS EEDITAR A TELA
+		
+		
+		
+		
 		JButton btnAdicionar = new JButton("Salvar Edições");
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
@@ -264,13 +278,40 @@ public class AlterarProduto extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 
+				Produto produto = new Produto();
+				produto.setLogin(txtLogin.getText());
+				produto.setSenha(txtSenha.getText());
+				produto.setCelular(txtCelular.getText());
+				produto.setCpf(txtCPF.getText());
+				produto.setEmail_Funcionario(txtEmail.getText());
+				produto.setNomeFuncionario(txtNomeCompleto.getText());
+
+				ProdutoDAO funcionarioAlterado = new ProdutoDAO();
+				try {
+					funcionarioAlterado.alterarFuncionario(produto);
+					ListagemFuncionarios janelaListagem = new ListagemFuncionarios();
+					janelaListagem.setVisible(true);
+					dispose();
+
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
+							JOptionPane.ERROR_MESSAGE);
+				}
+				
 			}
 
 		});
 
-		JButton btnLimparCampos = new JButton("Cancelar");
+		JButton btnLimparCampos = new JButton("Limpar Campos");
 		btnLimparCampos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				txtNomeCompleto.setText("");
+				txtEmail.setText("");
+				txtCelular.setText("");
+				txtCPF.setText("");
+				txtLogin.setText("");
+				txtSenha.setText("");
 
 			}
 		});
@@ -278,7 +319,19 @@ public class AlterarProduto extends JFrame {
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);
 		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
+		mostrarDados(p);
 
 	}
 
+	private void mostrarDados(Produto p) {
+		txtNomeCompleto.setText(f.getNomeFuncionario());
+		txtEmail.setText(f.getEmail_Funcionario());
+		txtCelular.setText(f.getCelular());
+		txtCPF.setText(f.getCpf());
+		txtLogin.setText(f.getLogin());
+		txtSenha.setText(f.getSenha());
+		
+	}
+*/
+	}
 }

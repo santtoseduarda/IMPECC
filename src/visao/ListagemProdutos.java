@@ -42,9 +42,6 @@ public class ListagemProdutos extends JFrame {
 	private JTextField txtFornecedor;
 	private JTable table;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -58,9 +55,6 @@ public class ListagemProdutos extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public ListagemProdutos() {
 
 		ListagemProdutos janelaListagemProdutos = this;
@@ -441,7 +435,7 @@ public class ListagemProdutos extends JFrame {
 		modeloTabela.setRowCount(0);
 
 		ProdutoDAO pdao = new ProdutoDAO();
-		ArrayList<Produto> listaProdutos = pdao.buscarProdutos(campo, valor);
+		ArrayList<Produto> listaProdutos = pdao.buscarProdLupa(campo, valor);
 
 		for (Produto p : listaProdutos) {
 
@@ -459,7 +453,7 @@ public class ListagemProdutos extends JFrame {
 		modeloTabela.setRowCount(0);
 
 		ProdutoDAO pdao = new ProdutoDAO();
-		ArrayList<Produto> listaProdutos = pdao.buscarProdutos(campo, valor);
+		ArrayList<Produto> listaProdutos = pdao.buscarProdLupa(campo, valor);
 
 		if (listaProdutos != null && !listaProdutos.isEmpty()) {
 			for (Produto p : listaProdutos) {

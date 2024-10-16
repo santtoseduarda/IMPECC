@@ -43,9 +43,6 @@ public class ListagemFuncionarios extends JFrame {
 	private JTextField textField_3;
 	private JTable table;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -59,9 +56,6 @@ public class ListagemFuncionarios extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public ListagemFuncionarios() {
 
 		ListagemFuncionarios janelaListagemFuncionarios = this;
@@ -398,7 +392,7 @@ public class ListagemFuncionarios extends JFrame {
 		modeloTabela.setRowCount(0);
 
 		FuncionarioDAO fdao = new FuncionarioDAO();
-		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios(campo, valor);
+		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncLupa(campo, valor);
 
 		for (Funcionario f : listaFuncionarios) {
 
@@ -413,7 +407,7 @@ public class ListagemFuncionarios extends JFrame {
 		modeloTabela.setRowCount(0);
 
 		FuncionarioDAO fdao = new FuncionarioDAO();
-		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios(campo, valor);
+		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncLupa(campo, valor);
 
 		if (listaFuncionarios != null && !listaFuncionarios.isEmpty()) {
 			for (Funcionario f : listaFuncionarios) {

@@ -274,6 +274,10 @@ public class CadastroFuncionarios extends JFrame {
 		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+				
 				String login = txtLogin.getText();
 				String senha = txtSenha.getText();
 				String cpf = txtCPF.getText();

@@ -53,7 +53,7 @@ public class ProdutoDAO {
 		return false;
 	}
 
-	public ArrayList<Produto> buscarProdutos(String campo, String valor) {
+	public ArrayList<Produto> buscarProdLupa(String campo, String valor) {
 
 		ArrayList<Produto> listaProdutos = new ArrayList<Produto>();
 
@@ -78,9 +78,9 @@ public class ProdutoDAO {
                 p.setNomeProduto(rs.getString("nome_Produto"));
                 p.setTamanho(rs.getString("tamanho"));
                 p.setGenero(rs.getString("genero"));
-                p.setPreco(rs.getDouble("preco"));
+                p.setPreco(rs.getFloat("preco"));
                 p.setFornecedor(rs.getString("fornecedor"));
-                p.setQtdEstoque(rs.getLong("qntd_Estoque"));
+                p.setQtdEstoque(rs.getInt("qntd_Estoque"));
 
 				listaProdutos.add(p);
 			}
@@ -93,7 +93,7 @@ public class ProdutoDAO {
 
 	}
 	
-	public boolean alterar(Produto p) {
+	public boolean alterarProduto(Produto p) {
         String sql = "UPDATE produtos SET nome_Produto = ?, tamanho = ?, genero = ?, preco = ?, qntd_Estoque = ?, fornecedor = ? WHERE id_Produto = ?";
         
         try  {
@@ -115,7 +115,7 @@ public class ProdutoDAO {
         }
     }
 
-	public boolean excluirProdutos(int idProduto) {
+	public boolean excluirProdutos(int id_Produto) {
 		// TODO Auto-generated method stub
 
 		String sql = "DELETE FROM produtos WHERE id_Produto = ?";
@@ -123,7 +123,7 @@ public class ProdutoDAO {
 		try {
 			PreparedStatement pst = conn.prepareStatement(sql);
 
-			pst.setInt(1, idProduto); // pega o id
+			pst.setInt(1, id_Produto); // pega o id
 			int linhasAfetadas = pst.executeUpdate(); // faz o delete
 
 			return linhasAfetadas > 0;
@@ -137,25 +137,27 @@ public class ProdutoDAO {
 	}
 
 	public Produto buscarProdutos(int id_Produto) {
-		String mostrarDados = "SELECT * FROM funcionarios WHERE id_Funcionario = ?";
-		Funcionario f = null;
+		String mostrarDados = "SELECT * FROM produtos WHERE id_Produto = ?";
+		Produto p = null;
 		
 		try {
 			pst = conn.prepareStatement(mostrarDados);
-	        pst.setInt(1, id_Funcionario); // Use o id_Funcionario passado como parâmetro
+	        pst.setInt(1, id_Produto); 
 
-	        ResultSet rs = pst.executeQuery(); // Aqui você deve usar executeQuery()
+	        ResultSet rs = pst.executeQuery(); 
 
-	        if (rs.next()) { // Se houver resultados, preencha o objeto Funcionario
-	            f = new Funcionario();
-	            f.setId_Funcionario(rs.getInt("id_Funcionario")); // Adicione isso se necessário
-	            f.setNomeFuncionario(rs.getString("nome_Funcionario"));
-	            f.setEmail_Funcionario(rs.getString("email_Funcionario"));
-	            f.setLogin(rs.getString("login"));
-	            f.setSenha(rs.getString("senha"));
-	            f.setCelular(rs.getString("celular"));
-	            f.setCpf(rs.getString("cpf"));
-	            return f;
+	        if (rs.next()) { 
+	        	
+	            p = new Produto();
+	            p.setId_Produto(rs.getInt("id_Produto"));
+                p.setNomeProduto(rs.getString("nome_Produto"));
+                p.setTamanho(rs.getString("tamanho"));
+                p.setGenero(rs.getString("genero"));
+                p.setPreco(rs.getFloat("preco"));
+                p.setFornecedor(rs.getString("fornecedor"));
+                p.setQtdEstoque(rs.getInt("qntd_Estoque"));
+                
+	            return p;
 	        }
 
 			pst.executeQuery();

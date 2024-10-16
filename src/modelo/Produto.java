@@ -9,9 +9,9 @@ public class Produto {
 	private String nomeProduto;
 	private String marca;
 	private String genero;
-	private Double preco;
+	private float preco;
 	private String codBarra;
-	private Long qtdEstoque;
+	private int qtdEstoque;
 	private String tamanho;
 	private String fornecedor;
 
@@ -63,12 +63,12 @@ public class Produto {
 		this.genero = genero;
 	}
 
-	public Double getPreco() {
+	public float getPreco() {
 		return preco;
 	}
 
-	public void setPreco(Double preco) {
-		this.preco = preco;
+	public void setPreco(float precoConvert) {
+		this.preco = precoConvert;
 	}
 
 	public String getCodBarra() {
@@ -79,11 +79,11 @@ public class Produto {
 		this.codBarra = codBarra;
 	}
 
-	public Long getQtdEstoque() {
+	public int getQtdEstoque() {
 		return qtdEstoque;
 	}
 
-	public void setQtdEstoque(Long qtdEstoque) {
-		this.qtdEstoque = qtdEstoque;
+	public void setQtdEstoque(int qntEstoqueConvert) {
+		this.qtdEstoque = qntEstoqueConvert;
 	}
 }

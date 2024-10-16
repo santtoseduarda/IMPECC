@@ -89,7 +89,7 @@ public class FuncionarioDAO {
 		}
 	}
 
-	public ArrayList<Funcionario> buscarFuncionarios(String campo, String valor) {
+	public ArrayList<Funcionario> buscarFuncLupa(String campo, String valor) {
 
 		ArrayList<Funcionario> listaFuncionarios = new ArrayList<Funcionario>();
 

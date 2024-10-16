@@ -37,9 +37,6 @@ public class AlterarFuncionario extends JFrame {
 	private JTextField txtLogin;
 	private JTextField txtSenha;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -54,10 +51,6 @@ public class AlterarFuncionario extends JFrame {
 
 	}
 
-	/**
-	 * Create the frame.
-	 * @param f 
-	 */
 	public AlterarFuncionario(Funcionario f) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -121,7 +114,8 @@ public class AlterarFuncionario extends JFrame {
 
 		JPanel panel = new JPanel();
 		contentPane.add(panel, "cell 3 2 27 83,grow");
-		panel.setLayout(new MigLayout("", "[grow][][][grow][grow 50][grow][][][grow]", "[][][grow][][][][][grow 20][][][grow 20][][][grow 20][][][][][][][][][][grow]"));
+		panel.setLayout(new MigLayout("", "[grow][][][grow][grow 50][grow][][][grow]",
+				"[][][grow][][][][][grow 20][][][grow 20][][][grow 20][][][][][][][][][][grow]"));
 
 		JLabel lblvoltar = new JLabel("");
 		lblvoltar.addMouseListener(new MouseAdapter() {
@@ -142,11 +136,11 @@ public class AlterarFuncionario extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("Email");
 		panel.add(lblNewLabel_2, "cell 5 5");
 
-		 txtNomeCompleto = new JTextField();
+		txtNomeCompleto = new JTextField();
 		panel.add(txtNomeCompleto, "cell 1 6 3 1,growx");
 		txtNomeCompleto.setColumns(10);
 
-		 txtEmail = new JTextField();
+		txtEmail = new JTextField();
 		panel.add(txtEmail, "cell 5 6 3 1,growx");
 		txtEmail.setColumns(10);
 
@@ -170,11 +164,11 @@ public class AlterarFuncionario extends JFrame {
 		JLabel lblNewLabel_5 = new JLabel("Senha:");
 		panel.add(lblNewLabel_5, "cell 5 11");
 
-		 txtLogin = new JTextField();
+		txtLogin = new JTextField();
 		panel.add(txtLogin, "cell 1 12 3 1,growx");
 		txtLogin.setColumns(10);
 
-		 txtSenha = new JTextField();
+		txtSenha = new JTextField();
 		panel.add(txtSenha, "cell 5 12 3 1,growx");
 		txtSenha.setColumns(10);
 
@@ -279,7 +273,6 @@ public class AlterarFuncionario extends JFrame {
 				funcionario.setCpf(txtCPF.getText());
 				funcionario.setEmail_Funcionario(txtEmail.getText());
 				funcionario.setNomeFuncionario(txtNomeCompleto.getText());
-				
 
 				FuncionarioDAO funcionarioAlterado = new FuncionarioDAO();
 				try {
@@ -320,8 +313,7 @@ public class AlterarFuncionario extends JFrame {
 		txtCPF.setText(f.getCpf());
 		txtLogin.setText(f.getLogin());
 		txtSenha.setText(f.getSenha());
-		
+
 	}
-	
-	
+
 }

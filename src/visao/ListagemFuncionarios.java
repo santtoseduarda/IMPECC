@@ -8,7 +8,6 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -22,17 +21,13 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import javax.swing.JSpinner;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import controle.FuncionarioController;
 import controle.FuncionarioDAO;
-import controle.ProdutoDAO;
 import modelo.Funcionario;
-import modelo.Produto;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -402,15 +397,13 @@ public class ListagemFuncionarios extends JFrame {
 		DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
 		modeloTabela.setRowCount(0);
 
-		ProdutoDAO pdao = new ProdutoDAO();
-		ArrayList<Produto> listaProdutos = pdao.buscarProdutos(campo, valor);
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios(campo, valor);
 
-		for (Produto p : listaProdutos) {
+		for (Funcionario f : listaFuncionarios) {
 
-			modeloTabela.addRow(new Object[] { p.getId_Produto(), p.getNomeProduto(), p.getCodBarra(), p.getTamanho(),
-					p.getGenero(), p.getPreco(), p.getFornecedor(), p.getQtdEstoque()
-
-			});
+			modeloTabela.addRow(new Object[] { f.getId_Funcionario(), f.getNomeFuncionario(), f.getEmail_Funcionario(),
+					f.getCelular(), f.getCpf(), f.getLogin(), });
 		}
 	}
 
@@ -419,15 +412,14 @@ public class ListagemFuncionarios extends JFrame {
 		DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
 		modeloTabela.setRowCount(0);
 
-		ProdutoDAO pdao = new ProdutoDAO();
-		ArrayList<Produto> listaProdutos = pdao.buscarProdutos(campo, valor);
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncionarios(campo, valor);
 
-		if (listaProdutos != null && !listaProdutos.isEmpty()) {
-			for (Produto p : listaProdutos) {
-				// Adiciona os dados do produto na tabela
-				modeloTabela.addRow(new Object[] { p.getId_Produto(), p.getNomeProduto(), p.getCodBarra(),
-						p.getTamanho(), p.getGenero(), p.getPreco(), p.getFornecedor(), p.getQtdEstoque()
-				});
+		if (listaFuncionarios != null && !listaFuncionarios.isEmpty()) {
+			for (Funcionario f : listaFuncionarios) {
+				// Adiciona os dados do funcionário na tabela
+				modeloTabela.addRow(new Object[] { f.getId_Funcionario(), f.getNomeFuncionario(),
+						f.getEmail_Funcionario(), f.getCelular(), f.getCpf(), f.getLogin() });
 			}
 		}
 	}

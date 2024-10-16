@@ -136,5 +136,37 @@ public class ProdutoDAO {
 		}
 	}
 
+	public Produto buscarProdutos(int id_Produto) {
+		String mostrarDados = "SELECT * FROM funcionarios WHERE id_Funcionario = ?";
+		Funcionario f = null;
+		
+		try {
+			pst = conn.prepareStatement(mostrarDados);
+	        pst.setInt(1, id_Funcionario); // Use o id_Funcionario passado como parâmetro
+
+	        ResultSet rs = pst.executeQuery(); // Aqui você deve usar executeQuery()
+
+	        if (rs.next()) { // Se houver resultados, preencha o objeto Funcionario
+	            f = new Funcionario();
+	            f.setId_Funcionario(rs.getInt("id_Funcionario")); // Adicione isso se necessário
+	            f.setNomeFuncionario(rs.getString("nome_Funcionario"));
+	            f.setEmail_Funcionario(rs.getString("email_Funcionario"));
+	            f.setLogin(rs.getString("login"));
+	            f.setSenha(rs.getString("senha"));
+	            f.setCelular(rs.getString("celular"));
+	            f.setCpf(rs.getString("cpf"));
+	            return f;
+	        }
+
+			pst.executeQuery();
+
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return null;
+	}
+
+
 
 }

@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
 
 public class AlterarProduto extends JFrame {
@@ -48,8 +49,9 @@ public class AlterarProduto extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param p 
 	 */
-	public AlterarProduto() {
+	public AlterarProduto(Produto p) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

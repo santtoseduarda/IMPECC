@@ -25,6 +25,12 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import controle.FuncionarioController;
+import controle.FuncionarioDAO;
+import controle.ProdutoController;
+import controle.ProdutoDAO;
+import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTabbedPane;
 
@@ -34,6 +40,7 @@ public class ListagemProdutos extends JFrame {
 	private JTextField txtId;
 	private JTextField txtGenero;
 	private JTextField txtFornecedor;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -124,7 +131,7 @@ public class ListagemProdutos extends JFrame {
 		panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// pesquisarPorCampo("id_Funcionario", textField.getText());
+				pesquisarPorCampo("id_Produto", txtId.getText());
 			}
 		});
 		contentPane.add(panel, "cell 4 8 21 73,grow");
@@ -167,7 +174,7 @@ public class ListagemProdutos extends JFrame {
 		lupaId.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// pesquisarPorCampo("id_Funcionario", textField.getText());
+				pesquisarPorCampo("id_Fornecedor", txtId.getText());
 			}
 		});
 		lupaId.setIcon(new ImageIcon(
@@ -182,7 +189,7 @@ public class ListagemProdutos extends JFrame {
 		lupaNome.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// pesquisarPorCampo("nome_Funcionario", textField_1.getText());
+				pesquisarPorCampo("nome_Produto", txtNome.getText());
 			}
 		});
 		lupaNome.setIcon(new ImageIcon(
@@ -193,16 +200,16 @@ public class ListagemProdutos extends JFrame {
 		panel.add(txtCodBarra, "cell 7 1,growx");
 		txtCodBarra.setColumns(10);
 
-		JLabel lupaModelo = new JLabel("");
-		lupaModelo.addMouseListener(new MouseAdapter() {
+		JLabel lupaCod = new JLabel("");
+		lupaCod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// pesquisarPorCampo("cpf", textField_2.getText());
+				pesquisarPorCampo("codBarra", lupaCod.getText());
 			}
 		});
-		lupaModelo.setIcon(new ImageIcon(
+		lupaCod.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
-		panel.add(lupaModelo, "cell 8 1");
+		panel.add(lupaCod, "cell 8 1");
 
 		JTextField txtTamanho = new JTextField();
 		panel.add(txtTamanho, "cell 10 1,growx");
@@ -212,7 +219,7 @@ public class ListagemProdutos extends JFrame {
 		lupaTamanho.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// pesquisarPorCampo("login", textField_3.getText());
+				pesquisarPorCampo("tamanho", txtTamanho.getText());
 			}
 			// TODO Auto-generated method stub
 
@@ -226,6 +233,12 @@ public class ListagemProdutos extends JFrame {
 		panel.add(txtGenero, "cell 13 1,growx");
 
 		JLabel lupaGenero = new JLabel("");
+		lupaGenero.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				pesquisarPorCampo("genero", txtGenero.getText());
+			}
+		});
 		lupaGenero.setIcon(new ImageIcon(ListagemProdutos.class.getResource("/img/procurar.png")));
 		panel.add(lupaGenero, "cell 14 1");
 
@@ -234,6 +247,14 @@ public class ListagemProdutos extends JFrame {
 		panel.add(txtFornecedor, "cell 16 1,growx");
 
 		JLabel lupaFornecedor = new JLabel("");
+		lupaFornecedor.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				pesquisarPorCampo("fornecedor", txtFornecedor.getText());
+			}
+			// TODO Auto-generated method stub
+		});
+
 		lupaFornecedor.setIcon(new ImageIcon(ListagemProdutos.class.getResource("/img/procurar.png")));
 		panel.add(lupaFornecedor, "cell 17 1");
 
@@ -241,9 +262,10 @@ public class ListagemProdutos extends JFrame {
 		panel.add(scrollPane, "cell 0 3 20 19,grow");
 
 		JTable table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "ID", "Nome", "Cod. Barra","Marca", "Tamanho",
-				"Genero", "Preco", "Fornecedor", "QNTD.Estoque" }));
+		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "ID", "Nome", "Cod. Barra", "Marca",
+				"Tamanho", "Genero", "Preco", "Fornecedor", "QNTD.Estoque" }));
 		scrollPane.setViewportView(table);
+		atualizarTabela("", "");
 
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(
@@ -313,7 +335,7 @@ public class ListagemProdutos extends JFrame {
 		JButton btnSair = new JButton("Sair");
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				int resposta = JOptionPane.showConfirmDialog(janelaListagemProdutos, "Você realmente deseja sair?",
 						"Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
@@ -345,10 +367,21 @@ public class ListagemProdutos extends JFrame {
 		btnAdicionar_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				//editar fazer
-				
+				int posicaoSelecionada = table.getSelectedRow();
+				DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
+				int id_Produto = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+				ProdutoController pControlleer = new ProdutoController();
+				// AlterarFuncionario janelaAlterar = new AlterarFuncionario();
+
+				pControlleer.alterarProdutos(id_Produto);
+
+				// janelaAlterar.setVisible(true);
+
+				dispose();
+
 			}
 		});
+
 		btnAdicionar_2.setForeground(new Color(255, 0, 0));
 		btnAdicionar_2.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar_2.setBackground(new Color(255, 255, 255));
@@ -357,8 +390,36 @@ public class ListagemProdutos extends JFrame {
 		JButton btnAdicionar_1 = new JButton("Excluir");
 		btnAdicionar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
+
+				int posicaoSelecionada = table.getSelectedRow();
+
+				if (posicaoSelecionada >= 0) {
+
+					DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
+					int idProduto = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+
+					int confirmacao = JOptionPane.showConfirmDialog(null,
+							"Você tem certeza que deseja excluir o produto?", "Confirmação de Exclusão",
+							JOptionPane.YES_NO_OPTION);
+
+					if (confirmacao == JOptionPane.YES_OPTION) {
+
+						// vai excluir o produto
+						ProdutoDAO pdao = new ProdutoDAO();
+						boolean certo = pdao.excluirProdutos(idProduto);
+
+						if (certo) {
+
+							modeloTabela.removeRow(posicaoSelecionada);
+							JOptionPane.showMessageDialog(null, "Produto excluído com sucesso.");
+
+						} else {
+							JOptionPane.showMessageDialog(null, "Erro ao excluir o produto.");
+						}
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Por favor, selecione um produto para excluir.");
+				}
 
 			}
 
@@ -373,6 +434,40 @@ public class ListagemProdutos extends JFrame {
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 22 81 1 2,aligny bottom");
 
+	}
+
+	protected void pesquisarPorCampo(String campo, String valor) {
+		DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
+		modeloTabela.setRowCount(0);
+
+		ProdutoDAO pdao = new ProdutoDAO();
+		ArrayList<Produto> listaProdutos = pdao.buscarProdutos(campo, valor);
+
+		for (Produto p : listaProdutos) {
+
+			modeloTabela.addRow(new Object[] { p.getId_Produto(), p.getNomeProduto(), p.getCodBarra(), p.getTamanho(),
+					p.getGenero(), p.getPreco(), p.getFornecedor(), p.getQtdEstoque()
+
+			});
+		}
+
+	}
+
+	private void atualizarTabela(String campo, String valor) {
+
+		DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
+		modeloTabela.setRowCount(0);
+
+		ProdutoDAO pdao = new ProdutoDAO();
+		ArrayList<Produto> listaProdutos = pdao.buscarProdutos(campo, valor);
+
+		if (listaProdutos != null && !listaProdutos.isEmpty()) {
+			for (Produto p : listaProdutos) {
+				// Adiciona os dados do produto na tabela
+				modeloTabela.addRow(new Object[] { p.getId_Produto(), p.getNomeProduto(), p.getCodBarra(),
+						p.getTamanho(), p.getGenero(), p.getPreco(), p.getFornecedor(), p.getQtdEstoque() });
+			}
+		}
 	}
 
 }

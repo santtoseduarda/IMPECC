@@ -255,9 +255,13 @@ public class ListagemProdutos extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		panel.add(scrollPane, "cell 0 3 20 19,grow");
 
-		JTable table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "ID", "Nome", "Cod. Barra", "Marca",
-				"Tamanho", "Genero", "Preco", "Fornecedor", "QNTD.Estoque" }));
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+		    new Object[][] {},
+		    new String[] {
+		        "ID", "Nome", "Cod. Barra", "Marca", "Tamanho", "Genero", "Preco", "Fornecedor", "Qnt. Estoque"
+		    }
+		));
 		scrollPane.setViewportView(table);
 		atualizarTabela("", "");
 

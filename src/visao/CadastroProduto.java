@@ -31,6 +31,7 @@ import modelo.Funcionario;
 import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class CadastroProduto extends JFrame {
 
@@ -149,12 +150,14 @@ public class CadastroProduto extends JFrame {
 		panel.add(lblTamanho, "cell 1 11,growx,aligny bottom");
 
 		JComboBox comboBoxTamanho = new JComboBox();
+		comboBoxTamanho.setModel(new DefaultComboBoxModel(new String[] {"Selecione um Item", "PP", "P", "M", "G", "GG"}));
 		panel.add(comboBoxTamanho, "cell 1 13 7 1,growx");
 
 		JLabel lblGenero = new JLabel("Gênero:*");
 		panel.add(lblGenero, "cell 1 15,growx,aligny bottom");
 
 		JComboBox comboBoxGenero = new JComboBox();
+		comboBoxGenero.setModel(new DefaultComboBoxModel(new String[] {"Selecione um Item", "Feminino", "Masculino", "Unissex"}));
 		panel.add(comboBoxGenero, "cell 1 17 7 1,growx");
 
 		JLabel lblPreco = new JLabel("Preço:*");
@@ -168,6 +171,7 @@ public class CadastroProduto extends JFrame {
 		panel.add(lblForn, "cell 1 23,growx,aligny bottom");
 
 		JComboBox comboBoxFornecedor = new JComboBox();
+		comboBoxFornecedor.setModel(new DefaultComboBoxModel(new String[] {"tem", "que", "adicionar", "os", "fornecedores"}));
 		panel.add(comboBoxFornecedor, "cell 1 25 7 1,growx");
 
 		JLabel lblQntdEstoque = new JLabel("Quantidade em estoque:*");

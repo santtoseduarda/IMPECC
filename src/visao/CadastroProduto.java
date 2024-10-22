@@ -90,10 +90,10 @@ public class CadastroProduto extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
 
-		JLabel lblcadastroFunc = new JLabel("Cadastro de Produtos");
-		lblcadastroFunc.setForeground(new Color(255, 255, 255));
-		lblcadastroFunc.setFont(fontBold.deriveFont(Font.PLAIN, 45));
-		contentPane.add(lblcadastroFunc, "cell 3 1");
+		JLabel lblCadastroProduto = new JLabel("Cadastro de Produtos");
+		lblCadastroProduto.setForeground(new Color(255, 255, 255));
+		lblCadastroProduto.setFont(fontBold.deriveFont(Font.PLAIN, 45));
+		contentPane.add(lblCadastroProduto, "cell 3 1");
 
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(new ImageIcon(

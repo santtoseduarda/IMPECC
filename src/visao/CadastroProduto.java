@@ -170,6 +170,7 @@ public class CadastroProduto extends JFrame {
 		JLabel lblForn = new JLabel("Fornecedor:*");
 		panel.add(lblForn, "cell 1 23,growx,aligny bottom");
 
+		
 		JComboBox comboBoxFornecedor = new JComboBox();
 		comboBoxFornecedor.setModel(new DefaultComboBoxModel(new String[] {"tem", "que", "adicionar", "os", "fornecedores"}));
 		panel.add(comboBoxFornecedor, "cell 1 25 7 1,growx");
@@ -297,11 +298,12 @@ public class CadastroProduto extends JFrame {
 						//conversao dos valores
 						float precoConvert = Float.parseFloat(preco);
 			            int qntEstoqueConvert = Integer.parseInt(qntEstoque);
+			            int codBarraConvert = Integer.parseInt(codBarra);
 						
 						Produto cadastro = new Produto();
 
 						cadastro.setNomeProduto(nomeProduto);
-						cadastro.setCodBarra(codBarra);
+						cadastro.setCodBarra(codBarraConvert);
 						cadastro.setTamanho(tamanho);
 						cadastro.setGenero(genero);
 						cadastro.setPreco(precoConvert);
@@ -334,6 +336,7 @@ public class CadastroProduto extends JFrame {
 		        txtPreco.setText("");
 		        txtQntdEstoque.setText("");
 		        
+		        //limpar do combobox
 		        comboBoxTamanho.setSelectedItem(null);
 		        comboBoxGenero.setSelectedItem(null);
 		        comboBoxFornecedor.setSelectedItem(null);

@@ -10,7 +10,7 @@ public class Produto {
 	private String marca;
 	private String genero;
 	private float preco;
-	private String codBarra;
+	private int codBarra;
 	private int qtdEstoque;
 	private String tamanho;
 	private String fornecedor;
@@ -71,12 +71,12 @@ public class Produto {
 		this.preco = precoConvert;
 	}
 
-	public String getCodBarra() {
+	public int getCodBarra() {
 		return codBarra;
 	}
 
-	public void setCodBarra(String codBarra) {
-		this.codBarra = codBarra;
+	public void setCodBarra(int codBarraConvert) {
+		this.codBarra = codBarraConvert;
 	}
 
 	public int getQtdEstoque() {

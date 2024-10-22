@@ -32,8 +32,8 @@ import net.miginfocom.swing.MigLayout;
 public class AlterarProduto extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField_1;
-	private JTextField textField;
+	private JTextField txtFornecedor;
+	private JTextField txtQuantidadeEstoque;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -137,19 +137,19 @@ public class AlterarProduto extends JFrame {
 		JLabel lblModelo = new JLabel("Modelo");
 		panel.add(lblModelo, "cell 1 9");
 
-		JTextField textModelo = new JTextField();
-		panel.add(textModelo, "cell 1 10 3 1,growx");
-		textModelo.setColumns(10);
+		JTextField txtModelo = new JTextField();
+		panel.add(txtModelo, "cell 1 10 3 1,growx");
+		txtModelo.setColumns(10);
 
 		JLabel lblTamanho = new JLabel("Tamanho");
 		panel.add(lblTamanho, "cell 1 12");
 
-		JTextField txttamanho = new JTextField();
-		panel.add(txttamanho, "cell 1 13 3 1,growx");
-		txttamanho.setColumns(10);
+		JTextField txtTamanho = new JTextField();
+		panel.add(txtTamanho, "cell 1 13 3 1,growx");
+		txtTamanho.setColumns(10);
 
-		JLabel lblGênero = new JLabel("Gênero");
-		panel.add(lblGênero, "cell 1 15");
+		JLabel lblGenero = new JLabel("Gênero");
+		panel.add(lblGenero, "cell 1 15");
 
 		JTextField txtGenero = new JTextField();
 		panel.add(txtGenero, "cell 1 16 3 1,growx");
@@ -165,16 +165,16 @@ public class AlterarProduto extends JFrame {
 		JLabel lblfornecedor = new JLabel("Fornecedor");
 		panel.add(lblfornecedor, "cell 1 21");
 
-		textField_1 = new JTextField();
-		panel.add(textField_1, "cell 1 22 3 1,growx");
-		textField_1.setColumns(10);
+		txtFornecedor = new JTextField();
+		panel.add(txtFornecedor, "cell 1 22 3 1,growx");
+		txtFornecedor.setColumns(10);
 
-		JLabel lblNewLabel = new JLabel("Quantida em Estoque");
-		panel.add(lblNewLabel, "cell 1 24");
+		JLabel lblQuantidadeEstoque = new JLabel("Quantida em Estoque");
+		panel.add(lblQuantidadeEstoque, "cell 1 24");
 
-		textField = new JTextField();
-		panel.add(textField, "cell 1 25 3 1,growx");
-		textField.setColumns(10);
+		txtQuantidadeEstoque = new JTextField();
+		panel.add(txtQuantidadeEstoque, "cell 1 25 3 1,growx");
+		txtQuantidadeEstoque.setColumns(10);
 
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(

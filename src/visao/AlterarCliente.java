@@ -30,7 +30,7 @@ import net.miginfocom.swing.MigLayout;
 public class AlterarCliente extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txtDataNascCliente;
 
 	/**
 	 * Launch the application.
@@ -113,7 +113,7 @@ public class AlterarCliente extends JFrame {
 
 		JPanel panel = new JPanel();
 		contentPane.add(panel, "cell 3 2 27 83,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][][grow][grow 50][grow][][][grow]", "[][][grow][][][][][][][grow 20][][][grow 20][][][][][grow 20][][][][][][][][][][grow]"));
+		panel.setLayout(new MigLayout("", "[grow][grow][][grow][grow 50][grow][][][grow]", "[][][][][][][][][][][][][][grow 20][][][][][grow 20][][][][][][grow 20][][][][][][][][][][grow]"));
 
 		JLabel lblvoltar = new JLabel("");
 		lblvoltar.addMouseListener(new MouseAdapter() {
@@ -127,41 +127,41 @@ public class AlterarCliente extends JFrame {
 		lblvoltar.setIcon(new ImageIcon(
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
-				
-						JLabel lblNewLabel_1 = new JLabel("Nome");
-						panel.add(lblNewLabel_1, "cell 1 3");
-		
-				JTextField txtNomeCompleto = new JTextField();
-				panel.add(txtNomeCompleto, "cell 1 4 3 1,growx");
-				txtNomeCompleto.setColumns(10);
-		
-		JLabel lblNewLabel = new JLabel("Data Nasc");
-		panel.add(lblNewLabel, "cell 1 6");
-		
-		textField = new JTextField();
-		panel.add(textField, "cell 1 7 3 1,growx");
-		textField.setColumns(10);
-
-		JLabel lblNewLabel_3 = new JLabel("Telefone");
-		panel.add(lblNewLabel_3, "cell 1 10");
-
-		JTextField txtCelular = new JTextField();
-		panel.add(txtCelular, "cell 1 11 3 1,growx");
-		txtCelular.setColumns(10);
-		
-				JLabel lblNewLabel_2 = new JLabel("Email");
-				panel.add(lblNewLabel_2, "cell 1 13");
-				
-						JTextField txtEmail = new JTextField();
-						panel.add(txtEmail, "cell 1 14 3 1,growx");
-						txtEmail.setColumns(10);
 										
-												JLabel lblCPF = new JLabel("CPF");
-												panel.add(lblCPF, "cell 1 16");
+												JLabel lblNomeCliente = new JLabel("Nome");
+												panel.add(lblNomeCliente, "cell 1 7");
 								
-										JTextField txtCPF = new JTextField();
-										panel.add(txtCPF, "cell 1 17 3 1,growx");
-										txtCPF.setColumns(10);
+										JTextField txtNomeCliente = new JTextField();
+										panel.add(txtNomeCliente, "cell 1 8 7 1,growx");
+										txtNomeCliente.setColumns(10);
+								
+								JLabel lblDataNascCliente = new JLabel("Data Nasc");
+								panel.add(lblDataNascCliente, "cell 1 10");
+								
+								txtDataNascCliente = new JTextField();
+								panel.add(txtDataNascCliente, "cell 1 11 7 1,growx");
+								txtDataNascCliente.setColumns(10);
+						
+								JLabel lblTelefoneCliente = new JLabel("Telefone");
+								panel.add(lblTelefoneCliente, "cell 1 13");
+								
+										JTextField txtTelefoneCliente = new JTextField();
+										panel.add(txtTelefoneCliente, "cell 1 14 7 1,growx");
+										txtTelefoneCliente.setColumns(10);
+														
+																JLabel lblEmailCliente = new JLabel("Email");
+																panel.add(lblEmailCliente, "cell 1 16");
+												
+														JTextField txtEmailCliente = new JTextField();
+														panel.add(txtEmailCliente, "cell 1 17 7 1,growx");
+														txtEmailCliente.setColumns(10);
+												
+														JLabel lblCpfClinte = new JLabel("CPF");
+														panel.add(lblCpfClinte, "cell 1 19");
+												
+														JTextField txtCpfCliente = new JTextField();
+														panel.add(txtCpfCliente, "cell 1 20 7 1,growx");
+														txtCpfCliente.setColumns(10);
 
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(

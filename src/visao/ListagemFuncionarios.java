@@ -297,7 +297,7 @@ public class ListagemFuncionarios extends JFrame {
 
 				// Verifica a resposta
 				if (resposta == JOptionPane.YES_OPTION) {
-					TelaLogin janelaListagemFuncionarios = new TelaLogin();
+					TelaLogin janelaListagemFuncionarios = new TelaLogin(null);
 					janelaListagemFuncionarios.setVisible(true);
 					dispose(); // Fecha a tela de login
 				}
@@ -312,9 +312,10 @@ public class ListagemFuncionarios extends JFrame {
 		JButton btnAdicionar = new JButton("Adicionar Funcionário");
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				CadastroFuncionarios janelaFuncionarios = new CadastroFuncionarios();
-				janelaFuncionarios.setVisible(true);
+				
+				// view chama o controler
+				FuncionarioController fControlleer = new FuncionarioController();
+				fControlleer.inserirFuncionario();
 				dispose();
 
 			}
@@ -324,12 +325,13 @@ public class ListagemFuncionarios extends JFrame {
 		btnAdicionar_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int posicaoSelecionada = table.getSelectedRow();
+				
 				DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
+				
 				int id_Funcionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+				
 				FuncionarioController fControlleer = new FuncionarioController();
-				// AlterarFuncionario janelaAlterar = new AlterarFuncionario();
-				fControlleer.alterarFuncionario(id_Funcionario);
-				// janelaAlterar.setVisible(true);
+				fControlleer.selecionaBusca(id_Funcionario);
 				dispose();
 			}
 		});

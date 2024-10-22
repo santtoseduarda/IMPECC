@@ -255,7 +255,7 @@ public class CadastroFuncionarios extends JFrame {
 
 				// Verifica a resposta
 				if (resposta == JOptionPane.YES_OPTION) {
-					TelaLogin CadastroFuncionarios = new TelaLogin();
+					TelaLogin CadastroFuncionarios = new TelaLogin(null);
 					CadastroFuncionarios.setVisible(true);
 					dispose(); // Fecha a tela de login
 				}
@@ -275,9 +275,6 @@ public class CadastroFuncionarios extends JFrame {
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				
-				
 				String login = txtLogin.getText();
 				String senha = txtSenha.getText();
 				String cpf = txtCPF.getText();
@@ -288,9 +285,7 @@ public class CadastroFuncionarios extends JFrame {
 				if (login.isEmpty() || senha.isEmpty() || cpf.isEmpty() || email.isEmpty() || nomeCompleto.isEmpty()
 						|| celular.isEmpty()) {
 					javax.swing.JOptionPane.showMessageDialog(null,
-							"Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", // Adicionei
-																											// o título
-																											// da janela
+							"Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro",
 							javax.swing.JOptionPane.ERROR_MESSAGE);
 				} else {
 

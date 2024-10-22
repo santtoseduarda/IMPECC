@@ -232,7 +232,7 @@ public class CadastroFornecedores extends JFrame {
 
 				// Verifica a resposta
 				if (resposta == JOptionPane.YES_OPTION) {
-					TelaLogin CadastroFuncionarios = new TelaLogin();
+					TelaLogin CadastroFuncionarios = new TelaLogin(null);
 					CadastroFuncionarios.setVisible(true);
 					dispose(); // Fecha a tela de login
 				}

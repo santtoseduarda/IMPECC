@@ -9,6 +9,7 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import controle.FuncionarioDAO;
+import controle.LoginController;
 import modelo.Funcionario;
 
 import java.awt.Color;
@@ -29,15 +30,18 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.ModuleLayer.Controller;
 
 public class TelaLogin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtLogin;
-	private JTextField txtSenha;
-	private boolean SenhaVisivel;
-
+	public JTextField txtLogin;
+	public JTextField txtSenha;
+	public boolean SenhaVisivel;
+	public JPanel panel;
+	public JTextField txttSenhaVisivel;
+	LoginController loginController;
 	/**
 	 * Launch the application.
 	 */
@@ -45,8 +49,8 @@ public class TelaLogin extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaLogin frame = new TelaLogin();
-					frame.setVisible(true);
+					LoginController controller = new LoginController();
+					controller.iniciarLogin();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -56,9 +60,10 @@ public class TelaLogin extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param loginController 
 	 */
-	public TelaLogin() {
-		
+	public TelaLogin(LoginController loginController) {
+		this.loginController = loginController;
 		Font fontRegular = null;
 		Font fontBold = null;
 		
@@ -100,7 +105,7 @@ public class TelaLogin extends JFrame {
 		lblNewLabel_3.setIcon(new ImageIcon(new ImageIcon("src/img/logo.png").getImage().getScaledInstance(230, 110, Image.SCALE_DEFAULT)));
 		contentPane.add(lblNewLabel_3, "cell 4 0,alignx center,aligny center");
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBackground(new Color(69, 69, 69, 40));
 		contentPane.add(panel, "cell 3 1 3 1,grow");
 		panel.setLayout(new MigLayout("", "[grow][grow][grow][grow]", "[grow][][][][][][][][][][][][grow]"));
@@ -122,7 +127,7 @@ public class TelaLogin extends JFrame {
 		panel.add(lblNewLabel_2, "cell 1 5");
 		
 		
-		JTextField txttSenhaVisivel = new JTextField();
+		txttSenhaVisivel = new JTextField();
 		txttSenhaVisivel.setColumns(10);
 
 		
@@ -136,31 +141,9 @@ public class TelaLogin extends JFrame {
 		btnAcessar.setForeground(new Color(255, 255, 255));
 		btnAcessar.setBackground(new Color(255, 0, 0));
 		btnAcessar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnAcessar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				String login = txtLogin.getText();
-		        String senha = txtSenha.getText();
-		        
-		        FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-				
-				
-				 if (funcionarioDAO.verificarLogin(login, senha)) {
-					 
-			            // Se a verificação for bem-sucedida, abre a tela inicial
-			            TelaInicial novaJanela = new TelaInicial();
-			            novaJanela.setVisible(true);
-			            dispose(); // Fecha a tela de login
-			            
-			        } else {
-			            // Se o login ou a senha estiverem errados, mostra uma mensagem de erro
-			            javax.swing.JOptionPane.showMessageDialog(null,
-			                    "Login ou senha incorretos!",
-			                    "Erro de login",
-			                    javax.swing.JOptionPane.ERROR_MESSAGE);
-			        }
-			}
-		});
+		
+		// controller faz logar
+		btnAcessar.addActionListener(loginController.logar());
 		
 		JLabel btnOlho = new JLabel("");
 		btnOlho.setFont(new Font("Tahoma", Font.PLAIN, 9));
@@ -204,7 +187,6 @@ public class TelaLogin extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				//mostrar tela de esquecer a senha..
-				
 				System.out.print("esqueceu");
 				
 			}
@@ -216,11 +198,7 @@ public class TelaLogin extends JFrame {
 		JButton btnCadastre = new JButton("Cadastre-se");
 		btnCadastre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				CadastroFuncionario janelaLogin = new CadastroFuncionario();
-				janelaLogin.setVisible(true);
-				dispose();
-				
+				loginController.iniciarCadastro();
 			}
 		});
 		btnCadastre.setFont(fontBold.deriveFont(Font.PLAIN, 25));

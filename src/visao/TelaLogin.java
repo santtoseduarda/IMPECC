@@ -47,18 +47,6 @@ public class TelaLogin extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginController controller = new LoginController();
-					controller.iniciarLogin();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -136,9 +124,7 @@ public class TelaLogin extends JFrame {
 		txtSenha = new JPasswordField();
 		panel.add(txtSenha, "cell 1 6 2 1,growx");
 		txtSenha.setColumns(10);
-		
-		
-		
+
 		JButton btnAcessar = new JButton("Acessar");
 		btnAcessar.setForeground(new Color(255, 255, 255));
 		btnAcessar.setBackground(new Color(255, 0, 0));
@@ -152,35 +138,9 @@ public class TelaLogin extends JFrame {
 		
 		btnOlho.setIcon(new ImageIcon(new ImageIcon("src/img/olho.png").getImage().getScaledInstance(17, 18, Image.SCALE_DEFAULT)));
 		SenhaVisivel = false;
-		btnOlho.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				//clique do olho
-				if(SenhaVisivel == false) {
-					System.out.print("mostrar senha");
-					txttSenhaVisivel.setText(txtSenha.getText());
-
-					panel.remove(txtSenha);
-
-					panel.add(txttSenhaVisivel, "cell 1 6 2 1,growx");
-					panel.repaint();
-					SenhaVisivel = true;
-				} else {
-					System.out.print("ocular senha");
-					txtSenha.setText(txttSenhaVisivel.getText());
-
-					panel.remove(txttSenhaVisivel);
-
-					panel.add(txtSenha, "cell 1 6 2 1,growx");
-					panel.repaint();
-					SenhaVisivel = false;
-					
-				}
-				panel.validate();
-			
-			}
-		});
+		
+		//controller chmaa o metodo de mostrar a senha
+		btnOlho.addMouseListener(loginController.mostrarSenha());
 		panel.add(btnOlho, "cell 3 6");
 		
 		JLabel btnEsqueceuSenha = new JLabel("Esqueceu sua senha?");
@@ -200,6 +160,7 @@ public class TelaLogin extends JFrame {
 		JButton btnCadastre = new JButton("Cadastre-se");
 		btnCadastre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// controller inicializa o cadastro
 				loginController.iniciarCadastro();
 			}
 		});

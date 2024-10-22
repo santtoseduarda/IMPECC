@@ -12,7 +12,6 @@ public class ProdutoController {
 	
 	ProdutoController listagemProduto = new ProdutoController();
 	listagemProduto.setVisible(true);
-	dispose();
 	
 	
 	public void alterarProdutos(int id_Produto) {

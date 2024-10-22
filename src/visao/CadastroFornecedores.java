@@ -35,13 +35,6 @@ public class CadastroFornecedores extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtTelefone;
 
-	/**
-	 * Launch the application.
-	 */
-	/**
-	 * Create the frame.
-	 * @param fornecedorController 
-	 */
 	public CadastroFornecedores(FornecedorController fornecedorController) {
 		
 		CadastroFornecedores janelaCadastroFornecedores = this;

@@ -19,7 +19,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -28,9 +27,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controle.FornecedorController;
-import controle.FornecedorDAO;
-import controle.FuncionarioController;
-import modelo.Fornecedor;
 import net.miginfocom.swing.MigLayout;
 
 public class ListagemFornecedor extends JFrame {
@@ -39,27 +35,6 @@ public class ListagemFornecedor extends JFrame {
 	public JTable table;
 	private JTextField txtId;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FornecedorController controllerListagemForn = new FornecedorController();
-					controllerListagemForn.iniciarListagem();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 * 
-	 * @param fornecedorController
-	 */
 	public ListagemFornecedor(FornecedorController fornecedorController) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

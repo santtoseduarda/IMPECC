@@ -339,7 +339,8 @@ public class ListagemProdutos extends JFrame {
 
 				// Verifica a resposta
 				if (resposta == JOptionPane.YES_OPTION) {
-					TelaLogin janelaListagemProdutos = new TelaLogin();
+					
+					TelaLogin janelaListagemProdutos = new TelaLogin(null);
 					janelaListagemProdutos.setVisible(true);
 					dispose(); // Fecha a tela de login
 				}

@@ -161,7 +161,7 @@ public class CadastroFuncionario extends JFrame {
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				TelaLogin janelaCadastro = new TelaLogin();
+				TelaLogin janelaCadastro = new TelaLogin(null);
 				janelaCadastro.setVisible(true);
 				dispose();
 
@@ -187,7 +187,7 @@ public class CadastroFuncionario extends JFrame {
 					FuncionarioDAO novoFuncionario = new FuncionarioDAO();
 					try {
 						novoFuncionario.inserir(cadastro);
-						TelaLogin janelaLogin = new TelaLogin();
+						TelaLogin janelaLogin = new TelaLogin(null);
 						janelaLogin.setVisible(true);
 						dispose();
 						

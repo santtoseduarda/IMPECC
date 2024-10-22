@@ -13,6 +13,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.ModuleLayer.Controller;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controle.FuncionarioController;
 import controle.FuncionarioDAO;
 import modelo.Funcionario;
 import net.miginfocom.swing.MigLayout;
@@ -246,7 +248,9 @@ public class AlterarFuncionario extends JFrame {
 
 				// Verifica a resposta
 				if (resposta == JOptionPane.YES_OPTION) {
-					TelaLogin CadastroFuncionarios = new TelaLogin();
+					
+					
+					TelaLogin CadastroFuncionarios = new TelaLogin(null);
 					CadastroFuncionarios.setVisible(true);
 					dispose(); // Fecha a tela de login
 				}

@@ -260,7 +260,7 @@ public class CadastroProduto extends JFrame {
 
 				// Verifica a resposta
 				if (resposta == JOptionPane.YES_OPTION) {
-					TelaLogin CadastroProduto = new TelaLogin();
+					TelaLogin CadastroProduto = new TelaLogin(null);
 					CadastroProduto.setVisible(true);
 					dispose(); // Fecha a tela de login
 				}

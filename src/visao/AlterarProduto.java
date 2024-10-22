@@ -250,7 +250,7 @@ public class AlterarProduto extends JFrame {
 
 				// Verifica a resposta
 				if (resposta == JOptionPane.YES_OPTION) {
-					TelaLogin janelaAlterarProduto = new TelaLogin();
+					TelaLogin janelaAlterarProduto = new TelaLogin(null);
 					janelaAlterarProduto.setVisible(true);
 					dispose(); //volta para tela de login
 				}

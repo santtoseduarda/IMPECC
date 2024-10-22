@@ -310,7 +310,7 @@ public class ListagemFornecedor extends JFrame {
 			        
 			        // Verifica a resposta
 			        if (resposta == JOptionPane.YES_OPTION) {
-			        	TelaLogin janelaListagemFornecedor = new TelaLogin();
+			        	TelaLogin janelaListagemFornecedor = new TelaLogin(null);
 			        	janelaListagemFornecedor.setVisible(true);
 						dispose(); // Fecha a tela de login
 			        }

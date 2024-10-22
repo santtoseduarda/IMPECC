@@ -31,17 +31,18 @@ public class ProdutoDAO {
 
 	public boolean inserir(Produto p) {
 
-		String inserir = "INSERT INTO produtos (nome_Produto, tamanho, genero, preco, qntd_Estoque, fornecedor) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String inserir = "INSERT INTO produtos (codBarra, nome_Produto, tamanho, genero, preco, qntd_Estoque, fornecedor) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			pst = conn.prepareStatement(inserir);
 
-			pst.setString(1, p.getNomeProduto());
-			pst.setString(2, p.getTamanho());
-			pst.setString(3, p.getGenero());
-			pst.setDouble(4, p.getPreco());
-			pst.setLong(5, p.getQtdEstoque());
-			pst.setString(6, p.getFornecedor());
+			pst.setInt(1, p.getCodBarra());
+			pst.setString(2, p.getNomeProduto());
+			pst.setString(3, p.getTamanho());
+			pst.setString(4, p.getGenero());
+			pst.setDouble(5, p.getPreco());
+			pst.setLong(6, p.getQtdEstoque());
+			pst.setString(7, p.getFornecedor());
 			pst.executeUpdate();
 			
 

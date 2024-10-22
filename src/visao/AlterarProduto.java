@@ -87,10 +87,10 @@ public class AlterarProduto extends JFrame {
 				"[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
 
-		JLabel lblcadastroFunc = new JLabel("Editar Dados do Produto");
-		lblcadastroFunc.setForeground(new Color(255, 255, 255));
-		lblcadastroFunc.setFont(fontBold.deriveFont(Font.PLAIN, 45));
-		contentPane_1.add(lblcadastroFunc, "cell 3 1");
+		JLabel lblEditarProdutos = new JLabel("Editar Dados do Produto");
+		lblEditarProdutos.setForeground(new Color(255, 255, 255));
+		lblEditarProdutos.setFont(fontBold.deriveFont(Font.PLAIN, 45));
+		contentPane.add(lblEditarProdutos, "cell 3 1");
 
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(new ImageIcon(

@@ -84,10 +84,10 @@ public class CadastroCliente extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
 
-		JLabel lblcadastroFunc = new JLabel("Editar Dados do Produto");
-		lblcadastroFunc.setForeground(new Color(255, 255, 255));
-		lblcadastroFunc.setFont(fontBold.deriveFont(Font.PLAIN, 45));
-		contentPane.add(lblcadastroFunc, "cell 3 1");
+		JLabel lblcadastroCliente = new JLabel("Editar Dados do Produto");
+		lblcadastroCliente.setForeground(new Color(255, 255, 255));
+		lblcadastroCliente.setFont(fontBold.deriveFont(Font.PLAIN, 45));
+		contentPane.add(lblcadastroCliente, "cell 3 1");
 
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(new ImageIcon(
@@ -146,9 +146,9 @@ public class CadastroCliente extends JFrame {
 		lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel.add(lblCpf, "cell 1 13");
 
-		JTextField txttamanho = new JTextField();
-		panel.add(txttamanho, "cell 1 14 7 1,growx");
-		txttamanho.setColumns(10);
+		JTextField txtCpf = new JTextField();
+		panel.add(txtCpf, "cell 1 14 7 1,growx");
+		txtCpf.setColumns(10);
 
 		JLabel lblTelefone = new JLabel("Telefone*");
 		lblTelefone.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -166,29 +166,29 @@ public class CadastroCliente extends JFrame {
 		panel.add(txtEmail, "cell 1 20 7 1,growx");
 		txtEmail.setColumns(10);
 
-		JButton btnLimparCampos = new JButton("Cancelar");
-		panel.add(btnLimparCampos, "cell 1 28");
-		btnLimparCampos.addActionListener(new ActionListener() {
+		JButton btnCancelar = new JButton("Cancelar");
+		panel.add(btnCancelar, "cell 1 28");
+		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 			}
 		});
-		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnLimparCampos.setForeground(Color.RED);
-		btnLimparCampos.setBackground(Color.WHITE);
+		btnCancelar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnCancelar.setForeground(Color.RED);
+		btnCancelar.setBackground(Color.WHITE);
 
-		JButton btnAdicionar = new JButton("LimparCampos");
-		panel.add(btnAdicionar, "cell 2 28");
-		btnAdicionar.setForeground(new Color(255, 0, 0));
-		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnAdicionar.setBackground(new Color(255, 255, 255));
-
-		JButton btnAdicionarclientes = new JButton("AdicionarClientes");
-		panel.add(btnAdicionarclientes, "cell 6 28");
+		JButton btnLimparCampos = new JButton("LimparCampos");
+		panel.add(btnLimparCampos, "cell 2 28");
+		btnLimparCampos.setForeground(new Color(255, 0, 0));
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnLimparCampos.setForeground(Color.RED);
-		btnLimparCampos.setBackground(Color.WHITE);
-		btnAdicionar.addActionListener(new ActionListener() {
+		btnLimparCampos.setBackground(new Color(255, 255, 255));
+
+		JButton btnAdicionarClientes = new JButton("AdicionarClientes");
+		panel.add(btnAdicionarClientes, "cell 6 28");
+		btnCancelar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnCancelar.setForeground(Color.RED);
+		btnCancelar.setBackground(Color.WHITE);
+		btnLimparCampos.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 

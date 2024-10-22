@@ -32,6 +32,7 @@ import net.miginfocom.swing.MigLayout;
 public class AlterarProduto extends JFrame {
 
 	private JPanel contentPane;
+	private JPanel contentPane_1;
 	private JTextField txtFornecedor;
 	private JTextField txtQuantidadeEstoque;
 
@@ -77,42 +78,43 @@ public class AlterarProduto extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1054, 853);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(161, 0, 29));
-		contentPane.setForeground(new Color(255, 0, 0));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][]",
-				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
+		contentPane_1 = new JPanel();
+		contentPane_1.setBackground(new Color(161, 0, 29));
+		contentPane_1.setForeground(new Color(255, 0, 0));
+		contentPane_1.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane_1);
+		contentPane_1.setLayout(new MigLayout("",
+				"[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][][][]",
+				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
 
 		JLabel lblcadastroFunc = new JLabel("Editar Dados do Produto");
 		lblcadastroFunc.setForeground(new Color(255, 255, 255));
 		lblcadastroFunc.setFont(fontBold.deriveFont(Font.PLAIN, 45));
-		contentPane.add(lblcadastroFunc, "cell 3 1");
+		contentPane_1.add(lblcadastroFunc, "cell 3 1");
 
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(new ImageIcon(
 				new ImageIcon("src/img/image 6.png").getImage().getScaledInstance(215, 106, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLogo, "cell 1 1 2 1");
+		contentPane_1.add(lblLogo, "cell 1 1 2 1");
 
 		JLabel lblLinha1 = new JLabel("");
 		lblLinha1.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha1, "cell 1 2 2 1");
+		contentPane_1.add(lblLinha1, "cell 1 2 2 1");
 
 		JLabel lblCarrinho = new JLabel("");
 		lblCarrinho.setIcon(new ImageIcon("C:\\Users\\Aluno\\Downloads\\IMPECC\\src\\img\\carrinho.png"));
-		contentPane.add(lblCarrinho, "cell 1 3");
+		contentPane_1.add(lblCarrinho, "cell 1 3");
 
 		JLabel lblVendas = new JLabel("Vendas");
 		lblVendas.setForeground(new Color(255, 255, 255));
 		lblVendas.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblVendas, "cell 2 3,alignx left,aligny center");
+		contentPane_1.add(lblVendas, "cell 2 3,alignx left,aligny center");
 
 		JPanel panel = new JPanel();
-		contentPane.add(panel, "cell 3 2 27 83,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][][grow][grow 50][grow][][][grow]",
-				"[][][][][][][][][][][][grow 20][][][grow 20][][][][][grow 20][][][][][][][][][][][][][grow]"));
+		contentPane_1.add(panel, "cell 3 2 29 83,grow");
+		panel.setLayout(new MigLayout("", "[grow][grow][grow][][grow][grow 50][grow][][][grow]",
+				"[][][][][][grow][][][][][][grow][][][][][grow][][][][grow][][][][][][grow][][][][][grow][][][][grow][][][][]"));
 
 		JLabel lblvoltar = new JLabel("");
 		lblvoltar.addMouseListener(new MouseAdapter() {
@@ -128,120 +130,113 @@ public class AlterarProduto extends JFrame {
 		panel.add(lblvoltar, "cell 0 0");
 
 		JLabel lblNome = new JLabel("Nome");
-		panel.add(lblNome, "cell 1 6");
+		panel.add(lblNome, "cell 1 3");
 
 		JTextField txtNome = new JTextField();
-		panel.add(txtNome, "cell 1 7 3 1,growx");
+		panel.add(txtNome, "cell 1 4 7 1,growx");
 		txtNome.setColumns(10);
 
-		JLabel lblModelo = new JLabel("Modelo");
-		panel.add(lblModelo, "cell 1 9");
-
-		JTextField txtModelo = new JTextField();
-		panel.add(txtModelo, "cell 1 10 3 1,growx");
-		txtModelo.setColumns(10);
-
 		JLabel lblTamanho = new JLabel("Tamanho");
-		panel.add(lblTamanho, "cell 1 12");
+		panel.add(lblTamanho, "cell 1 8");
 
 		JTextField txtTamanho = new JTextField();
-		panel.add(txtTamanho, "cell 1 13 3 1,growx");
+		panel.add(txtTamanho, "cell 1 9 7 1,growx");
 		txtTamanho.setColumns(10);
 
 		JLabel lblGenero = new JLabel("Gênero");
-		panel.add(lblGenero, "cell 1 15");
+		panel.add(lblGenero, "cell 1 13");
 
 		JTextField txtGenero = new JTextField();
-		panel.add(txtGenero, "cell 1 16 3 1,growx");
+		panel.add(txtGenero, "cell 1 14 7 1,growx");
 		txtGenero.setColumns(10);
 
 		JLabel lblPreço = new JLabel("Preço");
 		panel.add(lblPreço, "cell 1 18");
 
 		JTextField txtPreço = new JTextField();
-		panel.add(txtPreço, "cell 1 19 3 1,growx");
+		panel.add(txtPreço, "cell 1 19 7 1,growx");
 		txtPreço.setColumns(10);
 
 		JLabel lblfornecedor = new JLabel("Fornecedor");
-		panel.add(lblfornecedor, "cell 1 21");
+		panel.add(lblfornecedor, "cell 1 23");
 
 		txtFornecedor = new JTextField();
-		panel.add(txtFornecedor, "cell 1 22 3 1,growx");
+		panel.add(txtFornecedor, "cell 1 24 7 1,growx");
 		txtFornecedor.setColumns(10);
 
 		JLabel lblQuantidadeEstoque = new JLabel("Quantida em Estoque");
-		panel.add(lblQuantidadeEstoque, "cell 1 24");
+		panel.add(lblQuantidadeEstoque, "cell 1 28");
 
 		txtQuantidadeEstoque = new JTextField();
-		panel.add(txtQuantidadeEstoque, "cell 1 25 3 1,growx");
+		panel.add(txtQuantidadeEstoque, "cell 1 29 7 1,growx");
 		txtQuantidadeEstoque.setColumns(10);
 
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha, "cell 1 4 2 1");
+		contentPane_1.add(lblLinha, "cell 1 4 2 1");
 
 		JLabel lblCaixa = new JLabel("");
 		lblCaixa.setIcon(new ImageIcon(
 				new ImageIcon("src/img/caixa.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
-		contentPane.add(lblCaixa, "cell 1 5");
+		contentPane_1.add(lblCaixa, "cell 1 5");
 
 		JLabel lblProdutos = new JLabel("Produtos");
 		lblProdutos.setForeground(new Color(255, 255, 255));
 		lblProdutos.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblProdutos, "cell 2 5,alignx left,aligny center");
+		contentPane_1.add(lblProdutos, "cell 2 5,alignx left,aligny center");
 
 		JLabel lblLinha2 = new JLabel("");
 		lblLinha2.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha2, "cell 1 6 2 1");
+		contentPane_1.add(lblLinha2, "cell 1 6 2 1");
 
 		JLabel lblCliente = new JLabel("");
 		lblCliente.setIcon(new ImageIcon(
 				new ImageIcon("src/img/cliente.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
-		contentPane.add(lblCliente, "cell 1 7,alignx left,aligny center");
+		contentPane_1.add(lblCliente, "cell 1 7,alignx left,aligny center");
 
 		JLabel lblClientes = new JLabel("Clientes");
 		lblClientes.setForeground(new Color(255, 255, 255));
 		lblClientes.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblClientes, "cell 2 7");
+		contentPane_1.add(lblClientes, "cell 2 7");
 
 		JLabel lblLinha3 = new JLabel("");
 		lblLinha3.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha3, "cell 1 9 2 1");
+		contentPane_1.add(lblLinha3, "cell 1 9 2 1");
 
 		JLabel lblCaminhao = new JLabel("");
 		lblCaminhao.setIcon(new ImageIcon(
 				new ImageIcon("src/img/caminhao.png").getImage().getScaledInstance(40, 35, Image.SCALE_DEFAULT)));
-		contentPane.add(lblCaminhao, "cell 1 10,alignx left,aligny center");
+		contentPane_1.add(lblCaminhao, "cell 1 10,alignx left,aligny center");
 
 		JLabel lblFornecedor = new JLabel("Fornecedores");
 		lblFornecedor.setForeground(new Color(255, 255, 255));
 		lblFornecedor.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblFornecedor, "cell 2 10");
+		contentPane_1.add(lblFornecedor, "cell 2 10");
 
 		JLabel lblLinha4 = new JLabel("");
 		lblLinha4.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha4, "cell 1 12 2 1");
+		contentPane_1.add(lblLinha4, "cell 1 12 2 1");
 
 		JLabel lblFuncionario = new JLabel("");
 		lblFuncionario.setIcon(new ImageIcon(
 				new ImageIcon("src/img/funcionario.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
-		contentPane.add(lblFuncionario, "cell 1 13,alignx left,aligny center");
+		contentPane_1.add(lblFuncionario, "cell 1 13,alignx left,aligny center");
 
 		JLabel lblFuncionarios = new JLabel("Funcionários");
 		lblFuncionarios.setForeground(new Color(255, 255, 255));
 		lblFuncionarios.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblFuncionarios, "cell 2 13");
+		contentPane_1.add(lblFuncionarios, "cell 2 13");
 
 		JLabel lblLinha5 = new JLabel("");
 		lblLinha5.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha5, "cell 1 15 2 1");
+		contentPane_1.add(lblLinha5, "cell 1 15 2 1");
 
-		JButton btnSair = new JButton("Sair");
+		JButton btnSair = new JButton("  Sair  ");
 		btnSair.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -252,7 +247,7 @@ public class AlterarProduto extends JFrame {
 				if (resposta == JOptionPane.YES_OPTION) {
 					TelaLogin janelaAlterarProduto = new TelaLogin();
 					janelaAlterarProduto.setVisible(true);
-					dispose(); //volta para tela de login
+					dispose(); // volta para tela de login
 				}
 
 			}
@@ -260,78 +255,76 @@ public class AlterarProduto extends JFrame {
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnSair, "cell 2 83 1 4,aligny bottom");
+		contentPane_1.add(btnSair, "cell 2 88,aligny bottom");
+
+		JButton btnCancelar = new JButton("   Cancelar   ");
+		btnCancelar.setForeground(Color.RED);
+		btnCancelar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnCancelar.setBackground(new Color(255, 255, 255));
+		contentPane_1.add(btnCancelar, "cell 18 88,aligny bottom");
+
+		JButton btnSalvarEdicoes = new JButton("Salvar Edições");
+		btnSalvarEdicoes.setForeground(Color.RED);
+		btnSalvarEdicoes.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnSalvarEdicoes.setBackground(new Color(255, 255, 255));
+		contentPane_1.add(btnSalvarEdicoes, "cell 23 88,aligny bottom");
 
 		/*
-		
-		//AINDA FALTA ARRUMAR AS VARIAVEIS DOS PRODUTOS EEDITAR A TELA
-		
-		
-		
-		
-		JButton btnAdicionar = new JButton("Salvar Edições");
-		btnAdicionar.setForeground(new Color(255, 0, 0));
-		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnAdicionar.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
-		btnAdicionar.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-
-				Produto produto = new Produto();
-				produto.setLogin(txtLogin.getText());
-				produto.setSenha(txtSenha.getText());
-				produto.setCelular(txtCelular.getText());
-				produto.setCpf(txtCPF.getText());
-				produto.setEmail_Funcionario(txtEmail.getText());
-				produto.setNomeFuncionario(txtNomeCompleto.getText());
-
-				ProdutoDAO funcionarioAlterado = new ProdutoDAO();
-				try {
-					funcionarioAlterado.alterarFuncionario(produto);
-					ListagemFuncionarios janelaListagem = new ListagemFuncionarios();
-					janelaListagem.setVisible(true);
-					dispose();
-
-				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(null, "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
-							JOptionPane.ERROR_MESSAGE);
-				}
-				
-			}
-
-		});
-
-		JButton btnLimparCampos = new JButton("Limpar Campos");
-		btnLimparCampos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				txtNomeCompleto.setText("");
-				txtEmail.setText("");
-				txtCelular.setText("");
-				txtCPF.setText("");
-				txtLogin.setText("");
-				txtSenha.setText("");
-
-			}
-		});
-		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnLimparCampos.setForeground(Color.RED);
-		btnLimparCampos.setBackground(Color.WHITE);
-		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
-		mostrarDados(p);
-
-	}
-
-	private void mostrarDados(Produto p) {
-		txtNomeCompleto.setText(f.getNomeFuncionario());
-		txtEmail.setText(f.getEmail_Funcionario());
-		txtCelular.setText(f.getCelular());
-		txtCPF.setText(f.getCpf());
-		txtLogin.setText(f.getLogin());
-		txtSenha.setText(f.getSenha());
-		
-	}
-*/
+		 * 
+		 * //AINDA FALTA ARRUMAR AS VARIAVEIS DOS PRODUTOS EEDITAR A TELA
+		 * 
+		 * 
+		 * 
+		 * 
+		 * JButton btnAdicionar = new JButton("Salvar Edições");
+		 * btnAdicionar.setForeground(new Color(255, 0, 0));
+		 * btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		 * btnAdicionar.setBackground(new Color(255, 255, 255));
+		 * contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
+		 * btnAdicionar.addActionListener(new ActionListener() {
+		 * 
+		 * public void actionPerformed(ActionEvent e) {
+		 * 
+		 * Produto produto = new Produto(); produto.setLogin(txtLogin.getText());
+		 * produto.setSenha(txtSenha.getText());
+		 * produto.setCelular(txtCelular.getText()); produto.setCpf(txtCPF.getText());
+		 * produto.setEmail_Funcionario(txtEmail.getText());
+		 * produto.setNomeFuncionario(txtNomeCompleto.getText());
+		 * 
+		 * ProdutoDAO funcionarioAlterado = new ProdutoDAO(); try {
+		 * funcionarioAlterado.alterarFuncionario(produto); ListagemFuncionarios
+		 * janelaListagem = new ListagemFuncionarios(); janelaListagem.setVisible(true);
+		 * dispose();
+		 * 
+		 * } catch (Exception ex) { JOptionPane.showMessageDialog(null,
+		 * "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
+		 * JOptionPane.ERROR_MESSAGE); }
+		 * 
+		 * }
+		 * 
+		 * });
+		 * 
+		 * JButton btnLimparCampos = new JButton("Limpar Campos");
+		 * btnLimparCampos.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) {
+		 * 
+		 * txtNomeCompleto.setText(""); txtEmail.setText(""); txtCelular.setText("");
+		 * txtCPF.setText(""); txtLogin.setText(""); txtSenha.setText("");
+		 * 
+		 * } }); btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		 * btnLimparCampos.setForeground(Color.RED);
+		 * btnLimparCampos.setBackground(Color.WHITE); contentPane.add(btnLimparCampos,
+		 * "cell 25 85 1 4,aligny center"); mostrarDados(p);
+		 * 
+		 * }
+		 * 
+		 * private void mostrarDados(Produto p) {
+		 * txtNomeCompleto.setText(f.getNomeFuncionario());
+		 * txtEmail.setText(f.getEmail_Funcionario());
+		 * txtCelular.setText(f.getCelular()); txtCPF.setText(f.getCpf());
+		 * txtLogin.setText(f.getLogin()); txtSenha.setText(f.getSenha());
+		 * 
+		 * }
+		 */
 	}
 }

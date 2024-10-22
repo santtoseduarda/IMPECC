@@ -88,10 +88,10 @@ public class AlterarFuncionario extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
 
-		JLabel lblcadastroFunc = new JLabel("Editar Dados do Funcionário");
-		lblcadastroFunc.setForeground(new Color(255, 255, 255));
-		lblcadastroFunc.setFont(fontBold.deriveFont(Font.PLAIN, 45));
-		contentPane.add(lblcadastroFunc, "cell 3 1");
+		JLabel lblAlterarFunc = new JLabel("Editar Dados do Funcionário");
+		lblAlterarFunc.setForeground(new Color(255, 255, 255));
+		lblAlterarFunc.setFont(fontBold.deriveFont(Font.PLAIN, 45));
+		contentPane.add(lblAlterarFunc, "cell 3 1");
 
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(new ImageIcon(
@@ -130,11 +130,11 @@ public class AlterarFuncionario extends JFrame {
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
 
-		JLabel lblNewLabel_1 = new JLabel("Nome Completo:");
-		panel.add(lblNewLabel_1, "cell 1 5");
+		JLabel lblNomeCompleto = new JLabel("Nome Completo:");
+		panel.add(lblNomeCompleto, "cell 1 5");
 
-		JLabel lblNewLabel_2 = new JLabel("Email");
-		panel.add(lblNewLabel_2, "cell 5 5");
+		JLabel lblEmail = new JLabel("Email");
+		panel.add(lblEmail, "cell 5 5");
 
 		txtNomeCompleto = new JTextField();
 		panel.add(txtNomeCompleto, "cell 1 6 3 1,growx");
@@ -144,8 +144,8 @@ public class AlterarFuncionario extends JFrame {
 		panel.add(txtEmail, "cell 5 6 3 1,growx");
 		txtEmail.setColumns(10);
 
-		JLabel lblNewLabel_3 = new JLabel("Celular:");
-		panel.add(lblNewLabel_3, "cell 1 8");
+		JLabel lblCelular = new JLabel("Celular:");
+		panel.add(lblCelular, "cell 1 8");
 
 		JLabel lblCPF = new JLabel("CPF:");
 		panel.add(lblCPF, "cell 5 8");
@@ -158,11 +158,11 @@ public class AlterarFuncionario extends JFrame {
 		panel.add(txtCPF, "cell 5 9 3 1,growx");
 		txtCPF.setColumns(10);
 
-		JLabel lblNewLabel_4 = new JLabel("Login:");
-		panel.add(lblNewLabel_4, "cell 1 11");
+		JLabel lblLogin = new JLabel("Login:");
+		panel.add(lblLogin, "cell 1 11");
 
-		JLabel lblNewLabel_5 = new JLabel("Senha:");
-		panel.add(lblNewLabel_5, "cell 5 11");
+		JLabel lblSenha = new JLabel("Senha:");
+		panel.add(lblSenha, "cell 5 11");
 
 		txtLogin = new JTextField();
 		panel.add(txtLogin, "cell 1 12 3 1,growx");

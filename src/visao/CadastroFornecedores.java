@@ -85,10 +85,10 @@ public class CadastroFornecedores extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
 
-		JLabel lblcadastroFunc = new JLabel("Cadastro de Fornecedores");
-		lblcadastroFunc.setForeground(new Color(255, 255, 255));
-		lblcadastroFunc.setFont(fontBold.deriveFont(Font.PLAIN, 45));
-		contentPane.add(lblcadastroFunc, "cell 3 1");
+		JLabel lblcadastroForne = new JLabel("Cadastro de Fornecedores");
+		lblcadastroForne.setForeground(new Color(255, 255, 255));
+		lblcadastroForne.setFont(fontBold.deriveFont(Font.PLAIN, 45));
+		contentPane.add(lblcadastroForne, "cell 3 1");
 
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(new ImageIcon(

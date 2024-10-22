@@ -96,10 +96,10 @@ public class ListagemProdutos extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[][][][][grow][][][][][][][][][][][][][][][][][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
-		JLabel lblListagemFunc = new JLabel("Listagem de Produtos");
-		lblListagemFunc.setForeground(new Color(255, 255, 255));
-		lblListagemFunc.setFont(fontBold.deriveFont(Font.PLAIN, 45));
-		contentPane.add(lblListagemFunc, "cell 4 4");
+		JLabel lblListagemProduto = new JLabel("Listagem de Produtos");
+		lblListagemProduto.setForeground(new Color(255, 255, 255));
+		lblListagemProduto.setFont(fontBold.deriveFont(Font.PLAIN, 45));
+		contentPane.add(lblListagemProduto, "cell 4 4");
 
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(new ImageIcon(
@@ -361,8 +361,8 @@ public class ListagemProdutos extends JFrame {
 			}
 		});
 
-		JButton btnAdicionar_2 = new JButton("Editar");
-		btnAdicionar_2.addActionListener(new ActionListener() {
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				int posicaoSelecionada = table.getSelectedRow();
@@ -380,13 +380,13 @@ public class ListagemProdutos extends JFrame {
 			}
 		});
 
-		btnAdicionar_2.setForeground(new Color(255, 0, 0));
-		btnAdicionar_2.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnAdicionar_2.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnAdicionar_2, "cell 20 81 1 2");
+		btnEditar.setForeground(new Color(255, 0, 0));
+		btnEditar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnEditar.setBackground(new Color(255, 255, 255));
+		contentPane.add(btnEditar, "cell 20 81 1 2");
 
-		JButton btnAdicionar_1 = new JButton("Excluir");
-		btnAdicionar_1.addActionListener(new ActionListener() {
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				int posicaoSelecionada = table.getSelectedRow();
@@ -422,10 +422,10 @@ public class ListagemProdutos extends JFrame {
 			}
 
 		});
-		btnAdicionar_1.setForeground(new Color(255, 0, 0));
-		btnAdicionar_1.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnAdicionar_1.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnAdicionar_1, "cell 21 81 1 2");
+		btnExcluir.setForeground(new Color(255, 0, 0));
+		btnExcluir.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnExcluir.setBackground(new Color(255, 255, 255));
+		contentPane.add(btnExcluir, "cell 21 81 1 2");
 
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));

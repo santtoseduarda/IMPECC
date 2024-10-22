@@ -94,10 +94,10 @@ public class AlterarFornecedor extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
 
-		JLabel lblcadastroFunc = new JLabel("Editar Dados do Fornecedor");
-		lblcadastroFunc.setForeground(new Color(255, 255, 255));
-		lblcadastroFunc.setFont(fontBold.deriveFont(Font.PLAIN, 45));
-		contentPane.add(lblcadastroFunc, "cell 3 1");
+		JLabel lblAlterarForne = new JLabel("Editar Dados do Fornecedor");
+		lblAlterarForne.setForeground(new Color(255, 255, 255));
+		lblAlterarForne.setFont(fontBold.deriveFont(Font.PLAIN, 45));
+		contentPane.add(lblAlterarForne, "cell 3 1");
 
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(new ImageIcon(

@@ -36,7 +36,7 @@ import net.miginfocom.swing.MigLayout;
 public class ListagemFornecedor extends JFrame {
 
 	private JPanel contentPane;
-	private JTable table;
+	public JTable table;
 	private JTextField txtId;
 
 	/**
@@ -46,8 +46,8 @@ public class ListagemFornecedor extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListagemFornecedor frame = new ListagemFornecedor();
-					frame.setVisible(true);
+					FornecedorController controllerListagemForn = new FornecedorController();
+					controllerListagemForn.iniciarListagem();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -57,12 +57,15 @@ public class ListagemFornecedor extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @param fornecedorController
 	 */
-	public ListagemFornecedor() {
+	public ListagemFornecedor(FornecedorController fornecedorController) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
 		ListagemFornecedor janelaListagemFornecedor = this;
 
 		Font fontRegular = null;
@@ -99,7 +102,8 @@ public class ListagemFornecedor extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][][][][][][][][][]",
+				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblListagemFunc = new JLabel("Listagem de Fornecedores");
 		lblListagemFunc.setForeground(new Color(255, 255, 255));
@@ -127,14 +131,16 @@ public class ListagemFornecedor extends JFrame {
 		contentPane.add(lblVendas, "cell 2 8,alignx left,aligny center");
 
 		JPanel panel = new JPanel();
-		panel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				pesquisarPorCampo("id_Fornecedor", txtId.getText());
-			}
-		});
+		panel.addMouseListener(fornecedorController.pesquisa("id_Fornecedor", txtId.getText()));
+		/*
+		 * panel.addMouseListener(new MouseAdapter() {
+		 * 
+		 * @Override public void mouseClicked(MouseEvent e) {
+		 * pesquisarPorCampo("id_Fornecedor", txtId.getText()); } });
+		 */
 		contentPane.add(panel, "cell 3 8 21 72,grow");
-		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][grow][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][grow][][][][]",
+				"[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblId = new JLabel("ID");
 		lblId.setFont(fontBold.deriveFont(Font.PLAIN, 14));
@@ -156,16 +162,9 @@ public class ListagemFornecedor extends JFrame {
 		lblPesquisar.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		panel.add(lblPesquisar, "cell 1 1,alignx trailing");
 
-		
-
 		JLabel lupa1 = new JLabel("");
-		lupa1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("id_Fornecedor", txtId.getText());
-			}
-		});
-		
+		lupa1.addMouseListener(fornecedorController.pesquisa("id_Fornecedor", txtId.getText()));
+
 		txtId = new JTextField();
 		txtId.setColumns(10);
 		panel.add(txtId, "cell 2 1,growx");
@@ -178,14 +177,10 @@ public class ListagemFornecedor extends JFrame {
 		txtNome.setColumns(10);
 
 		JLabel lupa2 = new JLabel("");
-		lupa2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("nome_Fornecedor", txtNome.getText());
-			}
-		});
+		lupa2.addMouseListener(fornecedorController.pesquisa("nome_Fornecedor", txtNome.getText()));
+		
 		lupa2.setIcon(new ImageIcon(
-				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
+		new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa2, "cell 6 1");
 
 		JTextField txtCnpj = new JTextField();
@@ -193,14 +188,9 @@ public class ListagemFornecedor extends JFrame {
 		txtCnpj.setColumns(10);
 
 		JLabel lupa3 = new JLabel("");
-		lupa3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("cnpj", txtCnpj.getText());
-			}
-		});
+		lupa3.addMouseListener(fornecedorController.pesquisa("cnpj", txtCnpj.getText()));
 		lupa3.setIcon(new ImageIcon(
-				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
+		new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa3, "cell 9 1");
 
 		JTextField txtEmail = new JTextField();
@@ -208,33 +198,26 @@ public class ListagemFornecedor extends JFrame {
 		txtEmail.setColumns(10);
 
 		JLabel lupa4 = new JLabel("");
-		lupa4.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				  pesquisarPorCampo("email_Fornecedor", txtEmail.getText());
-			}
-				// TODO Auto-generated method stub
-				
-		});
+		lupa3.addMouseListener(fornecedorController.pesquisa("email_Fornecedor", txtEmail.getText()));
+		/*lupa4.addMouseListener(new MouseAdapter() {
+		  
+		  @Override public void mouseClicked(MouseEvent e) {
+		  pesquisarPorCampo("email_Fornecedor", txtEmail.getText()); } // TODO
+		  Auto-generated method stub
+		  
+		  }); */
 		lupa4.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa4, "cell 12 1");
 
 		JScrollPane scrollPane = new JScrollPane();
 		panel.add(scrollPane, "cell 1 3 14 14,grow");
-		
+
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"ID", "Nome", "CNPJ", "Email", "Telefone"
-			}
-		));
+		table.setModel(
+				new DefaultTableModel(new Object[][] {}, new String[] { "ID", "Nome", "CNPJ", "Email", "Telefone" }));
 		scrollPane.setViewportView(table);
-		atualizarTabela("", "");
-
-
+		fornecedorController.atualizarTabela("", "");
 
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(
@@ -304,18 +287,7 @@ public class ListagemFornecedor extends JFrame {
 		JButton btnSair = new JButton("Sair");
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int resposta = JOptionPane.showConfirmDialog(janelaListagemFornecedor, 
-			            "Você realmente deseja sair?", "Confirmação", 
-			            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-			        
-			        // Verifica a resposta
-			        if (resposta == JOptionPane.YES_OPTION) {
-			        	TelaLogin janelaListagemFornecedor = new TelaLogin(null);
-			        	janelaListagemFornecedor.setVisible(true);
-						dispose(); // Fecha a tela de login
-			        }
-				
-				
+				fornecedorController.sairSistema();
 			}
 		});
 		btnSair.setForeground(new Color(255, 0, 0));
@@ -326,24 +298,17 @@ public class ListagemFornecedor extends JFrame {
 		JButton btnAdicionar = new JButton("Adicionar Fornecedor");
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				CadastroFornecedores janelaListagemFornecedor = new CadastroFornecedores();
-				janelaListagemFornecedor.setVisible(true);
-				dispose();
-				
-			
-			        
+				fornecedorController.cadastroFornecedor();
 			}
 		});
-		
+
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int posicaoSelecionada = table.getSelectedRow();
 				DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
 				int id_Fornecedor = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
-				FornecedorController fornControlleer= new FornecedorController();
-				fornControlleer.alterarFornecedor(id_Fornecedor);
+				fornecedorController.editarFornecedor(id_Fornecedor);
 				dispose();
 			}
 		});
@@ -351,94 +316,17 @@ public class ListagemFornecedor extends JFrame {
 		btnEditar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnEditar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnEditar, "cell 19 80 1 2");
-		
+
 		JButton btnExcluir = new JButton("Excluir");
-		btnExcluir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				int posicaoSelecionada = table.getSelectedRow();
-		        
-		        if (posicaoSelecionada >= 0) {
-		        	
-		            DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
-		            int idFornecedor = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
-
-		            int confirmacao = JOptionPane.showConfirmDialog(null, 
-		                    "Você tem certeza que deseja excluir o fornecedor?", "Confirmação de Exclusão", 
-		                    JOptionPane.YES_NO_OPTION);
-		            
-		            if (confirmacao == JOptionPane.YES_OPTION) {
-		            	
-		            	//vai excluir o fornecedor
-		            	FornecedorDAO frdao = new FornecedorDAO();
-		                boolean certo = frdao.excluirFornecedor(idFornecedor); 
-
-		                if (certo) {
-		                	
-		                    modeloTabela.removeRow(posicaoSelecionada);
-		                    JOptionPane.showMessageDialog(null, "Fornecedor excluído com sucesso.");
-		                    
-		                } else {
-		                    JOptionPane.showMessageDialog(null, "Erro ao excluir o fornecedor.");
-		                }
-		            }
-		        } else {
-		            JOptionPane.showMessageDialog(null, "Por favor, selecione um fornecedor para excluir.");
-		        }
-		    }
-	
-		});
+		btnExcluir.addActionListener(fornecedorController.excluirFornecedor());
 		btnExcluir.setForeground(new Color(255, 0, 0));
 		btnExcluir.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnExcluir.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnExcluir, "cell 20 80 1 2");
-		
+
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 21 80 1 2,aligny bottom");
 	}
-
-	private void pesquisarPorCampo(String campo, String valor) {
-	    DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
-	    modeloTabela.setRowCount(0); // Limpa a tabela
-
-	    FornecedorDAO frdao = new FornecedorDAO();
-	    ArrayList<Fornecedor> listaFornecedores = frdao.buscarFornecedores(campo, valor); // Passando o campo e o valor
-	   
-	    for (Fornecedor fr : listaFornecedores) {
-
-	        modeloTabela.addRow(new Object[]{
-	                fr.getID_fornecedor(),
-	                fr.getNome_Fornecedor(),
-	                fr.getCNPJ(),
-	                fr.getEmail_Fornecedor(),
-	                fr.getTelefone_Fornecedor(),
-	        });
-	    }
-	}
-
-	private void atualizarTabela(String campo, String valor) {
-
-		DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
-		modeloTabela.setRowCount(0); // Limpa a tabela
-
-		FornecedorDAO frdao = new FornecedorDAO();
-		ArrayList<Fornecedor> listaFornecedores = frdao.buscarFornecedores(campo, valor);
-		
-		
-		 if (listaFornecedores != null && !listaFornecedores.isEmpty()) {
-		        for (Fornecedor fr : listaFornecedores) {
-		            // Adiciona os dados do fornecedor na tabela
-		            modeloTabela.addRow(new Object[] {
-		            		fr.getID_fornecedor(),
-			                fr.getNome_Fornecedor(),
-			                fr.getCNPJ(),
-			                fr.getEmail_Fornecedor(),
-			                fr.getTelefone_Fornecedor(),
-		            });
-		        }
-		    }
-	}
-
 }

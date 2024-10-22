@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controle.FornecedorController;
 import controle.FornecedorDAO;
 import controle.FuncionarioDAO;
 import modelo.Fornecedor;
@@ -37,24 +38,14 @@ public class CadastroFornecedores extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CadastroFornecedores frame = new CadastroFornecedores();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
+	 * @param fornecedorController 
 	 */
-	public CadastroFornecedores() {
+	public CadastroFornecedores(FornecedorController fornecedorController) {
+		
 		CadastroFornecedores janelaCadastroFornecedores = this;
+		
 		setTitle("Cadastro Funcionário");
 		Font fontRegular = null;
 		Font fontBold = null;
@@ -275,8 +266,9 @@ public class CadastroFornecedores extends JFrame {
 					FornecedorDAO.getInstancia();
 					novoFornecedor.inserir(cadastroFornecedor);
 
-					ListagemFornecedor janelaCadastrarFornecedor= new ListagemFornecedor();
-					janelaCadastrarFornecedor.setVisible(true);
+					//ListagemFornecedor janelaCadastrarFornecedor= new ListagemFornecedor();
+					//janelaCadastrarFornecedor.setVisible(true);
+					
 					dispose();
 
 				}

@@ -42,6 +42,8 @@ public class TelaLogin extends JFrame {
 	public JPanel panel;
 	public JTextField txttSenhaVisivel;
 	LoginController loginController;
+	
+	
 	/**
 	 * Launch the application.
 	 */

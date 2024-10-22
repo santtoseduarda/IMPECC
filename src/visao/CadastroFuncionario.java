@@ -172,32 +172,7 @@ public class CadastroFuncionario extends JFrame {
 		contentPane.add(btnSair, "cell 1 17 1 2,alignx left,aligny bottom");
 
 		JButton btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				if (validarCampos()) {
-					Funcionario cadastro = new Funcionario();
-					cadastro.setLogin(txtLogin.getText());
-					cadastro.setSenha(txtSenha.getText());
-					cadastro.setCelular(txtCelular.getText());
-					cadastro.setCpf(txtCPF.getText());
-					cadastro.setEmail_Funcionario(txtEmail.getText());
-					cadastro.setNomeFuncionario(txtNomeCompleto.getText());
-
-					FuncionarioDAO novoFuncionario = new FuncionarioDAO();
-					try {
-						novoFuncionario.inserir(cadastro);
-						TelaLogin janelaLogin = new TelaLogin(null);
-						janelaLogin.setVisible(true);
-						dispose();
-						
-					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(null, "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
-								JOptionPane.ERROR_MESSAGE);
-					}
-				}
-			}
-		});
+		btnCadastrar.addActionListener();
 		btnCadastrar.setForeground(new Color(225, 225, 225));
 		btnCadastrar.setBackground(new Color(161, 0, 29));
 		btnCadastrar.setFont(fontBold.deriveFont(Font.PLAIN, 22));

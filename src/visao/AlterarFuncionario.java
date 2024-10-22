@@ -32,28 +32,14 @@ import net.miginfocom.swing.MigLayout;
 public class AlterarFuncionario extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtNomeCompleto;
-	private JTextField txtEmail;
-	private JTextField txtCelular;
-	private JTextField txtCPF;
-	private JTextField txtLogin;
-	private JTextField txtSenha;
+	public JTextField txtNomeCompleto;
+	public JTextField txtEmail;
+	public JTextField txtCelular;
+	public JTextField txtCPF;
+	public JTextField txtLogin;
+	public JTextField txtSenha;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AlterarFuncionario frame = new AlterarFuncionario(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-
-	}
-
-	public AlterarFuncionario(Funcionario f) {
+	public AlterarFuncionario(Funcionario f, FuncionarioController funcionarioController) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -120,14 +106,8 @@ public class AlterarFuncionario extends JFrame {
 				"[][][grow][][][][][grow 20][][][grow 20][][][grow 20][][][][][][][][][][grow]"));
 
 		JLabel lblvoltar = new JLabel("");
-		lblvoltar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ListagemFuncionarios novaJanela = new ListagemFuncionarios();
-				novaJanela.setVisible(true);
-				dispose();
-			}
-		});
+		// volta para a listagem
+		lblvoltar.addMouseListener(funcionarioController.voltarListagem());
 		lblvoltar.setIcon(new ImageIcon(
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
@@ -240,23 +220,9 @@ public class AlterarFuncionario extends JFrame {
 		contentPane.add(lblLinha5, "cell 1 15 2 1");
 
 		JButton btnSair = new JButton("Sair");
-		btnSair.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int resposta = JOptionPane.showConfirmDialog(janelaAlterarFuncionario, "Você realmente deseja sair?",
-						"Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-				// Verifica a resposta
-				if (resposta == JOptionPane.YES_OPTION) {
-					
-					
-					TelaLogin CadastroFuncionarios = new TelaLogin(null);
-					CadastroFuncionarios.setVisible(true);
-					dispose(); // Fecha a tela de login
-				}
-
-			}
-		});
+		// chamar o controller para sair do sistema
+		
+		btnSair.addMouseListener(funcionarioController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
@@ -267,57 +233,19 @@ public class AlterarFuncionario extends JFrame {
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
-		btnAdicionar.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				Funcionario funcionario = new Funcionario();
-				funcionario.setLogin(txtLogin.getText());
-				funcionario.setSenha(txtSenha.getText());
-				funcionario.setCelular(txtCelular.getText());
-				funcionario.setCpf(txtCPF.getText());
-				funcionario.setEmail_Funcionario(txtEmail.getText());
-				funcionario.setNomeFuncionario(txtNomeCompleto.getText());
-
-				FuncionarioDAO funcionarioAlterado = new FuncionarioDAO();
-				try {
-					funcionarioAlterado.alterarFuncionario(funcionario);
-					ListagemFuncionarios janelaListagem = new ListagemFuncionarios();
-					janelaListagem.setVisible(true);
-					dispose();
-
-				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(null, "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
+		btnAdicionar.addActionListener(funcionarioController.salvarEdicoes()); 
 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
-		btnLimparCampos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				txtNomeCompleto.setText("");
-				txtEmail.setText("");
-				txtCelular.setText("");
-				txtCPF.setText("");
-				txtLogin.setText("");
-				txtSenha.setText("");
-			}
-		});
+		// controller limpa os campos
+		btnLimparCampos.addActionListener(funcionarioController.limparCampos());
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);
 		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
-		mostrarDados(f);
+		
+		// mostra os campos
+		funcionarioController.mostrarDados(f);
 	}
 
-	private void mostrarDados(Funcionario f) {
-		txtNomeCompleto.setText(f.getNomeFuncionario());
-		txtEmail.setText(f.getEmail_Funcionario());
-		txtCelular.setText(f.getCelular());
-		txtCPF.setText(f.getCpf());
-		txtLogin.setText(f.getLogin());
-		txtSenha.setText(f.getSenha());
-
-	}
 
 }

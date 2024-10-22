@@ -47,7 +47,7 @@ public class ListagemFuncionarios extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListagemFuncionarios frame = new ListagemFuncionarios();
+					ListagemFuncionarios frame = new ListagemFuncionarios(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,7 +56,7 @@ public class ListagemFuncionarios extends JFrame {
 		});
 	}
 
-	public ListagemFuncionarios() {
+	public ListagemFuncionarios(FuncionarioController funcionarioController) {
 
 		ListagemFuncionarios janelaListagemFuncionarios = this;
 

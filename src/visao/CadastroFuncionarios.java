@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controle.FuncionarioController;
 import controle.FuncionarioDAO;
 import modelo.Funcionario;
 import net.miginfocom.swing.MigLayout;
@@ -33,12 +34,12 @@ public class CadastroFuncionarios extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtNomeCompleto;
-	private JTextField txtCPF;
-	private JTextField txtEmail;
-	private JTextField txtLogin;
-	private JTextField txtCelular;
-	private JTextField txtSenha;
+	public JTextField txtNomeCompleto;
+	public JTextField txtCPF;
+	public JTextField txtEmail;
+	public JTextField txtLogin;
+	public JTextField txtCelular;
+	public JTextField txtSenha;
 
 	/**
 	 * Launch the application.
@@ -47,7 +48,7 @@ public class CadastroFuncionarios extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CadastroFuncionarios frame = new CadastroFuncionarios();
+					CadastroFuncionarios frame = new CadastroFuncionarios(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,8 +59,9 @@ public class CadastroFuncionarios extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param funcionarioController 
 	 */
-	public CadastroFuncionarios() {
+	public CadastroFuncionarios(FuncionarioController funcionarioController) {
 
 		CadastroFuncionarios janelaCadastroFuncionarios = this;
 
@@ -126,7 +128,7 @@ public class CadastroFuncionarios extends JFrame {
 		lblvoltar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ListagemFuncionarios novaJanela = new ListagemFuncionarios();
+				ListagemFuncionarios novaJanela = new ListagemFuncionarios(funcionarioController);
 				novaJanela.setVisible(true);
 				dispose();
 			}
@@ -327,4 +329,5 @@ public class CadastroFuncionarios extends JFrame {
 		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
 
 	}
+
 }

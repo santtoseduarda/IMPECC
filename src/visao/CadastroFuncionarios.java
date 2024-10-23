@@ -41,21 +41,6 @@ public class CadastroFuncionarios extends JFrame {
 	public JTextField txtCelular;
 	public JTextField txtSenha;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CadastroFuncionarios frame = new CadastroFuncionarios(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -125,14 +110,7 @@ public class CadastroFuncionarios extends JFrame {
 				"[][grow][][][][][grow 20][][][grow 20][][][grow 20][][][][][][][][][][grow]"));
 
 		JLabel lblvoltar = new JLabel("");
-		lblvoltar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ListagemFuncionarios novaJanela = new ListagemFuncionarios(funcionarioController);
-				novaJanela.setVisible(true);
-				dispose();
-			}
-		});
+		lblvoltar.addMouseListener(funcionarioController.voltarListagem());
 		lblvoltar.setIcon(new ImageIcon(
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
@@ -245,25 +223,7 @@ public class CadastroFuncionarios extends JFrame {
 		contentPane.add(lblLinha5, "cell 1 15 2 1");
 
 		JButton btnSair = new JButton("Sair");
-		btnSair.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnSair.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int resposta = JOptionPane.showConfirmDialog(janelaCadastroFuncionarios, "Você realmente deseja sair?",
-						"Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-				// Verifica a resposta
-				if (resposta == JOptionPane.YES_OPTION) {
-					TelaLogin CadastroFuncionarios = new TelaLogin(null);
-					CadastroFuncionarios.setVisible(true);
-					dispose(); // Fecha a tela de login
-				}
-
-			}
-		});
+		btnSair.addActionListener(funcionarioController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
@@ -274,55 +234,11 @@ public class CadastroFuncionarios extends JFrame {
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
-		btnAdicionar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				String login = txtLogin.getText();
-				String senha = txtSenha.getText();
-				String cpf = txtCPF.getText();
-				String email = txtEmail.getText();
-				String nomeCompleto = txtNomeCompleto.getText();
-				String celular = txtCelular.getText();
-
-				if (login.isEmpty() || senha.isEmpty() || cpf.isEmpty() || email.isEmpty() || nomeCompleto.isEmpty()
-						|| celular.isEmpty()) {
-					javax.swing.JOptionPane.showMessageDialog(null,
-							"Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro",
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-				} else {
-
-					Funcionario cadastro = new Funcionario();
-
-					cadastro.setLogin(login);
-					cadastro.setSenha(senha);
-					cadastro.setCelular(celular);
-					cadastro.setCpf(cpf);
-					cadastro.setEmail_Funcionario(email);
-					cadastro.setNomeFuncionario(nomeCompleto);
-
-					FuncionarioDAO novoFuncionario = new FuncionarioDAO();
-					FuncionarioDAO.getInstancia();
-					novoFuncionario.inserir(cadastro);
-
-					ListagemFuncionarios janelaCadastro = new ListagemFuncionarios();
-					janelaCadastro.setVisible(true);
-					dispose();
-
-				}
-			}
-		});
+		btnAdicionar.addActionListener(funcionarioController.cadastrarFuncionario());
+		funcionarioController.voltarListagem();
 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
-		btnLimparCampos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				txtNomeCompleto.setText("");
-				txtEmail.setText("");
-				txtCelular.setText("");
-				txtCPF.setText("");
-				txtLogin.setText("");
-				txtSenha.setText("");
-			}
-		});
+		btnLimparCampos.addActionListener(funcionarioController.limparCampos());
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);

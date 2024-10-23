@@ -172,4 +172,65 @@ public class FuncionarioController {
 			}
 		};
 	}
+	
+	public boolean validarCampos() {
+		 	String login = janelaCadastro.xtLogin.getText();
+	        String senha = janelaCadastro.txtSenha.getText();
+	        String cpf = janelaCadastro.txtCPF.getText();
+	        String email = janelaCadastro.txtEmail.getText();
+	        String nomeCompleto = janelaCadastro.txtNomeCompleto.getText();
+	        String celular = janelaCadastro.txtCelular.getText();
+
+	        if (login.isEmpty() || senha.isEmpty() || cpf.isEmpty() || email.isEmpty() || nomeCompleto.isEmpty() || celular.isEmpty()) {
+	            JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+	            return false;
+	        }
+
+	        if (!cpf.matches("\\d{11}")) {
+	            JOptionPane.showMessageDialog(null, "CPF inválido. Deve ter 11 dígitos numéricos.", "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+	            return false;
+	        }
+
+	        if (!email.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+	            JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.", "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+	            return false;
+	        }
+
+	        if (!celular.matches("\\d{11}")) {
+	            JOptionPane.showMessageDialog(null, "Celular inválido. Deve ter 11 dígitos numéricos.", "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+	            return false;
+	        }
+		return true;
+	}
+	
+	public void pesquisarPorCampo(String campo, String valor) {
+		DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
+		modeloTabela.setRowCount(0);
+
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncLupa(campo, valor);
+
+		for (Funcionario f : listaFuncionarios) {
+
+			modeloTabela.addRow(new Object[] { f.getId_Funcionario(), f.getNomeFuncionario(), f.getEmail_Funcionario(),
+					f.getCelular(), f.getCpf(), f.getLogin(), });
+		}
+	}
+
+	public void atualizarTabela(String campo, String valor) {
+
+		DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
+		modeloTabela.setRowCount(0);
+
+		FuncionarioDAO fdao = new FuncionarioDAO();
+		ArrayList<Funcionario> listaFuncionarios = fdao.buscarFuncLupa(campo, valor);
+
+		if (listaFuncionarios != null && !listaFuncionarios.isEmpty()) {
+			for (Funcionario f : listaFuncionarios) {
+				// Adiciona os dados do funcionário na tabela
+				modeloTabela.addRow(new Object[] { f.getId_Funcionario(), f.getNomeFuncionario(),
+						f.getEmail_Funcionario(), f.getCelular(), f.getCpf(), f.getLogin() });
+			}
+		}
+	}
 }

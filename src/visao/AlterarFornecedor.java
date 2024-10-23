@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controle.FornecedorController;
 import controle.FornecedorDAO;
 import controle.FuncionarioDAO;
 import modelo.Fornecedor;
@@ -32,32 +33,12 @@ import net.miginfocom.swing.MigLayout;
 public class AlterarFornecedor extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtTelefoneFornecedor;
-	private JTextField txtEmailFornecedor;
-	private JTextField txtCnpj;
-	private JTextField txtNomeFornecedor;
+	public JTextField txtTelefoneFornecedor;
+	public JTextField txtEmailFornecedor;
+	public JTextField txtCnpj;
+	public JTextField txtNomeFornecedor;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AlterarFornecedor frame = new AlterarFornecedor(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 * @param fornecedor 
-	 */
-	public AlterarFornecedor(Fornecedor fornecedor) {
+	public AlterarFornecedor(Fornecedor fornecedor, FornecedorController fornecedorController) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -126,9 +107,7 @@ public class AlterarFornecedor extends JFrame {
 		lblvoltar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ListagemFuncionarios novaJanela = new ListagemFuncionarios();
-				novaJanela.setVisible(true);
-				dispose();
+				fornecedorController.voltarListagem();
 			}
 		});
 		lblvoltar.setIcon(new ImageIcon(
@@ -232,16 +211,7 @@ public class AlterarFornecedor extends JFrame {
 		btnSair.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int resposta = JOptionPane.showConfirmDialog(janelaAlterarFornecedor, "Você realmente deseja sair?",
-						"Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-				// Verifica a resposta
-				if (resposta == JOptionPane.YES_OPTION) {
-					TelaLogin CadastroFuncionarios = new TelaLogin(null);
-					CadastroFuncionarios.setVisible(true);
-					dispose(); // Fecha a tela de login
-				}
-
+				fornecedorController.sairSistema();
 			}
 		});
 		btnSair.setForeground(new Color(255, 0, 0));
@@ -255,55 +225,22 @@ public class AlterarFornecedor extends JFrame {
 		btnSalvar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSalvar, "cell 28 85 1 4,aligny center");
 		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
-				Fornecedor fornecedor = new Fornecedor();
-				fornecedor.setTelefone_Fornecedor(txtTelefoneFornecedor.getText());
-				fornecedor.setCNPJ(txtCnpj.getText());
-				fornecedor.setEmail_Fornecedor(txtEmailFornecedor.getText());
-				fornecedor.setNome_Fornecedor(txtNomeFornecedor.getText());
-				
-
-				FornecedorDAO fornecedorAlterado = new FornecedorDAO();
-				try {
-					fornecedorAlterado.alterarFornecedor(fornecedor);
-					ListagemFornecedor janelaListagem = new ListagemFornecedor();
-					janelaListagem.setVisible(true);
-					dispose();
-
-				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(null, "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
-							JOptionPane.ERROR_MESSAGE);
-				}
-				
-				
-			}
+		    public void actionPerformed(ActionEvent e) {				
+		        fornecedorController.salvarEdicoes();
+		    }
 		});
 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
 		btnLimparCampos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtNomeFornecedor.setText("");
-				txtEmailFornecedor.setText("");
-				txtCnpj.setText("");
-				txtEmailFornecedor.setText("");
-				txtTelefoneFornecedor.setText("");
+				fornecedorController.limparCamposAlterar();
 			}
 		});
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);
 		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
-		mostrarDados(fornecedor);
-
+		fornecedorController.mostrarDados(fornecedor);
 	}
-
-	private void mostrarDados(Fornecedor fornecedor) {
-		txtNomeFornecedor.setText(fornecedor.getNome_Fornecedor());
-		txtEmailFornecedor.setText(fornecedor.getEmail_Fornecedor());
-		txtCnpj.setText(fornecedor.getCNPJ());
-		txtEmailFornecedor.setText(fornecedor.getEmail_Fornecedor());
-		txtTelefoneFornecedor.setText(fornecedor.getTelefone_Fornecedor());
-	}
-
 
 }

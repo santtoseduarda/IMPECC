@@ -7,6 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controle.FornecedorController;
+import controle.FornecedorDAO;
+import modelo.Fornecedor;
 import modelo.Funcionario;
 
 import java.awt.Color;
@@ -25,29 +28,9 @@ import java.awt.FontFormatException;
 public class TelaInicial extends JFrame {
 
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaInicial frame = new TelaInicial();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public TelaInicial() {
-
-		
+	
+	
+	public TelaInicial(FornecedorController fornecedorController) {
 		
 		// fonte
 		Font fontRegular = null;
@@ -108,7 +91,7 @@ public class TelaInicial extends JFrame {
 		lblVendas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// tela inicial para abrir em vendas
+				
 			}
 		});
 		lblVendas.setForeground(new Color(255, 255, 255));
@@ -152,7 +135,7 @@ public class TelaInicial extends JFrame {
 		lblCliente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// tela inicial para abrir em clientes
+				
 			}
 		});
 		lblCliente.setForeground(new Color(255, 255, 255));
@@ -173,7 +156,8 @@ public class TelaInicial extends JFrame {
 		lblFornecedores.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// tela inicial para abrir em fornecedores
+				fornecedorController.iniciarListagem();
+				dispose();
 			}
 		});
 		lblFornecedores.setForeground(new Color(255, 255, 255));
@@ -196,11 +180,10 @@ public class TelaInicial extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				ListagemFuncionarios janelaInicial = new ListagemFuncionarios();
+				ListagemFuncionarios janelaInicial = new ListagemFuncionarios(null);
 				janelaInicial.setVisible(true);
 				dispose();
 
-				// tela inicial para abrir em Funcionarios
 			}
 		});
 		lblFuncionarios.setForeground(new Color(255, 255, 255));

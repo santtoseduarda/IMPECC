@@ -34,7 +34,10 @@ public class ListagemFornecedor extends JFrame {
 	private JPanel contentPane;
 	public JTable table;
 	private JTextField txtId;
-
+	public JTextField txtCnpj;
+	public JTextField txtEmail;
+	public JTextField txtNome;
+	
 	public ListagemFornecedor(FornecedorController fornecedorController) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -147,7 +150,7 @@ public class ListagemFornecedor extends JFrame {
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa1, "cell 3 1,alignx trailing");
 
-		JTextField txtNome = new JTextField();
+		txtNome = new JTextField();
 		panel.add(txtNome, "cell 5 1,growx");
 		txtNome.setColumns(10);
 
@@ -158,7 +161,7 @@ public class ListagemFornecedor extends JFrame {
 		new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa2, "cell 6 1");
 
-		JTextField txtCnpj = new JTextField();
+		txtCnpj = new JTextField();
 		panel.add(txtCnpj, "cell 8 1,growx");
 		txtCnpj.setColumns(10);
 
@@ -168,7 +171,7 @@ public class ListagemFornecedor extends JFrame {
 		new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa3, "cell 9 1");
 
-		JTextField txtEmail = new JTextField();
+		txtEmail = new JTextField();
 		panel.add(txtEmail, "cell 11 1,growx");
 		txtEmail.setColumns(10);
 

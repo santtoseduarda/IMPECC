@@ -33,7 +33,10 @@ import net.miginfocom.swing.MigLayout;
 public class CadastroFornecedores extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtTelefone;
+	public JTextField txtTelefone;
+	public JTextField txtCnpj;
+	public JTextField txtEmail;
+	public JTextField txtNome;
 
 	public CadastroFornecedores(FornecedorController fornecedorController) {
 		
@@ -98,7 +101,7 @@ public class CadastroFornecedores extends JFrame {
 		panel.setLayout(new MigLayout("", "[grow][grow][][grow][grow 50][grow][][][grow]", "[][grow][][][][][grow 20][][][grow 20][][][grow 20][][][][][][][][][][grow]"));
 
 		JLabel lblvoltar = new JLabel("");
-		lblvoltar.addMouseListener(funcionarioController.voltarListagem());
+		lblvoltar.addMouseListener(fornecedorController.voltarListagem());
 		lblvoltar.setIcon(new ImageIcon(
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
@@ -197,7 +200,7 @@ public class CadastroFornecedores extends JFrame {
 		contentPane.add(lblLinha5, "cell 1 15 2 1");
 
 		JButton btnSair = new JButton("Sair");
-		btnSair.addActionListener(fornecedorController.sairSistema());
+		btnSair.addMouseListener(fornecedorController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
@@ -208,45 +211,12 @@ public class CadastroFornecedores extends JFrame {
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
-		btnAdicionar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String cnpj = txtCnpj.getText();
-				String email = txtEmail.getText();
-				String nomeCompleto = txtNome.getText();
-				String telefone = txtTelefone.getText();
-				
-				if (cnpj.isEmpty() || email.isEmpty() || nomeCompleto.isEmpty() || telefone.isEmpty()) {
-					javax.swing.JOptionPane.showMessageDialog(null,
-							"Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", // Adicionei
-																											// o título
-																											// da janela
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-				} else {
-
-					Fornecedor cadastroFornecedor = new Fornecedor();
-
-					cadastroFornecedor.setCNPJ(cnpj);
-					cadastroFornecedor.setEmail_Fornecedor(email);
-					cadastroFornecedor.setNome_Fornecedor(nomeCompleto);
-					cadastroFornecedor.setTelefone_Fornecedor(telefone);
-
-					FornecedorDAO novoFornecedor = new FornecedorDAO();
-					FornecedorDAO.getInstancia();
-					novoFornecedor.inserir(cadastroFornecedor);
-
-					//ListagemFornecedor janelaCadastrarFornecedor= new ListagemFornecedor();
-					//janelaCadastrarFornecedor.setVisible(true);
-					
-					dispose();
-
-				}
-			}
-		});
+		btnAdicionar.addActionListener(fornecedorController.cadastrarFornecedor());
 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
 		btnLimparCampos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				fornecedorController.limparCamposCadastro();
 			}
 		});
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));

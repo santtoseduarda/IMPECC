@@ -221,7 +221,6 @@ public class AlterarFuncionario extends JFrame {
 
 		JButton btnSair = new JButton("Sair");
 		// chamar o controller para sair do sistema
-		
 		btnSair.addMouseListener(funcionarioController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));

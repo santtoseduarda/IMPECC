@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controle.FuncionarioController;
 import controle.FuncionarioDAO;
 import modelo.Funcionario;
 import net.miginfocom.swing.MigLayout;
@@ -34,34 +35,14 @@ public class CadastroFuncionario extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtNomeCompleto;
-	private JTextField txtEmail;
-	private JTextField txtCelular;
-	private JTextField txtLogin;
-	private JTextField txtSenha;
-	private JTextField txtCPF;
+	public JTextField txtNomeCompleto;
+	public JTextField txtEmail;
+	public JTextField txtCelular;
+	public JTextField txtLogin;
+	public JTextField txtSenha;
+	public JTextField txtCPF;
 
-	/**
-	 * Launch the application.
-	 */
-	//
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CadastroFuncionario frame = new CadastroFuncionario();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public CadastroFuncionario() {
+	public CadastroFuncionario(FuncionarioController funcionarioController) {
 
 		Font fontRegular = null;
 		Font fontBold = null;
@@ -158,55 +139,18 @@ public class CadastroFuncionario extends JFrame {
 		txtSenha.setColumns(10);
 
 		JButton btnSair = new JButton("Voltar");
-		btnSair.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				TelaLogin janelaCadastro = new TelaLogin(null);
-				janelaCadastro.setVisible(true);
-				dispose();
-
-			}
-		});
+		btnSair.addActionListener((ActionListener) funcionarioController.voltarListagem());
 		btnSair.setForeground(new Color(225, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 22));
 		contentPane.add(btnSair, "cell 1 17 1 2,alignx left,aligny bottom");
 
 		JButton btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.addActionListener();
+		btnCadastrar.addActionListener(funcionarioController.cadastrarFuncionarioLogin());
+		// cadastrar
 		btnCadastrar.setForeground(new Color(225, 225, 225));
 		btnCadastrar.setBackground(new Color(161, 0, 29));
 		btnCadastrar.setFont(fontBold.deriveFont(Font.PLAIN, 22));
 		contentPane.add(btnCadastrar, "flowx,cell 5 17 1 2,alignx right,aligny bottom");
-	}
-
-	private boolean validarCampos() {
-		 String login = txtLogin.getText();
-	        String senha = txtSenha.getText();
-	        String cpf = txtCPF.getText();
-	        String email = txtEmail.getText();
-	        String nomeCompleto = txtNomeCompleto.getText();
-	        String celular = txtCelular.getText();
-
-	        if (login.isEmpty() || senha.isEmpty() || cpf.isEmpty() || email.isEmpty() || nomeCompleto.isEmpty() || celular.isEmpty()) {
-	            JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
-	            return false;
-	        }
-
-	        if (!cpf.matches("\\d{11}")) {
-	            JOptionPane.showMessageDialog(null, "CPF inválido. Deve ter 11 dígitos numéricos.", "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
-	            return false;
-	        }
-
-	        if (!email.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
-	            JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.", "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
-	            return false;
-	        }
-
-	        if (!celular.matches("\\d{11}")) {
-	            JOptionPane.showMessageDialog(null, "Celular inválido. Deve ter 11 dígitos numéricos.", "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
-	            return false;
-	        }
-		return true;
 	}
 
 }

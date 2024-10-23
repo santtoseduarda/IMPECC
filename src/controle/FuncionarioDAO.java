@@ -166,7 +166,7 @@ public class FuncionarioDAO {
 		return false;
 	}
 
-	public Funcionario bucarFuncionario(int id_Funcionario) {
+	public Funcionario buscarFuncionario(int id_Funcionario) {
 		
 		String mostrarDados = "SELECT * FROM funcionarios WHERE id_Funcionario = ?";
 		Funcionario f = null;

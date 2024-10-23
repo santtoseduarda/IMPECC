@@ -33,7 +33,7 @@ public class FuncionarioController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (validarCampos()) {
+				if (limparCampos()) {
 					Funcionario cadastro = new Funcionario();
 					cadastro.setLogin(janelaCadastro.txtLogin.getText());
 					cadastro.setSenha(janelaCadastro.txtSenha.getText());

@@ -98,14 +98,7 @@ public class CadastroFornecedores extends JFrame {
 		panel.setLayout(new MigLayout("", "[grow][grow][][grow][grow 50][grow][][][grow]", "[][grow][][][][][grow 20][][][grow 20][][][grow 20][][][][][][][][][][grow]"));
 
 		JLabel lblvoltar = new JLabel("");
-		lblvoltar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ListagemFuncionarios novaJanela = new ListagemFuncionarios();
-				novaJanela.setVisible(true);
-				dispose();
-			}
-		});
+		lblvoltar.addMouseListener(funcionarioController.voltarListagem());
 		lblvoltar.setIcon(new ImageIcon(
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
@@ -204,31 +197,13 @@ public class CadastroFornecedores extends JFrame {
 		contentPane.add(lblLinha5, "cell 1 15 2 1");
 
 		JButton btnSair = new JButton("Sair");
-		btnSair.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnSair.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int resposta = JOptionPane.showConfirmDialog(janelaCadastroFornecedores, "Você realmente deseja sair?",
-						"Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-				// Verifica a resposta
-				if (resposta == JOptionPane.YES_OPTION) {
-					TelaLogin CadastroFuncionarios = new TelaLogin(null);
-					CadastroFuncionarios.setVisible(true);
-					dispose(); // Fecha a tela de login
-				}
-
-			}
-		});
+		btnSair.addActionListener(fornecedorController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSair, "cell 2 83 1 4,aligny bottom");
 
-		JButton btnAdicionar = new JButton("Adicionar Funcionário");
+		JButton btnAdicionar = new JButton("Adicionar Fornecedor");
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));

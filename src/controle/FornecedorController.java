@@ -192,5 +192,34 @@ public class FornecedorController {
 		};
 	}
 	
+	
+	//cadastro de funcionario
+	
+	
+	public ActionListener cadastrarFornecedor() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		}
+	}
+	
+	public MouseListener voltarListagem() {
+		return new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				janelaListagemFornecedor.setVisible(true);
+				janelaListagemFornecedor.dispose();
+			}
+		};
+	}
+	
+	
+	
+	
 }
 

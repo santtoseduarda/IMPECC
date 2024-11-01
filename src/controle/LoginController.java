@@ -10,22 +10,20 @@ import visao.TelaInicial;
 import visao.TelaLogin;
 
 public class LoginController {
-	
-	FuncionarioDAO fdao = new FuncionarioDAO();
 	TelaLogin view = new TelaLogin(this);
-	
-	public void validacao(){
-		
-	}
-	
+	FuncionarioDAO fdao = new FuncionarioDAO();
+	FuncionarioController fcont = new FuncionarioController();
+
+
 	public void iniciarCadastro(){
-		CadastroFuncionario janelaCadastro = new CadastroFuncionario();
-		janelaCadastro.setVisible(true);
+	
+		fcont.janelaLoginCadastro.setVisible(true);
 		view.dispose();
 	}
 	
 	public void telaInicial(){
-		TelaInicial novaJanela = new TelaInicial();
+		TelaInicialController telaInicialController = new TelaInicialController();
+		TelaInicial novaJanela = new TelaInicial(telaInicialController);
         novaJanela.setVisible(true);
 	}
 

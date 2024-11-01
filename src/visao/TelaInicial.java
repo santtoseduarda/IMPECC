@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import controle.FornecedorController;
 import controle.FornecedorDAO;
+import controle.TelaInicialController;
 import modelo.Fornecedor;
 import modelo.Funcionario;
 
@@ -30,7 +31,7 @@ public class TelaInicial extends JFrame {
 	private JPanel contentPane;
 	
 	
-	public TelaInicial(FornecedorController fornecedorController) {
+	public TelaInicial(TelaInicialController telaInicialController) {
 		
 		// fonte
 		Font fontRegular = null;
@@ -112,9 +113,9 @@ public class TelaInicial extends JFrame {
 		lblProdutos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ListagemProdutos janelaInicial = new ListagemProdutos();
-				janelaInicial.setVisible(true);
-				dispose();
+				
+				
+				telaInicialController.abrirTelaProduto();
 			}
 		});
 		lblProdutos.setForeground(new Color(255, 255, 255));
@@ -156,8 +157,7 @@ public class TelaInicial extends JFrame {
 		lblFornecedores.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				fornecedorController.iniciarListagem();
-				dispose();
+				telaInicialController.abrirTelaFornecedor();
 			}
 		});
 		lblFornecedores.setForeground(new Color(255, 255, 255));
@@ -176,16 +176,7 @@ public class TelaInicial extends JFrame {
 
 		JLabel lblFuncionarios = new JLabel("Funcionários");
 		lblFuncionarios.setFont(fontRegular.deriveFont(Font.PLAIN, 24));
-		lblFuncionarios.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				ListagemFuncionarios janelaInicial = new ListagemFuncionarios(null);
-				janelaInicial.setVisible(true);
-				dispose();
-
-			}
-		});
+		lblFuncionarios.addMouseListener(telaInicialController.abrirTelaFuncionario());
 		lblFuncionarios.setForeground(new Color(255, 255, 255));
 		contentPane.add(lblFuncionarios, "cell 2 11,alignx left,aligny center");
 

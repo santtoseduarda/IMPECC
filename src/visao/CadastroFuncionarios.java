@@ -240,7 +240,7 @@ public class CadastroFuncionarios extends JFrame {
 
 		// sair
 		JButton btnSair = new JButton("Sair");
-		btnSair.addActionListener((ActionListener) funcionarioController.sairSistema());
+		btnSair.addActionListener(funcionarioController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));

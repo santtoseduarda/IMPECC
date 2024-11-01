@@ -109,6 +109,8 @@ public class ListagemFuncionarios extends JFrame {
 		lblVendas.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblVendas, "cell 2 8,alignx left,aligny center");
 
+		textField = new JTextField();
+		
 		JPanel panel = new JPanel();
 		panel.addMouseListener(funcionarioController.pesquisa("id_Funcionario", textField.getText()));
 		contentPane.add(panel, "cell 3 8 21 72,grow");
@@ -135,7 +137,6 @@ public class ListagemFuncionarios extends JFrame {
 		lblPesquisar.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		panel.add(lblPesquisar, "cell 1 1,alignx trailing");
 
-		textField = new JTextField();
 		panel.add(textField, "cell 2 1,growx");
 		textField.setColumns(10);
 
@@ -182,7 +183,6 @@ public class ListagemFuncionarios extends JFrame {
 		table.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "ID", "Nome", "Email", "Celular", "CPF", "Login" }));
 		scrollPane.setViewportView(table);
-		funcionarioController.atualizarTabela("", "");
 
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(

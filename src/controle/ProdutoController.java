@@ -11,7 +11,7 @@ public class ProdutoController {
 	ProdutoController janelaControllerProd = this;
 	
 	ProdutoController listagemProduto = new ProdutoController();
-	listagemProduto.setVisible(true);
+	//listagemProduto.setVisible(true);
 	
 	
 	public void alterarProdutos(int id_Produto) {

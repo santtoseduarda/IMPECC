@@ -47,7 +47,7 @@ public class FuncionarioDAO {
 
 	public boolean inserir(Funcionario f) {
 
-		String inserir = "INSERT INTO funcionarios (nome_Funcionario, email_Funcionario, login, senha, celular, cpf) VALUES (?, ?, ?, ?, ?, ?)";
+		String inserir = "INSERT INTO funcionarios (nome_Funcionario, email_Funcionario, celular, cpf, login, senha) VALUES (?, ?, ?, ?, ?, ?)";
 
 		try {
 			pst = conn.prepareStatement(inserir);
@@ -55,10 +55,11 @@ public class FuncionarioDAO {
 			// Setar os valores nos placeholders "?"
 			pst.setString(1, f.getNomeFuncionario()); // ajuste conforme os métodos get do seu modelo Funcionario
 			pst.setString(2, f.getEmail_Funcionario());
-			pst.setString(3, f.getLogin());
-			pst.setString(4, f.getSenha());
-			pst.setString(5, f.getCelular());
-			pst.setString(6, f.getCpf());
+			pst.setString(3, f.getCelular());
+			pst.setString(4, f.getCpf());
+			pst.setString(5, f.getLogin());
+			pst.setString(6, f.getSenha());
+			
 
 			pst.executeUpdate();
 

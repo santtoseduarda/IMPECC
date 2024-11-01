@@ -70,7 +70,7 @@ public class CadastroFuncionario extends JFrame {
 			e.printStackTrace();
 		}
 
-		CadastroFuncionario janelaCadastro = this;
+		CadastroFuncionario janelaLoginCadastro = this;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 713, 504);
@@ -139,18 +139,19 @@ public class CadastroFuncionario extends JFrame {
 		txtSenha.setColumns(10);
 
 		JButton btnSair = new JButton("Voltar");
-		btnSair.addActionListener((ActionListener) funcionarioController.voltarListagem());
+		btnSair.addMouseListener(funcionarioController.voltarListagem());
 		btnSair.setForeground(new Color(225, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 22));
 		contentPane.add(btnSair, "cell 1 17 1 2,alignx left,aligny bottom");
+		
 
 		JButton btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.addActionListener(funcionarioController.cadastrarFuncionarioLogin());
 		// cadastrar
 		btnCadastrar.setForeground(new Color(225, 225, 225));
 		btnCadastrar.setBackground(new Color(161, 0, 29));
 		btnCadastrar.setFont(fontBold.deriveFont(Font.PLAIN, 22));
 		contentPane.add(btnCadastrar, "flowx,cell 5 17 1 2,alignx right,aligny bottom");
+		btnCadastrar.addActionListener(funcionarioController.cadastrarFuncionarioLogin());
 	}
 
 }

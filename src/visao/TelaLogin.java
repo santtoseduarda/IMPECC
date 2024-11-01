@@ -131,7 +131,7 @@ public class TelaLogin extends JFrame {
 		btnAcessar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		
 		// controller faz logar
-		btnAcessar.addActionListener(loginController.logar());
+		btnAcessar.addActionListener(this.loginController.logar());
 		
 		JLabel btnOlho = new JLabel("");
 		btnOlho.setFont(new Font("Tahoma", Font.PLAIN, 9));

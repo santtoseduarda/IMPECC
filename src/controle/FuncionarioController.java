@@ -23,7 +23,14 @@ public class FuncionarioController{
 	CadastroFuncionarios janelaCadastro = new CadastroFuncionarios(this);
 	ListagemFuncionarios janelaListagem = new ListagemFuncionarios(this);
 	CadastroFuncionario janelaLoginCadastro = new CadastroFuncionario(this);
+	//FuncionarioController fcont = new FuncionarioController();
+	
 
+	public void iniciarCadastroFunc(){
+		janelaCadastro.setVisible(true);
+		janelaListagem.dispose();
+	}
+	
 	public void abrirListagem(){
 		janelaListagem.setVisible(true);
 	}
@@ -33,13 +40,14 @@ public class FuncionarioController{
 		janelaCadastro.setVisible(true);
 	}
 
+	
 	public ActionListener cadastrarFuncionario() {
 		return new ActionListener() {
-
+		
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (validarCampos()) {
+				if (validarCamposCadastroFuncionarios()) {
 					Funcionario cadastro = new Funcionario();
 					cadastro.setLogin(janelaCadastro.txtLogin.getText());
 					cadastro.setSenha(janelaCadastro.txtSenha.getText());
@@ -176,17 +184,17 @@ public class FuncionarioController{
 		};
 	}
 
-	public ActionListener limparCampos() {
+	public ActionListener limparCamposCadastroFuncionario() {
 		// TODO Auto-generated method stub
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-/*				janelaAlterar.txtNomeCompleto.setText("");
-				janelaAlterar.txtEmail.setText("");
-				janelaAlterar.txtCelular.setText("");
-				janelaAlterar.txtCPF.setText("");
-				janelaAlterar.txtLogin.setText("");
-				janelaAlterar.txtSenha.setText("");
-*/			}
+				janelaCadastro.txtNomeCompleto.setText("");
+				janelaCadastro.txtEmail.setText("");
+				janelaCadastro.txtCelular.setText("");
+				janelaCadastro.txtCPF.setText("");
+				janelaCadastro.txtLogin.setText("");
+				janelaCadastro.txtSenha.setText("");
+			}
 		};
 	}
 
@@ -203,8 +211,9 @@ public class FuncionarioController{
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				LoginController loginController = new LoginController();
-				loginController.iniciarLogin();
+				FuncionarioController funcionarioController = new FuncionarioController();
+				funcionarioController.abrirListagem();
+				janelaCadastro.dispose();
 			}
 		};
 	}
@@ -286,6 +295,41 @@ public class FuncionarioController{
 	    }
 	    return true;
 	}
+	
+	public boolean validarCamposCadastroFuncionarios() {
+	    String nomeFuncionario = janelaCadastro.txtNomeCompleto.getText();
+	    String email_Funcionario = janelaCadastro.txtEmail.getText();
+	    String celular = janelaCadastro.txtCelular.getText();
+	    String cpf = janelaCadastro.txtCPF.getText();
+	    String login = janelaCadastro.txtLogin.getText();
+	    String senha = janelaCadastro.txtSenha.getText();
+
+	    if (nomeFuncionario.isEmpty() || email_Funcionario.isEmpty() || celular.isEmpty() || 
+	        cpf.isEmpty() || login.isEmpty() || senha.isEmpty()) {
+	        JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!", 
+	                                      "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+	        return false;
+	    }
+
+	    if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) { // CPF no formato 000.000.000-00
+	        JOptionPane.showMessageDialog(null, "CPF inválido. Deve estar no formato 000.000.000-00.", 
+	                                      "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+	        return false;
+	    }
+
+	    if (!email_Funcionario.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+	        JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.", 
+	                                      "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+	        return false;
+	    }
+
+	    if (!celular.matches("\\(\\d{2}\\)\\d{5}-\\d{4}")) { // Celular no formato (00)00000-0000
+	        JOptionPane.showMessageDialog(null, "Celular inválido. Deve estar no formato (00)00000-0000.", 
+	                                      "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+	        return false;
+	    }
+	    return true;
+	}
 
 	
 	public ActionListener cadastrarFuncionarioLogin() {
@@ -319,6 +363,5 @@ public class FuncionarioController{
 	        }
 	    };
 	}
-
 
 }

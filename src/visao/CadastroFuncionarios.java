@@ -127,8 +127,7 @@ public class CadastroFuncionarios extends JFrame {
 		// volta
 		JLabel lblvoltar = new JLabel("");
 		lblvoltar.addMouseListener(funcionarioController.voltarListagem());
-		lblvoltar.setIcon(new ImageIcon(
-				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
+		lblvoltar.setIcon(new ImageIcon(new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
 
 		JLabel lblNewLabel_1 = new JLabel("Nome Completo:");
@@ -258,7 +257,7 @@ public class CadastroFuncionarios extends JFrame {
 
 		// limpar campos
 		JButton btnLimparCampos = new JButton("Limpar Campos");
-		btnLimparCampos.addActionListener(funcionarioController.limparCampos());
+		btnLimparCampos.addActionListener(funcionarioController.limparCamposCadastroFuncionario());
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);

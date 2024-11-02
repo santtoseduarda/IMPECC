@@ -42,11 +42,10 @@ public class ListagemFuncionarios extends JFrame {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	public JTable table;
+	FuncionarioController funcionarioController;
 
 	public ListagemFuncionarios(FuncionarioController funcionarioController) {
-		//hahahahahha para ver se o commit da certo
-
-		ListagemFuncionarios janelaListagemFuncionarios = this;
+		this.funcionarioController = funcionarioController;
 
 		Font fontRegular = null;
 		Font fontBold = null;
@@ -75,7 +74,7 @@ public class ListagemFuncionarios extends JFrame {
 		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1054, 853);
+		setBounds(100, 100, 1199, 1607);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(161, 0, 29));
 		contentPane.setForeground(new Color(255, 0, 0));
@@ -252,11 +251,7 @@ public class ListagemFuncionarios extends JFrame {
 
 		//sair
 		JButton btnSair = new JButton("Sair");
-		btnSair.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				funcionarioController.sairSistema();
-			}
-		});
+		btnSair.addActionListener(funcionarioController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
@@ -266,34 +261,30 @@ public class ListagemFuncionarios extends JFrame {
 		JButton btnAdicionar = new JButton("Adicionar Funcionário");
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				funcionarioController.cadastrarFuncionario();
+				funcionarioController.iniciarCadastroFunc();
 			}
 		});
 
 		// editar
-		JButton btnAdicionar_2 = new JButton("Editar");
-		btnAdicionar_2.addActionListener(new ActionListener() {
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				funcionarioController.selecionaBusca(ABORT);
 			}
 		});
 
-		btnAdicionar_2.setForeground(new Color(255, 0, 0));
-		btnAdicionar_2.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnAdicionar_2.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnAdicionar_2, "cell 19 80 1 2");
+		btnEditar.setForeground(new Color(255, 0, 0));
+		btnEditar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnEditar.setBackground(new Color(255, 255, 255));
+		contentPane.add(btnEditar, "cell 19 80 1 2");
 
 		// excluir
-		JButton btnAdicionar_1 = new JButton("Excluir");
-		btnAdicionar_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				funcionarioController.excluirFuncionario();
-			}	
-		});
-		btnAdicionar_1.setForeground(new Color(255, 0, 0));
-		btnAdicionar_1.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnAdicionar_1.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnAdicionar_1, "cell 20 80 1 2");
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(funcionarioController.excluirFuncionario());
+		btnExcluir.setForeground(new Color(255, 0, 0));
+		btnExcluir.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnExcluir.setBackground(new Color(255, 255, 255));
+		contentPane.add(btnExcluir, "cell 20 80 1 2");
 
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));

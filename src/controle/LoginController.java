@@ -16,7 +16,6 @@ public class LoginController {
 
 
 	public void iniciarCadastro(){
-	
 		fcont.janelaLoginCadastro.setVisible(true);
 		view.dispose();
 	}

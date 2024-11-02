@@ -33,6 +33,8 @@ public class TelaInicial extends JFrame {
 	
 	public TelaInicial(TelaInicialController telaInicialController) {
 		
+		
+		
 		// fonte
 		Font fontRegular = null;
 		Font fontBold = null;

@@ -19,12 +19,12 @@ import visao.TelaLogin;
 
 public class FuncionarioController{
 	FuncionarioDAO fdao = new FuncionarioDAO();
-	//AlterarFuncionario janelaAlterar = new AlterarFuncionario(f, this);
+	AlterarFuncionario janelaAlterar = new AlterarFuncionario(this);
 	CadastroFuncionarios janelaCadastro = new CadastroFuncionarios(this);
 	ListagemFuncionarios janelaListagem = new ListagemFuncionarios(this);
 	CadastroFuncionario janelaLoginCadastro = new CadastroFuncionario(this);
-	//FuncionarioController fcont = new FuncionarioController();
 	
+	private int idFuncionarioAtual;
 
 	public void iniciarCadastroFunc(){
 		janelaCadastro.setVisible(true);
@@ -114,33 +114,46 @@ public class FuncionarioController{
 		
 	}
 
-	public ActionListener selecionaBusca(int id_Funcionario) {
+	public ActionListener buscaFuncionario() {
 	    return new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	            int posicaoSelecionada = janelaListagem.table.getSelectedRow();
+	            // Supondo que 'janelaListagem' é um JFrame que contém uma JTable chamada 'tabelaFuncionarios'
+	            int selectedRow = janelaListagem.table.getSelectedRow();
 	            
-	            DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
-	            
-	            int idFuncionarioSelecionado = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
-	            janelaListagem.dispose();
-	            
-	            Funcionario f = fdao.buscarFuncionario(idFuncionarioSelecionado);
-	            
-	            if (f != null) {
-//	                janelaAlterar.setVisible(true);
+	            if (selectedRow != -1) { // Verifica se alguma linha foi selecionada
+	                // Supondo que a primeira coluna da tabela contém o ID do funcionário
+	                int id_Funcionario = (int) janelaListagem.table.getValueAt(selectedRow, 0);
+
+	                // Busca o funcionário no banco de dados usando o DAO
+	                Funcionario f = fdao.buscarFuncionario(id_Funcionario);
+
+	                if (f != null) {
+	                    // Preenche os campos da janela de alteração com os dados do funcionário
+	                    mostrarDados(f);
+	                    
+	                    // Exibe a janela de alteração
+	                    janelaAlterar.setVisible(true);
+	                    janelaListagem.dispose();
+	                } else {
+	                    System.out.println("Funcionário não encontrado.");
+	                    JOptionPane.showMessageDialog(janelaListagem, "Funcionário não encontrado.");
+	                }
 	            } else {
-	                System.out.println("Funcionário não encontrado.");
+	                System.out.println("Nenhuma linha selecionada.");
+	                JOptionPane.showMessageDialog(janelaListagem, "Por favor, selecione um funcionário para alterar.");
 	            }
 	        }
 	    };
 	}
 
 
+
+
 	public ActionListener salvarEdicoes() {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-/*				Funcionario funcionario = new Funcionario();
+				Funcionario funcionario = new Funcionario();
 				funcionario.setLogin(janelaAlterar.txtLogin.getText());
 				funcionario.setSenha(janelaAlterar.txtSenha.getText());
 				funcionario.setCelular(janelaAlterar.txtCelular.getText());
@@ -157,7 +170,7 @@ public class FuncionarioController{
 					JOptionPane.showMessageDialog(null, "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
 							JOptionPane.ERROR_MESSAGE);
 				}
-*/			}
+			}
 		};
 	}
 
@@ -199,13 +212,14 @@ public class FuncionarioController{
 	}
 
 	public void mostrarDados(Funcionario f) {
-/*		janelaAlterar.txtNomeCompleto.setText(f.getNomeFuncionario());
+		this.idFuncionarioAtual = f.getId_Funcionario();
+		janelaAlterar.txtNomeCompleto.setText(f.getNomeFuncionario());
 		janelaAlterar.txtEmail.setText(f.getEmail_Funcionario());
 		janelaAlterar.txtCelular.setText(f.getCelular());
 		janelaAlterar.txtCPF.setText(f.getCpf());
 		janelaAlterar.txtLogin.setText(f.getLogin());
 		janelaAlterar.txtSenha.setText(f.getSenha());
-*/	}
+	}
 
 	public MouseListener voltarListagem() {
 		return new MouseAdapter() {

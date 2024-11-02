@@ -39,7 +39,7 @@ public class AlterarFuncionario extends JFrame {
 	public JTextField txtLogin;
 	public JTextField txtSenha;
 
-	public AlterarFuncionario(Funcionario f, FuncionarioController funcionarioController) {
+	public AlterarFuncionario(FuncionarioController funcionarioController) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -221,7 +221,7 @@ public class AlterarFuncionario extends JFrame {
 
 		JButton btnSair = new JButton("Sair");
 		// chamar o controller para sair do sistema
-		btnSair.addMouseListener(funcionarioController.sairSistema());
+		btnSair.addActionListener(funcionarioController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
@@ -236,14 +236,12 @@ public class AlterarFuncionario extends JFrame {
 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
 		// controller limpa os campos
-		btnLimparCampos.addActionListener(funcionarioController.limparCampos());
+		btnLimparCampos.addActionListener(funcionarioController.limparCamposCadastroFuncionario());
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);
 		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
 		
-		// mostra os campos
-		funcionarioController.mostrarDados(f);
 	}
 
 

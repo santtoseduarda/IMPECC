@@ -5,7 +5,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import visao.ListagemFornecedor;
-import visao.ListagemFuncionarios;
 import visao.ListagemProdutos;
 import visao.TelaInicial;
 
@@ -16,9 +15,7 @@ public class TelaInicialController {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ListagemProdutos janelaInicial = new ListagemProdutos();
-				janelaInicial.setVisible(true);
-				janelaInicial.dispose();
+				janelaTela.dispose();
 			}
 		};
 	}
@@ -27,9 +24,7 @@ public class TelaInicialController {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ListagemFornecedor janelaInicial = new ListagemFornecedor(null);
-				janelaInicial.setVisible(true);
-				janelaInicial.dispose();
+				janelaTela.dispose();
 			}
 		};
 	}

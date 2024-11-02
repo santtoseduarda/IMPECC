@@ -148,7 +148,7 @@ public class FuncionarioDAO {
 
 
 	public boolean alterarFuncionario(Funcionario f) {
-		String alterar = "UPDATE funcionarios SET nome_Funcionario = ?, email_Funcionario = ?, login = ?, senha = ?, celular = ? WHERE cpf = ?";
+		String alterar = "UPDATE funcionarios SET nome_Funcionario = ?, email_Funcionario = ?, login = ?, senha = ?, celular = ?, cpf = ?, WHERE id = ?";
 
 		try {
 			pst = conn.prepareStatement(alterar);
@@ -158,6 +158,7 @@ public class FuncionarioDAO {
 			pst.setString(4, f.getSenha());
 			pst.setString(5, f.getCelular());
 			pst.setString(6, f.getCpf());
+			pst.setLong(7, f.getId_Funcionario());
 			pst.executeUpdate();
 
 		} catch (SQLException e1) {

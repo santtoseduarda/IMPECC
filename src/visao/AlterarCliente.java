@@ -119,9 +119,7 @@ public class AlterarCliente extends JFrame {
 		lblvoltar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ListagemFuncionarios novaJanela = new ListagemFuncionarios();
-				novaJanela.setVisible(true);
-				dispose();
+			// abrir listagem clientes
 			}
 		});
 		lblvoltar.setIcon(new ImageIcon(

@@ -267,11 +267,7 @@ public class ListagemFuncionarios extends JFrame {
 
 		// editar
 		JButton btnEditar = new JButton("Editar");
-		btnEditar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				funcionarioController.selecionaBusca(ABORT);
-			}
-		});
+		btnEditar.addActionListener(funcionarioController.buscaFuncionario());
 
 		btnEditar.setForeground(new Color(255, 0, 0));
 		btnEditar.setFont(fontBold.deriveFont(Font.PLAIN, 25));

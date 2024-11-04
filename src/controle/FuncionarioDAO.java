@@ -91,39 +91,35 @@ public class FuncionarioDAO {
 	}
 
 	public ArrayList<Funcionario> buscarFuncLupa(String campo, String valor) {
+		    ArrayList<Funcionario> listaFuncionarios = new ArrayList<>();
+		    String sql = "SELECT * FROM funcionarios";
 
-		ArrayList<Funcionario> listaFuncionarios = new ArrayList<Funcionario>();
+		    if (campo != null && !campo.isEmpty()) {
+		        sql += " WHERE " + campo + " LIKE ?";
+		    }
 
-		try {
+		    try (PreparedStatement pst = conn.prepareStatement(sql)) {
+		        if (campo != null && !campo.isEmpty()) {
+		            pst.setString(1, "%" + valor + "%");
+		        }
 
-			String sql = "SELECT * FROM funcionarios";
-			PreparedStatement pst = conn.prepareStatement(sql);
-			if (campo.isEmpty() == false) {
-				sql = "SELECT * FROM funcionarios WHERE " + campo + " LIKE ?";
-				pst = conn.prepareStatement(sql);
-				pst.setString(1, "%" + valor + "%"); // Usando % para permitir busca parcial
-			}
-			ResultSet rs = pst.executeQuery();
-
-			// Iterando sobre o resultado e adicionando à lista de funcionários
-			while (rs.next()) {
-				Funcionario f = new Funcionario();
-				f.setId_Funcionario(rs.getInt("id_Funcionario"));
-				f.setNomeFuncionario(rs.getString("nome_Funcionario"));
-				f.setEmail_Funcionario(rs.getString("email_Funcionario"));
-				f.setCpf(rs.getString("cpf"));
-				f.setCelular(rs.getString("celular"));
-				f.setLogin(rs.getString("login"));
-				listaFuncionarios.add(f);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
+		        ResultSet rs = pst.executeQuery();
+		        while (rs.next()) {
+		            Funcionario f = new Funcionario();
+		            f.setId_Funcionario(rs.getInt("id_Funcionario"));
+		            f.setNomeFuncionario(rs.getString("nome_Funcionario"));
+		            f.setEmail_Funcionario(rs.getString("email_Funcionario"));
+		            f.setCpf(rs.getString("cpf"));
+		            f.setCelular(rs.getString("celular"));
+		            f.setLogin(rs.getString("login"));
+		            listaFuncionarios.add(f);
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return listaFuncionarios;
 		}
 
-		return listaFuncionarios;
-
-	}
 
 	public boolean excluirFuncionario(int idFuncionario) {
 		// TODO Auto-generated method stub
@@ -147,26 +143,27 @@ public class FuncionarioDAO {
 	}
 
 
-	public boolean alterarFuncionario(Funcionario f) {
-		String alterar = "UPDATE funcionarios SET nome_Funcionario = ?, email_Funcionario = ?, login = ?, senha = ?, celular = ?, cpf = ?, WHERE id = ?";
+	public boolean alterarFuncionario(Funcionario f, int idFuncionario) {
+	    String alterar = "UPDATE funcionarios SET nome_Funcionario = ?, email_Funcionario = ?, celular = ?, cpf = ?, login = ?, senha = ? WHERE id_Funcionario = ?";
 
-		try {
-			pst = conn.prepareStatement(alterar);
-			pst.setString(1, f.getNomeFuncionario()); // ajuste conforme os métodos get do seu modelo Funcionario
-			pst.setString(2, f.getEmail_Funcionario());
-			pst.setString(3, f.getLogin());
-			pst.setString(4, f.getSenha());
-			pst.setString(5, f.getCelular());
-			pst.setString(6, f.getCpf());
-			pst.setLong(7, f.getId_Funcionario());
-			pst.executeUpdate();
+	    try {
+	        pst = conn.prepareStatement(alterar);
+	        pst.setString(1, f.getNomeFuncionario());
+	        pst.setString(2, f.getEmail_Funcionario());
+	        pst.setString(3, f.getCelular());
+	        pst.setString(4, f.getCpf());
+	        pst.setString(5, f.getLogin());
+	        pst.setString(6, f.getSenha());
+	        pst.setInt(7, idFuncionario); // Certifique-se de que o ID está sendo configurado corretamente no objeto Funcionario
 
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return false;
+	        int rowsAffected = pst.executeUpdate();
+	        return rowsAffected > 0; // Retorna true se a alteração foi bem-sucedida
+	    } catch (SQLException e1) {
+	        e1.printStackTrace();
+	    }
+	    return false;
 	}
+
 
 	public Funcionario buscarFuncionario(int id_Funcionario) {
 		

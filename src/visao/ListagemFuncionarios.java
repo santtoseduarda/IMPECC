@@ -112,7 +112,7 @@ public class ListagemFuncionarios extends JFrame {
 		textField = new JTextField();
 		
 		JPanel panel = new JPanel();
-		panel.addMouseListener(funcionarioController.pesquisa("id_Funcionario", textField.getText()));
+		panel.addMouseListener(funcionarioController.pesquisa("id_Funcionario", textField));
 		contentPane.add(panel, "cell 3 8 21 72,grow");
 		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][grow][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
@@ -141,7 +141,7 @@ public class ListagemFuncionarios extends JFrame {
 		textField.setColumns(10);
 
 		JLabel lupa1 = new JLabel("");
-		lupa1.addMouseListener(funcionarioController.pesquisa("id_Funcionario", textField.getText()));
+		lupa1.addMouseListener(funcionarioController.pesquisa("id_Funcionario", textField));
 		lupa1.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa1, "cell 3 1,alignx trailing");
@@ -151,7 +151,7 @@ public class ListagemFuncionarios extends JFrame {
 		textField_1.setColumns(10);
 
 		JLabel lupa2 = new JLabel("");
-		lupa2.addMouseListener(funcionarioController.pesquisa("nome_Funcionario", textField_1.getText()));
+		lupa2.addMouseListener(funcionarioController.pesquisa("nome_Funcionario", textField_1));
 		lupa2.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa2, "cell 6 1");
@@ -161,7 +161,7 @@ public class ListagemFuncionarios extends JFrame {
 		textField_2.setColumns(10);
 
 		JLabel lupa3 = new JLabel("");
-		lupa3.addMouseListener(funcionarioController.pesquisa("cpf", textField_2.getText()));
+		lupa3.addMouseListener(funcionarioController.pesquisa("cpf", textField_2));
 		lupa3.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa3, "cell 9 1");
@@ -171,7 +171,7 @@ public class ListagemFuncionarios extends JFrame {
 		textField_3.setColumns(10);
 
 		JLabel lupa4 = new JLabel("");
-		lupa4.addMouseListener(funcionarioController.pesquisa("login", textField_3.getText()));
+		lupa4.addMouseListener(funcionarioController.pesquisa("login", textField_3));
 		lupa4.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa4, "cell 12 1");

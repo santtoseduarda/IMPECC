@@ -23,6 +23,7 @@ public class FuncionarioController{
 	CadastroFuncionarios janelaCadastro = new CadastroFuncionarios(this);
 	ListagemFuncionarios janelaListagem = new ListagemFuncionarios(this);
 	CadastroFuncionario janelaLoginCadastro = new CadastroFuncionario(this);
+	//teste
 	
 	private int idFuncionarioAtual;
 

@@ -25,7 +25,7 @@ public class FornecedorController {
 	FornecedorDAO fordao = new FornecedorDAO();
 	ListagemFornecedor viewl = new ListagemFornecedor(this);
 	CadastroFornecedores viewc = new CadastroFornecedores(this);
-	//AlterarFornecedor viewa = new AlterarFornecedor(fornecedor, null);
+	AlterarFornecedor viewa = new AlterarFornecedor(fornecedor, this);
 
 	// listagemFornecedor
 
@@ -40,12 +40,35 @@ public class FornecedorController {
 		viewl.dispose();
 	}
 
-	public void editarFornecedor(int id_Fornecedor) {
+	public ActionListener buscaFornecedor() {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selectedRow = viewl.table.getSelectedRow();
 
-/*		FornecedorDAO forDao = new FornecedorDAO();
-		fornecedor = forDao.bucarFornecedor(id_Fornecedor);
-		viewa.setVisible(true);
-*/
+				if (selectedRow != -1) { 
+					int id_Fornecedor = (int) viewl.table.getValueAt(selectedRow, 0);
+
+					// Busca o funcionário no banco de dados usando o DAO
+					fornecedor = fordao.buscarFornecedor(id_Fornecedor);
+
+					if (fornecedor != null) {
+						// Preenche os campos da janela de alteração com os dados do funcionário
+						mostrarDados(fornecedor);
+
+						// Exibe a janela de alteração
+						viewa.setVisible(true);
+						viewl.dispose();
+					} else {
+						System.out.println("Fornecedor não encontrado.");
+						JOptionPane.showMessageDialog(viewl, "Fornecedor não encontrado.");
+					}
+				} else {
+					System.out.println("Nenhuma linha selecionada.");
+					JOptionPane.showMessageDialog(viewl, "Por favor, selecione um fornecedor para alterar.");
+				}
+			}
+		};
 	}
 
 	public ActionListener excluirFornecedor() {
@@ -242,15 +265,14 @@ public class FornecedorController {
 		// TODO Auto-generated method stub
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-/*				viewa.txtCnpj.setText("");
+				viewa.txtCnpj.setText("");
 				viewa.txtEmailFornecedor.setText("");
 				viewa.txtNomeFornecedor.setText("");
-				viewa.txtTelefoneFornecedor.setText("");
-*/			}
+				viewa.txtTelefoneFornecedor.setText("");			}
 		};
 	}
 
-/*	public ActionListener salvarEdicoes() {
+	public ActionListener salvarEdicoes() {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fornecedor.setTelefone_Fornecedor(viewa.txtTelefoneFornecedor.getText());
@@ -270,12 +292,12 @@ public class FornecedorController {
 			}
 		};
 	}
-*/
+
 	public void mostrarDados(Fornecedor fornecedor) {
-/*		viewa.txtNomeFornecedor.setText(fornecedor.getNome_Fornecedor());
+		viewa.txtNomeFornecedor.setText(fornecedor.getNome_Fornecedor());
 		viewa.txtEmailFornecedor.setText(fornecedor.getEmail_Fornecedor());
 		viewa.txtCnpj.setText(fornecedor.getCNPJ());
 		viewa.txtTelefoneFornecedor.setText(fornecedor.getTelefone_Fornecedor());
-	*/}
+	}
 
 }

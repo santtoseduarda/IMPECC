@@ -75,7 +75,7 @@ public class FornecedorDAO {
 			String sql = "SELECT * FROM fornecedor";
 			PreparedStatement pst = conn.prepareStatement(sql);
 			if (campo.isEmpty() == false) {
-				sql = "SELECT * FROM fornecedores WHERE " + campo + " LIKE ?";
+				sql = "SELECT * FROM fornecedor WHERE " + campo + " LIKE ?";
 				pst = conn.prepareStatement(sql);
 				pst.setString(1, "%" + valor + "%"); // Usando % para permitir busca parcial
 			}
@@ -140,7 +140,7 @@ public class FornecedorDAO {
 		return false;
 	}
 
-	public Fornecedor bucarFornecedor(int id_Fornecedor) {
+	public Fornecedor buscarFornecedor(int id_Fornecedor) {
 
 		String mostrarDados = "SELECT * FROM fornecedor WHERE id_Fornecedor = ?";
 		Fornecedor fornecedor = null;
@@ -170,5 +170,6 @@ public class FornecedorDAO {
 		return null;
 
 	}
+
 
 }

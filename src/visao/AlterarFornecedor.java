@@ -208,12 +208,7 @@ public class AlterarFornecedor extends JFrame {
 		contentPane.add(lblLinha5, "cell 1 15 2 1");
 
 		JButton btnSair = new JButton("Sair");
-		btnSair.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				fornecedorController.sairSistema();
-			}
-		});
+		btnSair.addActionListener(fornecedorController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
@@ -224,19 +219,15 @@ public class AlterarFornecedor extends JFrame {
 		btnSalvar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSalvar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSalvar, "cell 28 85 1 4,aligny center");
+		btnSalvar.addActionListener(fornecedorController.salvarEdicoes());
 		
 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
-		btnLimparCampos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				fornecedorController.limparCamposAlterar();
-			}
-		});
+		btnLimparCampos.addActionListener(fornecedorController.limparCamposAlterar());
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);
 		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
-		//fornecedorController.mostrarDados(fornecedor);
 	}
 
 }

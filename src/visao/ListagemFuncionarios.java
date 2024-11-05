@@ -79,6 +79,8 @@ public class ListagemFuncionarios extends JFrame {
 		contentPane.setBackground(new Color(161, 0, 29));
 		contentPane.setForeground(new Color(255, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][][][][][][][][][]",
@@ -112,7 +114,6 @@ public class ListagemFuncionarios extends JFrame {
 		textField = new JTextField();
 
 		JPanel panel = new JPanel();
-		panel.addMouseListener(funcionarioController.pesquisa("id_Funcionario", textField));
 		contentPane.add(panel, "cell 3 8 21 72,grow");
 		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][grow][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));

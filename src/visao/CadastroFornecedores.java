@@ -41,8 +41,6 @@ public class CadastroFornecedores extends JFrame {
 
 	public CadastroFornecedores(FornecedorController fornecedorController) {
 		
-		CadastroFornecedores janelaCadastroFornecedores = this;
-		
 		setTitle("Cadastro Funcionário");
 		Font fontRegular = null;
 		Font fontBold = null;
@@ -64,6 +62,7 @@ public class CadastroFornecedores extends JFrame {
 		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setBounds(100, 100, 1054, 853);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(161, 0, 29));

@@ -43,7 +43,7 @@ public class AlterarFornecedor extends JFrame {
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		AlterarFornecedor janelaAlterarFornecedor = this;
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		setTitle("Alterar Fornecedor");
 		Font fontRegular = null;
@@ -104,12 +104,7 @@ public class AlterarFornecedor extends JFrame {
 		panel.setLayout(new MigLayout("", "[grow][grow][][grow][grow 50][grow][][][grow]", "[][][grow][][][][][grow 20][][][grow 20][][][grow 20][][][][][][][][][][grow]"));
 
 		JLabel lblvoltar = new JLabel("");
-		lblvoltar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				fornecedorController.voltarListagem();
-			}
-		});
+		lblvoltar.addMouseListener(fornecedorController.voltarListagem());
 		lblvoltar.setIcon(new ImageIcon(
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
@@ -223,7 +218,7 @@ public class AlterarFornecedor extends JFrame {
 		
 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
-		btnLimparCampos.addActionListener(fornecedorController.limparCamposAlterar());
+		btnLimparCampos.addActionListener(fornecedorController.limparCamposAlterarFornecedor());
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);

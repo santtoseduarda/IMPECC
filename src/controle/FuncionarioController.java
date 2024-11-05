@@ -31,6 +31,7 @@ public class FuncionarioController {
 	}
 
 	public void abrirListagem() {
+		atualizarTabela("", "");
 		janelaListagem.setVisible(true);
 	}
 
@@ -97,6 +98,7 @@ public class FuncionarioController {
 
 							modeloTabela.removeRow(posicaoSelecionada);
 							JOptionPane.showMessageDialog(null, "Funcionário excluído com sucesso.");
+							 atualizarTabela("", "");
 
 						} else {
 							JOptionPane.showMessageDialog(null, "Erro ao excluir o funcionário.");
@@ -154,20 +156,22 @@ public class FuncionarioController {
 
 					DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
 					int idFuncionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
-					
 					Funcionario funcionario = new Funcionario();
-					funcionario.setLogin(janelaAlterar.txtLogin.getText());
-					funcionario.setSenha(janelaAlterar.txtSenha.getText());
+					
+					funcionario.setNomeFuncionario(janelaAlterar.txtNomeCompleto.getText());
+					funcionario.setEmail_Funcionario(janelaAlterar.txtEmail.getText());
 					funcionario.setCelular(janelaAlterar.txtCelular.getText());
 					funcionario.setCpf(janelaAlterar.txtCPF.getText());
-					funcionario.setEmail_Funcionario(janelaAlterar.txtEmail.getText());
-					funcionario.setNomeFuncionario(janelaAlterar.txtNomeCompleto.getText());
+					funcionario.setLogin(janelaAlterar.txtLogin.getText());
+					funcionario.setSenha(janelaAlterar.txtSenha.getText());
+					
 
 					try {
 						boolean sucesso = fdao.alterarFuncionario(funcionario, idFuncionario);
 						if (sucesso) {
 							janelaListagem.setVisible(true);
 							janelaAlterar.dispose();
+							atualizarTabela("", "");
 						} else {
 							JOptionPane.showMessageDialog(null,
 									"Erro ao alterar funcionário: Nenhuma linha foi afetada.", "Erro",

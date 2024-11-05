@@ -274,27 +274,49 @@ public class FornecedorController {
 		};
 	}
 
+	
+	
+	
 	public ActionListener salvarEdicoes() {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fornecedor.setTelefone_Fornecedor(viewa.txtTelefoneFornecedor.getText());
-				fornecedor.setCNPJ(viewa.txtCnpj.getText());
-				fornecedor.setEmail_Fornecedor(viewa.txtEmailFornecedor.getText());
-				fornecedor.setNome_Fornecedor(viewa.txtNomeFornecedor.getText());
+				int posicaoSelecionada = viewl.table.getSelectedRow();
 
-				try {
-					fordao.alterarFornecedor(fornecedor);
-					viewl.setVisible(true);
-					viewa.dispose();
+				if (posicaoSelecionada >= 0) {
 
-				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(null, "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
-							JOptionPane.ERROR_MESSAGE);
+					DefaultTableModel modeloTabela = (DefaultTableModel) viewl.table.getModel();
+					int idFornecedor = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+					Fornecedor fornecedor = new Fornecedor();
+					
+					fornecedor.setID_fornecedor(idFornecedor);
+					fornecedor.setTelefone_Fornecedor(viewa.txtTelefoneFornecedor.getText());
+					fornecedor.setCNPJ(viewa.txtCnpj.getText());
+					fornecedor.setEmail_Fornecedor(viewa.txtEmailFornecedor.getText());
+					fornecedor.setNome_Fornecedor(viewa.txtNomeFornecedor.getText());
+					
+
+					try {
+						boolean sucesso = fordao.alterarFornecedor(fornecedor);
+						if (sucesso) {
+							atualizarTabela("", "");
+							viewl.setVisible(true);
+							viewa.dispose();
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"Erro ao alterar fornecedor: Nenhuma linha foi afetada.", "Erro",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Erro ao alterar fornecedor: " + ex.getMessage(), "Erro",
+								JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		};
 	}
 
+	
+	
 	public void mostrarDados(Fornecedor fornecedor) {
 		viewa.txtNomeFornecedor.setText(fornecedor.getNome_Fornecedor());
 		viewa.txtEmailFornecedor.setText(fornecedor.getEmail_Fornecedor());

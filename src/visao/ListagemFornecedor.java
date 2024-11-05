@@ -47,6 +47,8 @@ public class ListagemFornecedor extends JFrame {
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 
 		
 
@@ -115,7 +117,6 @@ public class ListagemFornecedor extends JFrame {
 		txtId = new JTextField();
 		
 		JPanel panel = new JPanel();
-		panel.addMouseListener(fornecedorController.pesquisaLupaFornecedor("id_Fornecedor", txtId));
 		contentPane.add(panel, "cell 3 8 21 72,grow");
 		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][grow][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
@@ -143,7 +144,6 @@ public class ListagemFornecedor extends JFrame {
 		JLabel lupa1 = new JLabel("");
 		lupa1.addMouseListener(fornecedorController.pesquisaLupaFornecedor("id_Fornecedor", txtId));
 
-		txtId = new JTextField();
 		txtId.setColumns(10);
 		panel.add(txtId, "cell 2 1,growx");
 		lupa1.setIcon(new ImageIcon(

@@ -87,6 +87,8 @@ public class TelaLogin extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(69, 69, 69, 30));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[grow][][][][200px,grow][][][][grow]", "[grow 50][grow][grow 50]"));

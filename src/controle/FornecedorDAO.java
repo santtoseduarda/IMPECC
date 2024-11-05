@@ -123,15 +123,19 @@ public class FornecedorDAO {
 	}
 
 	public boolean alterarFornecedor(Fornecedor fornecedor) {
-		String alterarFornecedor = "UPDATE fornecedor SET nome_Fornecedor = ?, email_fornecedor = ?, telefone_fornecedor = ? WHERE cnpj = ?";
+		String alterarFornecedor = "UPDATE fornecedor SET nome_Fornecedor = ?, email_fornecedor = ?, telefone_fornecedor = ?, cnpj = ? WHERE id_Fornecedor = ?";
 
 		try {
 			pst = conn.prepareStatement(alterarFornecedor);
+			
 			pst.setString(1, fornecedor.getNome_Fornecedor()); // ajuste conforme os métodos get do seu modelo Funcionario
 			pst.setString(2, fornecedor.getEmail_Fornecedor());
 			pst.setString(3, fornecedor.getTelefone_Fornecedor());
 			pst.setString(4, fornecedor.getCNPJ());
+			pst.setInt(5, fornecedor.getID_fornecedor());
+			System.out.println(pst);
 			pst.executeUpdate();
+			return true;
 
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block

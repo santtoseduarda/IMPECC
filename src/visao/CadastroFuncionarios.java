@@ -63,8 +63,6 @@ public class CadastroFuncionarios extends JFrame {
 	 */
 	public CadastroFuncionarios(FuncionarioController funcionarioController) {
 
-		CadastroFuncionarios janelaCadastroFuncionarios = this;
-
 		setTitle("Cadastro Funcionário");
 		Font fontRegular = null;
 		Font fontBold = null;
@@ -91,6 +89,9 @@ public class CadastroFuncionarios extends JFrame {
 		contentPane.setBackground(new Color(161, 0, 29));
 		contentPane.setForeground(new Color(255, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+		
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));

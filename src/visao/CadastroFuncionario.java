@@ -77,6 +77,8 @@ public class CadastroFuncionario extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(69, 69, 69, 35));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[grow][][grow][][grow][][grow]",

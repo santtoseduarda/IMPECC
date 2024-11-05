@@ -44,8 +44,9 @@ public class AlterarFuncionario extends JFrame {
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		AlterarFuncionario janelaAlterarFuncionario = this;
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+		
 		setTitle("Alterar Funcionário");
 		Font fontRegular = null;
 		Font fontBold = null;

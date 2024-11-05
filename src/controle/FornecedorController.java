@@ -229,22 +229,24 @@ public class FornecedorController {
 			return false;
 		}
 
-		if (!cnpj.matches("\\d{14}")) {
-			JOptionPane.showMessageDialog(null, "CNPJ inválido. Deve ter 14 dígitos numéricos.", "Erro de cadastro",
-					JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-
-		if (!email.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
-			JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.",
+		if (!cnpj.matches("\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}")) { 
+			JOptionPane.showMessageDialog(null, "CNPJ inválido. Deve estar no formato 00.000.000/0000-00",
 					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 
-		if (!telefone.matches("\\d{11}")) {
-			JOptionPane.showMessageDialog(null, "Celular inválido. Deve ter 11 dígitos numéricos.", "Erro de cadastro",
-					JOptionPane.ERROR_MESSAGE);
-			return false;
+		
+		 if (!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
+		        JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.",
+		                "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+		        return false;
+		    }
+
+		 if (!telefone.matches("\\(\\d{2}\\)\\d{5}-\\d{4}")) { // Celular no formato (00)00000-0000
+				JOptionPane.showMessageDialog(null, "Celular inválido. Deve estar no formato (00)00000-0000.",
+						"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+				return false;
+
 		}
 		return true;
 	}

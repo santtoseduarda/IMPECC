@@ -36,6 +36,7 @@ public class FornecedorController {
 	
 
 	public void cadastroFornecedor() {
+		limparCamposCadFornecedor();
 		viewc.setVisible(true);
 		viewl.dispose();
 	}
@@ -251,14 +252,25 @@ public class FornecedorController {
 		return true;
 	}
 
-	public ActionListener limparCamposCadastroFornecedor() {
-		// TODO Auto-generated method stub
-		return new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+	
+	public void limparCamposCadFornecedor() {
+		
 				viewc.txtNome.setText("");
 				viewc.txtEmail.setText("");
 				viewc.txtTelefone.setText("");
 				viewc.txtCnpj.setText("");
+			
+		
+	}
+	
+	
+	
+	
+	public ActionListener limparCamposCadastroFornecedor() {
+		// TODO Auto-generated method stub
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limparCamposCadFornecedor();
 			}
 		};
 	}

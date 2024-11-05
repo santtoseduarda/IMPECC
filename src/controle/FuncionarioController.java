@@ -26,6 +26,7 @@ public class FuncionarioController {
 	CadastroFuncionario janelaLoginCadastro = new CadastroFuncionario(this);
 
 	public void iniciarCadastroFunc() {
+		limparCamposCadFuncionario();
 		janelaCadastro.setVisible(true);
 		janelaListagem.dispose();
 	}
@@ -206,17 +207,25 @@ public class FuncionarioController {
 
 		};
 	}
-
-	public ActionListener limparCamposCadastroFuncionario() {
+	
+	public void limparCamposCadFuncionario() {
 		// TODO Auto-generated method stub
-		return new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		
 				janelaCadastro.txtNomeCompleto.setText("");
 				janelaCadastro.txtEmail.setText("");
 				janelaCadastro.txtCelular.setText("");
 				janelaCadastro.txtCPF.setText("");
 				janelaCadastro.txtLogin.setText("");
 				janelaCadastro.txtSenha.setText("");
+		
+	}
+	
+
+	public ActionListener limparCamposCadastroFuncionario() {
+		// TODO Auto-generated method stub
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limparCamposCadFuncionario();
 			}
 		};
 	}

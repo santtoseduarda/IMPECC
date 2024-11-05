@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import controle.FornecedorController;
 import controle.FuncionarioController;
 import controle.FuncionarioDAO;
 import modelo.Funcionario;
@@ -226,6 +227,16 @@ public class ListagemFuncionarios extends JFrame {
 		contentPane.add(lblCaminhao, "cell 1 15,alignx left,aligny center");
 
 		JLabel lblFornecedor = new JLabel("Fornecedores");
+		lblFornecedor.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				FornecedorController fornecedorController = new FornecedorController();
+				ListagemFornecedor forn = new ListagemFornecedor(fornecedorController); 
+		        forn.setVisible(true);
+
+		        dispose();
+			}
+		});
 		lblFornecedor.setForeground(new Color(255, 255, 255));
 		lblFornecedor.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblFornecedor, "cell 2 15");

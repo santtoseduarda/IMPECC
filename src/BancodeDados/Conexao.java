@@ -11,7 +11,7 @@ public class Conexao {
 		// localhost: 3306 é o local da máquina = porta de comunicação
 		
 		String user = "root";
-		String passoword = "aluno";
+		String passoword = "Berbelle77-";
 		
 		// try = tentar
 		try (Connection connection = DriverManager.getConnection(url, user, passoword)) {

@@ -37,7 +37,7 @@ public class ListagemFuncionarios extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField textField; //id
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
@@ -110,7 +110,7 @@ public class ListagemFuncionarios extends JFrame {
 		contentPane.add(lblVendas, "cell 2 8,alignx left,aligny center");
 
 		textField = new JTextField();
-		
+
 		JPanel panel = new JPanel();
 		panel.addMouseListener(funcionarioController.pesquisa("id_Funcionario", textField));
 		contentPane.add(panel, "cell 3 8 21 72,grow");
@@ -249,7 +249,7 @@ public class ListagemFuncionarios extends JFrame {
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
 		contentPane.add(lblLinha5, "cell 1 19 2 1");
 
-		//sair
+		// sair
 		JButton btnSair = new JButton("Sair");
 		btnSair.addActionListener(funcionarioController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
@@ -287,6 +287,5 @@ public class ListagemFuncionarios extends JFrame {
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 21 80 1 2,aligny bottom");
 	}
-
 
 }

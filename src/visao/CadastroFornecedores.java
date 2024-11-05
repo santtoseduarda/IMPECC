@@ -32,6 +32,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class CadastroFornecedores extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public JTextField txtTelefone;
 	public JTextField txtCnpj;
@@ -109,21 +110,21 @@ public class CadastroFornecedores extends JFrame {
 		JLabel lblNome = new JLabel("Nome Completo:*");
 		panel.add(lblNome, "cell 1 4");
 
-		JTextField txtNome = new JTextField();
+		txtNome = new JTextField();
 		panel.add(txtNome, "cell 1 5 7 1,growx");
 		txtNome.setColumns(10);
 
 		JLabel lblCnpj = new JLabel("CNPJ:*");
 		panel.add(lblCnpj, "cell 1 7");
 
-		JTextField txtCnpj = new JTextField();
+		txtCnpj = new JTextField();
 		panel.add(txtCnpj, "cell 1 8 7 1,growx");
 		txtCnpj.setColumns(10);
 
 		JLabel lblEmail = new JLabel("E-mail:*");
 		panel.add(lblEmail, "cell 1 10");
 
-		JTextField txtEmail = new JTextField();
+		txtEmail = new JTextField();
 		panel.add(txtEmail, "cell 1 11 7 1,growx");
 		txtEmail.setColumns(10);
 		
@@ -200,7 +201,7 @@ public class CadastroFornecedores extends JFrame {
 		contentPane.add(lblLinha5, "cell 1 15 2 1");
 
 		JButton btnSair = new JButton("Sair");
-		btnSair.addMouseListener(fornecedorController.sairSistema());
+		btnSair.addActionListener(fornecedorController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
@@ -214,11 +215,7 @@ public class CadastroFornecedores extends JFrame {
 		btnAdicionar.addActionListener(fornecedorController.cadastrarFornecedor());
 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
-		btnLimparCampos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				fornecedorController.limparCamposCadastro();
-			}
-		});
+		btnLimparCampos.addActionListener(fornecedorController.limparCamposCadastroFornecedor());
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);

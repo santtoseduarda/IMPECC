@@ -91,12 +91,6 @@ public class TelaInicial extends JFrame {
 		
 		JLabel lblVendas = new JLabel("Vendas");
 		lblVendas.setFont(fontRegular.deriveFont(Font.PLAIN, 24));
-		lblVendas.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-			}
-		});
 		lblVendas.setForeground(new Color(255, 255, 255));
 		contentPane.add(lblVendas, "cell 2 3,alignx left,aligny center");
 
@@ -112,14 +106,6 @@ public class TelaInicial extends JFrame {
 
 		JLabel lblProdutos = new JLabel("Produtos");
 		lblProdutos.setFont(fontRegular.deriveFont(Font.PLAIN, 24));
-		lblProdutos.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				
-				telaInicialController.abrirTelaProduto();
-			}
-		});
 		lblProdutos.setForeground(new Color(255, 255, 255));
 		contentPane.add(lblProdutos, "cell 2 5,alignx left,aligny center");
 
@@ -135,12 +121,6 @@ public class TelaInicial extends JFrame {
 
 		JLabel lblCliente = new JLabel("Clientes");
 		lblCliente.setFont(fontRegular.deriveFont(Font.PLAIN, 24));
-		lblCliente.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-			}
-		});
 		lblCliente.setForeground(new Color(255, 255, 255));
 		contentPane.add(lblCliente, "cell 2 7,alignx left,aligny center");
 
@@ -156,12 +136,7 @@ public class TelaInicial extends JFrame {
 
 		JLabel lblFornecedores = new JLabel("Fornecedores");
 		lblFornecedores.setFont(fontRegular.deriveFont(Font.PLAIN, 24));
-		lblFornecedores.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				telaInicialController.abrirTelaFornecedor();
-			}
-		});
+		lblFornecedores.addMouseListener(telaInicialController.abrirTelaFornecedor());
 		lblFornecedores.setForeground(new Color(255, 255, 255));
 		contentPane.add(lblFornecedores, "cell 2 9,alignx left,aligny center");
 

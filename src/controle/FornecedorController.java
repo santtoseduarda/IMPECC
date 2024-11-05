@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Fornecedor;
@@ -24,26 +25,27 @@ public class FornecedorController {
 	FornecedorDAO fordao = new FornecedorDAO();
 	ListagemFornecedor viewl = new ListagemFornecedor(this);
 	CadastroFornecedores viewc = new CadastroFornecedores(this);
-	AlterarFornecedor viewa = new AlterarFornecedor(fornecedor, null);
+	//AlterarFornecedor viewa = new AlterarFornecedor(fornecedor, null);
 
 	// listagemFornecedor
 
-	public void iniciarListagem() {
+	public void abrirListagemFornecedor() {
+		atualizarTabela("", "");
 		viewl.setVisible(true);
 	}
+	
 
 	public void cadastroFornecedor() {
-		CadastroFornecedores janelaCadastroFornecedores = new CadastroFornecedores(this);
-		janelaCadastroFornecedores.setVisible(true);
+		viewc.setVisible(true);
 		viewl.dispose();
 	}
 
 	public void editarFornecedor(int id_Fornecedor) {
 
-		FornecedorDAO forDao = new FornecedorDAO();
+/*		FornecedorDAO forDao = new FornecedorDAO();
 		fornecedor = forDao.bucarFornecedor(id_Fornecedor);
 		viewa.setVisible(true);
-
+*/
 	}
 
 	public ActionListener excluirFornecedor() {
@@ -83,49 +85,17 @@ public class FornecedorController {
 		};
 	}
 
-	public MouseListener sairSistema() {
-		return new MouseListener() {
-			public void mouseClicked1(MouseEvent e) {
+	public ActionListener sairSistema() {
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				int resposta = JOptionPane.showConfirmDialog(null, "Você realmente deseja sair?", "Confirmação",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
 				// Verifica a resposta
 				if (resposta == JOptionPane.YES_OPTION) {
-					TelaLogin viewLogin = new TelaLogin(null);
-
-					viewLogin.setVisible(true);
-					viewLogin.dispose(); // Fecha a tela de login
+					LoginController logController = new LoginController();
+					logController.iniciarLogin();
 				}
-
-			}
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -163,12 +133,12 @@ public class FornecedorController {
 		}
 	}
 
-	public MouseListener pesquisa(String campo, String valor) {
+	public MouseListener pesquisaLupaFornecedor(String campo, JTextField txtID) {
 		// TODO Auto-generated method stub
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println(e.getSource());
+	            String valor = txtID.getText(); // Obter o valor atualizado do campo de texto no momento do clique
 				pesquisarPorCampo(campo, valor);
 			}
 		};
@@ -184,21 +154,21 @@ public class FornecedorController {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (validarCampos()) {
+				if (validarCamposCadastroFornecedores()) {
 
-					fornecedor.setCNPJ(viewc.txtCnpj.getText());
-					fornecedor.setEmail_Fornecedor(viewc.txtEmail.getText());
-					fornecedor.setNome_Fornecedor(viewc.txtNome.getText());
-					fornecedor.setTelefone_Fornecedor(viewc.txtTelefone.getText());
-
-					fordao.getInstancia();
-					fordao.inserir(fornecedor);
+					Fornecedor cadastro = new Fornecedor();
+					
+					cadastro.setNome_Fornecedor(viewc.txtNome.getText());
+					cadastro.setCNPJ(viewc.txtCnpj.getText());
+					cadastro.setEmail_Fornecedor(viewc.txtEmail.getText());
+					cadastro.setTelefone_Fornecedor(viewc.txtTelefone.getText());
 
 					FornecedorDAO novoFornecedor = new FornecedorDAO();
 
 					try {
-						novoFornecedor.inserir(fornecedor);
+						novoFornecedor.inserir(cadastro);
 						viewl.setVisible(true);
+						atualizarTabela("", "");
 						viewc.dispose();
 
 					} catch (Exception ex) {
@@ -216,26 +186,28 @@ public class FornecedorController {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				viewl.setVisible(true);
-				viewl.dispose();
+				FornecedorController fornecedorController = new FornecedorController();
+				fornecedorController.abrirListagemFornecedor();
+				viewc.dispose();
 			}
 		};
 	}
 
-	protected boolean validarCampos() {
+	//arrumar essas validações
+	public boolean validarCamposCadastroFornecedores() {
+		String nome = viewc.txtNome.getText();
 		String cnpj = viewc.txtCnpj.getText();
 		String email = viewc.txtEmail.getText();
-		String nome = viewc.txtNome.getText();
 		String telefone = viewc.txtTelefone.getText();
 
-		if (cnpj.isEmpty() || email.isEmpty() || nome.isEmpty() || telefone.isEmpty()) {
+		if (nome.isEmpty() || cnpj.isEmpty() || email.isEmpty() || telefone.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
 					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 
-		if (!cnpj.matches("\\d{11}")) {
-			JOptionPane.showMessageDialog(null, "CPF inválido. Deve ter 11 dígitos numéricos.", "Erro de cadastro",
+		if (!cnpj.matches("\\d{14}")) {
+			JOptionPane.showMessageDialog(null, "CNPJ inválido. Deve ter 14 dígitos numéricos.", "Erro de cadastro",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -253,8 +225,8 @@ public class FornecedorController {
 		}
 		return true;
 	}
-	
-	public ActionListener limparCamposCadastro() {
+
+	public ActionListener limparCamposCadastroFornecedor() {
 		// TODO Auto-generated method stub
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -265,20 +237,20 @@ public class FornecedorController {
 			}
 		};
 	}
-	
+
 	public ActionListener limparCamposAlterar() {
 		// TODO Auto-generated method stub
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				viewa.txtCnpj.setText("");
+/*				viewa.txtCnpj.setText("");
 				viewa.txtEmailFornecedor.setText("");
 				viewa.txtNomeFornecedor.setText("");
 				viewa.txtTelefoneFornecedor.setText("");
-			}
+*/			}
 		};
 	}
-	
-	public ActionListener salvarEdicoes() {
+
+/*	public ActionListener salvarEdicoes() {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fornecedor.setTelefone_Fornecedor(viewa.txtTelefoneFornecedor.getText());
@@ -298,13 +270,12 @@ public class FornecedorController {
 			}
 		};
 	}
-	
+*/
 	public void mostrarDados(Fornecedor fornecedor) {
-		viewa.txtNomeFornecedor.setText(fornecedor.getNome_Fornecedor());
+/*		viewa.txtNomeFornecedor.setText(fornecedor.getNome_Fornecedor());
 		viewa.txtEmailFornecedor.setText(fornecedor.getEmail_Fornecedor());
 		viewa.txtCnpj.setText(fornecedor.getCNPJ());
 		viewa.txtTelefoneFornecedor.setText(fornecedor.getTelefone_Fornecedor());
-	}
-
+	*/}
 
 }

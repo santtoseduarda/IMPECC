@@ -31,20 +31,24 @@ import net.miginfocom.swing.MigLayout;
 
 public class ListagemFornecedor extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public JTable table;
-	private JTextField txtId;
+	public JTextField txtId;
 	public JTextField txtCnpj;
 	public JTextField txtEmail;
 	public JTextField txtNome;
+	FornecedorController fornecedorController;
 	
 	public ListagemFornecedor(FornecedorController fornecedorController) {
+		this.fornecedorController = fornecedorController;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		ListagemFornecedor janelaListagemFornecedor = this;
+		
 
 		Font fontRegular = null;
 		Font fontBold = null;
@@ -108,14 +112,10 @@ public class ListagemFornecedor extends JFrame {
 		lblVendas.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblVendas, "cell 2 8,alignx left,aligny center");
 
+		txtId = new JTextField();
+		
 		JPanel panel = new JPanel();
-		panel.addMouseListener(fornecedorController.pesquisa("id_Fornecedor", txtId.getText()));
-		/*
-		 * panel.addMouseListener(new MouseAdapter() {
-		 * 
-		 * @Override public void mouseClicked(MouseEvent e) {
-		 * pesquisarPorCampo("id_Fornecedor", txtId.getText()); } });
-		 */
+		panel.addMouseListener(fornecedorController.pesquisaLupaFornecedor("id_Fornecedor", txtId));
 		contentPane.add(panel, "cell 3 8 21 72,grow");
 		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][grow][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
@@ -141,7 +141,7 @@ public class ListagemFornecedor extends JFrame {
 		panel.add(lblPesquisar, "cell 1 1,alignx trailing");
 
 		JLabel lupa1 = new JLabel("");
-		lupa1.addMouseListener(fornecedorController.pesquisa("id_Fornecedor", txtId.getText()));
+		lupa1.addMouseListener(fornecedorController.pesquisaLupaFornecedor("id_Fornecedor", txtId));
 
 		txtId = new JTextField();
 		txtId.setColumns(10);
@@ -155,7 +155,7 @@ public class ListagemFornecedor extends JFrame {
 		txtNome.setColumns(10);
 
 		JLabel lupa2 = new JLabel("");
-		lupa2.addMouseListener(fornecedorController.pesquisa("nome_Fornecedor", txtNome.getText()));
+		lupa2.addMouseListener(fornecedorController.pesquisaLupaFornecedor("nome_Fornecedor", txtNome));
 		
 		lupa2.setIcon(new ImageIcon(
 		new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
@@ -166,7 +166,7 @@ public class ListagemFornecedor extends JFrame {
 		txtCnpj.setColumns(10);
 
 		JLabel lupa3 = new JLabel("");
-		lupa3.addMouseListener(fornecedorController.pesquisa("cnpj", txtCnpj.getText()));
+		lupa3.addMouseListener(fornecedorController.pesquisaLupaFornecedor("cnpj", txtCnpj));
 		lupa3.setIcon(new ImageIcon(
 		new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa3, "cell 9 1");
@@ -176,14 +176,7 @@ public class ListagemFornecedor extends JFrame {
 		txtEmail.setColumns(10);
 
 		JLabel lupa4 = new JLabel("");
-		lupa3.addMouseListener(fornecedorController.pesquisa("email_Fornecedor", txtEmail.getText()));
-		/*lupa4.addMouseListener(new MouseAdapter() {
-		  
-		  @Override public void mouseClicked(MouseEvent e) {
-		  pesquisarPorCampo("email_Fornecedor", txtEmail.getText()); } // TODO
-		  Auto-generated method stub
-		  
-		  }); */
+		lupa3.addMouseListener(fornecedorController.pesquisaLupaFornecedor("email_Fornecedor", txtEmail));
 		lupa4.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa4, "cell 12 1");
@@ -195,7 +188,6 @@ public class ListagemFornecedor extends JFrame {
 		table.setModel(
 				new DefaultTableModel(new Object[][] {}, new String[] { "ID", "Nome", "CNPJ", "Email", "Telefone" }));
 		scrollPane.setViewportView(table);
-		fornecedorController.atualizarTabela("", "");
 
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(
@@ -263,11 +255,7 @@ public class ListagemFornecedor extends JFrame {
 		contentPane.add(lblLinha5, "cell 1 19 2 1");
 
 		JButton btnSair = new JButton("Sair");
-		btnSair.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				fornecedorController.sairSistema();
-			}
-		});
+		btnSair.addActionListener(fornecedorController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));

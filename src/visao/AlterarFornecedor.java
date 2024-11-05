@@ -224,11 +224,7 @@ public class AlterarFornecedor extends JFrame {
 		btnSalvar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSalvar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSalvar, "cell 28 85 1 4,aligny center");
-		btnSalvar.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {				
-		        fornecedorController.salvarEdicoes();
-		    }
-		});
+		
 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
 		btnLimparCampos.addActionListener(new ActionListener() {
@@ -240,7 +236,7 @@ public class AlterarFornecedor extends JFrame {
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);
 		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
-		fornecedorController.mostrarDados(fornecedor);
+		//fornecedorController.mostrarDados(fornecedor);
 	}
 
 }

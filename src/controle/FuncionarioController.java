@@ -41,11 +41,11 @@ public class FuncionarioController {
 
 	public ActionListener cadastrarFuncionario() {
 		return new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				if (validarCamposCadastroFuncionarios()) {
+					
 					Funcionario cadastro = new Funcionario();
 					cadastro.setLogin(janelaCadastro.txtLogin.getText());
 					cadastro.setSenha(janelaCadastro.txtSenha.getText());

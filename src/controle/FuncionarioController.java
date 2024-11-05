@@ -216,6 +216,21 @@ public class FuncionarioController {
 			}
 		};
 	}
+	
+	public ActionListener limparCamposEditarFuncionario() {
+	    return new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            janelaAlterar.txtNomeCompleto.setText("");
+	            janelaAlterar.txtEmail.setText("");
+	            janelaAlterar.txtCelular.setText("");
+	            janelaAlterar.txtCPF.setText("");
+	            janelaAlterar.txtLogin.setText("");
+	            janelaAlterar.txtSenha.setText("");
+	        }
+	    };
+	}
+	
+	
 
 	public void mostrarDados(Funcionario f) {
 		janelaAlterar.txtNomeCompleto.setText(f.getNomeFuncionario());

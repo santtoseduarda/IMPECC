@@ -238,7 +238,7 @@ public class FornecedorController {
 		};
 	}
 
-	public ActionListener limparCamposAlterar() {
+	public ActionListener limparCamposAlterarFornecedor() {
 		// TODO Auto-generated method stub
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

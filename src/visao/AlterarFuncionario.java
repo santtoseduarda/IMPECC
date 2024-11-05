@@ -236,7 +236,7 @@ public class AlterarFuncionario extends JFrame {
 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
 		// controller limpa os campos
-		btnLimparCampos.addActionListener(funcionarioController.limparCamposCadastroFuncionario());
+		btnLimparCampos.addActionListener(funcionarioController.limparCamposEditarFuncionario());
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);

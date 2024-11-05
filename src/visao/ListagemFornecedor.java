@@ -269,15 +269,7 @@ public class ListagemFornecedor extends JFrame {
 		});
 
 		JButton btnEditar = new JButton("Editar");
-		btnEditar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int posicaoSelecionada = table.getSelectedRow();
-				DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
-				int id_Fornecedor = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
-				fornecedorController.editarFornecedor(id_Fornecedor);
-				dispose();
-			}
-		});
+		btnEditar.addActionListener(fornecedorController.buscaFornecedor());
 		btnEditar.setForeground(new Color(255, 0, 0));
 		btnEditar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnEditar.setBackground(new Color(255, 255, 255));

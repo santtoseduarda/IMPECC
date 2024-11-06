@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controle.ClienteController;
 import controle.ProdutoController;
 import controle.ProdutoDAO;
 import modelo.Produto;
@@ -40,29 +41,11 @@ public class ListagemCliente extends JFrame {
 	private JTextField textCpf;
 	private JTextField textTelefone;
 	private JTextField textEmail;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ListagemCliente frame = new ListagemCliente();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public ListagemCliente() {
-		ListagemCliente janelaListagemCliente = this;
-
+	ClienteController clienteController;
+	
+	public ListagemCliente(ClienteController clienteController) {
+		this.clienteController = clienteController;
+		
 		Font fontRegular = null;
 		Font fontBold = null;
 
@@ -124,6 +107,8 @@ public class ListagemCliente extends JFrame {
 		lblVendas.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblVendas, "cell 3 8,alignx left,aligny center");
 
+	//	txtId = new JtextField();
+		
 		JPanel panel = new JPanel();
 		JTextField txtId;
 		contentPane.add(panel, "cell 4 8 21 71,grow");
@@ -283,17 +268,33 @@ public class ListagemCliente extends JFrame {
 		contentPane.add(lblLinha5, "cell 2 19 2 1");
 
 		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(clienteController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSair, "cell 3 79 1 4,aligny bottom");
 
 		JButton btnAdicionar = new JButton("Adicionar Cliente");
+		btnAdicionar.addActionListener(clienteController.iniciarCadastroCliente());
 
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 22 81 1 2,aligny bottom");
+		
+		JButton btnEditar = new JButton("btnEditar");
+		btnEditar.addActionListener(clienteController.buscaCliente());
+		btnEditar.setForeground(Color.RED);
+		btnEditar.setFont(null);
+		btnEditar.setBackground(Color.WHITE);
+		contentPane.add(btnEditar, "cell 18 82");
+		
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.addActionListener(clienteController.excluirCliente());
+		btnExcluir.setForeground(Color.RED);
+		btnExcluir.setFont(null);
+		btnExcluir.setBackground(Color.WHITE);
+		contentPane.add(btnExcluir, "cell 20 82");
 
 	}
 

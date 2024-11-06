@@ -35,7 +35,11 @@ public class AlterarCliente extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtDataNascCliente;
+	public JTextField txtDataNascCliente;
+	public JTextField txtNomeCliente;
+	public JTextField txtTelefoneCliente;
+	public JTextField txtEmailCliente;
+	public JTextField txtCpfCliente;
 
 	public AlterarCliente(Cliente cliente, ClienteController clienteController) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,7 +115,7 @@ public class AlterarCliente extends JFrame {
 		JLabel lblNomeCliente = new JLabel("Nome");
 		panel.add(lblNomeCliente, "cell 1 7");
 
-		JTextField txtNomeCliente = new JTextField();
+		txtNomeCliente = new JTextField();
 		panel.add(txtNomeCliente, "cell 1 8 7 1,growx");
 		txtNomeCliente.setColumns(10);
 
@@ -125,21 +129,21 @@ public class AlterarCliente extends JFrame {
 		JLabel lblTelefoneCliente = new JLabel("Telefone");
 		panel.add(lblTelefoneCliente, "cell 1 13");
 
-		JTextField txtTelefoneCliente = new JTextField();
+		txtTelefoneCliente = new JTextField();
 		panel.add(txtTelefoneCliente, "cell 1 14 7 1,growx");
 		txtTelefoneCliente.setColumns(10);
 
 		JLabel lblEmailCliente = new JLabel("Email");
 		panel.add(lblEmailCliente, "cell 1 16");
 
-		JTextField txtEmailCliente = new JTextField();
+		txtEmailCliente = new JTextField();
 		panel.add(txtEmailCliente, "cell 1 17 7 1,growx");
 		txtEmailCliente.setColumns(10);
 
 		JLabel lblCpfClinte = new JLabel("CPF");
 		panel.add(lblCpfClinte, "cell 1 19");
 
-		JTextField txtCpfCliente = new JTextField();
+		txtCpfCliente = new JTextField();
 		panel.add(txtCpfCliente, "cell 1 20 7 1,growx");
 		txtCpfCliente.setColumns(10);
 

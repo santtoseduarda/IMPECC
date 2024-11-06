@@ -11,7 +11,7 @@ public class Cliente {
 	private String cpf_Cliente;
 	private String email;
 	private String telefone;
-	private LocalDate dataNasc;
+	private String dataNasc;
 	
 	public int getId_Cliente() {
 		return id_Cliente;
@@ -45,10 +45,10 @@ public class Cliente {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	public LocalDate getDataNasc() {
+	public String getDataNasc() {
 		return dataNasc;
 	}
-	public void setDataNasc(LocalDate dataNasc) {
+	public void setDataNasc(String dataNasc) {
 		this.dataNasc = dataNasc;
 	}
 	

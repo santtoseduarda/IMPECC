@@ -26,34 +26,21 @@ import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 
 public class CadastroCliente extends JFrame {
+	
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	public JTextField txtNome;
+	public JTextField txtDataNsc;
+	public JTextField txtCPF;
+	public JTextField txtTelefone;
+	public JTextField txtEmail;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CadastroCliente frame = new CadastroCliente();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public CadastroCliente() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		CadastroCliente janelaCadastroCliente = this;
 
 		setTitle("Cadastrar Cliente ");
 		Font fontRegular = null;
@@ -82,7 +69,9 @@ public class CadastroCliente extends JFrame {
 		contentPane_1.setForeground(new Color(255, 0, 0));
 		contentPane_1.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane_1);
-		contentPane_1.setLayout(new MigLayout("", "[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
+		contentPane_1.setLayout(new MigLayout("",
+				"[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][][][][]",
+				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
 
 		JLabel lblcadastroCliente = new JLabel("Cadastrar Cliente");
 		lblcadastroCliente.setForeground(new Color(255, 255, 255));
@@ -114,14 +103,7 @@ public class CadastroCliente extends JFrame {
 				"[][][][][][grow][][][][][][grow][][][][][grow][][][][grow][][][][][][grow][][][][][grow][][][][grow][][][][]"));
 
 		JLabel lblvoltar = new JLabel("");
-		lblvoltar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ListagemProdutos novaJanela = new ListagemProdutos();
-				novaJanela.setVisible(true);
-				dispose();
-			}
-		});
+		lblvoltar.addMouseListener(clienteController.voltarListagem());
 		lblvoltar.setIcon(new ImageIcon(
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
@@ -129,35 +111,35 @@ public class CadastroCliente extends JFrame {
 		JLabel lblNome = new JLabel("Nome");
 		panel.add(lblNome, "cell 1 5");
 
-		JTextField txtNome = new JTextField();
+		txtNome = new JTextField();
 		panel.add(txtNome, "cell 1 6 8 1,growx");
 		txtNome.setColumns(10);
 
 		JLabel lblDataNsc = new JLabel("Data De Nascimento");
 		panel.add(lblDataNsc, "cell 1 11");
 
-		JTextField txtDataNsc = new JTextField();
+		txtDataNsc = new JTextField();
 		panel.add(txtDataNsc, "cell 1 12 8 1,growx");
 		txtDataNsc.setColumns(10);
 
 		JLabel lblCpf = new JLabel("Cpf");
 		panel.add(lblCpf, "cell 1 18");
 
-		JTextField txtGenero = new JTextField();
-		panel.add(txtGenero, "cell 1 19 8 1,growx");
-		txtGenero.setColumns(10);
+		txtCPF = new JTextField();
+		panel.add(txtCPF, "cell 1 19 8 1,growx");
+		txtCPF.setColumns(10);
 
 		JLabel lblTelefone = new JLabel("Telefone ");
 		panel.add(lblTelefone, "cell 1 25");
 
-		JTextField txtTelefone = new JTextField();
+		txtTelefone = new JTextField();
 		panel.add(txtTelefone, "cell 1 26 8 1,growx");
 		txtTelefone.setColumns(10);
-		
-				JLabel lblEmail = new JLabel("E-mail");
-				panel.add(lblEmail, "cell 1 32");
 
-		JTextField txtEmail = new JTextField();
+		JLabel lblEmail = new JLabel("E-mail");
+		panel.add(lblEmail, "cell 1 32");
+
+		txtEmail = new JTextField();
 		panel.add(txtEmail, "cell 1 33 8 1,growx");
 		txtEmail.setColumns(10);
 
@@ -227,25 +209,23 @@ public class CadastroCliente extends JFrame {
 		contentPane_1.add(lblLinha5, "cell 1 15 2 1");
 
 		JButton btnSair = new JButton("  Sair  ");
-
+		btnSair.addActionListener(clienteController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
 		contentPane_1.add(btnSair, "cell 2 88,aligny bottom");
 
-		JButton btnCancelar = new JButton("   Cancelar   ");
-		btnCancelar.setForeground(Color.RED);
-		btnCancelar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnCancelar.setBackground(new Color(255, 255, 255));
-		contentPane_1.add(btnCancelar, "cell 6 88,aligny bottom");
-		
-				JButton btnLimparCampos = new JButton("LimparCampos");
-				btnLimparCampos.setForeground(Color.RED);
-				btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-				btnLimparCampos.setBackground(new Color(255, 255, 255));
-				contentPane_1.add(btnLimparCampos, "cell 8 88,aligny bottom");
+		JButton btnLimparCampos = new JButton("LimparCampos");
+		btnLimparCampos.addActionListener(clienteController.limparCamposCadastroCliente());
+
+		btnLimparCampos.setForeground(Color.RED);
+		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnLimparCampos.setBackground(new Color(255, 255, 255));
+		contentPane_1.add(btnLimparCampos, "cell 8 88,aligny bottom");
 
 		JButton btnAdicionarCliente = new JButton("Adicionar Cliente");
+		btnLimparCampos.addActionListener(clienteController.cadastrarCliente());
+
 		btnAdicionarCliente.setForeground(Color.RED);
 		btnAdicionarCliente.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionarCliente.setBackground(new Color(255, 255, 255));

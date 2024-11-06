@@ -23,40 +23,25 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controle.ClienteController;
+import controle.FornecedorController;
 import controle.FuncionarioDAO;
+import modelo.Cliente;
+import modelo.Fornecedor;
 import modelo.Funcionario;
 import net.miginfocom.swing.MigLayout;
 
 public class AlterarCliente extends JFrame {
-
+	
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtDataNascCliente;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AlterarCliente frame = new AlterarCliente();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public AlterarCliente() {
+	public AlterarCliente(Cliente cliente, ClienteController clienteController) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		AlterarCliente janelaAlterarCliente = this;
 
 		setTitle("Alterar Cliente ");
 		Font fontRegular = null;
@@ -85,7 +70,8 @@ public class AlterarCliente extends JFrame {
 		contentPane.setForeground(new Color(255, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][]",
+				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
 
 		JLabel lblcadastroFunc = new JLabel("Editar Dados do Funcionário");
 		lblcadastroFunc.setForeground(new Color(255, 255, 255));
@@ -113,53 +99,49 @@ public class AlterarCliente extends JFrame {
 
 		JPanel panel = new JPanel();
 		contentPane.add(panel, "cell 3 2 27 83,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][][grow][grow 50][grow][][][grow]", "[][][][][][][][][][][][][][grow 20][][][][][grow 20][][][][][][grow 20][][][][][][][][][][grow]"));
+		panel.setLayout(new MigLayout("", "[grow][grow][][grow][grow 50][grow][][][grow]",
+				"[][][][][][][][][][][][][][grow 20][][][][][grow 20][][][][][][grow 20][][][][][][][][][][grow]"));
 
 		JLabel lblvoltar = new JLabel("");
-		lblvoltar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			// abrir listagem clientes
-			}
-		});
+		lblvoltar.addMouseListener(clienteController.voltarListagem());
 		lblvoltar.setIcon(new ImageIcon(
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
-										
-												JLabel lblNomeCliente = new JLabel("Nome");
-												panel.add(lblNomeCliente, "cell 1 7");
-								
-										JTextField txtNomeCliente = new JTextField();
-										panel.add(txtNomeCliente, "cell 1 8 7 1,growx");
-										txtNomeCliente.setColumns(10);
-								
-								JLabel lblDataNascCliente = new JLabel("Data Nasc");
-								panel.add(lblDataNascCliente, "cell 1 10");
-								
-								txtDataNascCliente = new JTextField();
-								panel.add(txtDataNascCliente, "cell 1 11 7 1,growx");
-								txtDataNascCliente.setColumns(10);
-						
-								JLabel lblTelefoneCliente = new JLabel("Telefone");
-								panel.add(lblTelefoneCliente, "cell 1 13");
-								
-										JTextField txtTelefoneCliente = new JTextField();
-										panel.add(txtTelefoneCliente, "cell 1 14 7 1,growx");
-										txtTelefoneCliente.setColumns(10);
-														
-																JLabel lblEmailCliente = new JLabel("Email");
-																panel.add(lblEmailCliente, "cell 1 16");
-												
-														JTextField txtEmailCliente = new JTextField();
-														panel.add(txtEmailCliente, "cell 1 17 7 1,growx");
-														txtEmailCliente.setColumns(10);
-												
-														JLabel lblCpfClinte = new JLabel("CPF");
-														panel.add(lblCpfClinte, "cell 1 19");
-												
-														JTextField txtCpfCliente = new JTextField();
-														panel.add(txtCpfCliente, "cell 1 20 7 1,growx");
-														txtCpfCliente.setColumns(10);
+
+		JLabel lblNomeCliente = new JLabel("Nome");
+		panel.add(lblNomeCliente, "cell 1 7");
+
+		JTextField txtNomeCliente = new JTextField();
+		panel.add(txtNomeCliente, "cell 1 8 7 1,growx");
+		txtNomeCliente.setColumns(10);
+
+		JLabel lblDataNascCliente = new JLabel("Data Nasc");
+		panel.add(lblDataNascCliente, "cell 1 10");
+
+		txtDataNascCliente = new JTextField();
+		panel.add(txtDataNascCliente, "cell 1 11 7 1,growx");
+		txtDataNascCliente.setColumns(10);
+
+		JLabel lblTelefoneCliente = new JLabel("Telefone");
+		panel.add(lblTelefoneCliente, "cell 1 13");
+
+		JTextField txtTelefoneCliente = new JTextField();
+		panel.add(txtTelefoneCliente, "cell 1 14 7 1,growx");
+		txtTelefoneCliente.setColumns(10);
+
+		JLabel lblEmailCliente = new JLabel("Email");
+		panel.add(lblEmailCliente, "cell 1 16");
+
+		JTextField txtEmailCliente = new JTextField();
+		panel.add(txtEmailCliente, "cell 1 17 7 1,growx");
+		txtEmailCliente.setColumns(10);
+
+		JLabel lblCpfClinte = new JLabel("CPF");
+		panel.add(lblCpfClinte, "cell 1 19");
+
+		JTextField txtCpfCliente = new JTextField();
+		panel.add(txtCpfCliente, "cell 1 20 7 1,growx");
+		txtCpfCliente.setColumns(10);
 
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(
@@ -227,37 +209,22 @@ public class AlterarCliente extends JFrame {
 		contentPane.add(lblLinha5, "cell 1 15 2 1");
 
 		JButton btnSair = new JButton("Sair");
-		btnSair.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// Fecha a tela de login
-
-			}
-		});
+		btnSair.addActionListener(clienteController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSair, "cell 2 83 1 4,aligny bottom");
 
 		JButton btnAdicionar = new JButton("Salvar Edições");
+		btnSalvar.addActionListener(clienteController.salvarEdicoes());
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
-		btnAdicionar.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-
-			}
-
-		});
+		
 
 		JButton btnLimparCampos = new JButton("Cancelar");
-		btnLimparCampos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
+		btnLimparCampos.addActionListener(clienteController.limparCamposAlterarClientes());
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);

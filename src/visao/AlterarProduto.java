@@ -36,18 +36,6 @@ public class AlterarProduto extends JFrame {
 	private JTextField txtFornecedor;
 	private JTextField txtQuantidadeEstoque;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AlterarProduto frame = new AlterarProduto(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public AlterarProduto(Produto p) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

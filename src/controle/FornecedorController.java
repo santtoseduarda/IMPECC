@@ -210,8 +210,7 @@ public class FornecedorController {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				FornecedorController fornecedorController = new FornecedorController();
-				fornecedorController.abrirListagemFornecedor();
+				viewl.setVisible(true);
 				viewc.dispose();
 			}
 		};

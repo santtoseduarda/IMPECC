@@ -40,22 +40,9 @@ public class ListagemProdutos extends JFrame {
 	private JTextField txtId;
 	private JTextField txtGenero;
 	private JTextField txtFornecedor;
-	private JTable table;
+	public JTable table;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ListagemProdutos frame = new ListagemProdutos();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public ListagemProdutos() {
+	public ListagemProdutos(ProdutoController produtoController) {
 
 		ListagemProdutos janelaListagemProdutos = this;
 
@@ -331,55 +318,19 @@ public class ListagemProdutos extends JFrame {
 		contentPane.add(lblLinha5, "cell 2 19 2 1");
 
 		JButton btnSair = new JButton("Sair");
-		btnSair.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnSair.addActionListener(produtoController.sairSistema());
+		// sair
 
-				int resposta = JOptionPane.showConfirmDialog(janelaListagemProdutos, "Você realmente deseja sair?",
-						"Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-				// Verifica a resposta
-				if (resposta == JOptionPane.YES_OPTION) {
-					
-					TelaLogin janelaListagemProdutos = new TelaLogin(null);
-					janelaListagemProdutos.setVisible(true);
-					dispose(); // Fecha a tela de login
-				}
-
-			}
-		});
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSair, "cell 3 79 1 4,aligny bottom");
 
 		JButton btnAdicionar = new JButton("Adicionar Produto");
-		btnAdicionar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				CadastroProduto janelaProdutos = new CadastroProduto();
-				janelaProdutos.setVisible(true);
-				dispose();
-			}
-		});
+		btnAdicionar.addActionListener(produtoController.cadastroProduto());
 
 		JButton btnEditar = new JButton("Editar");
-		btnEditar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				int posicaoSelecionada = table.getSelectedRow();
-				DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
-				int id_Produto = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
-				ProdutoController pControlleer = new ProdutoController();
-				// AlterarFuncionario janelaAlterar = new AlterarFuncionario();
-
-				pControlleer.alterarProdutos(id_Produto);
-
-				// janelaAlterar.setVisible(true);
-
-				dispose();
-
-			}
-		});
+		btnEditar.addActionListener(produtoController.buscaProduto());
 
 		btnEditar.setForeground(new Color(255, 0, 0));
 		btnEditar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
@@ -387,42 +338,7 @@ public class ListagemProdutos extends JFrame {
 		contentPane.add(btnEditar, "cell 20 81 1 2");
 
 		JButton btnExcluir = new JButton("Excluir");
-		btnExcluir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				int posicaoSelecionada = table.getSelectedRow();
-
-				if (posicaoSelecionada >= 0) {
-
-					DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
-					int idProduto = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
-
-					int confirmacao = JOptionPane.showConfirmDialog(null,
-							"Você tem certeza que deseja excluir o produto?", "Confirmação de Exclusão",
-							JOptionPane.YES_NO_OPTION);
-
-					if (confirmacao == JOptionPane.YES_OPTION) {
-
-						// vai excluir o produto
-						ProdutoDAO pdao = new ProdutoDAO();
-						boolean certo = pdao.excluirProdutos(idProduto);
-
-						if (certo) {
-
-							modeloTabela.removeRow(posicaoSelecionada);
-							JOptionPane.showMessageDialog(null, "Produto excluído com sucesso.");
-
-						} else {
-							JOptionPane.showMessageDialog(null, "Erro ao excluir o produto.");
-						}
-					}
-				} else {
-					JOptionPane.showMessageDialog(null, "Por favor, selecione um produto para excluir.");
-				}
-
-			}
-
-		});
+		btnExcluir.addActionListener(produtoController.excluirProduto());
 		btnExcluir.setForeground(new Color(255, 0, 0));
 		btnExcluir.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnExcluir.setBackground(new Color(255, 255, 255));
@@ -435,38 +351,5 @@ public class ListagemProdutos extends JFrame {
 
 	}
 
-	protected void pesquisarPorCampo(String campo, String valor) {
-		DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
-		modeloTabela.setRowCount(0);
-
-		ProdutoDAO pdao = new ProdutoDAO();
-		ArrayList<Produto> listaProdutos = pdao.buscarProdLupa(campo, valor);
-
-		for (Produto p : listaProdutos) {
-
-			modeloTabela.addRow(new Object[] { p.getId_Produto(), p.getNomeProduto(), p.getCodBarra(), p.getTamanho(),
-					p.getGenero(), p.getPreco(), p.getFornecedor(), p.getQtdEstoque()
-
-			});
-		}
-
-	}
-
-	private void atualizarTabela(String campo, String valor) {
-
-		DefaultTableModel modeloTabela = (DefaultTableModel) table.getModel();
-		modeloTabela.setRowCount(0);
-
-		ProdutoDAO pdao = new ProdutoDAO();
-		ArrayList<Produto> listaProdutos = pdao.buscarProdLupa(campo, valor);
-
-		if (listaProdutos != null && !listaProdutos.isEmpty()) {
-			for (Produto p : listaProdutos) {
-				// Adiciona os dados do produto na tabela
-				modeloTabela.addRow(new Object[] { p.getId_Produto(), p.getNomeProduto(), p.getCodBarra(),
-						p.getTamanho(), p.getGenero(), p.getPreco(), p.getFornecedor(), p.getQtdEstoque() });
-			}
-		}
-	}
 
 }

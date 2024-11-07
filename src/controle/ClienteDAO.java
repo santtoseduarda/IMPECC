@@ -36,9 +36,7 @@ public class ClienteDAO {
 
 	public boolean inserir(Cliente c) {
 
-		String inserir = "INSERT INTO clientes (nome_Cliente, data_Nasc, cpf_Clinte, telefone_Cliente, email_Cliente) VALUES (?, ?, ?, ?, ?)";
-
-		PreparedStatement pst = null;
+		String inserir = "INSERT INTO clientes (nome_Cliente, data_Nasc, cpf_Cliente, telefone_Cliente, email_Cliente) VALUES (?, ?, ?, ?, ?)";
 
 		try {
 			pst = conn.prepareStatement(inserir);
@@ -119,7 +117,7 @@ public class ClienteDAO {
 	}
 
 	public boolean alterarCliente(Cliente cliente) {
-		String alterarCliente = "UPDATE clientes SET nome_Cliente = ?, data_Nasc = ?, cpf_Clinte = ?, telefone_Cliente = ?, email_Cliente = ?";
+		String alterarCliente = "UPDATE clientes SET nome_Cliente = ?, data_Nasc = ?, cpf_Cliente = ?, telefone_Cliente = ?, email_Cliente = ?";
 
 		try {
 			pst = conn.prepareStatement(alterarCliente);
@@ -158,9 +156,10 @@ public class ClienteDAO {
 				cliente.setId_Cliente(rs.getInt("idCliente"));
 				cliente.setNomeCliente(rs.getString("nome_Cliente"));
 				cliente.setEmail(rs.getString("email_Cliente"));
+				cliente.setCpf_Cliente(rs.getString("cpf_Cliente"));
 				cliente.setTelefone(rs.getString("telefone_Cliente"));
 				cliente.setDataNasc(rs.getString("data_Nasc"));
-				cliente.setCpf_Cliente(rs.getString("cpf_Cliente"));
+				
 
 				return cliente;
 			}

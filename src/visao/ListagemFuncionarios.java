@@ -230,6 +230,7 @@ public class ListagemFuncionarios extends JFrame {
 		lblFornecedor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				//teste
 				FornecedorController fornecedorController = new FornecedorController();
 				ListagemFornecedor forn = new ListagemFornecedor(fornecedorController); 
 		        forn.setVisible(true);

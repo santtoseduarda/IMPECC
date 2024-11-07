@@ -5,11 +5,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Cliente;
+import modelo.Fornecedor;
 import modelo.Funcionario;
 import visao.AlterarCliente;
 import visao.CadastroCliente;
@@ -20,9 +24,9 @@ public class ClienteController {
 	//instanciar as classes que vão ser usadas
 	
 	Cliente cliente = new Cliente();
-	ClienteDAO clidao = new ClienteDAO();
+	ClienteDAO cdao = new ClienteDAO();
 	ListagemCliente janelaListagem = new ListagemCliente(this);
-	CadastroCliente janelaCadastro = new CadastroCliente();
+	CadastroCliente janelaCadastro = new CadastroCliente(this);
 	AlterarCliente janelaAlterar = new AlterarCliente(cliente, this);
 	
 	
@@ -31,8 +35,13 @@ public class ClienteController {
 		janelaListagem.setVisible(true);
 	}
 	
-	public ActionListener iniciarCadastroCliente() {
-		limparCamposCadCliente();
+	public void inserirCliente() {
+		// inserir
+		janelaCadastro.setVisible(true);
+	}
+
+	public void iniciarCadastroCliente() {
+		limparCamposCadClientes();
 		janelaCadastro.setVisible(true);
 		janelaListagem.dispose();
 	}
@@ -53,7 +62,7 @@ public class ClienteController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (validarCamposCadClientes()) {
+				if (validarCamposCadastroClientes()) {
 					
 					Cliente cadastro = new Cliente();
 					
@@ -64,6 +73,7 @@ public class ClienteController {
 					cadastro.setEmail(janelaCadastro.txtEmail.getText());
 					
 					ClienteDAO novoCliente = new ClienteDAO();
+					
 					try {
 						novoCliente.inserir(cadastro);
 						janelaListagem.setVisible(true);
@@ -80,7 +90,7 @@ public class ClienteController {
 		};
 	}
 	
-	public boolean validarCamposCadastroFornecedores() {
+	public boolean validarCamposCadastroClientes() {
 		String nome = janelaCadastro.txtNome.getText();
 		String dataNasc = janelaCadastro.txtDataNsc.getText();
 		String cpf = janelaCadastro.txtCPF.getText();
@@ -93,17 +103,12 @@ public class ClienteController {
 			return false;
 		}
 
-		if (!cpf.matches("\\d{3}\\\\.\\\\d{3}\\\\.\\\\d{3}-\\\\d{2}")) { 
-			JOptionPane.showMessageDialog(null, "CPF inválido. Deve estar no formato 00.000.000/0000-00",
+		if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) { 
+			JOptionPane.showMessageDialog(null, "CPF inválido. Deve estar no formato 000.000.000-00",
 					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		
-		if (!dataNasc.matches("")) {
-	        JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.",
-	                "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
-	        return false;
-	    }
+
 		
 		 if (!email.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
 		        JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.",
@@ -119,17 +124,16 @@ public class ClienteController {
 		}
 		return true;
 	}
-	/*
+	
 	public void limparCamposCadClientes() {
 		// TODO Auto-generated method stub
-		
 				janelaCadastro.txtNome.setText("");
 				janelaCadastro.txtDataNsc.setText("");
 				janelaCadastro.txtCPF.setText("");
 				janelaCadastro.txtTelefone.setText("");
 				janelaCadastro.txtEmail.setText("");
 	}
-	*/
+	
 	public ActionListener excluirCliente() {
 		return new ActionListener() {
 
@@ -169,78 +173,8 @@ public class ClienteController {
 		};
 
 	}
-	/*
-	public ActionListener salvarEdicoes() {
-		return new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int posicaoSelecionada = janelaListagem.table.getSelectedRow();
-
-				if (posicaoSelecionada >= 0) {
-
-					DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
-					int idCliente = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
-					Cliente cadastro = new Cliente();
-					
-					cadastro.setNomeCliente(janelaAlterar.txtNomeCliente.getText());
-					cadastro.setDataNasc(janelaAlterar.txtDataNascCliente.getText());
-					cadastro.setCpf_Cliente(janelaAlterar.txtCpfCliente.getText());
-					cadastro.setTelefone(janelaAlterar.txtTelefoneCliente.getText());
-					cadastro.setEmail(janelaAlterar.txtEmailCliente.getText());
-					
-
-					try {
-						boolean sucesso = clidao.alterarCliente(cliente, idCliente);
-						if (sucesso) {
-							janelaListagem.setVisible(true);
-							janelaAlterar.dispose();
-							atualizarTabela("", "");
-						} else {
-							JOptionPane.showMessageDialog(null,
-									"Erro ao alterar cliente: Nenhuma linha foi afetada.", "Erro",
-									JOptionPane.ERROR_MESSAGE);
-						}
-					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(null, "Erro ao alterar cliente: " + ex.getMessage(), "Erro",
-								JOptionPane.ERROR_MESSAGE);
-					}
-				}
-			}
-		};
-	}
 	
-	public ActionListener buscaCliente() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				int selectedRow = janelaListagem.table.getSelectedRow();
 
-				if (selectedRow != -1) { // Verifica se alguma linha foi selecionada
-					// Supondo que a primeira coluna da tabela contém o ID do funcionário
-					int id_Cliente = (int) janelaListagem.table.getValueAt(selectedRow, 0);
-
-					// Busca o funcionário no banco de dados usando o DAO
-					Cliente c = clidao.buscarFuncionario(id_Cliente);
-
-					if (f != null) {
-						// Preenche os campos da janela de alteração com os dados do funcionário
-						mostrarDados(c);
-
-						// Exibe a janela de alteração
-						janelaAlterar.setVisible(true);
-						janelaListagem.dispose();
-					} else {
-						System.out.println("Cliente não encontrado.");
-						JOptionPane.showMessageDialog(janelaListagem, "Cliente não encontrado.");
-					}
-				} else {
-					System.out.println("Nenhuma linha selecionada.");
-					JOptionPane.showMessageDialog(janelaListagem, "Por favor, selecione um cliente para alterar.");
-				}
-			}
-		};
-	}
-	*/
 	public ActionListener sairSistema() {
 		return new ActionListener() {
 
@@ -260,6 +194,69 @@ public class ClienteController {
 			}
 
 		};
+	}
+	
+	public void atualizarTabela(String campo, String valor) {
+
+		DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
+		modeloTabela.setRowCount(0); // Limpa a tabela
+
+		ClienteDAO cdao = new ClienteDAO();
+		ArrayList<Cliente> listaClientes = cdao.buscarClientes(campo, valor);
+
+		if (listaClientes != null && !listaClientes.isEmpty()) {
+			for (Cliente c : listaClientes) {
+				// Adiciona os dados do cliente na tabela
+				modeloTabela.addRow(new Object[] { c.getId_Cliente(), c.getNomeCliente(), c.getDataNasc(), c.getCpf_Cliente(), c.getEmail(), c.getTelefone() });
+			}
+		}
+	}
+
+
+
+	public ActionListener buscaCliente() {
+		//busca cliente para editar
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selectedRow = janelaListagem.table.getSelectedRow();
+
+				if (selectedRow != -1) { 
+					int id_Cliente = (int) janelaListagem.table.getValueAt(selectedRow, 0);
+
+					// Busca o funcionário no banco de dados usando o DAO
+					cliente = cdao.buscarClientes(id_Cliente);
+
+					if (cliente != null) {
+						// Preenche os campos da janela de alteração com os dados do funcionário
+						mostrarDados(cliente);
+
+						// Exibe a janela de alteração
+						janelaAlterar.setVisible(true);
+						janelaListagem.dispose();
+					} else {
+						System.out.println("Fornecedor não encontrado.");
+						JOptionPane.showMessageDialog(janelaListagem, "Fornecedor não encontrado.");
+					}
+				} else {
+					System.out.println("Nenhuma linha selecionada.");
+					JOptionPane.showMessageDialog(janelaListagem, "Por favor, selecione um fornecedor para alterar.");
+				}
+			}
+		};
+	}
+
+
+
+	protected void mostrarDados(Cliente cliente) {
+		// TODO Auto-generated method stub
+		janelaAlterar.txtNomeCliente.setText(cliente.getNomeCliente());
+		janelaAlterar.txtDataNascCliente.setText(cliente.getDataNasc());
+		janelaAlterar.txtCpfCliente.setText(cliente.getCpf_Cliente());
+		janelaAlterar.txtEmailCliente.setText(cliente.getEmail());
+		janelaAlterar.txtTelefoneCliente.setText(cliente.getTelefone());
+
+		
 	}
 	
 	

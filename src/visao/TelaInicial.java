@@ -120,6 +120,7 @@ public class TelaInicial extends JFrame {
 		contentPane.add(lblClientes, "cell 1 7");
 
 		JLabel lblCliente = new JLabel("Clientes");
+		lblCliente.addMouseListener(telaInicialController.abrirTelaCliente());
 		lblCliente.setFont(fontRegular.deriveFont(Font.PLAIN, 24));
 		lblCliente.setForeground(new Color(255, 255, 255));
 		contentPane.add(lblCliente, "cell 2 7,alignx left,aligny center");

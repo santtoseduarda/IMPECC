@@ -113,4 +113,39 @@ public class TelaInicialController {
 			}
 		};
 	}
+	
+	public MouseListener abrirTelaCliente() {
+		return new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ClienteController clienteController = new ClienteController();
+				clienteController.abrirListagemCLientes();		
+				janelaTela.dispose();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+	}
 }

@@ -220,7 +220,7 @@ public class AlterarCliente extends JFrame {
 		contentPane.add(btnSair, "cell 2 83 1 4,aligny bottom");
 
 		JButton btnAdicionar = new JButton("Salvar Edições");
-		btnSalvar.addActionListener(clienteController.salvarEdicoes());
+		//btnSalvar.addActionListener(clienteController.salvarEdicoes());
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
@@ -228,7 +228,7 @@ public class AlterarCliente extends JFrame {
 		
 
 		JButton btnLimparCampos = new JButton("Cancelar");
-		btnLimparCampos.addActionListener(clienteController.limparCamposAlterarClientes());
+		//btnLimparCampos.addActionListener(clienteController.limparCamposAlterarClientes());
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);

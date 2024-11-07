@@ -37,7 +37,7 @@ public class ListagemCliente extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable table;
+	public JTable table;
 	private JTextField textCpf;
 	private JTextField textTelefone;
 	private JTextField textEmail;
@@ -78,6 +78,8 @@ public class ListagemCliente extends JFrame {
 		contentPane.setBackground(new Color(161, 0, 29));
 		contentPane.setForeground(new Color(255, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[][][][][grow][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
@@ -272,29 +274,33 @@ public class ListagemCliente extends JFrame {
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnSair, "cell 3 79 1 4,aligny bottom");
+		contentPane.add(btnSair, "cell 2 78 1 4,aligny bottom");
 
 		JButton btnAdicionar = new JButton("Adicionar Cliente");
-		btnAdicionar.addActionListener(clienteController.iniciarCadastroCliente());
+		btnAdicionar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clienteController.iniciarCadastroCliente();
+			}
+		});
 
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnAdicionar, "cell 22 81 1 2,aligny bottom");
+		contentPane.add(btnAdicionar, "cell 21 80 1 2,aligny bottom");
 		
-		JButton btnEditar = new JButton("btnEditar");
+		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(clienteController.buscaCliente());
 		btnEditar.setForeground(Color.RED);
-		btnEditar.setFont(null);
+		btnEditar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnEditar.setBackground(Color.WHITE);
-		contentPane.add(btnEditar, "cell 18 82");
+		contentPane.add(btnEditar, "cell 19 80 1 2");
 		
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(clienteController.excluirCliente());
 		btnExcluir.setForeground(Color.RED);
-		btnExcluir.setFont(null);
+		btnExcluir.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnExcluir.setBackground(Color.WHITE);
-		contentPane.add(btnExcluir, "cell 20 82");
+		contentPane.add(btnExcluir, "cell 20 80 1 2");
 
 	}
 

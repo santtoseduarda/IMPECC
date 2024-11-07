@@ -60,7 +60,6 @@ public class FuncionarioDAO {
 			pst.setString(5, f.getLogin());
 			pst.setString(6, f.getSenha());
 			
-
 			pst.executeUpdate();
 
 		} catch (SQLException e1) {

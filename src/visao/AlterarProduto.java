@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controle.FuncionarioDAO;
+import controle.ProdutoController;
 import controle.ProdutoDAO;
 import modelo.Funcionario;
 import modelo.Produto;
@@ -35,9 +36,9 @@ public class AlterarProduto extends JFrame {
 	private JPanel contentPane_1;
 	private JTextField txtFornecedor;
 	private JTextField txtQuantidadeEstoque;
+	private JTextField txtQuantidadeEstoque;
 
-
-	public AlterarProduto(Produto p) {
+	public AlterarProduto(ProdutoController produtoController) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -105,14 +106,7 @@ public class AlterarProduto extends JFrame {
 				"[][][][][][grow][][][][][][grow][][][][][grow][][][][grow][][][][][][grow][][][][][grow][][][][grow][][][][]"));
 
 		JLabel lblvoltar = new JLabel("");
-		lblvoltar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ListagemProdutos novaJanela = new ListagemProdutos();
-				novaJanela.setVisible(true);
-				dispose();
-			}
-		});
+		lblvoltar.addMouseListener(produtoController.voltarListagem());
 		lblvoltar.setIcon(new ImageIcon(
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
@@ -225,21 +219,7 @@ public class AlterarProduto extends JFrame {
 		contentPane_1.add(lblLinha5, "cell 1 15 2 1");
 
 		JButton btnSair = new JButton("  Sair  ");
-		btnSair.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int resposta = JOptionPane.showConfirmDialog(janelaAlterarProduto, "Você realmente deseja sair?",
-						"Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-				// Verifica a resposta
-				if (resposta == JOptionPane.YES_OPTION) {
-					TelaLogin janelaAlterarProduto = new TelaLogin(null);
-					janelaAlterarProduto.setVisible(true);
-					dispose(); // volta para tela de login
-				}
-
-			}
-		});
+		btnSair.addActionListener(produtoController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
@@ -257,62 +237,21 @@ public class AlterarProduto extends JFrame {
 		btnSalvarEdicoes.setBackground(new Color(255, 255, 255));
 		contentPane_1.add(btnSalvarEdicoes, "cell 23 88,aligny bottom");
 
-		/*
-		 * 
-		 * //AINDA FALTA ARRUMAR AS VARIAVEIS DOS PRODUTOS EEDITAR A TELA
-		 * 
-		 * 
-		 * 
-		 * 
-		 * JButton btnAdicionar = new JButton("Salvar Edições");
-		 * btnAdicionar.setForeground(new Color(255, 0, 0));
-		 * btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		 * btnAdicionar.setBackground(new Color(255, 255, 255));
-		 * contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
-		 * btnAdicionar.addActionListener(new ActionListener() {
-		 * 
-		 * public void actionPerformed(ActionEvent e) {
-		 * 
-		 * Produto produto = new Produto(); produto.setLogin(txtLogin.getText());
-		 * produto.setSenha(txtSenha.getText());
-		 * produto.setCelular(txtCelular.getText()); produto.setCpf(txtCPF.getText());
-		 * produto.setEmail_Funcionario(txtEmail.getText());
-		 * produto.setNomeFuncionario(txtNomeCompleto.getText());
-		 * 
-		 * ProdutoDAO funcionarioAlterado = new ProdutoDAO(); try {
-		 * funcionarioAlterado.alterarFuncionario(produto); ListagemFuncionarios
-		 * janelaListagem = new ListagemFuncionarios(); janelaListagem.setVisible(true);
-		 * dispose();
-		 * 
-		 * } catch (Exception ex) { JOptionPane.showMessageDialog(null,
-		 * "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
-		 * JOptionPane.ERROR_MESSAGE); }
-		 * 
-		 * }
-		 * 
-		 * });
-		 * 
-		 * JButton btnLimparCampos = new JButton("Limpar Campos");
-		 * btnLimparCampos.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) {
-		 * 
-		 * txtNomeCompleto.setText(""); txtEmail.setText(""); txtCelular.setText("");
-		 * txtCPF.setText(""); txtLogin.setText(""); txtSenha.setText("");
-		 * 
-		 * } }); btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		 * btnLimparCampos.setForeground(Color.RED);
-		 * btnLimparCampos.setBackground(Color.WHITE); contentPane.add(btnLimparCampos,
-		 * "cell 25 85 1 4,aligny center"); mostrarDados(p);
-		 * 
-		 * }
-		 * 
-		 * private void mostrarDados(Produto p) {
-		 * txtNomeCompleto.setText(f.getNomeFuncionario());
-		 * txtEmail.setText(f.getEmail_Funcionario());
-		 * txtCelular.setText(f.getCelular()); txtCPF.setText(f.getCpf());
-		 * txtLogin.setText(f.getLogin()); txtSenha.setText(f.getSenha());
-		 * 
-		 * }
-		 */
-	}
+	
+		JButton btnAdicionar = new JButton("Salvar Edições");
+		btnAdicionar.setForeground(new Color(255, 0, 0));
+		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnAdicionar.setBackground(new Color(255, 255, 255));
+		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
+		btnAdicionar.addActionListener(produtoController.salvarEdicoes());
+		 
+		JButton btnLimparCampos = new JButton("Limpar Campos");
+		btnLimparCampos.addActionListener(produtoController.limparCamposEditarFuncionarioProduto());
+		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnLimparCampos.setForeground(Color.RED);
+		btnLimparCampos.setBackground(Color.WHITE); contentPane.add(btnLimparCampos,
+		"cell 25 85 1 4,aligny center"); 
+		 
+		 }
+	
 }

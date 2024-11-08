@@ -7,6 +7,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -89,6 +92,16 @@ public class ClienteController {
 
 		};
 	}
+	
+	/*public String validaçaoData(String dateStr) {
+	    try {
+	        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+	        DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	        return LocalDate.parse(dateStr, inputFormat).format(outputFormat);
+	    } catch (DateTimeParseException e) {
+	        return null; // Indica data inválida
+	    }
+	}*/
 	
 	public boolean validarCamposCadastroClientes() {
 		String nome = janelaCadastro.txtNome.getText();

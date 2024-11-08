@@ -12,7 +12,7 @@ import modelo.Cliente;
 import modelo.Fornecedor;
 
 public class ClienteDAO {
-
+	
 	Statement stm1 = null; // permite fazer consultas no banco de dados
 	int res1;
 	PreparedStatement pst = null;
@@ -39,10 +39,12 @@ public class ClienteDAO {
 		String inserir = "INSERT INTO clientes (nome_Cliente, data_Nasc, cpf_Cliente, telefone_Cliente, email_Cliente) VALUES (?, ?, ?, ?, ?)";
 
 		try {
+			
+			
 			pst = conn.prepareStatement(inserir);
 
 			pst.setString(1, c.getNomeCliente()); // ajuste conforme os métodos get do seu modelo Cliente
-			pst.setString(2, c.getDataNasc());
+			pst.setString(2, (c.getDataNasc()));
 			pst.setString(3, c.getCpf_Cliente());
 			pst.setString(4, c.getTelefone());
 			pst.setString(5, c.getEmail());

@@ -9,19 +9,23 @@ import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import modelo.Funcionario;
 import modelo.Produto;
 import visao.AlterarProduto;
 import visao.CadastroFuncionario;
 import visao.CadastroProduto;
+import visao.ListagemFuncionarios;
 import visao.ListagemProdutos;
 
 public class ProdutoController {
 
 	ListagemProdutos viewL = new ListagemProdutos(this);
 	CadastroProduto viewC = new CadastroProduto(this);
-	Produto cadastro = new Produto();
+	AlterarProduto viewA = new AlterarProduto(this);
+	Produto produto = new Produto();
 	ProdutoDAO novoProduto = new ProdutoDAO();
 
 	public void abrirListagem() {
@@ -57,7 +61,6 @@ public class ProdutoController {
 	}
 
 	protected void limparCamposCad() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -69,8 +72,7 @@ public class ProdutoController {
 	public void alterarProdutos(int id_Produto) {
 		ProdutoDAO pdao = new ProdutoDAO();
 		Produto p = pdao.buscarProdutos(id_Produto);
-		AlterarProduto janelaAlterar = new AlterarProduto(p);
-		janelaAlterar.setVisible(true);
+		viewA.setVisible(true);
 	}
 
 	public ActionListener excluirProduto() {
@@ -95,6 +97,16 @@ public class ProdutoController {
 
 	}
 
+	public MouseListener pesquisa(String campo, JTextField textField) {
+		return new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String valor = textField.getText(); // Obter o valor atualizado do campo de texto no momento do clique
+				pesquisarPorCampo(campo, valor);
+			}
+		};
+	}
+
 	private void atualizarTabela(String campo, String valor) {
 
 		DefaultTableModel modeloTabela = (DefaultTableModel) viewL.table.getModel();
@@ -110,25 +122,6 @@ public class ProdutoController {
 			}
 		}
 	}
-	
-	protected boolean validarCamposProd() {
-		String nomeProduto = viewC.txtNomeProduto.getText();
-		String codBarra = viewC.txtCodBarra.getText();
-		String tamanho = (String) viewC.comboBoxTamanho.getSelectedItem();
-		String genero = (String) viewC.comboBoxGenero.getSelectedItem();
-		String preco = viewC.txtPreco.getText();
-		String fornecedor = (String) viewC.comboBoxFornecedor.getSelectedItem();
-		String qntEstoque = viewC.txtQntdEstoque.getText();
-
-		if (nomeProduto.isEmpty() || codBarra.isEmpty() || tamanho == null || genero == null || preco.isEmpty()
-				|| fornecedor == null || qntEstoque.isEmpty()) {
-			javax.swing.JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
-					"Erro de cadastro", javax.swing.JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-		
-		return true;
-	}
 
 	public ActionListener adicionarProduto() {
 		return new ActionListener() {
@@ -136,21 +129,9 @@ public class ProdutoController {
 
 				if (validarCamposProd()) {
 
-					float precoConvert = Float.parseFloat(preco);
-					int qntEstoqueConvert = Integer.parseInt(qntEstoque);
-					int codBarraConvert = Integer.parseInt(codBarra);
-
-					cadastro.setNomeProduto(nomeProduto);
-					cadastro.setCodBarra(codBarraConvert);
-					cadastro.setTamanho(tamanho);
-					cadastro.setGenero(genero);
-					cadastro.setPreco(precoConvert);
-					cadastro.setFornecedor(fornecedor);
-					cadastro.setQtdEstoque(qntEstoqueConvert);
-
 					try {
 
-						novoProduto.inserir(cadastro);
+						novoProduto.inserir(produto);
 						viewL.setVisible(true);
 						atualizarTabela("", "");
 						viewC.dispose();
@@ -166,7 +147,36 @@ public class ProdutoController {
 		};
 	}
 
-	
+	protected boolean validarCamposProd() {
+		String nomeProduto = viewC.txtNomeProduto.getText();
+		String codBarra = viewC.txtCodBarra.getText();
+		String tamanho = (String) viewC.comboBoxTamanho.getSelectedItem();
+		String genero = (String) viewC.comboBoxGenero.getSelectedItem();
+		String preco = viewC.txtPreco.getText();
+		String fornecedor = (String) viewC.comboBoxFornecedor.getSelectedItem();
+		String qntEstoque = viewC.txtQntdEstoque.getText();
+
+		if (nomeProduto.isEmpty() || codBarra.isEmpty() || tamanho == null || genero == null || preco.isEmpty()
+				|| fornecedor == null || qntEstoque.isEmpty()) {
+			javax.swing.JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
+					"Erro de cadastro", javax.swing.JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		float precoConvert = Float.parseFloat(preco);
+		int qntEstoqueConvert = Integer.parseInt(qntEstoque);
+		int codBarraConvert = Integer.parseInt(codBarra);
+
+		produto.setNomeProduto(nomeProduto);
+		produto.setCodBarra(codBarraConvert);
+		produto.setTamanho(tamanho);
+		produto.setGenero(genero);
+		produto.setPreco(precoConvert);
+		produto.setFornecedor(fornecedor);
+		produto.setQtdEstoque(qntEstoqueConvert);
+
+		return true;
+	}
 
 	public MouseListener voltarListagem() {
 		return new MouseAdapter() {
@@ -178,4 +188,49 @@ public class ProdutoController {
 		};
 	}
 
+	public ActionListener salvarEdicoes() {
+		return new ActionListener() { 
+			public void actionPerformed(ActionEvent e) {
+				int posicaoSelecionada = viewL.table.getSelectedRow();
+				if (posicaoSelecionada >= 0) {
+					DefaultTableModel modeloTabela = (DefaultTableModel) viewL.table.getModel();
+					int idProduto = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+					
+					produto.setNomeProduto(nomeProduto);
+					produto.setCodBarra(codBarraConvert);
+					produto.setTamanho(tamanho);
+					produto.setGenero(genero);
+					produto.setPreco(precoConvert);
+					produto.setFornecedor(fornecedor);
+					produto.setQtdEstoque(qntEstoqueConvert);
+					
+				}
+			 
+				
+			  
+			  ProdutoDAO funcionarioAlterado = new ProdutoDAO(); try {
+			  funcionarioAlterado.alterarFuncionario(produto); ListagemFuncionarios
+			  janelaListagem = new ListagemFuncionarios(); janelaListagem.setVisible(true);
+			  dispose();
+			  
+			  } catch (Exception ex) { JOptionPane.showMessageDialog(null,
+			  "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
+			  JOptionPane.ERROR_MESSAGE); }
+			  
+			  }
+
+		}	
+	}
+
+	public ActionListener limparCamposEditarFuncionarioProduto() {
+		public ActionListener limparCamposEditarFuncionarioProduto() {
+			// TODO Auto-generated method stub
+			return null;
+		});
+	}
+
+	private void mostrarDados(Produto p) {
+		
+
+	}
 }

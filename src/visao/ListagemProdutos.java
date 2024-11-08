@@ -38,6 +38,9 @@ public class ListagemProdutos extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtId;
+	private JTextField txtNome;
+	private JTextField txtCodBarra;
+	private JTextField txtTamanho;
 	private JTextField txtGenero;
 	private JTextField txtFornecedor;
 	public JTable table;
@@ -109,12 +112,12 @@ public class ListagemProdutos extends JFrame {
 		contentPane.add(lblVendas, "cell 3 8,alignx left,aligny center");
 
 		JPanel panel = new JPanel();
-		panel.addMouseListener(new MouseAdapter() {
+		/*panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				pesquisarPorCampo("id_Produto", txtId.getText());
 			}
-		});
+		});*/
 		contentPane.add(panel, "cell 4 8 21 73,grow");
 		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][][][][][][grow]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
@@ -152,42 +155,28 @@ public class ListagemProdutos extends JFrame {
 		txtId.setColumns(10);
 
 		JLabel lupaId = new JLabel("");
-		lupaId.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				pesquisarPorCampo("id_Fornecedor", txtId.getText());
-			}
-		});
+		lupaId.addMouseListener(produtoController.pesquisa("id_Fornecedor", txtId));
 		lupaId.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupaId, "cell 2 1,alignx trailing");
 
-		JTextField txtNome = new JTextField();
+		txtNome = new JTextField();
 		panel.add(txtNome, "cell 4 1,growx");
 		txtNome.setColumns(10);
 
 		JLabel lupaNome = new JLabel("");
-		lupaNome.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				pesquisarPorCampo("nome_Produto", txtNome.getText());
-			}
-		});
+		lupaNome.addMouseListener(produtoController.pesquisa("nome_Produto", txtNome));
 		lupaNome.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupaNome, "cell 5 1");
 
-		JTextField txtCodBarra = new JTextField();
+		txtCodBarra = new JTextField();
 		panel.add(txtCodBarra, "cell 7 1,growx");
 		txtCodBarra.setColumns(10);
 
 		JLabel lupaCod = new JLabel("");
-		lupaCod.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				pesquisarPorCampo("codBarra", lupaCod.getText());
-			}
-		});
+		lupaCod.addMouseListener(produtoController.pesquisa("codBarra", txtCodBarra));
+		
 		lupaCod.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupaCod, "cell 8 1");
@@ -197,14 +186,8 @@ public class ListagemProdutos extends JFrame {
 		txtTamanho.setColumns(10);
 
 		JLabel lupaTamanho = new JLabel("");
-		lupaTamanho.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				pesquisarPorCampo("tamanho", txtTamanho.getText());
-			}
-			// TODO Auto-generated method stub
-
-		});
+		lupaTamanho.addMouseListener(produtoController.pesquisa("tamanho", txtTamanho));
+		
 		lupaTamanho.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupaTamanho, "cell 11 1,alignx trailing");
@@ -214,12 +197,8 @@ public class ListagemProdutos extends JFrame {
 		panel.add(txtGenero, "cell 13 1,growx");
 
 		JLabel lupaGenero = new JLabel("");
-		lupaGenero.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				pesquisarPorCampo("genero", txtGenero.getText());
-			}
-		});
+		lupaGenero.addMouseListener(produtoController.pesquisa("genero", txtGenero));
+		
 		lupaGenero.setIcon(new ImageIcon(ListagemProdutos.class.getResource("/img/procurar.png")));
 		panel.add(lupaGenero, "cell 14 1");
 
@@ -228,13 +207,7 @@ public class ListagemProdutos extends JFrame {
 		panel.add(txtFornecedor, "cell 16 1,growx");
 
 		JLabel lupaFornecedor = new JLabel("");
-		lupaFornecedor.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				pesquisarPorCampo("fornecedor", txtFornecedor.getText());
-			}
-			// TODO Auto-generated method stub
-		});
+		lupaFornecedor.addMouseListener(produtoController.pesquisa("fornecedor", txtFornecedor));
 
 		lupaFornecedor.setIcon(new ImageIcon(ListagemProdutos.class.getResource("/img/procurar.png")));
 		panel.add(lupaFornecedor, "cell 17 1");
@@ -250,7 +223,6 @@ public class ListagemProdutos extends JFrame {
 		    }
 		));
 		scrollPane.setViewportView(table);
-		atualizarTabela("", "");
 
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(

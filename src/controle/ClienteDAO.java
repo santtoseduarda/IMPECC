@@ -50,6 +50,7 @@ public class ClienteDAO {
 			pst.setString(5, c.getEmail());
 
 			pst.executeUpdate();
+			return true;
 
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -118,18 +119,18 @@ public class ClienteDAO {
 		}
 	}
 
-	public boolean alterarCliente(Cliente cliente) {
-		String alterarCliente = "UPDATE clientes SET nome_Cliente = ?, data_Nasc = ?, cpf_Cliente = ?, telefone_Cliente = ?, email_Cliente = ?";
+	public boolean alterarCliente(Cliente c) {
+		String alterarCliente = "UPDATE clientes SET nome_Cliente = ?, data_Nasc = ?, cpf_Cliente = ?, telefone_Cliente = ?, email_Cliente = ? WHERE id_Cliente = ?";
 
 		try {
 			pst = conn.prepareStatement(alterarCliente);
 
-			pst.setString(1, cliente.getNomeCliente()); // ajuste conforme os métodos get do seu modelo Funcionario
-			pst.setString(2, cliente.getDataNasc());
-			pst.setString(3, cliente.getEmail());
-			pst.setString(4, cliente.getTelefone());
-			pst.setString(5, cliente.getCpf_Cliente());
-			pst.setInt(6, cliente.getId_Cliente());
+			pst.setString(1, c.getNomeCliente());
+			pst.setString(2, c.getDataNasc());
+			pst.setString(3, c.getCpf_Cliente());
+			pst.setString(4, c.getTelefone());
+			pst.setString(5, c.getEmail());
+			pst.setInt(6, c.getId_Cliente());
 			System.out.println(pst);
 			pst.executeUpdate();
 			return true;
@@ -137,25 +138,25 @@ public class ClienteDAO {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			return false;
 		}
-		return false;
 	}
 
-	public Cliente buscarClientes(int idCliente) {
+	public Cliente buscarClientes(int id_Cliente) {
 
 		String mostrarDados = "SELECT * FROM clientes  WHERE id_Cliente = ?";
 		Cliente cliente = null;
 
 		try {
 			pst = conn.prepareStatement(mostrarDados);
-			pst.setInt(1, idCliente);
+			pst.setInt(1, id_Cliente);
 
 			ResultSet rs = pst.executeQuery(); // Aqui você deve usar executeQuery()
 
 			if (rs.next()) { // Se houver resultados, preencha o objeto Funcionario
 				cliente = new Cliente();
 
-				cliente.setId_Cliente(rs.getInt("idCliente"));
+				cliente.setId_Cliente(rs.getInt("id_Cliente"));
 				cliente.setNomeCliente(rs.getString("nome_Cliente"));
 				cliente.setEmail(rs.getString("email_Cliente"));
 				cliente.setCpf_Cliente(rs.getString("cpf_Cliente"));

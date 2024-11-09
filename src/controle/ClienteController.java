@@ -53,8 +53,7 @@ public class ClienteController {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ClienteController clienteController = new ClienteController();
-				clienteController.abrirListagemCLientes();
+				abrirListagemCLientes();
 				janelaCadastro.dispose();
 			}
 		};
@@ -214,13 +213,13 @@ public class ClienteController {
 		DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
 		modeloTabela.setRowCount(0); // Limpa a tabela
 
-		ClienteDAO cdao = new ClienteDAO();
+		//ClienteDAO cdao = new ClienteDAO();
 		ArrayList<Cliente> listaClientes = cdao.buscarClientes(campo, valor);
 
 		if (listaClientes != null && !listaClientes.isEmpty()) {
 			for (Cliente c : listaClientes) {
 				// Adiciona os dados do cliente na tabela
-				modeloTabela.addRow(new Object[] { c.getId_Cliente(), c.getNomeCliente(), c.getDataNasc(), c.getCpf_Cliente(), c.getEmail(), c.getTelefone() });
+				modeloTabela.addRow(new Object[] { c.getId_Cliente(), c.getNomeCliente(), c.getDataNasc(), c.getCpf_Cliente(), c.getTelefone(), c.getEmail() });
 			}
 		}
 	}
@@ -248,12 +247,12 @@ public class ClienteController {
 						janelaAlterar.setVisible(true);
 						janelaListagem.dispose();
 					} else {
-						System.out.println("Fornecedor não encontrado.");
-						JOptionPane.showMessageDialog(janelaListagem, "Fornecedor não encontrado.");
+						System.out.println("cliente não encontrado.");
+						JOptionPane.showMessageDialog(janelaListagem, "cliente não encontrado.");
 					}
 				} else {
 					System.out.println("Nenhuma linha selecionada.");
-					JOptionPane.showMessageDialog(janelaListagem, "Por favor, selecione um fornecedor para alterar.");
+					JOptionPane.showMessageDialog(janelaListagem, "Por favor, selecione um cliente para alterar.");
 				}
 			}
 		};
@@ -270,6 +269,57 @@ public class ClienteController {
 		janelaAlterar.txtTelefoneCliente.setText(cliente.getTelefone());
 
 		
+	}
+
+	public ActionListener salvarEdicoesEditarCliente() {
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int posicaoSelecionada = janelaListagem.table.getSelectedRow();
+
+				if (posicaoSelecionada >= 0) {
+
+					DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
+					int id_Cliente = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+					Cliente alterar = new Cliente();
+					
+					alterar.setId_Cliente(id_Cliente);
+					alterar.setNomeCliente(janelaAlterar.txtNomeCliente.getText());
+					alterar.setDataNasc(janelaAlterar.txtDataNascCliente.getText());
+					alterar.setCpf_Cliente(janelaAlterar.txtCpfCliente.getText());
+					alterar.setTelefone(janelaAlterar.txtTelefoneCliente.getText());
+					alterar.setEmail(janelaAlterar.txtEmailCliente.getText());
+					
+
+					try {
+						boolean sucesso = cdao.alterarCliente(alterar);
+						if (sucesso) {
+							janelaListagem.setVisible(true);
+							janelaAlterar.dispose();
+							atualizarTabela("", "");
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"Erro ao alterar cliente: Nenhuma linha foi afetada.", "Erro",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Erro ao alterar cliente: " + ex.getMessage(), "Erro",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		};
+	}
+
+	public ActionListener limparCamposEditarClientes() {
+		 return new ActionListener() {
+		        public void actionPerformed(ActionEvent e) {
+		        	janelaAlterar.txtNomeCliente.setText("");
+		        	janelaAlterar.txtDataNascCliente.setText("");
+		        	janelaAlterar.txtCpfCliente.setText("");
+		        	janelaAlterar.txtTelefoneCliente.setText("");
+		        	janelaAlterar.txtEmailCliente.setText("");
+		        }
+		    };
 	}
 	
 	

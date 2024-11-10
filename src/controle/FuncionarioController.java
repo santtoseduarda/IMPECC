@@ -46,8 +46,8 @@ public class FuncionarioController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (validarCamposCadastroFuncionarios()) {
-					
+				if (validarCamposCadastroFuncionario()) {
+
 					Funcionario cadastro = new Funcionario();
 					cadastro.setLogin(janelaCadastro.txtLogin.getText());
 					cadastro.setSenha(janelaCadastro.txtSenha.getText());
@@ -99,7 +99,7 @@ public class FuncionarioController {
 
 							modeloTabela.removeRow(posicaoSelecionada);
 							JOptionPane.showMessageDialog(null, "Funcionário excluído com sucesso.");
-							 atualizarTabela("", "");
+							atualizarTabela("", "");
 
 						} else {
 							JOptionPane.showMessageDialog(null, "Erro ao excluir o funcionário.");
@@ -114,9 +114,6 @@ public class FuncionarioController {
 
 	}
 
-	
-	
-	
 	//
 	public ActionListener buscaFuncionario() {
 		return new ActionListener() {
@@ -161,31 +158,33 @@ public class FuncionarioController {
 
 					DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
 					int idFuncionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
-					Funcionario funcionario = new Funcionario();
-					
-					funcionario.setNomeFuncionario(janelaAlterar.txtNomeCompleto.getText());
-					funcionario.setEmail_Funcionario(janelaAlterar.txtEmail.getText());
-					funcionario.setCelular(janelaAlterar.txtCelular.getText());
-					funcionario.setCpf(janelaAlterar.txtCPF.getText());
-					funcionario.setLogin(janelaAlterar.txtLogin.getText());
-					funcionario.setSenha(janelaAlterar.txtSenha.getText());
-					
+					if (validarCamposEditarFuncionarios()) {
+						Funcionario funcionario = new Funcionario();
 
-					try {
-						boolean sucesso = fdao.alterarFuncionario(funcionario, idFuncionario);
-						if (sucesso) {
-							janelaListagem.setVisible(true);
-							janelaAlterar.dispose();
-							atualizarTabela("", "");
-						} else {
-							JOptionPane.showMessageDialog(null,
-									"Erro ao alterar funcionário: Nenhuma linha foi afetada.", "Erro",
-									JOptionPane.ERROR_MESSAGE);
+						funcionario.setNomeFuncionario(janelaAlterar.txtNomeCompleto.getText());
+						funcionario.setEmail_Funcionario(janelaAlterar.txtEmail.getText());
+						funcionario.setCelular(janelaAlterar.txtCelular.getText());
+						funcionario.setCpf(janelaAlterar.txtCPF.getText());
+						funcionario.setLogin(janelaAlterar.txtLogin.getText());
+						funcionario.setSenha(janelaAlterar.txtSenha.getText());
+
+						try {
+							boolean sucesso = fdao.alterarFuncionario(funcionario, idFuncionario);
+							if (sucesso) {
+								janelaListagem.setVisible(true);
+								janelaAlterar.dispose();
+								atualizarTabela("", "");
+							} else {
+								JOptionPane.showMessageDialog(null,
+										"Erro ao alterar funcionário: Nenhuma linha foi afetada.", "Erro",
+										JOptionPane.ERROR_MESSAGE);
+							}
+						} catch (Exception ex) {
+							JOptionPane.showMessageDialog(null, "Erro ao alterar funcionário: " + ex.getMessage(),
+									"Erro", JOptionPane.ERROR_MESSAGE);
 						}
-					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(null, "Erro ao alterar funcionário: " + ex.getMessage(), "Erro",
-								JOptionPane.ERROR_MESSAGE);
 					}
+
 				}
 			}
 		};
@@ -211,19 +210,18 @@ public class FuncionarioController {
 
 		};
 	}
-	
+
 	public void limparCamposCadFuncionario() {
 		// TODO Auto-generated method stub
-		
-				janelaCadastro.txtNomeCompleto.setText("");
-				janelaCadastro.txtEmail.setText("");
-				janelaCadastro.txtCelular.setText("");
-				janelaCadastro.txtCPF.setText("");
-				janelaCadastro.txtLogin.setText("");
-				janelaCadastro.txtSenha.setText("");
-		
+
+		janelaCadastro.txtNomeCompleto.setText("");
+		janelaCadastro.txtEmail.setText("");
+		janelaCadastro.txtCelular.setText("");
+		janelaCadastro.txtCPF.setText("");
+		janelaCadastro.txtLogin.setText("");
+		janelaCadastro.txtSenha.setText("");
+
 	}
-	
 
 	public ActionListener limparCamposCadastroFuncionario() {
 		// TODO Auto-generated method stub
@@ -233,21 +231,19 @@ public class FuncionarioController {
 			}
 		};
 	}
-	
+
 	public ActionListener limparCamposEditarFuncionario() {
-	    return new ActionListener() {
-	        public void actionPerformed(ActionEvent e) {
-	            janelaAlterar.txtNomeCompleto.setText("");
-	            janelaAlterar.txtEmail.setText("");
-	            janelaAlterar.txtCelular.setText("");
-	            janelaAlterar.txtCPF.setText("");
-	            janelaAlterar.txtLogin.setText("");
-	            janelaAlterar.txtSenha.setText("");
-	        }
-	    };
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				janelaAlterar.txtNomeCompleto.setText("");
+				janelaAlterar.txtEmail.setText("");
+				janelaAlterar.txtCelular.setText("");
+				janelaAlterar.txtCPF.setText("");
+				janelaAlterar.txtLogin.setText("");
+				janelaAlterar.txtSenha.setText("");
+			}
+		};
 	}
-	
-	
 
 	public void mostrarDados(Funcionario f) {
 		janelaAlterar.txtNomeCompleto.setText(f.getNomeFuncionario());
@@ -270,7 +266,7 @@ public class FuncionarioController {
 	}
 
 	private void pesquisarPorCampo(String campo, String valor) {
-	
+
 		DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
 		modeloTabela.setRowCount(0);
 
@@ -285,15 +281,14 @@ public class FuncionarioController {
 	}
 
 	public MouseListener pesquisa(String campo, JTextField textField) {
-	    return new MouseAdapter() {
-	        @Override
-	        public void mouseClicked(MouseEvent e) {
-	            String valor = textField.getText(); // Obter o valor atualizado do campo de texto no momento do clique
-	            pesquisarPorCampo(campo, valor);
-	        }
-	    };
+		return new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String valor = textField.getText(); // Obter o valor atualizado do campo de texto no momento do clique
+				pesquisarPorCampo(campo, valor);
+			}
+		};
 	}
-
 
 	public void atualizarTabela(String campo, String valor) {
 		DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
@@ -311,13 +306,13 @@ public class FuncionarioController {
 		}
 	}
 
-	public boolean validarCampos() {
-		String nomeFuncionario = janelaLoginCadastro.txtNomeCompleto.getText();
-		String email_Funcionario = janelaLoginCadastro.txtEmail.getText();
-		String celular = janelaLoginCadastro.txtCelular.getText();
-		String cpf = janelaLoginCadastro.txtCPF.getText();
-		String login = janelaLoginCadastro.txtLogin.getText();
-		String senha = janelaLoginCadastro.txtSenha.getText();
+	public boolean validarCamposEditarFuncionarios() {
+		String nomeFuncionario = janelaAlterar.txtNomeCompleto.getText();
+		String email_Funcionario = janelaAlterar.txtEmail.getText();
+		String celular = janelaAlterar.txtCelular.getText();
+		String cpf = janelaAlterar.txtCPF.getText();
+		String login = janelaAlterar.txtLogin.getText();
+		String senha = janelaAlterar.txtSenha.getText();
 
 		if (nomeFuncionario.isEmpty() || email_Funcionario.isEmpty() || celular.isEmpty() || cpf.isEmpty()
 				|| login.isEmpty() || senha.isEmpty()) {
@@ -346,7 +341,7 @@ public class FuncionarioController {
 		return true;
 	}
 
-	public boolean validarCamposCadastroFuncionarios() {
+	public boolean validarCamposCadastroFuncionario() {
 		String nomeFuncionario = janelaCadastro.txtNomeCompleto.getText();
 		String email_Funcionario = janelaCadastro.txtEmail.getText();
 		String celular = janelaCadastro.txtCelular.getText();
@@ -381,12 +376,47 @@ public class FuncionarioController {
 		return true;
 	}
 
+	public boolean validarCamposCadastroFuncionariosLogin() {
+		String nomeFuncionario = janelaLoginCadastro.txtNomeCompleto.getText();
+		String email_Funcionario = janelaLoginCadastro.txtEmail.getText();
+		String celular = janelaLoginCadastro.txtCelular.getText();
+		String cpf = janelaLoginCadastro.txtCPF.getText();
+		String login = janelaLoginCadastro.txtLogin.getText();
+		String senha = janelaLoginCadastro.txtSenha.getText();
+
+		if (nomeFuncionario.isEmpty() || email_Funcionario.isEmpty() || celular.isEmpty() || cpf.isEmpty()
+				|| login.isEmpty() || senha.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
+					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) { // CPF no formato 000.000.000-00
+			JOptionPane.showMessageDialog(null, "CPF inválido. Deve estar no formato 000.000.000-00.",
+					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		if (!email_Funcionario.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+			JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.",
+					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		if (!celular.matches("\\(\\d{2}\\)\\d{5}-\\d{4}")) { // Celular no formato (00)00000-0000
+			JOptionPane.showMessageDialog(null, "Celular inválido. Deve estar no formato (00)00000-0000.",
+					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
+	}
+
 	public ActionListener cadastrarFuncionarioLogin() {
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Entrou aqui");
-				if (validarCampos()) {
+				if (validarCamposCadastroFuncionariosLogin()) {
 					Funcionario cadastro = new Funcionario();
 
 					// Capturando os dados dos campos de texto

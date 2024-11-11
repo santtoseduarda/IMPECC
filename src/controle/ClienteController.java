@@ -5,22 +5,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Cliente;
-import modelo.Fornecedor;
-import modelo.Funcionario;
 import visao.AlterarCliente;
 import visao.CadastroCliente;
-import visao.ListagemCliente;
+import visao.ListagemClientes;
 
 public class ClienteController {
 
@@ -28,7 +22,7 @@ public class ClienteController {
 
 	Cliente cliente = new Cliente();
 	ClienteDAO cdao = new ClienteDAO();
-	ListagemCliente janelaListagem = new ListagemCliente(this);
+	ListagemClientes janelaListagem = new ListagemClientes(this);
 	CadastroCliente janelaCadastro = new CadastroCliente(this);
 	AlterarCliente janelaAlterar = new AlterarCliente(cliente, this);
 
@@ -209,7 +203,7 @@ public class ClienteController {
 		modeloTabela.setRowCount(0); // Limpa a tabela
 
 		// ClienteDAO cdao = new ClienteDAO();
-		ArrayList<Cliente> listaClientes = cdao.buscarClientes(campo, valor);
+		ArrayList<Cliente> listaClientes = cdao.buscarClientesLupa(campo, valor);
 
 		if (listaClientes != null && !listaClientes.isEmpty()) {
 			for (Cliente c : listaClientes) {
@@ -347,5 +341,32 @@ public class ClienteController {
 			}
 		};
 	}
+	
+	private void pesquisarPorCampo(String campo, String valor) {
+
+		DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
+		modeloTabela.setRowCount(0);
+
+		ClienteDAO cdao = new ClienteDAO();
+		ArrayList<Cliente> listaCliente = cdao.buscarClientesLupa(campo, valor);
+
+		for (Cliente c : listaCliente) {
+
+			modeloTabela.addRow(new Object[] { c.getId_Cliente(), c.getNomeCliente(), c.getDataNasc(),
+					c.getCpf_Cliente(), c.getTelefone(), c.getEmail() });
+		}
+	}
+
+	public MouseListener pesquisa(String campo, JTextField txtID) {
+		return new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String valor = txtID.getText(); // Obter o valor atualizado do campo de texto no momento do clique
+				pesquisarPorCampo(campo, valor);
+			}
+		};
+	}
+
+	
 
 }

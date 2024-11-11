@@ -1,51 +1,50 @@
 package visao;
 
-import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+
+import java.awt.Color;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controle.ClienteController;
-import controle.ProdutoController;
-import controle.ProdutoDAO;
-import modelo.Produto;
-import net.miginfocom.swing.MigLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class ListagemCliente extends JFrame {
+public class ListagemClientes extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public JTable table;
-	private JTextField textCpf;
+	private JTextField txtNomeCliente;
+	private JTextField txtCPF;
 	private JTextField textTelefone;
 	private JTextField textEmail;
 	ClienteController clienteController;
-	
-	public ListagemCliente(ClienteController clienteController) {
+
+	public ListagemClientes(ClienteController clienteController) {
 		this.clienteController = clienteController;
-		
+
 		Font fontRegular = null;
 		Font fontBold = null;
 
@@ -73,202 +72,170 @@ public class ListagemCliente extends JFrame {
 		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1054, 853);
+		setBounds(100, 100, 1199, 1607);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(161, 0, 29));
 		contentPane.setForeground(new Color(255, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][][grow][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][][][][][][][][][]",
+				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
-		JLabel lblListagemProduto = new JLabel("Listagem de Clientes");
-		lblListagemProduto.setForeground(new Color(255, 255, 255));
-		lblListagemProduto.setFont(fontBold.deriveFont(Font.PLAIN, 45));
-		contentPane.add(lblListagemProduto, "cell 4 4");
+		JLabel lblListagemCliente = new JLabel("Listagem de Clientes");
+		lblListagemCliente.setForeground(new Color(255, 255, 255));
+		lblListagemCliente.setFont(fontBold.deriveFont(Font.PLAIN, 45));
+		contentPane.add(lblListagemCliente, "cell 3 4");
 
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(new ImageIcon(
 				new ImageIcon("src/img/image 6.png").getImage().getScaledInstance(215, 106, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLogo, "cell 2 0 2 6,alignx center,aligny center");
+		contentPane.add(lblLogo, "cell 1 0 2 6,alignx center,aligny center");
 
 		JLabel lblLinha1 = new JLabel("");
 		lblLinha1.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha1, "cell 2 7 2 1");
+		contentPane.add(lblLinha1, "cell 1 7 2 1");
 
 		JLabel lblCarrinho = new JLabel("");
 		lblCarrinho.setIcon(new ImageIcon(
 				new ImageIcon("src/img/carrinho.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
-		contentPane.add(lblCarrinho, "cell 2 8,alignx left,aligny center");
+		contentPane.add(lblCarrinho, "cell 1 8,alignx left,aligny center");
 
 		JLabel lblVendas = new JLabel("Vendas");
 		lblVendas.setForeground(new Color(255, 255, 255));
 		lblVendas.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblVendas, "cell 3 8,alignx left,aligny center");
+		contentPane.add(lblVendas, "cell 2 8,alignx left,aligny center");
 
-	//	txtId = new JtextField();
-		
+		//txtId = new JTextField();
+
 		JPanel panel = new JPanel();
-		JTextField txtId;
-		contentPane.add(panel, "cell 4 8 21 71,grow");
-		panel.setLayout(new MigLayout("", "[][][][][][][][][][][grow][][][grow][][][grow][][][][grow]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+		JTextField txtID;
+		contentPane.add(panel, "cell 3 8 21 72,grow");
+		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][grow][][][][]",
+				"[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblId = new JLabel("ID");
 		lblId.setFont(fontBold.deriveFont(Font.PLAIN, 14));
-		panel.add(lblId, "cell 1 0");
+		panel.add(lblId, "cell 2 0");
 
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setFont(fontBold.deriveFont(Font.PLAIN, 14));
-		panel.add(lblNome, "cell 4 0");
+		panel.add(lblNome, "cell 5 0");
 
-		JLabel lbDataNsc = new JLabel("Data Nasc");
-		lbDataNsc.setFont(fontBold.deriveFont(Font.PLAIN, 14));
-		panel.add(lbDataNsc, "cell 7 0");
-		
-		JLabel lbCpf = new JLabel("Cpf");
-		lbCpf.setFont(null);
-		panel.add(lbCpf, "cell 10 0");
-		
-		JLabel lbTelefone = new JLabel("Telefone");
-		lbTelefone.setFont(null);
-		panel.add(lbTelefone, "cell 13 0");
-		
-		JLabel lbEmail = new JLabel("Email");
-		lbEmail.setFont(null);
-		panel.add(lbEmail, "cell 16 0");
+		JLabel lblDataNasc = new JLabel("CPF");
+		lblDataNasc.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		panel.add(lblDataNasc, "cell 8 0");
 
 		JLabel lblPesquisar = new JLabel("Pesquisar por : ");
 		lblPesquisar.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		panel.add(lblPesquisar, "cell 0 1,alignx trailing");
+		panel.add(lblPesquisar, "cell 1 1,alignx trailing");
 
-		txtId = new JTextField();
-		panel.add(txtId, "cell 1 1,growx");
-		txtId.setColumns(10);
+		txtID = new JTextField();
+		panel.add(txtID, "cell 2 1,growx");
+		txtID.setColumns(10);
 
-		JLabel lupaId = new JLabel("");
-		lupaId.setIcon(new ImageIcon(
+		JLabel lupa1 = new JLabel("");
+		lupa1.addMouseListener(clienteController.pesquisa("id_Cliente", txtID));
+		lupa1.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
-		panel.add(lupaId, "cell 2 1,alignx trailing");
+		panel.add(lupa1, "cell 3 1,alignx trailing");
 
-		JTextField txtNome = new JTextField();
-		panel.add(txtNome, "cell 4 1,growx");
-		txtNome.setColumns(10);
+		txtNomeCliente = new JTextField();
+		panel.add(txtNomeCliente, "cell 5 1,growx");
+		txtNomeCliente.setColumns(10);
 
-		JLabel lupaNome = new JLabel("");
-		lupaNome.setIcon(new ImageIcon(
+		JLabel lupa2 = new JLabel("");
+		lupa2.addMouseListener(clienteController.pesquisa("nome_Cliente", txtNomeCliente));
+		lupa2.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
-		panel.add(lupaNome, "cell 5 1");
+		panel.add(lupa2, "cell 6 1");
 
-		JTextField txtDataNsc = new JTextField();
-		panel.add(txtDataNsc, "cell 7 1,growx");
-		txtDataNsc.setColumns(10);
+		txtCPF = new JTextField();
+		panel.add(txtCPF, "cell 8 1,growx");
+		txtCPF.setColumns(10);
 
-		JLabel lupaDataNasc = new JLabel("");
-		lupaDataNasc.setIcon(new ImageIcon(
+		JLabel lupa3 = new JLabel("");
+		lupa3.addMouseListener(clienteController.pesquisa("cpf_Cliente", txtCPF));
+		lupa3.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
-		panel.add(lupaDataNasc, "cell 8 1");
-		
-		textCpf = new JTextField();
-		textCpf.setColumns(10);
-		panel.add(textCpf, "cell 10 1,growx");
-		
-		JLabel lupaCpf = new JLabel("");
-		panel.add(lupaCpf, "cell 11 1");
-		
-		textTelefone = new JTextField();
-		textTelefone.setColumns(10);
-		panel.add(textTelefone, "cell 13 1,growx");
-		
-		JLabel lupaTelefone = new JLabel("");
-		panel.add(lupaTelefone, "cell 14 1");
-		
-		textEmail = new JTextField();
-		textEmail.setColumns(10);
-		panel.add(textEmail, "cell 16 1,growx");
-		
-		JLabel lupaEmail = new JLabel("");
-		panel.add(lupaEmail, "cell 17 1");
+		panel.add(lupa3, "cell 9 1");
 
 		JScrollPane scrollPane = new JScrollPane();
-		panel.add(scrollPane, "cell 0 3 21 24,grow");
-		
+		panel.add(scrollPane, "cell 1 3 13 14,grow");
+
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Id", "Nome", "Data Nasc", "Cpf", "Telefone", "Email"
-			}
-		));
+		table.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "Id", "Nome", "Data Nasc", "Cpf", "Telefone", "Email" }));
 		scrollPane.setViewportView(table);
+
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha, "cell 2 9 2 1");
+		contentPane.add(lblLinha, "cell 1 9 2 1");
 
 		JLabel lblCaixa = new JLabel("");
 		lblCaixa.setIcon(new ImageIcon(
 				new ImageIcon("src/img/caixa.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
-		contentPane.add(lblCaixa, "cell 2 10,alignx left,aligny center");
+		contentPane.add(lblCaixa, "cell 1 10,alignx left,aligny center");
 
 		JLabel lblProdutos = new JLabel("Produtos");
 		lblProdutos.setForeground(new Color(255, 255, 255));
 		lblProdutos.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblProdutos, "cell 3 10,alignx left,aligny center");
+		contentPane.add(lblProdutos, "cell 2 10,alignx left,aligny center");
 
 		JLabel lblLinha2 = new JLabel("");
 		lblLinha2.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha2, "cell 2 11 2 1");
+		contentPane.add(lblLinha2, "cell 1 11 2 1");
 
 		JLabel lblCliente = new JLabel("");
 		lblCliente.setIcon(new ImageIcon(
 				new ImageIcon("src/img/cliente.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
-		contentPane.add(lblCliente, "cell 2 12,alignx left,aligny center");
+		contentPane.add(lblCliente, "cell 1 12,alignx left,aligny center");
 
 		JLabel lblClientes = new JLabel("Clientes");
 		lblClientes.setForeground(new Color(255, 255, 255));
 		lblClientes.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblClientes, "cell 3 12");
+		contentPane.add(lblClientes, "cell 2 12");
 
 		JLabel lblLinha3 = new JLabel("");
 		lblLinha3.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha3, "cell 2 13 2 1");
+		contentPane.add(lblLinha3, "cell 1 13 2 1");
 
 		JLabel lblCaminhao = new JLabel("");
 		lblCaminhao.setIcon(new ImageIcon(
 				new ImageIcon("src/img/caminhao.png").getImage().getScaledInstance(40, 35, Image.SCALE_DEFAULT)));
-		contentPane.add(lblCaminhao, "cell 2 15,alignx left,aligny center");
+		contentPane.add(lblCaminhao, "cell 1 15,alignx left,aligny center");
 
 		JLabel lblFornecedor = new JLabel("Fornecedores");
 		lblFornecedor.setForeground(new Color(255, 255, 255));
 		lblFornecedor.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblFornecedor, "cell 3 15");
+		contentPane.add(lblFornecedor, "cell 2 15");
 
 		JLabel lblLinha4 = new JLabel("");
 		lblLinha4.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha4, "cell 2 16 2 1");
+		contentPane.add(lblLinha4, "cell 1 16 2 1");
 
 		JLabel lblFuncionario = new JLabel("");
 		lblFuncionario.setIcon(new ImageIcon(
 				new ImageIcon("src/img/funcionario.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
-		contentPane.add(lblFuncionario, "cell 2 17,alignx left,aligny center");
+		contentPane.add(lblFuncionario, "cell 1 17,alignx left,aligny center");
 
 		JLabel lblFuncionarios = new JLabel("Funcionários");
 		lblFuncionarios.setForeground(new Color(255, 255, 255));
 		lblFuncionarios.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblFuncionarios, "cell 3 17");
+		contentPane.add(lblFuncionarios, "cell 2 17");
 
 		JLabel lblLinha5 = new JLabel("");
 		lblLinha5.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha5, "cell 2 19 2 1");
+		contentPane.add(lblLinha5, "cell 1 19 2 1");
 
+		// sair
 		JButton btnSair = new JButton("Sair");
 		btnSair.addActionListener(clienteController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
@@ -276,30 +243,33 @@ public class ListagemCliente extends JFrame {
 		btnSair.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSair, "cell 2 78 1 4,aligny bottom");
 
+		// cadastrar funcionario
 		JButton btnAdicionar = new JButton("Adicionar Cliente");
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clienteController.iniciarCadastroCliente();
 			}
 		});
-
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 21 80 1 2,aligny bottom");
-		
+
+		// editar
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(clienteController.buscaCliente());
-		btnEditar.setForeground(Color.RED);
+
+		btnEditar.setForeground(new Color(255, 0, 0));
 		btnEditar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnEditar.setBackground(Color.WHITE);
+		btnEditar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnEditar, "cell 19 80 1 2");
-		
+
+		// excluir
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.addActionListener(clienteController.excluirCliente());
-		btnExcluir.setForeground(Color.RED);
+		btnExcluir.setForeground(new Color(255, 0, 0));
 		btnExcluir.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnExcluir.setBackground(Color.WHITE);
+		btnExcluir.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnExcluir, "cell 20 80 1 2");
 
 	}

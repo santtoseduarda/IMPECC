@@ -60,7 +60,7 @@ public class ClienteDAO {
 		return false;
 	}
 
-	public ArrayList<Cliente> buscarClientes(String campo, String valor) {
+	public ArrayList<Cliente> buscarClientesLupa(String campo, String valor) {
 
 		ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 		Statement stmt1 = null;

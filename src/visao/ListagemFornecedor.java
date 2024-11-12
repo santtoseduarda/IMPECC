@@ -30,7 +30,7 @@ import javax.swing.table.DefaultTableModel;
 import controle.FornecedorController;
 import net.miginfocom.swing.MigLayout;
 
-public class ListagemFornecedor extends JFrame {
+public class ListagemFornecedor extends JFrame implements TelaInterna{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -41,18 +41,13 @@ public class ListagemFornecedor extends JFrame {
 	public JTextField txtNome;
 	FornecedorController fornecedorController;
 	private JLabel lblFornecedor;
-	
+	private JLabel lblProdutos;
+	private JLabel lblClientes;
+	private JLabel lblFuncionarios;
+	private JLabel lblVendas;
+
 	public ListagemFornecedor(FornecedorController fornecedorController) {
 		this.fornecedorController = fornecedorController;
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-
-		
 
 		Font fontRegular = null;
 		Font fontBold = null;
@@ -79,7 +74,11 @@ public class ListagemFornecedor extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1054, 853);
 		contentPane = new JPanel();
@@ -111,13 +110,13 @@ public class ListagemFornecedor extends JFrame {
 				new ImageIcon("src/img/carrinho.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCarrinho, "cell 1 8,alignx left,aligny center");
 
-		JLabel lblVendas = new JLabel("Vendas");
+		lblVendas = new JLabel("Vendas");
 		lblVendas.setForeground(new Color(255, 255, 255));
 		lblVendas.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblVendas, "cell 2 8,alignx left,aligny center");
 
 		txtId = new JTextField();
-		
+
 		JPanel panel = new JPanel();
 		contentPane.add(panel, "cell 3 8 21 72,grow");
 		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][grow][][][][]",
@@ -158,9 +157,9 @@ public class ListagemFornecedor extends JFrame {
 
 		JLabel lupa2 = new JLabel("");
 		lupa2.addMouseListener(fornecedorController.pesquisaLupaFornecedor("nome_Fornecedor", txtNome));
-		
+
 		lupa2.setIcon(new ImageIcon(
-		new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
+				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa2, "cell 6 1");
 
 		txtCnpj = new JTextField();
@@ -170,7 +169,7 @@ public class ListagemFornecedor extends JFrame {
 		JLabel lupa3 = new JLabel("");
 		lupa3.addMouseListener(fornecedorController.pesquisaLupaFornecedor("cnpj", txtCnpj));
 		lupa3.setIcon(new ImageIcon(
-		new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
+				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupa3, "cell 9 1");
 
 		txtEmail = new JTextField();
@@ -201,7 +200,7 @@ public class ListagemFornecedor extends JFrame {
 				new ImageIcon("src/img/caixa.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCaixa, "cell 1 10,alignx left,aligny center");
 
-		JLabel lblProdutos = new JLabel("Produtos");
+		lblProdutos = new JLabel("Produtos");
 		lblProdutos.setForeground(new Color(255, 255, 255));
 		lblProdutos.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblProdutos, "cell 2 10,alignx left,aligny center");
@@ -216,7 +215,7 @@ public class ListagemFornecedor extends JFrame {
 				new ImageIcon("src/img/cliente.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCliente, "cell 1 12,alignx left,aligny center");
 
-		JLabel lblClientes = new JLabel("Clientes");
+		lblClientes = new JLabel("Clientes");
 		lblClientes.setForeground(new Color(255, 255, 255));
 		lblClientes.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblClientes, "cell 2 12");
@@ -246,7 +245,7 @@ public class ListagemFornecedor extends JFrame {
 				new ImageIcon("src/img/funcionario.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 		contentPane.add(lblFuncionario, "cell 1 17,alignx left,aligny center");
 
-		JLabel lblFuncionarios = new JLabel("Funcionários");
+		lblFuncionarios = new JLabel("Funcionários");
 		lblFuncionarios.setForeground(new Color(255, 255, 255));
 		lblFuncionarios.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblFuncionarios, "cell 2 17");
@@ -292,6 +291,26 @@ public class ListagemFornecedor extends JFrame {
 
 	public JLabel getLabelFornecedor() {
 		// TODO Auto-generated method stub
-		return lblFornecedor;
+		return lblFuncionarios;
+	}
+
+	public JLabel getLabelCliente() {
+		// TODO Auto-generated method stub
+		return lblClientes;
+	}
+
+	public JLabel getLabelFuncionario() {
+		// TODO Auto-generated method stub
+		return lblFuncionarios;
+	}
+
+	public JLabel getLabelVendas() {
+		// TODO Auto-generated method stub
+		return lblVendas;
+	}
+
+	public JLabel getLabelProduto() {
+		// TODO Auto-generated method stub
+		return lblProdutos;
 	}
 }

@@ -1,17 +1,13 @@
 package modelo;
 
-import java.time.LocalDate;
-
 public class Cliente {
 
-	
-	
 	private int id_Cliente;
 	private String nomeCliente;
 	private String cpf_Cliente;
 	private String email;
 	private String telefone;
-	private String dataNasc;
+	public String dataNasc;
 	
 	public int getId_Cliente() {
 		return id_Cliente;
@@ -49,7 +45,7 @@ public class Cliente {
 		return dataNasc;
 	}
 	public void setDataNasc(String dataNasc) {
-		this.dataNasc = dataNasc;
+	    this.dataNasc = dataNasc;
 	}
 	
 	

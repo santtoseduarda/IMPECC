@@ -40,8 +40,6 @@ public class ListagemClientes extends JFrame implements TelaInterna {
 	public JTable table;
 	private JTextField txtNomeCliente;
 	private JTextField txtCPF;
-	private JTextField textTelefone;
-	private JTextField textEmail;
 	ClienteController clienteController;
 	private JLabel lblVendas;
 	private JLabel lblProdutos;

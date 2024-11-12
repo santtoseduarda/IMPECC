@@ -234,6 +234,7 @@ public class ListagemFuncionarios extends JFrame implements TelaInterna{
 		contentPane.add(lblCaminhao, "cell 1 15,alignx left,aligny center");
 
 		lblFornecedor = new JLabel("Fornecedores");
+		
 		lblFornecedor.setForeground(new Color(255, 255, 255));
 		lblFornecedor.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblFornecedor, "cell 2 15");

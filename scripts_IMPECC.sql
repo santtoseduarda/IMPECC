@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS impecc.Produtos (
 CREATE TABLE IF NOT EXISTS impecc.Clientes (
   id_Cliente INT NOT NULL AUTO_INCREMENT,
   nome_Cliente VARCHAR(45) NOT NULL,
-  data_Nasc DATE NOT NULL,
-  cpf_Clinte VARCHAR(45) NOT NULL,
+  data_Nasc VARCHAR(45) NOT NULL,
+  cpf_Cliente VARCHAR(45) NOT NULL,
   telefone_Cliente VARCHAR(45) NOT NULL,
   email_Cliente VARCHAR(45) NOT NULL,
   PRIMARY KEY (id_Cliente)

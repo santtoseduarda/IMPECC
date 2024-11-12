@@ -138,7 +138,7 @@ public class CadastroFuncionario extends JFrame {
 		txtSenha.setColumns(10);
 
 		JButton btnSair = new JButton("Voltar");
-		btnSair.addMouseListener(funcionarioController.voltarListagem());
+		btnSair.addMouseListener(funcionarioController.voltarLogin());
 		btnSair.setForeground(new Color(225, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 22));
 		contentPane.add(btnSair, "cell 1 17 1 2,alignx left,aligny bottom");

@@ -80,9 +80,7 @@ public class TelaLogin extends JFrame {
 			e.printStackTrace();
 		}
 	    
-	    TelaLogin janelaLogin = this;
-	    
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 933, 737);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(69, 69, 69, 30));

@@ -24,7 +24,11 @@ public class FuncionarioController {
 	CadastroFuncionarios janelaCadastro = new CadastroFuncionarios(this);
 	ListagemFuncionarios janelaListagem = new ListagemFuncionarios(this);
 	CadastroFuncionario janelaLoginCadastro = new CadastroFuncionario(this);
-
+	TelaInternaController telaInternaController = new TelaInternaController();
+	
+	public FuncionarioController() {
+		telaInternaController.setTela(janelaListagem);
+	}
 	public void iniciarCadastroFunc() {
 		limparCamposCadFuncionario();
 		janelaCadastro.setVisible(true);
@@ -261,6 +265,17 @@ public class FuncionarioController {
 				FuncionarioController funcionarioController = new FuncionarioController();
 				funcionarioController.abrirListagem();
 				janelaCadastro.dispose();
+			}
+		};
+	}
+	public MouseListener voltarLogin() {
+		return new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				LoginController loginController = new LoginController();
+				//FuncionarioController funcionarioController = new FuncionarioController();
+				loginController.iniciarLogin();
+				janelaLoginCadastro.dispose();
 			}
 		};
 	}

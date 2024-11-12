@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -34,7 +36,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ListagemFuncionarios extends JFrame {
+public class ListagemFuncionarios extends JFrame implements TelaInterna{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -44,6 +46,11 @@ public class ListagemFuncionarios extends JFrame {
 	private JTextField textField_3;
 	public JTable table;
 	FuncionarioController funcionarioController;
+	private JLabel lblFornecedor;
+	private JLabel lblClientes;
+	private JLabel lblProdutos;
+	private JLabel lblFuncionarios;
+	private JLabel lblVendas;
 
 	public ListagemFuncionarios(FuncionarioController funcionarioController) {
 		this.funcionarioController = funcionarioController;
@@ -107,7 +114,7 @@ public class ListagemFuncionarios extends JFrame {
 				new ImageIcon("src/img/carrinho.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCarrinho, "cell 1 8,alignx left,aligny center");
 
-		JLabel lblVendas = new JLabel("Vendas");
+		lblVendas = new JLabel("Vendas");
 		lblVendas.setForeground(new Color(255, 255, 255));
 		lblVendas.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblVendas, "cell 2 8,alignx left,aligny center");
@@ -196,7 +203,7 @@ public class ListagemFuncionarios extends JFrame {
 				new ImageIcon("src/img/caixa.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCaixa, "cell 1 10,alignx left,aligny center");
 
-		JLabel lblProdutos = new JLabel("Produtos");
+		lblProdutos = new JLabel("Produtos");
 		lblProdutos.setForeground(new Color(255, 255, 255));
 		lblProdutos.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblProdutos, "cell 2 10,alignx left,aligny center");
@@ -211,7 +218,7 @@ public class ListagemFuncionarios extends JFrame {
 				new ImageIcon("src/img/cliente.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCliente, "cell 1 12,alignx left,aligny center");
 
-		JLabel lblClientes = new JLabel("Clientes");
+		lblClientes = new JLabel("Clientes");
 		lblClientes.setForeground(new Color(255, 255, 255));
 		lblClientes.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblClientes, "cell 2 12");
@@ -226,18 +233,7 @@ public class ListagemFuncionarios extends JFrame {
 				new ImageIcon("src/img/caminhao.png").getImage().getScaledInstance(40, 35, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCaminhao, "cell 1 15,alignx left,aligny center");
 
-		JLabel lblFornecedor = new JLabel("Fornecedores");
-		lblFornecedor.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				//teste
-				FornecedorController fornecedorController = new FornecedorController();
-				ListagemFornecedor forn = new ListagemFornecedor(fornecedorController); 
-		        forn.setVisible(true);
-
-		        dispose();
-			}
-		});
+		lblFornecedor = new JLabel("Fornecedores");
 		lblFornecedor.setForeground(new Color(255, 255, 255));
 		lblFornecedor.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblFornecedor, "cell 2 15");
@@ -252,7 +248,7 @@ public class ListagemFuncionarios extends JFrame {
 				new ImageIcon("src/img/funcionario.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 		contentPane.add(lblFuncionario, "cell 1 17,alignx left,aligny center");
 
-		JLabel lblFuncionarios = new JLabel("Funcionários");
+		lblFuncionarios = new JLabel("Funcionários");
 		lblFuncionarios.setForeground(new Color(255, 255, 255));
 		lblFuncionarios.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblFuncionarios, "cell 2 17");
@@ -299,6 +295,36 @@ public class ListagemFuncionarios extends JFrame {
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 21 80 1 2,aligny bottom");
+	}
+
+	@Override
+	public JLabel getLabelFornecedor() {
+		// TODO Auto-generated method stub
+		return lblFuncionarios;
+	}
+
+	@Override
+	public JLabel getLabelCliente() {
+		// TODO Auto-generated method stub
+		return lblClientes;
+	}
+
+	@Override
+	public JLabel getLabelFuncionario() {
+		// TODO Auto-generated method stub
+		return lblFuncionarios;
+	}
+
+	@Override
+	public JLabel getLabelVendas() {
+		// TODO Auto-generated method stub
+		return lblVendas;
+	}
+
+	@Override
+	public JLabel getLabelProduto() {
+		// TODO Auto-generated method stub
+		return lblProdutos;
 	}
 
 }

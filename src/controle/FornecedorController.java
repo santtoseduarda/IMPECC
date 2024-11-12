@@ -29,6 +29,7 @@ public class FornecedorController {
 
 	// listagemFornecedor
 
+	
 	public void abrirListagemFornecedor() {
 		atualizarTabela("", "");
 		viewl.setVisible(true);

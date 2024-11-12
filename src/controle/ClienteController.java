@@ -25,7 +25,11 @@ public class ClienteController {
 	ListagemClientes janelaListagem = new ListagemClientes(this);
 	CadastroCliente janelaCadastro = new CadastroCliente(this);
 	AlterarCliente janelaAlterar = new AlterarCliente(cliente, this);
-
+	TelaInternaController telaInternaController = new TelaInternaController();
+	
+	public ClienteController() {
+		telaInternaController.setTela(janelaListagem);
+	}
 	public void abrirListagemCLientes() {
 		atualizarTabela("", "");
 		janelaListagem.setVisible(true);

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,6 +40,7 @@ public class ListagemFornecedor extends JFrame {
 	public JTextField txtEmail;
 	public JTextField txtNome;
 	FornecedorController fornecedorController;
+	private JLabel lblFornecedor;
 	
 	public ListagemFornecedor(FornecedorController fornecedorController) {
 		this.fornecedorController = fornecedorController;
@@ -229,7 +231,7 @@ public class ListagemFornecedor extends JFrame {
 				new ImageIcon("src/img/caminhao.png").getImage().getScaledInstance(40, 35, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCaminhao, "cell 1 15,alignx left,aligny center");
 
-		JLabel lblFornecedor = new JLabel("Fornecedores");
+		lblFornecedor = new JLabel("Fornecedores");
 		lblFornecedor.setForeground(new Color(255, 255, 255));
 		lblFornecedor.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblFornecedor, "cell 2 15");
@@ -286,5 +288,10 @@ public class ListagemFornecedor extends JFrame {
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 21 80 1 2,aligny bottom");
+	}
+
+	public JLabel getLabelFornecedor() {
+		// TODO Auto-generated method stub
+		return lblFornecedor;
 	}
 }

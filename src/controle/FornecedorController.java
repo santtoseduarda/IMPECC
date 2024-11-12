@@ -26,15 +26,16 @@ public class FornecedorController {
 	ListagemFornecedor viewl = new ListagemFornecedor(this);
 	CadastroFornecedores viewc = new CadastroFornecedores(this);
 	AlterarFornecedor viewa = new AlterarFornecedor(fornecedor, this);
+	TelaInternaController telaInternaController = new TelaInternaController();
 
-	// listagemFornecedor
+	public FornecedorController() {
+		telaInternaController.setTela(viewl);
+	}
 
-	
 	public void abrirListagemFornecedor() {
 		atualizarTabela("", "");
 		viewl.setVisible(true);
 	}
-	
 
 	public void cadastroFornecedor() {
 		limparCamposCadFornecedor();
@@ -48,7 +49,7 @@ public class FornecedorController {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = viewl.table.getSelectedRow();
 
-				if (selectedRow != -1) { 
+				if (selectedRow != -1) {
 					int id_Fornecedor = (int) viewl.table.getValueAt(selectedRow, 0);
 
 					// Busca o funcionário no banco de dados usando o DAO
@@ -163,7 +164,7 @@ public class FornecedorController {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-	            String valor = txtID.getText(); // Obter o valor atualizado do campo de texto no momento do clique
+				String valor = txtID.getText(); // Obter o valor atualizado do campo de texto no momento do clique
 				pesquisarPorCampo(campo, valor);
 			}
 		};
@@ -182,7 +183,7 @@ public class FornecedorController {
 				if (validarCamposCadastroFornecedores()) {
 
 					Fornecedor cadastro = new Fornecedor();
-					
+
 					cadastro.setNome_Fornecedor(viewc.txtNome.getText());
 					cadastro.setCNPJ(viewc.txtCnpj.getText());
 					cadastro.setEmail_Fornecedor(viewc.txtEmail.getText());
@@ -217,7 +218,7 @@ public class FornecedorController {
 		};
 	}
 
-	//arrumar essas validações
+	// arrumar essas validações
 	public boolean validarCamposCadastroFornecedores() {
 		String nome = viewc.txtNome.getText();
 		String cnpj = viewc.txtCnpj.getText();
@@ -230,42 +231,36 @@ public class FornecedorController {
 			return false;
 		}
 
-		if (!cnpj.matches("\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}")) { 
+		if (!cnpj.matches("\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}")) {
 			JOptionPane.showMessageDialog(null, "CNPJ inválido. Deve estar no formato 00.000.000/0000-00",
 					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 
-		
-		 if (!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
-		        JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.",
-		                "Erro de cadastro", JOptionPane.ERROR_MESSAGE);
-		        return false;
-		    }
+		if (!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
+			JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.",
+					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 
-		 if (!telefone.matches("\\(\\d{2}\\)\\d{5}-\\d{4}")) { // Celular no formato (00)00000-0000
-				JOptionPane.showMessageDialog(null, "Celular inválido. Deve estar no formato (00)00000-0000.",
-						"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
-				return false;
+		if (!telefone.matches("\\(\\d{2}\\)\\d{5}-\\d{4}")) { // Celular no formato (00)00000-0000
+			JOptionPane.showMessageDialog(null, "Celular inválido. Deve estar no formato (00)00000-0000.",
+					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			return false;
 
 		}
 		return true;
 	}
 
-	
 	public void limparCamposCadFornecedor() {
-		
-				viewc.txtNome.setText("");
-				viewc.txtEmail.setText("");
-				viewc.txtTelefone.setText("");
-				viewc.txtCnpj.setText("");
-			
-		
+
+		viewc.txtNome.setText("");
+		viewc.txtEmail.setText("");
+		viewc.txtTelefone.setText("");
+		viewc.txtCnpj.setText("");
+
 	}
-	
-	
-	
-	
+
 	public ActionListener limparCamposCadastroFornecedor() {
 		// TODO Auto-generated method stub
 		return new ActionListener() {
@@ -282,13 +277,11 @@ public class FornecedorController {
 				viewa.txtCnpj.setText("");
 				viewa.txtEmailFornecedor.setText("");
 				viewa.txtNomeFornecedor.setText("");
-				viewa.txtTelefoneFornecedor.setText("");			}
+				viewa.txtTelefoneFornecedor.setText("");
+			}
 		};
 	}
 
-	
-	
-	
 	public ActionListener salvarEdicoes() {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -299,13 +292,12 @@ public class FornecedorController {
 					DefaultTableModel modeloTabela = (DefaultTableModel) viewl.table.getModel();
 					int idFornecedor = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
 					Fornecedor fornecedor = new Fornecedor();
-					
+
 					fornecedor.setID_fornecedor(idFornecedor);
 					fornecedor.setTelefone_Fornecedor(viewa.txtTelefoneFornecedor.getText());
 					fornecedor.setCNPJ(viewa.txtCnpj.getText());
 					fornecedor.setEmail_Fornecedor(viewa.txtEmailFornecedor.getText());
 					fornecedor.setNome_Fornecedor(viewa.txtNomeFornecedor.getText());
-					
 
 					try {
 						boolean sucesso = fordao.alterarFornecedor(fornecedor);
@@ -327,8 +319,6 @@ public class FornecedorController {
 		};
 	}
 
-	
-	
 	public void mostrarDados(Fornecedor fornecedor) {
 		viewa.txtNomeFornecedor.setText(fornecedor.getNome_Fornecedor());
 		viewa.txtEmailFornecedor.setText(fornecedor.getEmail_Fornecedor());

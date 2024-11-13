@@ -83,8 +83,8 @@ public class TelaInicialController {
 		return new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ProdutoController prodC = new ProdutoController();
-				prodC.abrirListagem();
+				ProdutoController produtoController = new ProdutoController();
+				produtoController.abrirListagem();
 				janelaTela.dispose();
 			}
 

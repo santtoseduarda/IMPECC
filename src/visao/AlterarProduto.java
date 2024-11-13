@@ -36,7 +36,6 @@ public class AlterarProduto extends JFrame {
 	private JPanel contentPane_1;
 	private JTextField txtFornecedor;
 	private JTextField txtQuantidadeEstoque;
-	private JTextField txtQuantidadeEstoque;
 
 	public AlterarProduto(ProdutoController produtoController) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -243,10 +242,10 @@ public class AlterarProduto extends JFrame {
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
-		btnAdicionar.addActionListener(produtoController.salvarEdicoes());
+		//btnAdicionar.addActionListener(produtoController.salvarEdicoes());
 		 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
-		btnLimparCampos.addActionListener(produtoController.limparCamposEditarFuncionarioProduto());
+		//btnLimparCampos.addActionListener(produtoController.limparCamposEditarFuncionarioProduto());
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE); contentPane.add(btnLimparCampos,

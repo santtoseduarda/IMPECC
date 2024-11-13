@@ -72,6 +72,8 @@ public class CadastroProduto extends JFrame {
 		contentPane.setBackground(new Color(161, 0, 29));
 		contentPane.setForeground(new Color(255, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
@@ -235,6 +237,7 @@ public class CadastroProduto extends JFrame {
 		btnAdicionar.addActionListener(produtoController.adicionarProduto());
 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
+<<<<<<< HEAD
 		btnLimparCampos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -249,6 +252,9 @@ public class CadastroProduto extends JFrame {
 		        comboBoxFornecedor.setSelectedItem(null);
 			}
 		});
+=======
+		btnLimparCampos.addActionListener(produtoController.limparCampos());
+>>>>>>> continuaçãoProduto
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);

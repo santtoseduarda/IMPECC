@@ -54,8 +54,9 @@ public class ProdutoController {
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				limparCamposCad();
-				viewL.setVisible(true);
+				//limparCamposCad();
+				viewC.setVisible(true);
+				viewL.dispose();
 			}
 		};
 	}
@@ -167,7 +168,7 @@ public class ProdutoController {
 		int qntEstoqueConvert = Integer.parseInt(qntEstoque);
 		int codBarraConvert = Integer.parseInt(codBarra);
 
-		produto.setNomeProduto(nomeProduto);
+		produto.setNomeProduto(viewC.txtNomeProduto.getText());
 		produto.setCodBarra(codBarraConvert);
 		produto.setTamanho(tamanho);
 		produto.setGenero(genero);
@@ -188,7 +189,26 @@ public class ProdutoController {
 		};
 	}
 
+	public ActionListener limparCampos() {
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				viewC.txtNomeProduto.setText("");
+				viewC.txtCodBarra.setText("");
+				viewC.txtPreco.setText("");
+				viewC.txtQntdEstoque.setText("");
+		        
+		        //limpar do combobox
+				viewC.comboBoxTamanho.setSelectedItem(null);
+				viewC.comboBoxGenero.setSelectedItem(null);
+				viewC.comboBoxFornecedor.setSelectedItem(null);
+			}
+		};
+	}
+
+	/*
 	public ActionListener salvarEdicoes() {
+		return null;
 		return new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
 				int posicaoSelecionada = viewL.table.getSelectedRow();
@@ -232,5 +252,5 @@ public class ProdutoController {
 	private void mostrarDados(Produto p) {
 		
 
-	}
+	}*/
 }

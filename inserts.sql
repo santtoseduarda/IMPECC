@@ -1,42 +1,45 @@
 -- funcionarios
-INSERT INTO Funcionarios (nome_Funcionario, email_Funcionario, celular, cpf, login, senha) VALUES (?, ?, ?, ?, ?, ?);
-
--- produtos
-INSERT INTO Produtos (Nome_Produto, Modelo, Tamanho , Genero, Preco, Fornecedor, Qntd_Estoque) VALUES (?, ?, ?, ?, ?, ?, ?);
-
--- venda
-INSERT INTO Vendas (Total, Mtd_Pagamento)
-VALUES (?, ?);
+INSERT INTO funcionarios (nome_Funcionario, email_Funcionario, celular, cpf, login, senha) VALUES (?, ?, ?, ?, ?, ?)
 
 -- cliente
-INSERT INTO Clientes (Nome_Cliente, Sobrenome, Data_Nasc, Cpf , Telefone, Email) VALUES (?, ?, ?, ?, ?, ?, ?);
+INSERT INTO clientes (nome_Cliente, data_Nasc, cpf_Cliente, telefone_Cliente, email_Cliente) VALUES (?, ?, ?, ?, ?)
 
--- historico venda
-INSERT INTO Historico_de_Vendas (Qtd_Venda)
-VALUES (?);
+-- fornecedor
+INSERT INTO fornecedor (nome_Fornecedor, cnpj, telefone_fornecedor, email_fornecedor) VALUES (?, ?, ?, ?)
 
-insert into Produtos (Nome_Produto, Modelo, Tamanho, Genero, Preco, Fornecedor, Qntd_Estoque ) values ('Camisa Preta', 'Cropped', 'PP', 'Feminino', 99.99, 'Nike', 30);
-insert into Produtos (Nome_Produto, Modelo, Tamanho, Genero, Preco, Fornecedor, Qntd_Estoque ) values ('Casaco', 'Ziper', 'M', 'Masculino', 135.90, 'Adidas', 25);
-insert into Produtos (Nome_Produto, Modelo, Tamanho, Genero, Preco, Fornecedor, Qntd_Estoque ) values ('Top', 'Aberto', 'G', 'Feminino', 179.20, 'Nike', 13);
+-- produtos
+INSERT INTO produtos (Nome_Produto, Modelo, Tamanho , Genero, Preco, Fornecedor, Qntd_Estoque) VALUES (?, ?, ?, ?, ?, ?, ?);
 
-INSERT INTO Vendas (Total, Mtd_Pagamento)
-VALUES (240.95, 'dinheiro');
-INSERT INTO Vendas (Total, Mtd_Pagamento)
-VALUES (154.96, 'cartão crédito');
-INSERT INTO Vendas (Total, Mtd_Pagamento)
-VALUES (98.99, 'cartão dépito');
+-- vendas
+INSERT INTO vendas (Total, Mtd_Pagamento) VALUES (?, ?);
 
-insert into Clientes (Nome_Cliente, Sobrenome, Data_Nasc, Cpf, Telefone, Email) values ('Oliver', 'Abate', '2003-03-25', '664.750.083-48', '(47)99457-6588', 'oabate0@nih.gov');
-insert into Clientes (Nome_Cliente, Sobrenome, Data_Nasc, Cpf, Telefone, Email) values ('Shirl', 'Ellinor', '1996-12-6', '391.736.884-56', '(55)99222-6764', 'sellinor1@shutterfly.com');
-insert into Clientes (Nome_Cliente, Sobrenome, Data_Nasc, Cpf, Telefone, Email) values ('Simonne', 'Keddle', '2001-02-27', '852.984.540-23', '(35)99030-4782', 'skeddle2@army.mil');
 
-INSERT INTO Historico_de_Vendas (Qtd_Venda)
-VALUES (3);
-INSERT INTO Historico_de_Vendas (Qtd_Venda)
-VALUES (2);
-INSERT INTO Historico_de_Vendas (Qtd_Venda)
-VALUES (4);
+INSERT INTO produtos (nome_Produto, tamanho, genero, preco, fornecedor, qntd_Estoque ) values ('Camisa Preta', 'PP', 'Feminino', 99.99, 'Nike', 30);
+INSERT INTO produtos (nome_Produto, tamanho, genero, preco, fornecedor, qntd_Estoque ) values ('Camisa Regata Cinza', 'M', 'Masculino', 79.90, 'Delta', 12);
+INSERT INTO produtos (nome_Produto, tamanho, genero, preco, fornecedor, qntd_Estoque ) values ('Calça Legging Preta', 'M', 'Feminino', 89.99, 'Adidas', 12);
+INSERT INTO produtos (nome_Produto, tamanho, genero, preco, fornecedor, qntd_Estoque ) values ('Top Curve Barrado', 'GG', 'Feminino', 49.50, 'Adidas', 99);
+INSERT INTO produtos (nome_Produto, tamanho, genero, preco, fornecedor, qntd_Estoque ) values ('Saia Esportiva', 'P', 'Feminino', 79.99, 'Gamma', 30);
 
-insert into Funcionarios (Nome_Funcionario, Cargo , Email , Senha ) values ('Camili', 'caixa', 'camilli@gmail.com', '479');
-insert into Funcionarios (Nome_Funcionario, Cargo , Email , Senha ) values ('Eduarda', 'atendente', 'eduarda@gmail.com', '159');
-insert into Funcionarios (Nome_Funcionario, Cargo , Email , Senha ) values ('Isabelle', 'caixa', 'isabelle@gmail.com', '365');
+INSERT INTO funcionarios (nome_Funcionario, email_Funcionario, celular, cpf, login, senha) VALUES ('Isabelle Kohler', '2015belle@gmail.com', '(47)99101-8455', '456.654.456-98', 'asd', 'asd');
+INSERT INTO funcionarios (nome_Funcionario, email_Funcionario, celular, cpf, login, senha) VALUES ('Carlos Pereira', 'carlos.pereira@gmail.com', '(42)98765-4323', '345.678.901-23', 'carlos', '4321')
+INSERT INTO funcionarios (nome_Funcionario, email_Funcionario, celular, cpf, login, senha) VALUES ('Paulo Strey', 'pauloStrey@gmail.com', '(47)99756-2625', '056.678.154-22', 'paulo', 'paulo')
+INSERT INTO funcionarios (nome_Funcionario, email_Funcionario, celular, cpf, login, senha) VALUES ('Camili Naara', 'milli.ns@gmail.com', '(41)99658-0203', '412.656.324-98', 'camili', 'camili')
+INSERT INTO funcionarios (nome_Funcionario, email_Funcionario, celular, cpf, login, senha) VALUES ('Eduarda Santos', 'duda.santos@gmail.com', '(47)99155-2365', '103.522.632-90', 'duda', 'duda')
+
+INSERT INTO clientes (nome_Cliente, data_Nasc, cpf_Cliente, telefone_Cliente, email_Cliente) VALUES ('Maria Oliveira', '15/07/1985', '123.456.789-00', '(21)98765-4321', 'maria.oliveira@email.com')
+INSERT INTO clientes (nome_Cliente, data_Nasc, cpf_Cliente, telefone_Cliente, email_Cliente) VALUES ('João Silva', '23/11/1990', '234.567.890-11', '(11)91234-5678', 'joao.silva@email.com')
+INSERT INTO clientes (nome_Cliente, data_Nasc, cpf_Cliente, telefone_Cliente, email_Cliente) VALUES ('Carlos Pereira', '29/09/1978', '456.789.012-33', '(47)93456-7890', 'carlos.pereira@email.com')
+INSERT INTO clientes (nome_Cliente, data_Nasc, cpf_Cliente, telefone_Cliente, email_Cliente) VALUES ('Ana Souza', '05/03/1982', '345.678.901-22', '(31)99876-5432', 'ana.souza@email.com')
+INSERT INTO clientes (nome_Cliente, data_Nasc, cpf_Cliente, telefone_Cliente, email_Cliente) VALUES ('Beatriz Lima', '12/12/1995', '567.890.123-44', '(85)92345-6789', 'beatriz.lima@email.com')
+
+INSERT INTO fornecedor (nome_Fornecedor, cnpj, telefone_fornecedor, email_fornecedor) VALUES ('Alpha Distribuidora', '12.345.678/0001-90', '(11)98765-4321', 'contato@alpha.com')
+INSERT INTO fornecedor (nome_Fornecedor, cnpj, telefone_fornecedor, email_fornecedor) VALUES ('Delta', '45.678.901/0001-23', '(47)93456-7890', 'delta@comercio.com')
+INSERT INTO fornecedor (nome_Fornecedor, cnpj, telefone_fornecedor, email_fornecedor) VALUES ('Nike', '56.789.012/0001-34', '(85)92345-6789', 'nike@consor.com')
+INSERT INTO fornecedor (nome_Fornecedor, cnpj, telefone_fornecedor, email_fornecedor) VALUES ('Gamma', '34.567.890/0001-12', '(31)99876-5432', 'gamma@materiais.com')
+INSERT INTO fornecedor (nome_Fornecedor, cnpj, telefone_fornecedor, email_fornecedor) VALUES ('Adidas', '12.345.678/0001-90', '(11)98765-4321', 'adidas@org.com')
+
+INSERT INTO vendas (total, mtd_Pagamento) VALUES (240.95, 'dinheiro');
+INSERT INTO vendas (total, mtd_Pagamento) VALUES (240.95, 'dinheiro');
+INSERT INTO vendas (total, mtd_Pagamento) VALUES (154.96, 'cartão crédito');
+INSERT INTO vendas (total, mtd_Pagamento) VALUES (98.99, 'cartão dépito');
+INSERT INTO vendas (total, mtd_Pagamento) VALUES (154.96, 'cartão crédito');

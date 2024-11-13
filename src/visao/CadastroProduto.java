@@ -42,7 +42,6 @@ public class CadastroProduto extends JFrame {
 	public JComboBox comboBoxFornecedor;
 	public JComboBox comboBoxGenero;
 	public JComboBox comboBoxTamanho;
-	public JTextField txtCodBarra;
 	public JTextField txtNomeProduto;
 
 	public CadastroProduto(ProdutoController produtoController) {
@@ -119,13 +118,6 @@ public class CadastroProduto extends JFrame {
 		txtNomeProduto = new JTextField();
 		panel.add(txtNomeProduto, "cell 1 5 7 1,growx,aligny bottom");
 		txtNomeProduto.setColumns(10);
-
-		JLabel lblCodBarra = new JLabel("Codigo de Barra: *");
-		panel.add(lblCodBarra, "cell 1 7,growx,aligny bottom");
-
-		txtCodBarra = new JTextField();
-		panel.add(txtCodBarra, "cell 1 9 7 1,growx,aligny bottom");
-		txtCodBarra.setColumns(10);
 
 		JLabel lblTamanho = new JLabel("Tamanho:*");
 		panel.add(lblTamanho, "cell 1 11,growx,aligny bottom");
@@ -247,7 +239,7 @@ public class CadastroProduto extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 		        txtNomeProduto.setText("");
-		        txtCodBarra.setText("");
+		       // txtCodBarra.setText("");
 		        txtPreco.setText("");
 		        txtQntdEstoque.setText("");
 		        

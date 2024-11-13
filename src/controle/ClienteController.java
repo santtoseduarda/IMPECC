@@ -5,6 +5,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -26,10 +30,11 @@ public class ClienteController {
 	CadastroCliente janelaCadastro = new CadastroCliente(this);
 	AlterarCliente janelaAlterar = new AlterarCliente(cliente, this);
 	TelaInternaController telaInternaController = new TelaInternaController();
-	
+
 	public ClienteController() {
 		telaInternaController.setTela(janelaListagem);
 	}
+
 	public void abrirListagemCLientes() {
 		atualizarTabela("", "");
 		janelaListagem.setVisible(true);
@@ -89,13 +94,33 @@ public class ClienteController {
 		};
 	}
 
-	/*
-	 * public String validaçaoData(String dateStr) { try { DateTimeFormatter
-	 * inputFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy"); DateTimeFormatter
-	 * outputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd"); return
-	 * LocalDate.parse(dateStr, inputFormat).format(outputFormat); } catch
-	 * (DateTimeParseException e) { return null; // Indica data inválida } }
-	 */
+	public boolean validarDataNascimento(String dataNasc) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		try {
+			LocalDate data = LocalDate.parse(dataNasc, formatter);
+
+			// Verifica se a data é maior que a data atual
+			if (data.isAfter(LocalDate.now())) {
+				JOptionPane.showMessageDialog(null, "Data de nascimento não pode ser no futuro.", "Erro",
+						JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+
+			// Verifica a idade (mínimo de 18 anos e máximo de 120 anos)
+			long idade = ChronoUnit.YEARS.between(data, LocalDate.now());
+			if (idade < 18 || idade > 120) {
+				JOptionPane.showMessageDialog(null, "A idade deve ser entre 18 e 120 anos.", "Erro",
+						JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+
+			return true; // Data é válida e dentro do intervalo
+		} catch (DateTimeParseException e) {
+			JOptionPane.showMessageDialog(null, "Data inválida. O formato correto é dd/MM/yyyy.", "Erro",
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+	}
 
 	public boolean validarCamposCadastroClientes() {
 		String nome = janelaCadastro.txtNome.getText();
@@ -107,6 +132,10 @@ public class ClienteController {
 		if (nome.isEmpty() || dataNasc.isEmpty() || cpf.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
 					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		if (!validarDataNascimento(dataNasc)) {
 			return false;
 		}
 
@@ -313,6 +342,10 @@ public class ClienteController {
 			return false;
 		}
 
+		if (!validarDataNascimento(dataNasc)) {
+			return false;
+		}
+
 		if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
 			JOptionPane.showMessageDialog(null, "CPF inválido. Deve estar no formato 000.000.000-00",
 					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
@@ -345,7 +378,7 @@ public class ClienteController {
 			}
 		};
 	}
-	
+
 	private void pesquisarPorCampo(String campo, String valor) {
 
 		DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
@@ -370,7 +403,5 @@ public class ClienteController {
 			}
 		};
 	}
-
-	
 
 }

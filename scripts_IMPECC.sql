@@ -19,14 +19,12 @@ CREATE TABLE IF NOT EXISTS impecc.Fornecedor (
 CREATE TABLE IF NOT EXISTS impecc.Produtos (
   id_Produto INT NOT NULL AUTO_INCREMENT,
   nome_Produto VARCHAR(45) NOT NULL,
-  modelo VARCHAR(45) NOT NULL,
   tamanho VARCHAR(45) NOT NULL,
   genero VARCHAR(45) NOT NULL,
-  preco DECIMAL(65, 2) NOT NULL,
+  preco DECIMAL(45) NOT NULL,
+  fornecedor VARCHAR(45) NOT NULL,
   qntd_Estoque INT NOT NULL,
-  id_Fornecedor INT NOT NULL,
-  PRIMARY KEY (id_Produto, id_Fornecedor),
-	FOREIGN KEY (id_Fornecedor) REFERENCES impecc.Fornecedor (id_Fornecedor)
+  PRIMARY KEY (id_Produto)
   );
 
 -- -----------------------------------------------------

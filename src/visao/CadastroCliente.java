@@ -123,9 +123,9 @@ public class CadastroCliente extends JFrame {
 		txtDataNsc = new JTextField();
 		panel.add(txtDataNsc, "cell 1 11 6 1,growx");
 		txtDataNsc.setColumns(10);
-
-		JLabel lblCpf = new JLabel("CPF");
-		panel.add(lblCpf, "cell 1 13");
+		
+				JLabel lblCpf = new JLabel("CPF");
+				panel.add(lblCpf, "cell 1 15");
 
 		txtCPF = new JTextField();
 		panel.add(txtCPF, "cell 1 16 6 1,growx");

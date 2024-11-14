@@ -150,31 +150,21 @@ public class ProdutoController {
 
 	protected boolean validarCamposProd() {
 		String nomeProduto = viewC.txtNomeProduto.getText();
-		String codBarra = viewC.txtCodBarra.getText();
 		String tamanho = (String) viewC.comboBoxTamanho.getSelectedItem();
 		String genero = (String) viewC.comboBoxGenero.getSelectedItem();
 		String preco = viewC.txtPreco.getText();
 		String fornecedor = (String) viewC.comboBoxFornecedor.getSelectedItem();
 		String qntEstoque = viewC.txtQntdEstoque.getText();
+		
+		//float precoConvert = Float.parseFloat(preco);
+		//int qntEstoqueConvert = Integer.parseInt(qntEstoque);
 
-		if (nomeProduto.isEmpty() || codBarra.isEmpty() || tamanho == null || genero == null || preco.isEmpty()
+		if (nomeProduto.isEmpty() || tamanho == null || genero == null || preco.isEmpty()
 				|| fornecedor == null || qntEstoque.isEmpty()) {
 			javax.swing.JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
 					"Erro de cadastro", javax.swing.JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-
-		float precoConvert = Float.parseFloat(preco);
-		int qntEstoqueConvert = Integer.parseInt(qntEstoque);
-		int codBarraConvert = Integer.parseInt(codBarra);
-
-		produto.setNomeProduto(viewC.txtNomeProduto.getText());
-		produto.setCodBarra(codBarraConvert);
-		produto.setTamanho(tamanho);
-		produto.setGenero(genero);
-		produto.setPreco(precoConvert);
-		produto.setFornecedor(fornecedor);
-		produto.setQtdEstoque(qntEstoqueConvert);
 
 		return true;
 	}
@@ -192,13 +182,10 @@ public class ProdutoController {
 	public ActionListener limparCampos() {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				viewC.txtNomeProduto.setText("");
-				viewC.txtCodBarra.setText("");
 				viewC.txtPreco.setText("");
 				viewC.txtQntdEstoque.setText("");
 		        
-		        //limpar do combobox
 				viewC.comboBoxTamanho.setSelectedItem(null);
 				viewC.comboBoxGenero.setSelectedItem(null);
 				viewC.comboBoxFornecedor.setSelectedItem(null);
@@ -217,7 +204,6 @@ public class ProdutoController {
 					int idProduto = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
 					
 					produto.setNomeProduto(nomeProduto);
-					produto.setCodBarra(codBarraConvert);
 					produto.setTamanho(tamanho);
 					produto.setGenero(genero);
 					produto.setPreco(precoConvert);

@@ -237,24 +237,8 @@ public class CadastroProduto extends JFrame {
 		btnAdicionar.addActionListener(produtoController.adicionarProduto());
 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
-<<<<<<< HEAD
-		btnLimparCampos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-		        txtNomeProduto.setText("");
-		       // txtCodBarra.setText("");
-		        txtPreco.setText("");
-		        txtQntdEstoque.setText("");
-		        
-		        //limpar do combobox
-		        comboBoxTamanho.setSelectedItem(null);
-		        comboBoxGenero.setSelectedItem(null);
-		        comboBoxFornecedor.setSelectedItem(null);
-			}
-		});
-=======
 		btnLimparCampos.addActionListener(produtoController.limparCampos());
->>>>>>> continuaçãoProduto
+		btnLimparCampos.addActionListener(produtoController.limparCampos());
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);

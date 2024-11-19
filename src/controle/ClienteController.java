@@ -384,7 +384,6 @@ public class ClienteController {
 		DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
 		modeloTabela.setRowCount(0);
 
-		ClienteDAO cdao = new ClienteDAO();
 		ArrayList<Cliente> listaCliente = cdao.buscarClientesLupa(campo, valor);
 
 		for (Cliente c : listaCliente) {

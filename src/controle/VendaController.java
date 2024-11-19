@@ -1,7 +1,14 @@
 package controle;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Cliente;
@@ -14,7 +21,7 @@ public class VendaController {
 	Venda venda = new Venda();
 	VendaDAO vdao = new VendaDAO();
 	ListagemVendas janelaListagem = new ListagemVendas(this);
-	CadastroVendas janelaCadastro = CadastroVendas();
+	CadastroVendas janelaCadastro = new CadastroVendas(this);
 	TelaInternaController telaInternaController = new TelaInternaController();
 
 	
@@ -29,11 +36,71 @@ public class VendaController {
 		
 	}
 	
-
 	public void inserirVenda() {
 		// inserir
 		janelaCadastro.setVisible(true);
 	}
+	
+	public void iniciarCadastroCliente() {
+		janelaCadastro.setVisible(true);
+		janelaListagem.dispose();
+	}
+	
+	public MouseListener voltarListagem() {
+		return new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				abrirListagemVenda();
+				janelaCadastro.dispose();
+			}
+		};
+	}
+	
+	public ActionListener sairSistema() {
+		return new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int resposta = JOptionPane.showConfirmDialog(null, "Você realmente deseja sair?", "Confirmação",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+				// Verifica a resposta
+				if (resposta == JOptionPane.YES_OPTION) {
+
+					// botar o controller login para abrir a tela
+					LoginController logController = new LoginController();
+					logController.iniciarLogin();
+				}
+
+			}
+
+		};
+	}
+	
+	private void pesquisarPorCampo(String campo, String valor) {
+
+		DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
+		modeloTabela.setRowCount(0);
+
+		
+		ArrayList<Venda> listaVenda = vdao.buscarVendaLupa(campo, valor);
+
+		for (Venda v : listaVenda) {
+
+			modeloTabela.addRow(new Object[] { v.getId_Venda(), v.getTotal(), v.getMtd_Pagamento(), v.getCliente().getCpf_Cliente(), v.getFuncionario().getNomeFuncionario() });
+		}
+	}
+
+	public MouseListener pesquisa(String campo, JTextField txtID) {
+		return new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String valor = txtID.getText(); // Obter o valor atualizado do campo de texto no momento do clique
+				pesquisarPorCampo(campo, valor);
+			}
+		};
+	}
+	//
 	
 	
 	public void atualizarTabela(String campo, String valor) {
@@ -44,10 +111,9 @@ public class VendaController {
 		ArrayList<Venda> listaVendas = vdao.buscarClientesLupa(campo, valor);
 
 		if (listaVendas != null && !listaVendas.isEmpty()) {
-			for (Venda c : listaVendas) {
+			for (Venda v : listaVendas) {
 				// Adiciona os dados do cliente na tabela
-				modeloTabela.addRow(new Object[] { c.getId_Cliente(), c.getNomeCliente(), c.getDataNasc(),
-						c.getCpf_Cliente(), c.getTelefone(), c.getEmail() });
+				modeloTabela.addRow(new Object[] { v.getId_Venda(),  v.getTotal(), v.getMtd_Pagamento(), v.getCliente().getCpf_Cliente(), v.getFuncionario().getNomeFuncionario()});
 			}
 		}
 	}

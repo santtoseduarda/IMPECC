@@ -8,6 +8,8 @@ public class Venda {
 	private int id_Venda; 	// id automático
 	private Float total;
 	private String mtd_Pagamento;
+	private Cliente cliente;
+	private Funcionario funcionario;
 
 	
 	public int getId_Venda() {
@@ -28,5 +30,18 @@ public class Venda {
 	public void setMtd_Pagamento(String mtd_Pagamento) {
 		this.mtd_Pagamento = mtd_Pagamento;
 	}
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
+	
 	
 }

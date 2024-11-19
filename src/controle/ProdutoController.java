@@ -29,7 +29,7 @@ public class ProdutoController {
 	Produto produto = new Produto();
 	ProdutoDAO novoProduto = new ProdutoDAO();
 
-	public void abrirListagem() {
+	public void abrirListagemProdutos() {
 		atualizarTabela("", "");
 		viewL.setVisible(true);
 	}

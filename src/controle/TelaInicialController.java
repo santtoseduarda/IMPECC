@@ -6,40 +6,39 @@ import java.awt.event.MouseListener;
 import visao.TelaInicial;
 
 public class TelaInicialController {
-	TelaInicial janelaTela = new TelaInicial(this); 
+	TelaInicial janelaTela = new TelaInicial(this);
 
-	
 	public MouseListener abrirTelaFornecedor() {
 		return new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				FornecedorController fornecedorController = new FornecedorController();
-				fornecedorController.abrirListagemFornecedor();		
+				fornecedorController.abrirListagemFornecedor();
 				janelaTela.dispose();
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		};
 	}
@@ -49,102 +48,137 @@ public class TelaInicialController {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				FuncionarioController funcionarioController = new FuncionarioController();
-				funcionarioController.abrirListagem();		
+				funcionarioController.abrirListagem();
 				janelaTela.dispose();
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		};
 	}
-	
+
 	public MouseListener abrirTelaProduto() {
 		return new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				ProdutoController produtoController = new ProdutoController();
-				produtoController.abrirListagem();
+				produtoController.abrirListagemProdutos();
 				janelaTela.dispose();
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		};
 	}
-	
+
 	public MouseListener abrirTelaCliente() {
 		return new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				ClienteController clienteController = new ClienteController();
-				clienteController.abrirListagemCLientes();		
+				clienteController.abrirListagemCLientes();
 				janelaTela.dispose();
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
+			}
+		};
+	}
+
+	public MouseListener abrirTelaVendas() {
+		return new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+		            VendaController vendaController = new VendaController();
+		            vendaController.abrirListagemVenda();
+		            janelaTela.dispose();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
 			}
 		};
 	}

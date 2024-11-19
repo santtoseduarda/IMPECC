@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controle.ProdutoController;
 import controle.ProdutoDAO;
+import controle.VendaController;
 import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
 
@@ -42,8 +43,11 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 	private JLabel lblFuncionarios;
 	private JLabel lblVendas;
 	private JLabel lblProdutos;
+	VendaController vendaController;
 
-	public ListagemVendas() {
+	public ListagemVendas(VendaController vendaController) {
+		this.vendaController = vendaController;
+
 		Font fontRegular = null;
 		Font fontBold = null;
 
@@ -70,15 +74,17 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 			e.printStackTrace();
 		}
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1054, 853);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(161, 0, 29));
 		contentPane.setForeground(new Color(255, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][][grow][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][][][][grow][][][][][][][][][][][][][][][][][][][][]",
+				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblListagemProduto = new JLabel("Listagem de Vendas");
 		lblListagemProduto.setForeground(new Color(255, 255, 255));
@@ -100,7 +106,7 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 				new ImageIcon("src/img/carrinho.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCarrinho, "cell 2 8,alignx left,aligny center");
 
-		JLabel lblVendas = new JLabel("Vendas");
+		lblVendas = new JLabel("Vendas");
 		lblVendas.setForeground(new Color(255, 255, 255));
 		lblVendas.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblVendas, "cell 3 8,alignx left,aligny center");
@@ -108,7 +114,8 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 		JPanel panel = new JPanel();
 		JTextField txtId;
 		contentPane.add(panel, "cell 4 8 21 71,grow");
-		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][][][][][][][grow]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][][][][][][][grow]",
+				"[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblId = new JLabel("ID");
 		lblId.setFont(fontBold.deriveFont(Font.PLAIN, 14));
@@ -118,9 +125,17 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 		lblNome.setFont(fontBold.deriveFont(Font.PLAIN, 14));
 		panel.add(lblNome, "cell 4 0");
 
-		JLabel lblCPF = new JLabel("CPF");
-		lblCPF.setFont(fontBold.deriveFont(Font.PLAIN, 14));
-		panel.add(lblCPF, "cell 7 0");
+		JLabel lblData = new JLabel("Data");
+		lblData.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		panel.add(lblData, "cell 7 0");
+
+		JLabel lblCliente1 = new JLabel("Cliente"); // BUSCA POR CPF
+		lblCliente1.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		panel.add(lblCliente1, "cell 10 0");
+
+		JLabel lblFuncionario1 = new JLabel("Funcionario"); // BUSCA POR CPF
+		lblFuncionario1.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		panel.add(lblFuncionario1, "cell 13 0");
 
 		JLabel lblPesquisar = new JLabel("Pesquisar por : ");
 		lblPesquisar.setFont(fontBold.deriveFont(Font.PLAIN, 20));
@@ -148,6 +163,14 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 		panel.add(txtCPF, "cell 7 1,growx");
 		txtCPF.setColumns(10);
 
+		JTextField txtCliente = new JTextField();
+		panel.add(txtCliente, "cell 10 1,growx");
+		txtCliente.setColumns(10);
+
+		JTextField txtFuncionario = new JTextField();
+		panel.add(txtFuncionario, "cell 13 1,growx");
+		txtFuncionario.setColumns(10);
+
 		JLabel lupaCod = new JLabel("");
 		lupaCod.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
@@ -155,15 +178,10 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 
 		JScrollPane scrollPane = new JScrollPane();
 		panel.add(scrollPane, "cell 0 3 21 24,grow");
-		
+
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"IdVenda", "Nome", "Data Compra", "Pre\u00E7o Total"
-			}
-		));
+		table.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "IdVenda", "Total", "Data Compra", "Cliente", "Funcionario" }));
 		scrollPane.setViewportView(table);
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(
@@ -175,7 +193,7 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 				new ImageIcon("src/img/caixa.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCaixa, "cell 2 10,alignx left,aligny center");
 
-		JLabel lblProdutos = new JLabel("Produtos");
+		lblProdutos = new JLabel("Produtos");
 		lblProdutos.setForeground(new Color(255, 255, 255));
 		lblProdutos.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblProdutos, "cell 3 10,alignx left,aligny center");
@@ -190,7 +208,7 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 				new ImageIcon("src/img/cliente.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCliente, "cell 2 12,alignx left,aligny center");
 
-		JLabel lblClientes = new JLabel("Clientes");
+		lblClientes = new JLabel("Clientes");
 		lblClientes.setForeground(new Color(255, 255, 255));
 		lblClientes.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblClientes, "cell 3 12");
@@ -205,7 +223,7 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 				new ImageIcon("src/img/caminhao.png").getImage().getScaledInstance(40, 35, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCaminhao, "cell 2 15,alignx left,aligny center");
 
-		JLabel lblFornecedor = new JLabel("Fornecedores");
+		lblFornecedor = new JLabel("Fornecedores");
 		lblFornecedor.setForeground(new Color(255, 255, 255));
 		lblFornecedor.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblFornecedor, "cell 3 15");
@@ -220,7 +238,7 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 				new ImageIcon("src/img/funcionario.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 		contentPane.add(lblFuncionario, "cell 2 17,alignx left,aligny center");
 
-		JLabel lblFuncionarios = new JLabel("Funcionários");
+		lblFuncionarios = new JLabel("Funcionários");
 		lblFuncionarios.setForeground(new Color(255, 255, 255));
 		lblFuncionarios.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblFuncionarios, "cell 3 17");
@@ -231,17 +249,23 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 		contentPane.add(lblLinha5, "cell 2 19 2 1");
 
 		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(vendaController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSair, "cell 3 79 1 4,aligny bottom");
 
-		JButton btnAdicionar = new JButton("Adicionar Venda");
+		JButton btnCadastrarVenda = new JButton("Cadastrar Venda");
+		btnCadastrarVenda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vendaController.iniciarCadastroVenda();
+			}
+		});
 
-		btnAdicionar.setForeground(new Color(255, 0, 0));
-		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnAdicionar.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnAdicionar, "cell 22 81 1 2,aligny bottom");
+		btnCadastrarVenda.setForeground(new Color(255, 0, 0));
+		btnCadastrarVenda.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnCadastrarVenda.setBackground(new Color(255, 255, 255));
+		contentPane.add(btnCadastrarVenda, "cell 22 81 1 2,aligny bottom");
 
 	}
 

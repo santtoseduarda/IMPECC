@@ -21,27 +21,32 @@ public class VendaDAO {
 	PreparedStatement pst = null;
 	Connection conn = ConexaoBanco.getConexaoMySQL();
 
-	private static ArrayList<Venda> tabelaVenda;
 	private static VendaDAO instancia;
 
 	public static VendaDAO getInstancia() {
 
 		if (instancia == null) {
 			instancia = new VendaDAO();
-			tabelaVenda = new ArrayList<>();
+			new ArrayList<>();
 		}
 		return instancia;
 	}
 
 	public boolean inserir(Venda v) {
 
-		String inserir = "INSERT INTO vendas (Total, Mtd_Pagamento) VALUES (?, ?)";
+		String inserir = "INSERT INTO vendas (Total, Mtd_Pagamento, id_Cliente, id_Funcionario) VALUES (?, ?)";
 
 		try {
 			pst = conn.prepareStatement(inserir);
 
 			pst.setDouble(1, v.getTotal());
 			pst.setString(2, v.getMtd_Pagamento());
+			//pst.setString(3, v.getCliente().getCpf_Cliente());
+			//pst.setString(4, v.getFuncionario().getCpf());
+
+			// nao sei se precisa
+			// cpf da cliente que comrpu
+			// cpd do funcionario que fez a compra
 
 			pst.executeUpdate();
 			return true;
@@ -95,11 +100,17 @@ public class VendaDAO {
 				f.setCelular(rs.getString("celular"));
 				f.setLogin(rs.getString("login"));
 				v.setFuncionario(f);
-				
-				//fazer do prod
+
+				// fazer do prod
 				Produto p = new Produto();
-				
-				v.setIdProduto(rs.getInt("id_produto"));
+
+				p.setId_Produto(rs.getInt("id_Produto"));
+				p.setNomeProduto(rs.getString("nome_Produto"));
+				p.setTamanho(rs.getString("tamanho"));
+				p.setGenero(rs.getString("genero"));
+				p.setPreco(rs.getFloat("preco"));
+				p.setQtdEstoque(rs.getInt("qntd_Estoque"));
+				v.setProduto(p);
 
 				listaVendas.add(v);
 			}
@@ -168,7 +179,7 @@ public class VendaDAO {
 				f.setCelular(rs.getString("celular"));
 				f.setLogin(rs.getString("login"));
 				v.setFuncionario(f);
-				
+
 				return v;
 			}
 

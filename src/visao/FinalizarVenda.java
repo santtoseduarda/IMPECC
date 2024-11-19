@@ -115,7 +115,7 @@ public class FinalizarVenda extends JFrame {
 				"[][][][][][][][][][][][][][][][][][grow][][][][][][][][][][][][][][][grow][][][][][grow][][][][]"));
 
 		JLabel lblvoltar = new JLabel("");
-		lblvoltar.addMouseListener(clienteController.voltarListagem());
+	//	lblvoltar.addMouseListener(clienteController.voltarListagem());
 		lblvoltar.setIcon(new ImageIcon(
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
@@ -212,7 +212,7 @@ public class FinalizarVenda extends JFrame {
 		contentPane.add(lblLinha5, "cell 1 15 2 1");
 
 		JButton btnSair = new JButton("Sair");
-		btnSair.addActionListener(ClienteController.sairSistema());
+		//btnSair.addActionListener(ClienteController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
@@ -226,7 +226,7 @@ public class FinalizarVenda extends JFrame {
 		contentPane.add(btnCancelar, "cell 25 85 1 4,aligny center");
 
 		JButton btnFinalizarVenda = new JButton("Finalizar");
-		btnFinalizarVenda.addActionListener(clienteController.cadastrarCliente());
+	//	btnFinalizarVenda.addActionListener(clienteController.cadastrarCliente());
 		btnFinalizarVenda.setForeground(Color.RED);
 		btnFinalizarVenda.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnFinalizarVenda.setBackground(new Color(255, 255, 255));

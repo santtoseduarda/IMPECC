@@ -105,7 +105,7 @@ public class ListagemClientes extends JFrame implements TelaInterna {
 		lblVendas.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblVendas, "cell 2 8,alignx left,aligny center");
 
-		//txtId = new JTextField();
+		// txtId = new JTextField();
 
 		JPanel panel = new JPanel();
 		JTextField txtID;

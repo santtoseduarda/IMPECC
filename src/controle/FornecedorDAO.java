@@ -128,7 +128,7 @@ public class FornecedorDAO {
 		try {
 			pst = conn.prepareStatement(alterarFornecedor);
 			
-			pst.setString(1, fornecedor.getNome_Fornecedor()); // ajuste conforme os métodos get do seu modelo Funcionario
+			pst.setString(1, fornecedor.getNome_Fornecedor());
 			pst.setString(2, fornecedor.getEmail_Fornecedor());
 			pst.setString(3, fornecedor.getTelefone_Fornecedor());
 			pst.setString(4, fornecedor.getCNPJ());
@@ -153,9 +153,9 @@ public class FornecedorDAO {
 			pst = conn.prepareStatement(mostrarDados);
 			pst.setInt(1, id_Fornecedor);
 
-			ResultSet rs = pst.executeQuery(); // Aqui você deve usar executeQuery()
+			ResultSet rs = pst.executeQuery();
 
-			if (rs.next()) { // Se houver resultados, preencha o objeto Funcionario
+			if (rs.next()) {
 				fornecedor = new Fornecedor();
 				fornecedor.setID_fornecedor(rs.getInt("id_Fornecedor"));
 				fornecedor.setNome_Fornecedor(rs.getString("nome_Fornecedor"));
@@ -173,6 +173,21 @@ public class FornecedorDAO {
 		}
 		return null;
 
+	}
+	
+	public ArrayList<Fornecedor> buscarTodosFornecedores() throws SQLException {
+	    ArrayList<Fornecedor> fornecedores = new ArrayList<>();
+	    String sql = "SELECT id_Fornecedor, nome_Fornecedor FROM fornecedor";
+	    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        ResultSet rs = stmt.executeQuery();
+	        while (rs.next()) {
+				Fornecedor fornecedor = new Fornecedor();
+				fornecedor.setID_fornecedor(rs.getInt("id_Fornecedor"));
+				fornecedor.setNome_Fornecedor(rs.getString("nome_Fornecedor"));
+	            fornecedores.add(fornecedor);
+	        }
+	    }
+	    return fornecedores;
 	}
 
 

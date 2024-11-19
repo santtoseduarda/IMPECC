@@ -95,7 +95,6 @@ public class FuncionarioController {
 
 					if (confirmacao == JOptionPane.YES_OPTION) {
 
-						// vai excluir o funcionario
 						FuncionarioDAO fdao = new FuncionarioDAO();
 						boolean certo = fdao.excluirFuncionario(idFuncionario);
 

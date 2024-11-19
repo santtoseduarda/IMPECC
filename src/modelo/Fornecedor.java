@@ -8,7 +8,6 @@ public class Fornecedor{
 	private String telefone_Fornecedor;
 	private String email_Fornecedor;
 	
-	
 	public int getID_fornecedor() {
 		return ID_fornecedor;
 	}
@@ -41,5 +40,8 @@ public class Fornecedor{
 	}
 	
 	
-	
+	@Override
+    public String toString() {
+        return nome_Fornecedor;
+    }
 }

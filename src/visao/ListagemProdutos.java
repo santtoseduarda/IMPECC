@@ -221,7 +221,7 @@ public class ListagemProdutos extends JFrame {
 		table.setModel(new DefaultTableModel(
 		    new Object[][] {},
 		    new String[] {
-		        "ID", "Nome", "Cod. Barra", "Marca", "Tamanho", "Genero", "Preco", "Fornecedor", "Qnt. Estoque"
+		        "ID", "Nome", "Tamanho", "Genero", "Preco", "Fornecedor", "Qnt. Estoque"
 		    }
 		));
 		scrollPane.setViewportView(table);

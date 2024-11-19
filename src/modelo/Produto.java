@@ -13,13 +13,13 @@ public class Produto {
 	private int codBarra;
 	private int qtdEstoque;
 	private String tamanho;
-	private String fornecedor;
+	private Fornecedor fornecedor;
 
-	public String getFornecedor() {
+	public Fornecedor getFornecedor() {
 		return fornecedor;
 	}
 
-	public void setFornecedor(String fornecedor) {
+	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
 	}
 
@@ -86,4 +86,5 @@ public class Produto {
 	public void setQtdEstoque(int qntEstoqueConvert) {
 		this.qtdEstoque = qntEstoqueConvert;
 	}
+
 }

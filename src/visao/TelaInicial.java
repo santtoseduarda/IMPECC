@@ -1,24 +1,16 @@
 package visao;
 
-import java.awt.EventQueue;
 import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import controle.FornecedorController;
-import controle.FornecedorDAO;
 import controle.TelaInicialController;
-import modelo.Fornecedor;
-import modelo.Funcionario;
-
 import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,8 +25,6 @@ public class TelaInicial extends JFrame {
 	
 	
 	public TelaInicial(TelaInicialController telaInicialController) {
-		
-		
 		
 		// fonte
 		Font fontRegular = null;
@@ -88,9 +78,8 @@ public class TelaInicial extends JFrame {
 				new ImageIcon("src/img/carrinho.png").getImage().getScaledInstance(55, 55, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCarrinho, "cell 1 3");
 
-		TelaInicial janelaInicial = this;
-		
 		JLabel lblVendas = new JLabel("Vendas");
+		lblVendas.addMouseListener(telaInicialController.abrirTelaVendas()); 
 		lblVendas.setFont(fontRegular.deriveFont(Font.PLAIN, 24));
 		lblVendas.setForeground(new Color(255, 255, 255));
 		contentPane.add(lblVendas, "cell 2 3,alignx left,aligny center");

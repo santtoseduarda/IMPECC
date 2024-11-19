@@ -1,5 +1,6 @@
 package controle;
 
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -15,6 +16,7 @@ public class TelaInternaController {
 		adicionarListenerCliente();
 		adicionarListenerFuncionario();
 		adicionarListenerVenda();
+		adicionarListenerProdutos();
 		
 
 	}
@@ -135,7 +137,7 @@ public class TelaInternaController {
 	
 	private void adicionarListenerVenda() {
 		// TODO Auto-generated method stub
-		tela.getLabelCliente().addMouseListener(new MouseListener() {
+		tela.getLabelVendas().addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -143,6 +145,45 @@ public class TelaInternaController {
 				tela.dispose();
 				VendaController vendaController = new VendaController();
 				vendaController.abrirListagemVenda();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+	}
+	
+	private void adicionarListenerProdutos() {
+		// TODO Auto-generated method stub
+		tela.getLabelProduto().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				tela.dispose();
+				ProdutoController produtoController = new ProdutoController();
+				produtoController.abrirListagemProdutos();
 			}
 
 			@Override

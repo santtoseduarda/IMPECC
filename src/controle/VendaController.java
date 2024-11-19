@@ -33,7 +33,6 @@ public class VendaController {
 		// TODO Auto-generated method stub
 		atualizarTabela("", "");
 		janelaListagem.setVisible(true);
-		
 	}
 	
 	public void inserirVenda() {
@@ -41,7 +40,7 @@ public class VendaController {
 		janelaCadastro.setVisible(true);
 	}
 	
-	public void iniciarCadastroCliente() {
+	public void iniciarCadastroVenda() {
 		janelaCadastro.setVisible(true);
 		janelaListagem.dispose();
 	}
@@ -83,7 +82,7 @@ public class VendaController {
 		modeloTabela.setRowCount(0);
 
 		
-		ArrayList<Venda> listaVenda = vdao.buscarVendaLupa(campo, valor);
+		ArrayList<Venda> listaVenda = vdao.buscarVendasLupa(campo, valor);
 
 		for (Venda v : listaVenda) {
 
@@ -108,7 +107,7 @@ public class VendaController {
 		DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
 		modeloTabela.setRowCount(0); // Limpa a tabela
 
-		ArrayList<Venda> listaVendas = vdao.buscarClientesLupa(campo, valor);
+		ArrayList<Venda> listaVendas = vdao.buscarVendasLupa(campo, valor);
 
 		if (listaVendas != null && !listaVendas.isEmpty()) {
 			for (Venda v : listaVendas) {

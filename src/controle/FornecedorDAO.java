@@ -40,7 +40,7 @@ public class FornecedorDAO {
 
 		Connection conn = ConexaoBanco.getConexaoMySQL(); // Fazer a conexão com o BD
 
-		String inserir = "INSERT INTO fornecedor (nome_Fornecedor, cnpj, telefone_fornecedor, email_fornecedor) VALUES (?, ?, ?, ?)";
+		String inserir = "INSERT INTO fornecedores (nome_Fornecedor, cnpj, telefone_fornecedor, email_fornecedor) VALUES (?, ?, ?, ?)";
 
 		PreparedStatement pst = null;
 
@@ -72,10 +72,10 @@ public class FornecedorDAO {
 
 		try {
 
-			String sql = "SELECT * FROM fornecedor";
+			String sql = "SELECT * FROM fornecedores";
 			PreparedStatement pst = conn.prepareStatement(sql);
 			if (campo.isEmpty() == false) {
-				sql = "SELECT * FROM fornecedor WHERE " + campo + " LIKE ?";
+				sql = "SELECT * FROM fornecedores WHERE " + campo + " LIKE ?";
 				pst = conn.prepareStatement(sql);
 				pst.setString(1, "%" + valor + "%"); // Usando % para permitir busca parcial
 			}
@@ -106,7 +106,7 @@ public class FornecedorDAO {
 		// TODO Auto-generated method stub
 
 		Connection conn = ConexaoBanco.getConexaoMySQL(); // Estabelecer conexão com o banco
-		String excluirFornecedor = "DELETE FROM fornecedor WHERE id_Fornecedor = ?"; // SQL para excluir pelo ID
+		String excluirFornecedor = "DELETE FROM fornecedores WHERE id_Fornecedor = ?"; // SQL para excluir pelo ID
 
 		try {
 			PreparedStatement pst = conn.prepareStatement(excluirFornecedor);
@@ -123,7 +123,7 @@ public class FornecedorDAO {
 	}
 
 	public boolean alterarFornecedor(Fornecedor fornecedor) {
-		String alterarFornecedor = "UPDATE fornecedor SET nome_Fornecedor = ?, email_fornecedor = ?, telefone_fornecedor = ?, cnpj = ? WHERE id_Fornecedor = ?";
+		String alterarFornecedor = "UPDATE fornecedores SET nome_Fornecedor = ?, email_fornecedor = ?, telefone_fornecedor = ?, cnpj = ? WHERE id_Fornecedor = ?";
 
 		try {
 			pst = conn.prepareStatement(alterarFornecedor);
@@ -146,7 +146,7 @@ public class FornecedorDAO {
 
 	public Fornecedor buscarFornecedor(int id_Fornecedor) {
 
-		String mostrarDados = "SELECT * FROM fornecedor WHERE id_Fornecedor = ?";
+		String mostrarDados = "SELECT * FROM fornecedores WHERE id_Fornecedor = ?";
 		Fornecedor fornecedor = null;
 
 		try {
@@ -177,7 +177,7 @@ public class FornecedorDAO {
 	
 	public ArrayList<Fornecedor> buscarTodosFornecedores() throws SQLException {
 	    ArrayList<Fornecedor> fornecedores = new ArrayList<>();
-	    String sql = "SELECT id_Fornecedor, nome_Fornecedor FROM fornecedor";
+	    String sql = "SELECT id_Fornecedor, nome_Fornecedor FROM fornecedores";
 	    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 	        ResultSet rs = stmt.executeQuery();
 	        while (rs.next()) {

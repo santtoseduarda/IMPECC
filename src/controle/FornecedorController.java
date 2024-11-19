@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -152,7 +153,6 @@ public class FornecedorController {
 
 		if (listaFornecedores != null && !listaFornecedores.isEmpty()) {
 			for (Fornecedor fr : listaFornecedores) {
-				// Adiciona os dados do fornecedor na tabela
 				modeloTabela.addRow(new Object[] { fr.getID_fornecedor(), fr.getNome_Fornecedor(), fr.getCNPJ(),
 						fr.getEmail_Fornecedor(), fr.getTelefone_Fornecedor(), });
 			}
@@ -170,7 +170,6 @@ public class FornecedorController {
 		};
 	}
 
-	// cadastro de funcionario
 
 	public void inserirFornecedor() {
 		viewc.setVisible(true);
@@ -324,6 +323,10 @@ public class FornecedorController {
 		viewa.txtEmailFornecedor.setText(fornecedor.getEmail_Fornecedor());
 		viewa.txtCnpj.setText(fornecedor.getCNPJ());
 		viewa.txtTelefoneFornecedor.setText(fornecedor.getTelefone_Fornecedor());
+	}
+	
+	public ArrayList<Fornecedor> buscarTodosFornecedores() throws SQLException {
+		return fordao.buscarTodosFornecedores();
 	}
 
 }

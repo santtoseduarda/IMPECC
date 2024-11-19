@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import modelo.Fornecedor;
 import modelo.Funcionario;
 import modelo.Produto;
 import visao.AlterarProduto;
@@ -54,7 +55,7 @@ public class ProdutoController {
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//limparCamposCad();
+				// limparCamposCad();
 				viewC.setVisible(true);
 				viewL.dispose();
 			}
@@ -65,22 +66,43 @@ public class ProdutoController {
 
 	}
 
-	public ActionListener buscaProduto() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void alterarProdutos(int id_Produto) {
-		ProdutoDAO pdao = new ProdutoDAO();
-		Produto p = pdao.buscarProdutos(id_Produto);
-		viewA.setVisible(true);
-	}
-
 	public ActionListener excluirProduto() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		return new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
 
+				int posicaoSelecionada = viewL.table.getSelectedRow();
+
+				if (posicaoSelecionada >= 0) {
+
+					DefaultTableModel modeloTabela = (DefaultTableModel) viewL.table.getModel();
+					int idProduto = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+
+					int confirmacao = JOptionPane.showConfirmDialog(null,
+							"Você tem certeza que deseja excluir o produto?", "Confirmação de Exclusão",
+							JOptionPane.YES_NO_OPTION);
+
+					if (confirmacao == JOptionPane.YES_OPTION) {
+
+						boolean certo = novoProduto.excluirProdutos(idProduto);
+
+						if (certo) {
+
+							modeloTabela.removeRow(posicaoSelecionada);
+							JOptionPane.showMessageDialog(null, "Produto excluído com sucesso.");
+
+						} else {
+							JOptionPane.showMessageDialog(null, "Erro ao excluir o produto.");
+						}
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Por favor, selecione um produto para excluir.");
+				}
+			}
+		};
+
+	}
 	protected void pesquisarPorCampo(String campo, String valor) {
 		DefaultTableModel modeloTabela = (DefaultTableModel) viewL.table.getModel();
 		modeloTabela.setRowCount(0);
@@ -89,27 +111,22 @@ public class ProdutoController {
 		ArrayList<Produto> listaProdutos = pdao.buscarProdLupa(campo, valor);
 
 		for (Produto p : listaProdutos) {
-
-			modeloTabela.addRow(new Object[] { p.getId_Produto(), p.getNomeProduto(), p.getCodBarra(), p.getTamanho(),
-					p.getGenero(), p.getPreco(), p.getFornecedor(), p.getQtdEstoque()
-
-			});
+			modeloTabela.addRow(new Object[] { p.getId_Produto(), p.getNomeProduto(), p.getTamanho(), p.getGenero(),
+					p.getPreco(), p.getFornecedor().getNome_Fornecedor(), p.getQtdEstoque() });
 		}
-
 	}
 
 	public MouseListener pesquisa(String campo, JTextField textField) {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String valor = textField.getText(); // Obter o valor atualizado do campo de texto no momento do clique
+				String valor = textField.getText();
 				pesquisarPorCampo(campo, valor);
 			}
 		};
 	}
 
 	private void atualizarTabela(String campo, String valor) {
-
 		DefaultTableModel modeloTabela = (DefaultTableModel) viewL.table.getModel();
 		modeloTabela.setRowCount(0);
 
@@ -118,8 +135,8 @@ public class ProdutoController {
 
 		if (listaProdutos != null && !listaProdutos.isEmpty()) {
 			for (Produto p : listaProdutos) {
-				modeloTabela.addRow(new Object[] { p.getId_Produto(), p.getNomeProduto(), p.getCodBarra(),
-						p.getTamanho(), p.getGenero(), p.getPreco(), p.getFornecedor(), p.getQtdEstoque() });
+				modeloTabela.addRow(new Object[] { p.getId_Produto(), p.getNomeProduto(), p.getTamanho(), p.getGenero(),
+						p.getPreco(), p.getFornecedor().getNome_Fornecedor(), p.getQtdEstoque() });
 			}
 		}
 	}
@@ -129,6 +146,20 @@ public class ProdutoController {
 			public void actionPerformed(ActionEvent e) {
 
 				if (validarCamposProd()) {
+
+					produto.setNomeProduto(viewC.txtNomeProduto.getText());
+					produto.setTamanho(viewC.comboBoxTamanho.getSelectedItem().toString());
+					produto.setGenero(viewC.comboBoxGenero.getSelectedItem().toString());
+					produto.setFornecedor((Fornecedor) viewC.comboBoxFornecedor.getSelectedItem());
+
+					String preco = viewC.txtPreco.getText();
+					String qntEstoque = viewC.txtQntdEstoque.getText();
+
+					float precoConvert = Float.parseFloat(preco);
+					int qntEstoqueConvert = Integer.parseInt(qntEstoque);
+
+					produto.setPreco(precoConvert);
+					produto.setQtdEstoque(qntEstoqueConvert);
 
 					try {
 
@@ -150,17 +181,14 @@ public class ProdutoController {
 
 	protected boolean validarCamposProd() {
 		String nomeProduto = viewC.txtNomeProduto.getText();
-		String tamanho = (String) viewC.comboBoxTamanho.getSelectedItem();
-		String genero = (String) viewC.comboBoxGenero.getSelectedItem();
+		String tamanho = viewC.comboBoxTamanho.getSelectedItem().toString();
+		String genero = viewC.comboBoxGenero.getSelectedItem().toString();
 		String preco = viewC.txtPreco.getText();
-		String fornecedor = (String) viewC.comboBoxFornecedor.getSelectedItem();
+		String fornecedor = (viewC.comboBoxFornecedor.getSelectedItem().toString());
 		String qntEstoque = viewC.txtQntdEstoque.getText();
-		
-		//float precoConvert = Float.parseFloat(preco);
-		//int qntEstoqueConvert = Integer.parseInt(qntEstoque);
 
-		if (nomeProduto.isEmpty() || tamanho == null || genero == null || preco.isEmpty()
-				|| fornecedor == null || qntEstoque.isEmpty()) {
+		if (nomeProduto.isEmpty() || tamanho == null || genero == null || preco.isEmpty() || fornecedor == null
+				|| qntEstoque.isEmpty()) {
 			javax.swing.JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
 					"Erro de cadastro", javax.swing.JOptionPane.ERROR_MESSAGE);
 			return false;
@@ -185,7 +213,7 @@ public class ProdutoController {
 				viewC.txtNomeProduto.setText("");
 				viewC.txtPreco.setText("");
 				viewC.txtQntdEstoque.setText("");
-		        
+
 				viewC.comboBoxTamanho.setSelectedItem(null);
 				viewC.comboBoxGenero.setSelectedItem(null);
 				viewC.comboBoxFornecedor.setSelectedItem(null);
@@ -193,8 +221,7 @@ public class ProdutoController {
 		};
 	}
 
-	/*
-	public ActionListener salvarEdicoes() {
+	/*public ActionListener salvarEdicoes() {
 		return null;
 		return new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
@@ -229,14 +256,43 @@ public class ProdutoController {
 	}
 
 	public ActionListener limparCamposEditarFuncionarioProduto() {
-		public ActionListener limparCamposEditarFuncionarioProduto() {
-			// TODO Auto-generated method stub
-			return null;
-		});
-	}
+		return new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+		}
+		};
+	}*/
 
 	private void mostrarDados(Produto p) {
-		
 
-	}*/
+	}
+
+	public ActionListener buscaProduto() {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selectedRow = viewL.table.getSelectedRow();
+
+				if (selectedRow != -1) {
+					int idProduto = (int) viewL.table.getValueAt(selectedRow, 0);
+
+					produto = novoProduto.buscarProdutos(idProduto);
+
+					if (produto != null) {
+						mostrarDados(produto);
+
+						viewA.setVisible(true);
+						viewL.dispose();
+					} else {
+						System.out.println("Produto não encontrado.");
+						JOptionPane.showMessageDialog(viewL, "Produto não encontrado.");
+					}
+				} else {
+					System.out.println("Nenhuma linha selecionada.");
+					JOptionPane.showMessageDialog(viewL, "Por favor, selecione um produto para alterar.");
+				}
+			}
+		};
+	}
 }

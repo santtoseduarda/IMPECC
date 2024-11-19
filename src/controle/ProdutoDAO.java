@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import BancodeDados.ConexaoBanco;
-import modelo.Funcionario;
+import modelo.Fornecedor;
 import modelo.Produto;
 
 public class ProdutoDAO {
@@ -31,18 +31,17 @@ public class ProdutoDAO {
 
 	public boolean inserir(Produto p) {
 
-		String inserir = "INSERT INTO produtos (codBarra, nome_Produto, tamanho, genero, preco, qntd_Estoque, fornecedor) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String inserir = "INSERT INTO produtos (nome_Produto, tamanho, genero, preco, qntd_Estoque, fornecedor) VALUES (?, ?, ?, ?, ?, ?)";
 
 		try {
 			pst = conn.prepareStatement(inserir);
 
-			pst.setInt(1, p.getCodBarra());
-			pst.setString(2, p.getNomeProduto());
-			pst.setString(3, p.getTamanho());
-			pst.setString(4, p.getGenero());
-			pst.setDouble(5, p.getPreco());
-			pst.setLong(6, p.getQtdEstoque());
-			pst.setString(7, p.getFornecedor());
+			pst.setString(1, p.getNomeProduto());
+			pst.setString(2, p.getTamanho());
+			pst.setString(3, p.getGenero());
+			pst.setDouble(4, p.getPreco());
+			pst.setLong(5, p.getQtdEstoque());
+			pst.setInt(6, p.getFornecedor().getID_fornecedor());
 			pst.executeUpdate();
 			
 
@@ -55,44 +54,46 @@ public class ProdutoDAO {
 	}
 
 	public ArrayList<Produto> buscarProdLupa(String campo, String valor) {
+	    ArrayList<Produto> listaProdutos = new ArrayList<>();
 
-		ArrayList<Produto> listaProdutos = new ArrayList<Produto>();
+	    try {
+	        String sql = "SELECT p.*, f.nome_Fornecedor FROM produtos p JOIN fornecedor f ON p.fornecedor = f.id_Fornecedor";
+	        
+	        if (!campo.isEmpty()) {
+	            sql += " WHERE " + campo + " LIKE ?";
+	        }
 
-		try {
+	        PreparedStatement pst = conn.prepareStatement(sql);
 
-			String sql = "SELECT * FROM produtos";
-			PreparedStatement pst = conn.prepareStatement(sql);
+	        if (!campo.isEmpty()) {
+	            pst.setString(1, "%" + valor + "%");
+	        }
 
-			if (campo.isEmpty() == false) {
-				sql = "SELECT * FROM produtos WHERE " + campo + " LIKE ?";
-				pst = conn.prepareStatement(sql);
-				pst.setString(1, "%" + valor + "%");
-			}
-			ResultSet rs = pst.executeQuery();
+	        ResultSet rs = pst.executeQuery();
 
-			// Iterando sobre o resultado e adicionando à lista de funcionários
-			while (rs.next()) {
+	        while (rs.next()) {
+	            Produto p = new Produto();
+	            p.setId_Produto(rs.getInt("id_Produto"));
+	            p.setNomeProduto(rs.getString("nome_Produto"));
+	            p.setTamanho(rs.getString("tamanho"));
+	            p.setGenero(rs.getString("genero"));
+	            p.setPreco(rs.getFloat("preco"));
+	            p.setQtdEstoque(rs.getInt("qntd_Estoque"));
 
-				Produto p = new Produto();
-				
-                p.setId_Produto(rs.getInt("id_Produto"));
-                p.setNomeProduto(rs.getString("nome_Produto"));
-                p.setTamanho(rs.getString("tamanho"));
-                p.setGenero(rs.getString("genero"));
-                p.setPreco(rs.getFloat("preco"));
-                p.setFornecedor(rs.getString("fornecedor"));
-                p.setQtdEstoque(rs.getInt("qntd_Estoque"));
+	            Fornecedor fornecedor = new Fornecedor();
+	            fornecedor.setID_fornecedor(rs.getInt("fornecedor"));
+	            fornecedor.setNome_Fornecedor(rs.getString("nome_Fornecedor"));
+	            p.setFornecedor(fornecedor);
 
-				listaProdutos.add(p);
-			}
+	            listaProdutos.add(p);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return listaProdutos;
-
+	    return listaProdutos;
 	}
+
 	
 	public boolean alterarProduto(Produto p) {
         String sql = "UPDATE produtos SET nome_Produto = ?, tamanho = ?, genero = ?, preco = ?, qntd_Estoque = ?, fornecedor = ? WHERE id_Produto = ?";
@@ -105,7 +106,7 @@ public class ProdutoDAO {
             pst.setString(3, p.getGenero());
             pst.setDouble(4, p.getPreco());
             pst.setLong(5, p.getQtdEstoque());
-            pst.setString(6, p.getFornecedor());
+            pst.setInt(6, p.getFornecedor().getID_fornecedor());
             pst.setInt(7, p.getId_Produto());
             pst.executeUpdate();
             return true;
@@ -138,37 +139,41 @@ public class ProdutoDAO {
 	}
 
 	public Produto buscarProdutos(int id_Produto) {
-		String mostrarDados = "SELECT * FROM produtos WHERE id_Produto = ?";
-		Produto p = null;
-		
-		try {
-			pst = conn.prepareStatement(mostrarDados);
-	        pst.setInt(1, id_Produto); 
+	    String sql = "SELECT p.*, f.nome_Fornecedor FROM produtos p JOIN fornecedor f ON p.fornecedor = f.id_Fornecedor WHERE p.id_Produto = ?";
+	    Produto p = null;
 
-	        ResultSet rs = pst.executeQuery(); 
+	    try {
+	        pst = conn.prepareStatement(sql);
+	        pst.setInt(1, id_Produto);
 
-	        if (rs.next()) { 
-	        	
+	        ResultSet rs = pst.executeQuery();
+
+	        if (rs.next()) {
 	            p = new Produto();
 	            p.setId_Produto(rs.getInt("id_Produto"));
-                p.setNomeProduto(rs.getString("nome_Produto"));
-                p.setTamanho(rs.getString("tamanho"));
-                p.setGenero(rs.getString("genero"));
-                p.setPreco(rs.getFloat("preco"));
-                p.setFornecedor(rs.getString("fornecedor"));
-                p.setQtdEstoque(rs.getInt("qntd_Estoque"));
-                
-	            return p;
+	            p.setNomeProduto(rs.getString("nome_Produto"));
+	            p.setTamanho(rs.getString("tamanho"));
+	            p.setGenero(rs.getString("genero"));
+	            p.setPreco(rs.getFloat("preco"));
+	            p.setQtdEstoque(rs.getInt("qntd_Estoque"));
+
+	            Fornecedor fornecedor = new Fornecedor();
+	            fornecedor.setID_fornecedor(rs.getInt("fornecedor"));
+	            fornecedor.setNome_Fornecedor(rs.getString("nome_Fornecedor"));
+	            p.setFornecedor(fornecedor);
 	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 
-			pst.executeQuery();
+	    return p;
+	}
 
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+	public Produto buscarFornecedor(int idProduto) {
+		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 
 

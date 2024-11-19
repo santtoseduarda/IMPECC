@@ -13,6 +13,8 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controle.FornecedorController;
 import controle.FornecedorDAO;
 import controle.FuncionarioDAO;
 import controle.ProdutoController;
@@ -39,7 +42,7 @@ public class CadastroProduto extends JFrame {
 	private JPanel contentPane;
 	public JTextField txtPreco;
 	public JTextField txtQntdEstoque;
-	public JComboBox comboBoxFornecedor;
+	public JComboBox<Fornecedor> comboBoxFornecedor;
 	public JComboBox comboBoxGenero;
 	public JComboBox comboBoxTamanho;
 	public JTextField txtNomeProduto;
@@ -109,7 +112,7 @@ public class CadastroProduto extends JFrame {
 
 		JLabel lblvoltar = new JLabel("");
 		lblvoltar.addMouseListener(produtoController.voltarListagem());
-				
+
 		lblvoltar.setIcon(new ImageIcon(
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
@@ -125,14 +128,16 @@ public class CadastroProduto extends JFrame {
 		panel.add(lblTamanho, "cell 1 11,growx,aligny bottom");
 
 		comboBoxTamanho = new JComboBox();
-		comboBoxTamanho.setModel(new DefaultComboBoxModel(new String[] {"Selecione um Item", "PP", "P", "M", "G", "GG"}));
+		comboBoxTamanho
+				.setModel(new DefaultComboBoxModel(new String[] { "Selecione um Item", "PP", "P", "M", "G", "GG" }));
 		panel.add(comboBoxTamanho, "cell 1 13 7 1,growx");
 
 		JLabel lblGenero = new JLabel("Gênero:*");
 		panel.add(lblGenero, "cell 1 15,growx,aligny bottom");
 
 		comboBoxGenero = new JComboBox();
-		comboBoxGenero.setModel(new DefaultComboBoxModel(new String[] {"Selecione um Item", "Feminino", "Masculino", "Unissex"}));
+		comboBoxGenero.setModel(
+				new DefaultComboBoxModel(new String[] { "Selecione um Item", "Feminino", "Masculino", "Unissex" }));
 		panel.add(comboBoxGenero, "cell 1 17 7 1,growx");
 
 		JLabel lblPreco = new JLabel("Preço:*");
@@ -145,9 +150,21 @@ public class CadastroProduto extends JFrame {
 		JLabel lblForn = new JLabel("Fornecedor:*");
 		panel.add(lblForn, "cell 1 23,growx,aligny bottom");
 
+		comboBoxFornecedor = new JComboBox<>();
+		FornecedorController fornecedorController = new FornecedorController();
+
+		    ArrayList<Fornecedor> fornecedores = null;
+			try {
+				fornecedores = fornecedorController.buscarTodosFornecedores();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		    for (Fornecedor fornecedor : fornecedores) {
+		        comboBoxFornecedor.addItem(fornecedor);
+		    }
 		
-		comboBoxFornecedor = new JComboBox();
-		comboBoxFornecedor.setModel(new DefaultComboBoxModel(new String[] {"tem", "que", "adicionar", "os", "fornecedores"}));
+
 		panel.add(comboBoxFornecedor, "cell 1 25 7 1,growx");
 
 		JLabel lblQntdEstoque = new JLabel("Quantidade em estoque:*");

@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import BancodeDados.ConexaoBanco;
+import modelo.Cliente;
+import modelo.Funcionario;
+import modelo.ItemVenda;
 import modelo.Produto;
 import modelo.Venda;
 
@@ -71,8 +74,31 @@ public class VendaDAO {
 				v.setId_Venda(rs.getInt("id_venda"));
 				v.setTotal(rs.getFloat("Total"));
 				v.setMtd_Pagamento(rs.getString("mtd_Pagamento"));
-				v.setId_Cliente(rs.getInt("id_cliente"));
-				v.setIdFuncionario(rs.getInt("id_funcionario"));
+
+				ArrayList<ItemVenda> lista = buscarItensVendaPorIdVenda(rs.getInt("idVenda"));
+				v.setItensVenda(lista);
+
+				Cliente c = new Cliente();
+				c.setId_Cliente(rs.getInt("id_Cliente"));
+				c.setNomeCliente(rs.getString("nome_Cliente"));
+				c.setDataNasc(rs.getString("data_Nasc"));
+				c.setCpf_Cliente(rs.getString("cpf_Cliente"));
+				c.setTelefone(rs.getString("telefone_Cliente"));
+				c.setEmail(rs.getString("email_Cliente"));
+				v.setCliente(c);
+
+				Funcionario f = new Funcionario();
+				f.setId_Funcionario(rs.getInt("id_Funcionario"));
+				f.setNomeFuncionario(rs.getString("nome_Funcionario"));
+				f.setEmail_Funcionario(rs.getString("email_Funcionario"));
+				f.setCpf(rs.getString("cpf"));
+				f.setCelular(rs.getString("celular"));
+				f.setLogin(rs.getString("login"));
+				v.setFuncionario(f);
+				
+				//fazer do prod
+				Produto p = new Produto();
+				
 				v.setIdProduto(rs.getInt("id_produto"));
 
 				listaVendas.add(v);
@@ -83,23 +109,6 @@ public class VendaDAO {
 		}
 
 		return listaVendas;
-	}
-
-	public boolean alterarVenda(Venda v) {
-		String sql = "UPDATE vendas SET total = ?, mtd_pagamento = ? WHERE id_venda = ?";
-
-		try {
-			PreparedStatement pst = conn.prepareStatement(sql);
-			pst.setDouble(1, v.getTotal());
-			pst.setString(2, v.getMtd_Pagamento());
-			pst.setInt(3, v.getId_Venda());
-			pst.executeUpdate();
-			return true;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
 	}
 
 	public boolean excluirVendas(int idVenda) {
@@ -122,7 +131,7 @@ public class VendaDAO {
 	}
 
 	public Venda buscarVendas(int idVenda) {
-		String mostrarDados = "SELECT * FROM vendas WHERE id_venda = ?";
+		String mostrarDados = "SELECT * FROM vendas JOIN clientes ON clientes.id_Cliente = vendas.id_Cliente JOIN funcionarios ON funcionarios.id_Funcionario = vendas.id_Funcionario WHERE id_venda = ?";
 		Venda v = null;
 
 		try {
@@ -134,13 +143,32 @@ public class VendaDAO {
 			if (rs.next()) {
 
 				v = new Venda();
-				v.setId_Venda(rs.getInt("idVenda"));
-				v.setTotal(rs.getFloat("Total"));
-				v.setMtd_Pagamento(rs.getString("mtd_Pagamento"));
-				v.setIdCliente(rs.getInt("id_cliente"));
-				v.setIdFuncionario(rs.getInt("id_funcionario"));
-				v.setIdProduto(rs.getInt("id_produto"));
 
+				v.setId_Venda(rs.getInt("idVenda"));
+				v.setMtd_Pagamento(rs.getString("mtd_Pagamento"));
+				v.setTotal(rs.getFloat("Total"));
+
+				ArrayList<ItemVenda> lista = buscarItensVendaPorIdVenda(rs.getInt("idVenda"));
+				v.setItensVenda(lista);
+
+				Cliente c = new Cliente();
+				c.setId_Cliente(rs.getInt("id_Cliente"));
+				c.setNomeCliente(rs.getString("nome_Cliente"));
+				c.setDataNasc(rs.getString("data_Nasc"));
+				c.setCpf_Cliente(rs.getString("cpf_Cliente"));
+				c.setTelefone(rs.getString("telefone_Cliente"));
+				c.setEmail(rs.getString("email_Cliente"));
+				v.setCliente(c);
+
+				Funcionario f = new Funcionario();
+				f.setId_Funcionario(rs.getInt("id_Funcionario"));
+				f.setNomeFuncionario(rs.getString("nome_Funcionario"));
+				f.setEmail_Funcionario(rs.getString("email_Funcionario"));
+				f.setCpf(rs.getString("cpf"));
+				f.setCelular(rs.getString("celular"));
+				f.setLogin(rs.getString("login"));
+				v.setFuncionario(f);
+				
 				return v;
 			}
 
@@ -152,4 +180,43 @@ public class VendaDAO {
 
 		return null;
 	}
+
+	private ArrayList<ItemVenda> buscarItensVendaPorIdVenda(int idVenda) {
+		String mostrarDados = "SELECT *, venda_produtos.preco as preco_venda, produtos.preco as preco_produto FROM venda_produtos JOIN produtos ON venda_produtos.id_Produto = produtos.id_Produto WHERE id_venda = ?";
+		ArrayList<ItemVenda> lista = new ArrayList<ItemVenda>();
+
+		try {
+			pst = conn.prepareStatement(mostrarDados);
+			pst.setInt(1, idVenda);
+
+			ResultSet rs = pst.executeQuery();
+
+			while (rs.next()) {
+
+				ItemVenda v = new ItemVenda();
+
+				Produto p = new Produto();
+				p.setId_Produto(rs.getInt("id_Produto"));
+				p.setNomeProduto(rs.getString("nome_Produto"));
+				p.setTamanho(rs.getString("tamanho"));
+				p.setGenero(rs.getString("genero"));
+				p.setPreco(rs.getFloat("preco_produto"));
+				p.setFornecedor(rs.getString("fornecedor"));
+				p.setQtdEstoque(rs.getInt("qntd_Estoque"));
+
+				v.setPreco(rs.getInt("preco_venda"));
+				v.setQntd(rs.getInt("qntd"));
+				v.setProduto(p);
+
+				lista.add(v);
+			}
+
+			return lista;
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+
+		return null;
+	}
+
 }

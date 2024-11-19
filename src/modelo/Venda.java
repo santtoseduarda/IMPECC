@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.ArrayList;
+
 public class Venda {
 	
 	// chave estrangeira: id_Funcionário, id_Cliente
@@ -10,8 +12,15 @@ public class Venda {
 	private String mtd_Pagamento;
 	private Cliente cliente;
 	private Funcionario funcionario;
+	private ArrayList<ItemVenda> itensVenda;
 
 	
+	public ArrayList<ItemVenda> getItensVenda() {
+		return itensVenda;
+	}
+	public void setItensVenda(ArrayList<ItemVenda> itensVenda) {
+		this.itensVenda = itensVenda;
+	}
 	public int getId_Venda() {
 		return id_Venda;
 	}

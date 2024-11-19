@@ -1,6 +1,7 @@
-CREATE DATABASE  IF NOT EXISTS `impecc` 
-USE `impecc`;
+DROP DATABASE  IF EXISTS impecc;
 
+CREATE SCHEMA IF NOT EXISTS impecc;
+USE impecc ;
 
 DROP TABLE IF EXISTS `clientes`;
 

@@ -14,6 +14,7 @@ public class TelaInternaController {
 		adicionarListenerFornecedor();
 		adicionarListenerCliente();
 		adicionarListenerFuncionario();
+		adicionarListenerVenda();
 		
 
 	}
@@ -103,6 +104,45 @@ public class TelaInternaController {
 				tela.dispose();
 				ClienteController clienteController = new ClienteController();
 				clienteController.abrirListagemCLientes();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+	}
+	
+	private void adicionarListenerVenda() {
+		// TODO Auto-generated method stub
+		tela.getLabelCliente().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				tela.dispose();
+				VendaController vendaController = new VendaController();
+				vendaController.abrirListagemVenda();
 			}
 
 			@Override

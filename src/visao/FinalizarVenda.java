@@ -111,39 +111,41 @@ public class FinalizarVenda extends JFrame {
 
 		JPanel panel = new JPanel();
 		contentPane.add(panel, "cell 3 2 30 83,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][][grow][][grow][grow 50][grow][][][grow]", "[][][][][][][][][][][][][][][][][][grow][][][][][][][][][][][][][][][grow][][][][][grow][][][][]"));
+		panel.setLayout(new MigLayout("", "[grow][grow][][grow][][grow][grow 50][grow][][][grow]",
+				"[][][][][][][][][][][][][][][][][][grow][][][][][][][][][][][][][][][grow][][][][][grow][][][][]"));
 
 		JLabel lblvoltar = new JLabel("");
 		lblvoltar.addMouseListener(clienteController.voltarListagem());
 		lblvoltar.setIcon(new ImageIcon(
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
-				
-						JLabel lblNomeCliente = new JLabel("NomeCliente");
-						panel.add(lblNomeCliente, "cell 1 2");
-				
-						JLabel lblCpf1 = new JLabel("CPF");
-						panel.add(lblCpf1, "cell 3 2");
-				
-				JLabel lblNome = new JLabel("");
-				panel.add(lblNome, "cell 1 3");
-				
-				JLabel lblCpf = new JLabel("");
-				panel.add(lblCpf, "cell 3 3");
-				
-				JLabel lblTotal = new JLabel("Total(R$):");
-				panel.add(lblTotal, "cell 1 6");
-				
-				JLabel lblTotalPreco = new JLabel("");
-				panel.add(lblTotalPreco, "cell 2 6");
-				
-				JLabel lblMetPag = new JLabel("Métodos De Pagamento");
-				panel.add(lblMetPag, "cell 1 11 1 2");
-				
-				JComboBox comboBox = new JComboBox();
-				comboBox.setModel(new DefaultComboBoxModel(new String[] {"Cartão de Crédito", "Cartão de Débito", "Dinheiro\t", "Pix"}));
-				panel.add(comboBox, "cell 1 13,growx");
-		
+
+		JLabel lblNomeCliente = new JLabel("NomeCliente");
+		panel.add(lblNomeCliente, "cell 1 2");
+
+		JLabel lblCpf1 = new JLabel("CPF");
+		panel.add(lblCpf1, "cell 3 2");
+
+		JLabel lblNome = new JLabel("");
+		panel.add(lblNome, "cell 1 3");
+
+		JLabel lblCpf = new JLabel("");
+		panel.add(lblCpf, "cell 3 3");
+
+		JLabel lblTotal = new JLabel("Total(R$):");
+		panel.add(lblTotal, "cell 1 6");
+
+		JLabel lblTotalPreco = new JLabel("");
+		panel.add(lblTotalPreco, "cell 2 6");
+
+		JLabel lblMetPag = new JLabel("Métodos De Pagamento");
+		panel.add(lblMetPag, "cell 1 11 1 2");
+
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(
+				new String[] { "Cartão de Crédito", "Cartão de Débito", "Dinheiro\t", "Pix" }));
+		panel.add(comboBox, "cell 1 13,growx");
+
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
@@ -232,4 +234,3 @@ public class FinalizarVenda extends JFrame {
 
 	}
 }
-

@@ -81,7 +81,7 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 		contentPane.setForeground(new Color(255, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		
+
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][][][][][][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
@@ -162,7 +162,7 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 		JTextField txtFunc = new JTextField();
 		panel.add(txtFunc, "cell 11 1,growx");
 		txtFunc.setColumns(10);
-		
+
 		JLabel lupaCliente = new JLabel("");
 		lupaCliente.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));

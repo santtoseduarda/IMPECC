@@ -17,8 +17,6 @@ public class TelaInternaController {
 		adicionarListenerFuncionario();
 		adicionarListenerVenda();
 		adicionarListenerProdutos();
-		
-
 	}
 
 	private void adicionarListenerFuncionario() {
@@ -176,7 +174,7 @@ public class TelaInternaController {
 	
 	private void adicionarListenerProdutos() {
 		// TODO Auto-generated method stub
-		tela.getLabelProduto().addMouseListener(new MouseListener() {
+		tela.getLabelProduto().addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {

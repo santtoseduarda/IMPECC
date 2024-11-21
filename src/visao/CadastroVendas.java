@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
@@ -11,14 +12,18 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import controle.VendaController;
 import net.miginfocom.swing.MigLayout;
@@ -28,6 +33,17 @@ public class CadastroVendas extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
+	private JTable table;
+
+	public static void main(String[] args) {
+		// Criando um mock básico para VendaController caso ainda não tenha sido
+		// implementado.
+		VendaController vendaController = new VendaController(); // Substitua isso pela sua implementação real.
+
+		// Instanciando a tela e exibindo-a
+		CadastroVendas telaCadastroVendas = new CadastroVendas(vendaController);
+		telaCadastroVendas.setVisible(true);
+	}
 
 	public CadastroVendas(VendaController vendaController) {
 
@@ -66,85 +82,111 @@ public class CadastroVendas extends JFrame {
 		}
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][grow][][][][grow][][grow][]",
-				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][][grow][grow][][][][][][][][][][][][][][grow][][][][grow][]", "[grow][][grow][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+
+		JLabel lblvoltar = new JLabel("");
+		lblvoltar.addMouseListener(vendaController.voltarListagem());
+		lblvoltar.setIcon(new ImageIcon(
+				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 50, Image.SCALE_DEFAULT)));
+		contentPane.add(lblvoltar, "cell 0 1");
 
 		JLabel lblCadVenda = new JLabel("Cadastro de Vendas");
 		lblCadVenda.setForeground(new Color(0, 0, 0));
 		lblCadVenda.setFont(fontBold.deriveFont(Font.PLAIN, 45));
 		contentPane.add(lblCadVenda, "cell 3 2");
 
-		JLabel lblFunc = new JLabel("Funcionário: ---");
-		lblFunc.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblFunc, "cell 20 3,alignx center,growy");
+		JLabel lblFunc = new JLabel("Funcionário: ");
+		lblFunc.setFont(fontBold.deriveFont(Font.PLAIN, 22));
+		contentPane.add(lblFunc, "cell 20 2,alignx center,growy");
+
+		JLabel lblNomeFunc = new JLabel("Joao BlaBla");
+		lblNomeFunc.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
+		contentPane.add(lblNomeFunc, "cell 21 2,alignx left,aligny center");
 
 		JLabel lblProduto = new JLabel("Produto:");
 		lblProduto.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblProduto, "cell 2 7");
+		contentPane.add(lblProduto, "cell 2 9");
 
 		JLabel lblQntd = new JLabel("Quantidade:");
 		lblQntd.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblQntd, "cell 6 7");
+		contentPane.add(lblQntd, "cell 7 9");
 
 		JLabel cpfCliente = new JLabel("CPF Cliente:");
 		cpfCliente.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(cpfCliente, "cell 15 7,alignx left");
+		contentPane.add(cpfCliente, "cell 17 9,alignx left");
+		
+		JLabel lblNomeCliente = new JLabel("nome cliente adicionado ao ok");
+		lblNomeCliente.setFont(fontRegular.deriveFont(Font.PLAIN, 20));
+		contentPane.add(lblNomeCliente, "cell 18 9,alignx left,growy");
 
-		JComboBox comboBox = new JComboBox();
-		contentPane.add(comboBox, "cell 2 8 2 1,growx");
+		JComboBox<?> comboBox = new JComboBox<Object>();
+		comboBox.setPreferredSize(new Dimension(100, 30));
+		contentPane.add(comboBox, "cell 2 10 2 1,growx");
 
 		JSpinner spinner = new JSpinner();
 		spinner.setPreferredSize(new Dimension(100, 30));
-		contentPane.add(spinner, "cell 6 8");
+		contentPane.add(spinner, "cell 7 10");
 
 		JButton btnAdicionar = new JButton("Adicionar ao Carrinho");
 		btnAdicionar.setPreferredSize(new Dimension(100, 30));
 		btnAdicionar.setForeground(Color.RED);
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 17));
 		btnAdicionar.setBackground(Color.WHITE);
-		contentPane.add(btnAdicionar, "cell 9 8");
+		contentPane.add(btnAdicionar, "cell 12 10,grow");
 
 		textField = new JTextField();
 		textField.setPreferredSize(new Dimension(100, 30));
-		contentPane.add(textField, "cell 15 8 4 1,growx");
+		contentPane.add(textField, "cell 17 10 3 1,growx");
 		textField.setColumns(10);
+		
+		JButton btnOK = new JButton("OK");
+		btnOK.setPreferredSize(new Dimension(50, 30));
+		btnOK.setForeground(Color.RED);
+		btnOK.setFont(null);
+		btnOK.setBackground(Color.WHITE);
+		btnOK.setFont(fontBold.deriveFont(Font.PLAIN, 17));
+		contentPane.add(btnOK, "cell 20 10,alignx left,growy");
 
-		// sair
-		JButton btnSair = new JButton("Sair");
-		// btnSair.addActionListener(clienteController.sairSistema());
-		btnSair.setForeground(new Color(255, 0, 0));
-		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnSair.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnSair, "cell 2 78 1 4,aligny bottom");
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setPreferredSize(new Dimension(800, 400)); // Tamanho
+		contentPane.add(scrollPane, "cell 2 12 19 25, grow");
+
+		table = new JTable();
+		table.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "ID Venda", "Produto", "Quantidade", "Preço Un.", "Total" }));
+		table.setPreferredScrollableViewportSize(new Dimension(800, 400));// Tamanho
+
+		scrollPane.setViewportView(table);
+
+		JButton btnExcluir = new JButton("Excluir Produto");
+		btnExcluir.setForeground(Color.RED);
+		btnExcluir.setFont(null);
+		btnExcluir.setBackground(Color.WHITE);
+		btnExcluir.setFont(fontBold.deriveFont(Font.PLAIN, 22));
+		contentPane.add(btnExcluir, "cell 2 37,grow");
+
+		JLabel lblTotal = new JLabel("Total (R$): ");
+		lblTotal.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		contentPane.add(lblTotal, "cell 2 79,alignx left");
+
+		JLabel lblPreco = new JLabel("00.00");
+		lblPreco.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		contentPane.add(lblPreco, "cell 3 79,alignx left");
+		btnAdicionar.setPreferredSize(new Dimension(100, 30));
+
+		JButton btnCancelar = new JButton("Cancelar");
+		// btnExcluir.addActionListener(clienteController.excluirCliente());
+		btnCancelar.setForeground(new Color(255, 0, 0));
+		btnCancelar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnCancelar.setBackground(new Color(255, 255, 255));
+		contentPane.add(btnCancelar, "cell 20 79,grow");
 
 		// cadastrar funcionario
-		JButton btnAdicionarss = new JButton("Adicionar Cliente");
-		btnAdicionarss.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// clienteController.iniciarCadastroCliente();
-			}
-		});
-		btnAdicionarss.setForeground(new Color(255, 0, 0));
-		btnAdicionarss.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnAdicionarss.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnAdicionarss, "cell 21 80 1 2,aligny bottom");
-
-		// editar
-		JButton btnEditar = new JButton("Editar");
-		// btnEditar.addActionListener(clienteController.buscaCliente());
-
-		btnEditar.setForeground(new Color(255, 0, 0));
-		btnEditar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnEditar.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnEditar, "cell 19 80 1 2");
-
-		// excluir
-		JButton btnExcluir = new JButton("Excluir");
-		// btnExcluir.addActionListener(clienteController.excluirCliente());
-		btnExcluir.setForeground(new Color(255, 0, 0));
-		btnExcluir.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnExcluir.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnExcluir, "cell 20 80 1 2");
+		JButton btnFinalizarVenda = new JButton("Finalizar Venda");
+		btnFinalizarVenda.setForeground(new Color(255, 0, 0));
+		btnFinalizarVenda.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		btnFinalizarVenda.setBackground(new Color(255, 255, 255));
+		contentPane.add(btnFinalizarVenda, "cell 21 79,grow");
 
 	}
 

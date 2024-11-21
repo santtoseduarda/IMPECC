@@ -42,14 +42,14 @@ public class ListagemClientes extends JFrame implements TelaInterna {
 	public ListagemClientes(ClienteController clienteController) {
 		this.clienteController = clienteController;
 
-		Font fontRegular = null;
+		//Font fontRegular = null;
 		Font fontBold = null;
 
-		BufferedInputStream fontRegulaFile = null;
+		//BufferedInputStream fontRegulaFile = null;
 		BufferedInputStream fontBoldFile = null;
 
 		try {
-			fontRegulaFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Regular.TTF"));
+			//fontRegulaFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Regular.TTF"));
 			fontBoldFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Bold.TTF"));
 
 		} catch (FileNotFoundException e) {
@@ -57,7 +57,7 @@ public class ListagemClientes extends JFrame implements TelaInterna {
 			e.printStackTrace();
 		}
 		try {
-			fontRegular = Font.createFont(Font.TRUETYPE_FONT, fontRegulaFile);
+			//fontRegular = Font.createFont(Font.TRUETYPE_FONT, fontRegulaFile);
 			fontBold = Font.createFont(Font.TRUETYPE_FONT, fontBoldFile);
 
 		} catch (FontFormatException e) {
@@ -109,20 +109,20 @@ public class ListagemClientes extends JFrame implements TelaInterna {
 
 		JPanel panel = new JPanel();
 		JTextField txtID;
-		contentPane.add(panel, "cell 3 8 21 72,grow");
+		contentPane.add(panel, "cell 3 7 21 72,grow");
 		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][grow][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblId = new JLabel("ID");
-		lblId.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblId.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblId, "cell 2 0");
 
 		JLabel lblNome = new JLabel("Nome");
-		lblNome.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblNome.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblNome, "cell 5 0");
 
 		JLabel lblDataNasc = new JLabel("CPF");
-		lblDataNasc.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblDataNasc.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblDataNasc, "cell 8 0");
 
 		JLabel lblPesquisar = new JLabel("Pesquisar por : ");

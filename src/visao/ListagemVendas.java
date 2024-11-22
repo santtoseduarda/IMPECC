@@ -1,25 +1,20 @@
 package visao;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -27,10 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controle.ProdutoController;
-import controle.ProdutoDAO;
 import controle.VendaController;
-import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
 
 public class ListagemVendas extends JFrame implements TelaInterna {
@@ -48,14 +40,15 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 	public ListagemVendas(VendaController vendaController) {
 		this.vendaController = vendaController;
 
-		Font fontRegular = null;
+		// Font fontRegular = null;
 		Font fontBold = null;
 
-		BufferedInputStream fontRegulaFile = null;
+		// BufferedInputStream fontRegulaFile = null;
 		BufferedInputStream fontBoldFile = null;
 
 		try {
-			fontRegulaFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Regular.TTF"));
+			// fontRegulaFile = new BufferedInputStream(new
+			// FileInputStream("src/fontes/Carlito-Regular.TTF"));
 			fontBoldFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Bold.TTF"));
 
 		} catch (FileNotFoundException e) {
@@ -63,7 +56,7 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 			e.printStackTrace();
 		}
 		try {
-			fontRegular = Font.createFont(Font.TRUETYPE_FONT, fontRegulaFile);
+			// fontRegular = Font.createFont(Font.TRUETYPE_FONT, fontRegulaFile);
 			fontBold = Font.createFont(Font.TRUETYPE_FONT, fontBoldFile);
 
 		} catch (FontFormatException e) {
@@ -113,24 +106,24 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 
 		JPanel panel = new JPanel();
 		JTextField txtId;
-		contentPane.add(panel, "cell 3 8 21 72,grow");
+		contentPane.add(panel, "cell 3 7 21 73,grow");
 		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][grow][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblId = new JLabel("ID");
-		lblId.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblId.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblId, "cell 2 0");
 
 		JLabel lblDataCompra = new JLabel("Data");
-		lblDataCompra.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblDataCompra.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblDataCompra, "cell 5 0");
 
 		JLabel lblClienteCompra = new JLabel("Cliente");
-		lblClienteCompra.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblClienteCompra.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblClienteCompra, "cell 8 0");
 
 		JLabel lblFunc = new JLabel("Funcionario"); // BUSCA POR CPF
-		lblFunc.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblFunc.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblFunc, "cell 11 0");
 
 		JLabel lblPesquisar = new JLabel("Pesquisar por : ");
@@ -150,10 +143,10 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 		panel.add(txtNome, "cell 5 1,growx");
 		txtNome.setColumns(10);
 
-		JLabel lupaNome = new JLabel("");
-		lupaNome.setIcon(new ImageIcon(
+		JLabel lupaData = new JLabel("");
+		lupaData.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
-		panel.add(lupaNome, "cell 6 1");
+		panel.add(lupaData, "cell 6 1");
 
 		JTextField txtCliente = new JTextField();
 		panel.add(txtCliente, "cell 8 1,growx");
@@ -163,15 +156,15 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 		panel.add(txtFunc, "cell 11 1,growx");
 		txtFunc.setColumns(10);
 
+		JLabel lupaFunc = new JLabel("");
+		lupaFunc.setIcon(new ImageIcon(
+				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
+		panel.add(lupaFunc, "cell 12 1");
+
 		JLabel lupaCliente = new JLabel("");
 		lupaCliente.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
-		panel.add(lupaCliente, "cell 12 1");
-
-		JLabel lupaData = new JLabel("");
-		lupaData.setIcon(new ImageIcon(
-				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
-		panel.add(lupaData, "cell 9 1");
+		panel.add(lupaCliente, "cell 9 1");
 
 		JScrollPane scrollPane = new JScrollPane();
 		panel.add(scrollPane, "cell 1 3 14 14,grow");
@@ -258,7 +251,6 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 				vendaController.iniciarCadastroVenda();
 			}
 		});
-
 		btnCadastrarVenda.setForeground(new Color(255, 0, 0));
 		btnCadastrarVenda.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnCadastrarVenda.setBackground(new Color(255, 255, 255));

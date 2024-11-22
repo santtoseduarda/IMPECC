@@ -43,14 +43,14 @@ public class ListagemFuncionarios extends JFrame implements TelaInterna{
 	public ListagemFuncionarios(FuncionarioController funcionarioController) {
 		this.funcionarioController = funcionarioController;
 
-		Font fontRegular = null;
+		//Font fontRegular = null;
 		Font fontBold = null;
 
-		BufferedInputStream fontRegulaFile = null;
+		//BufferedInputStream fontRegulaFile = null;
 		BufferedInputStream fontBoldFile = null;
 
 		try {
-			fontRegulaFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Regular.TTF"));
+		//	fontRegulaFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Regular.TTF"));
 			fontBoldFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Bold.TTF"));
 
 		} catch (FileNotFoundException e) {
@@ -58,7 +58,7 @@ public class ListagemFuncionarios extends JFrame implements TelaInterna{
 			e.printStackTrace();
 		}
 		try {
-			fontRegular = Font.createFont(Font.TRUETYPE_FONT, fontRegulaFile);
+		//	fontRegular = Font.createFont(Font.TRUETYPE_FONT, fontRegulaFile);
 			fontBold = Font.createFont(Font.TRUETYPE_FONT, fontBoldFile);
 
 		} catch (FontFormatException e) {
@@ -79,8 +79,7 @@ public class ListagemFuncionarios extends JFrame implements TelaInterna{
 
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][][][][][][][][][]",
-				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblListagemFunc = new JLabel("Listagem de Funcionários");
 		lblListagemFunc.setForeground(new Color(255, 255, 255));
@@ -110,24 +109,24 @@ public class ListagemFuncionarios extends JFrame implements TelaInterna{
 		textField = new JTextField();
 
 		JPanel panel = new JPanel();
-		contentPane.add(panel, "cell 3 8 21 72,grow");
+		contentPane.add(panel, "cell 3 7 21 73,grow");
 		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][grow][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblNewLabel_4 = new JLabel("ID");
-		lblNewLabel_4.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblNewLabel_4.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblNewLabel_4, "cell 2 0");
 
 		JLabel lblNewLabel_5 = new JLabel("Nome");
-		lblNewLabel_5.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblNewLabel_5.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblNewLabel_5, "cell 5 0");
 
 		JLabel lblNewLabel_6 = new JLabel("CPF");
-		lblNewLabel_6.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblNewLabel_6.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblNewLabel_6, "cell 8 0");
 
 		JLabel lblNewLabel_7 = new JLabel("Login");
-		lblNewLabel_7.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblNewLabel_7.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblNewLabel_7, "cell 11 0");
 
 		JLabel lblPesquisar = new JLabel("Pesquisar por : ");

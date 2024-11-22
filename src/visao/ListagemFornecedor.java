@@ -43,14 +43,14 @@ public class ListagemFornecedor extends JFrame implements TelaInterna{
 	public ListagemFornecedor(FornecedorController fornecedorController) {
 		this.fornecedorController = fornecedorController;
 
-		Font fontRegular = null;
+		//Font fontRegular = null;
 		Font fontBold = null;
 
-		BufferedInputStream fontRegulaFile = null;
+	//	BufferedInputStream fontRegulaFile = null;
 		BufferedInputStream fontBoldFile = null;
 
 		try {
-			fontRegulaFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Regular.TTF"));
+	//		fontRegulaFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Regular.TTF"));
 			fontBoldFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Bold.TTF"));
 
 		} catch (FileNotFoundException e) {
@@ -58,7 +58,7 @@ public class ListagemFornecedor extends JFrame implements TelaInterna{
 			e.printStackTrace();
 		}
 		try {
-			fontRegular = Font.createFont(Font.TRUETYPE_FONT, fontRegulaFile);
+	//		fontRegular = Font.createFont(Font.TRUETYPE_FONT, fontRegulaFile);
 			fontBold = Font.createFont(Font.TRUETYPE_FONT, fontBoldFile);
 
 		} catch (FontFormatException e) {
@@ -81,8 +81,7 @@ public class ListagemFornecedor extends JFrame implements TelaInterna{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][][][][][][][][][]",
-				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][][][grow][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblListagemFunc = new JLabel("Listagem de Fornecedores");
 		lblListagemFunc.setForeground(new Color(255, 255, 255));
@@ -112,24 +111,24 @@ public class ListagemFornecedor extends JFrame implements TelaInterna{
 		txtId = new JTextField();
 
 		JPanel panel = new JPanel();
-		contentPane.add(panel, "cell 3 8 21 72,grow");
+		contentPane.add(panel, "cell 3 7 21 73,grow");
 		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][grow][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblId = new JLabel("ID");
-		lblId.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblId.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblId, "cell 2 0");
 
 		JLabel lblNome = new JLabel("Nome");
-		lblNome.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblNome.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblNome, "cell 5 0");
 
 		JLabel lblCnpj = new JLabel("CNPJ");
-		lblCnpj.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblCnpj.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblCnpj, "cell 8 0");
 
 		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblEmail.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblEmail, "cell 11 0");
 
 		JLabel lblPesquisar = new JLabel("Pesquisar por : ");

@@ -28,14 +28,14 @@ public class TelaInicial extends JFrame {
 		
 		// fonte
 		Font fontRegular = null;
-		Font fontBold = null;
+	//	Font fontBold = null;
 
 		BufferedInputStream fontRegulaFile = null;
-		BufferedInputStream fontBoldFile = null;
+	//	BufferedInputStream fontBoldFile = null;
 
 		try {
 			fontRegulaFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Regular.TTF"));
-			fontBoldFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Bold.TTF"));
+	//		fontBoldFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Bold.TTF"));
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -43,7 +43,7 @@ public class TelaInicial extends JFrame {
 		}
 		try {
 			fontRegular = Font.createFont(Font.TRUETYPE_FONT, fontRegulaFile);
-			fontBold = Font.createFont(Font.TRUETYPE_FONT, fontBoldFile);
+	//		fontBold = Font.createFont(Font.TRUETYPE_FONT, fontBoldFile);
 
 		} catch (FontFormatException e) {
 			// TODO Auto-generated catch block

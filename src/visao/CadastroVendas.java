@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,18 +30,8 @@ public class CadastroVendas extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txtCPFcliente;
 	private JTable table;
-
-	public static void main(String[] args) {
-		// Criando um mock básico para VendaController caso ainda não tenha sido
-		// implementado.
-		VendaController vendaController = new VendaController(); // Substitua isso pela sua implementação real.
-
-		// Instanciando a tela e exibindo-a
-		CadastroVendas telaCadastroVendas = new CadastroVendas(vendaController);
-		telaCadastroVendas.setVisible(true);
-	}
 
 	public CadastroVendas(VendaController vendaController) {
 
@@ -82,7 +70,8 @@ public class CadastroVendas extends JFrame {
 		}
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][grow][grow][][][][][][][][][][][][][][grow][][][][grow][]", "[grow][][grow][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][][grow][grow][][][][][][][][][][][][][][grow][][][][grow][]",
+				"[grow][][grow][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblvoltar = new JLabel("");
 		lblvoltar.addMouseListener(vendaController.voltarListagem());
@@ -107,25 +96,30 @@ public class CadastroVendas extends JFrame {
 		lblProduto.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblProduto, "cell 2 9");
 
+		JComboBox<?> comboBoxProd = new JComboBox<Object>();
+		comboBoxProd.setPreferredSize(new Dimension(100, 30));
+		contentPane.add(comboBoxProd, "cell 2 10 2 1,growx");
+
 		JLabel lblQntd = new JLabel("Quantidade:");
 		lblQntd.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblQntd, "cell 7 9");
 
+		JSpinner spinnerQntd = new JSpinner();
+		spinnerQntd.setPreferredSize(new Dimension(100, 30));
+		contentPane.add(spinnerQntd, "cell 7 10");
+
 		JLabel cpfCliente = new JLabel("CPF Cliente:");
 		cpfCliente.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(cpfCliente, "cell 17 9,alignx left");
-		
+
+		txtCPFcliente = new JTextField();
+		txtCPFcliente.setPreferredSize(new Dimension(100, 30));
+		contentPane.add(txtCPFcliente, "cell 17 10 3 1,growx");
+		txtCPFcliente.setColumns(10);
+
 		JLabel lblNomeCliente = new JLabel("nome cliente adicionado ao ok");
 		lblNomeCliente.setFont(fontRegular.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblNomeCliente, "cell 18 9,alignx left,growy");
-
-		JComboBox<?> comboBox = new JComboBox<Object>();
-		comboBox.setPreferredSize(new Dimension(100, 30));
-		contentPane.add(comboBox, "cell 2 10 2 1,growx");
-
-		JSpinner spinner = new JSpinner();
-		spinner.setPreferredSize(new Dimension(100, 30));
-		contentPane.add(spinner, "cell 7 10");
 
 		JButton btnAdicionar = new JButton("Adicionar ao Carrinho");
 		btnAdicionar.setPreferredSize(new Dimension(100, 30));
@@ -134,11 +128,6 @@ public class CadastroVendas extends JFrame {
 		btnAdicionar.setBackground(Color.WHITE);
 		contentPane.add(btnAdicionar, "cell 12 10,grow");
 
-		textField = new JTextField();
-		textField.setPreferredSize(new Dimension(100, 30));
-		contentPane.add(textField, "cell 17 10 3 1,growx");
-		textField.setColumns(10);
-		
 		JButton btnOK = new JButton("OK");
 		btnOK.setPreferredSize(new Dimension(50, 30));
 		btnOK.setForeground(Color.RED);

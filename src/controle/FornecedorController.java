@@ -1,10 +1,5 @@
 package controle;
 
-import visao.AlterarFornecedor;
-import visao.CadastroFornecedores;
-import visao.ListagemFornecedor;
-import visao.TelaLogin;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -18,7 +13,9 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Fornecedor;
-import modelo.Funcionario;
+import visao.AlterarFornecedor;
+import visao.CadastroFornecedores;
+import visao.ListagemFornecedor;
 
 public class FornecedorController {
 
@@ -170,7 +167,6 @@ public class FornecedorController {
 		};
 	}
 
-
 	public void inserirFornecedor() {
 		viewc.setVisible(true);
 	}
@@ -290,32 +286,68 @@ public class FornecedorController {
 
 					DefaultTableModel modeloTabela = (DefaultTableModel) viewl.table.getModel();
 					int idFornecedor = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
-					Fornecedor fornecedor = new Fornecedor();
+					if (validarCamposEditarForn()) {
+						Fornecedor fornecedor = new Fornecedor();
 
-					fornecedor.setID_fornecedor(idFornecedor);
-					fornecedor.setTelefone_Fornecedor(viewa.txtTelefoneFornecedor.getText());
-					fornecedor.setCNPJ(viewa.txtCnpj.getText());
-					fornecedor.setEmail_Fornecedor(viewa.txtEmailFornecedor.getText());
-					fornecedor.setNome_Fornecedor(viewa.txtNomeFornecedor.getText());
+						fornecedor.setID_fornecedor(idFornecedor);
+						fornecedor.setTelefone_Fornecedor(viewa.txtTelefoneFornecedor.getText());
+						fornecedor.setCNPJ(viewa.txtCnpj.getText());
+						fornecedor.setEmail_Fornecedor(viewa.txtEmailFornecedor.getText());
+						fornecedor.setNome_Fornecedor(viewa.txtNomeFornecedor.getText());
 
-					try {
-						boolean sucesso = fordao.alterarFornecedor(fornecedor);
-						if (sucesso) {
-							atualizarTabela("", "");
-							viewl.setVisible(true);
-							viewa.dispose();
-						} else {
-							JOptionPane.showMessageDialog(null,
-									"Erro ao alterar fornecedor: Nenhuma linha foi afetada.", "Erro",
-									JOptionPane.ERROR_MESSAGE);
+						try {
+							boolean sucesso = fordao.alterarFornecedor(fornecedor);
+							if (sucesso) {
+								atualizarTabela("", "");
+								viewl.setVisible(true);
+								viewa.dispose();
+							} else {
+								JOptionPane.showMessageDialog(null,
+										"Erro ao alterar fornecedor: Nenhuma linha foi afetada.", "Erro",
+										JOptionPane.ERROR_MESSAGE);
+							}
+						} catch (Exception ex) {
+							JOptionPane.showMessageDialog(null, "Erro ao alterar fornecedor: " + ex.getMessage(),
+									"Erro", JOptionPane.ERROR_MESSAGE);
 						}
-					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(null, "Erro ao alterar fornecedor: " + ex.getMessage(), "Erro",
-								JOptionPane.ERROR_MESSAGE);
 					}
+
 				}
 			}
 		};
+	}
+
+	protected boolean validarCamposEditarForn() {
+		String nome = viewa.txtNomeFornecedor.getText();
+		String cnpj = viewa.txtCnpj.getText();
+		String email = viewa.txtEmailFornecedor.getText();
+		String telefone = viewa.txtTelefoneFornecedor.getText();
+
+		if (nome.isEmpty() || cnpj.isEmpty() || email.isEmpty() || telefone.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
+					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		if (!cnpj.matches("\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}")) {
+			JOptionPane.showMessageDialog(null, "CNPJ inválido. Deve estar no formato 00.000.000/0000-00",
+					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		if (!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
+			JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.",
+					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		if (!telefone.matches("\\(\\d{2}\\)\\d{5}-\\d{4}")) { // Celular no formato (00)00000-0000
+			JOptionPane.showMessageDialog(null, "Celular inválido. Deve estar no formato (00)00000-0000.",
+					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			return false;
+
+		}
+		return true;
 	}
 
 	public void mostrarDados(Fornecedor fornecedor) {
@@ -324,7 +356,7 @@ public class FornecedorController {
 		viewa.txtCnpj.setText(fornecedor.getCNPJ());
 		viewa.txtTelefoneFornecedor.setText(fornecedor.getTelefone_Fornecedor());
 	}
-	
+
 	public ArrayList<Fornecedor> buscarTodosFornecedores() throws SQLException {
 		return fordao.buscarTodosFornecedores();
 	}

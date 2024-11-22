@@ -1,36 +1,30 @@
 package visao;
 
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.border.EmptyBorder;
-
-import controle.FuncionarioDAO;
-import controle.LoginController;
-import modelo.Funcionario;
-
 import java.awt.Color;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
-
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.ModuleLayer.Controller;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import controle.LoginController;
+import net.miginfocom.swing.MigLayout;
 
 public class TelaLogin extends JFrame {
 
@@ -42,16 +36,7 @@ public class TelaLogin extends JFrame {
 	public JPanel panel;
 	public JTextField txttSenhaVisivel;
 	LoginController loginController;
-	
-	
-	/**
-	 * Launch the application.
-	 */
 
-	/**
-	 * Create the frame.
-	 * @param loginController 
-	 */
 	public TelaLogin(LoginController loginController) {
 		this.loginController = loginController;
 		Font fontRegular = null;

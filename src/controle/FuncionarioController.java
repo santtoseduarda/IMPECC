@@ -16,7 +16,6 @@ import visao.AlterarFuncionario;
 import visao.CadastroFuncionario;
 import visao.CadastroFuncionarios;
 import visao.ListagemFuncionarios;
-import visao.TelaLogin;
 
 public class FuncionarioController {
 	FuncionarioDAO fdao = new FuncionarioDAO();

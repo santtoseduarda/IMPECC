@@ -1,32 +1,23 @@
 package visao;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import controle.FuncionarioController;
-import controle.FuncionarioDAO;
-import modelo.Funcionario;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.Image;
-
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import controle.FuncionarioController;
+import net.miginfocom.swing.MigLayout;
 
 public class CadastroFuncionario extends JFrame {
 
@@ -67,8 +58,6 @@ public class CadastroFuncionario extends JFrame {
 			e.printStackTrace();
 		}
 
-		CadastroFuncionario janelaLoginCadastro = this;
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 713, 504);
 		contentPane = new JPanel();
@@ -78,30 +67,27 @@ public class CadastroFuncionario extends JFrame {
 
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow][][grow][][grow][][grow]",
-				"[][][grow][][][][][][][][][][][][][][][][][grow]"));
+		contentPane.setLayout(new MigLayout("", "[grow][][85.00, grow][][grow][][grow]", "[][][grow][][][][][][][][][][][][][][][][][grow]"));
 
-		JLabel lblNewLabel_8 = new JLabel("New label");
-		lblNewLabel_8.setForeground(new Color(69, 69, 69, 0));
-		contentPane.add(lblNewLabel_8, "cell 5 1 2 3");
+		JLabel lblCadFunc = new JLabel("Cadastro de Funcionário");
+		lblCadFunc.setFont(fontBold.deriveFont(Font.PLAIN, 50));
+		contentPane.add(lblCadFunc, "cell 0 0 7 4,alignx center,aligny center");
 
-		JLabel lblNewLabel = new JLabel("Cadastro de Funcionário");
-		lblNewLabel.setFont(fontBold.deriveFont(Font.PLAIN, 50));
-		contentPane.add(lblNewLabel, "cell 2 2 3 3,alignx center,aligny center");
-
-		JLabel lblNewLabel_1 = new JLabel("Nome Completo:*");
-		lblNewLabel_1.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
-		contentPane.add(lblNewLabel_1, "cell 1 5");
+		JLabel lblNomeCompleto = new JLabel("Nome Completo:*");
+		lblNomeCompleto.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
+		contentPane.add(lblNomeCompleto, "cell 1 5");
 
 		JLabel lblNewLabel_2 = new JLabel("E-mail:* email@exemplo.com");
 		lblNewLabel_2.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		contentPane.add(lblNewLabel_2, "cell 4 5");
 
 		txtNomeCompleto = new JTextField();
+		txtNomeCompleto.setPreferredSize(new Dimension(90, 30));
 		contentPane.add(txtNomeCompleto, "cell 1 6 2 1,growx");
 		txtNomeCompleto.setColumns(10);
 
 		txtEmail = new JTextField();
+		txtEmail.setPreferredSize(new Dimension(90, 30));
 		contentPane.add(txtEmail, "cell 4 6 2 1,growx");
 		txtEmail.setColumns(10);
 
@@ -114,10 +100,12 @@ public class CadastroFuncionario extends JFrame {
 		contentPane.add(lblCPF, "cell 4 8");
 
 		txtCelular = new JTextField();
+		txtCelular.setPreferredSize(new Dimension(90, 30));
 		contentPane.add(txtCelular, "cell 1 9 2 1,growx");
 		txtCelular.setColumns(10);
 
 		txtCPF = new JTextField();
+		txtCPF.setPreferredSize(new Dimension(90, 30));
 		txtCPF.setColumns(10);
 		contentPane.add(txtCPF, "cell 4 9 2 1,growx");
 
@@ -130,10 +118,12 @@ public class CadastroFuncionario extends JFrame {
 		contentPane.add(LlblSenha, "cell 4 11");
 
 		txtLogin = new JTextField();
+		txtLogin.setPreferredSize(new Dimension(90, 30));
 		contentPane.add(txtLogin, "cell 1 12 2 1,growx");
 		txtLogin.setColumns(10);
 
 		txtSenha = new JTextField();
+		txtSenha.setPreferredSize(new Dimension(90, 30));
 		contentPane.add(txtSenha, "cell 4 12 2 1,growx");
 		txtSenha.setColumns(10);
 

@@ -153,17 +153,16 @@ public class CadastroProduto extends JFrame {
 		comboBoxFornecedor = new JComboBox<>();
 		FornecedorController fornecedorController = new FornecedorController();
 
-		    ArrayList<Fornecedor> fornecedores = null;
-			try {
-				fornecedores = fornecedorController.buscarTodosFornecedores();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-		    for (Fornecedor fornecedor : fornecedores) {
-		        comboBoxFornecedor.addItem(fornecedor);
-		    }
-		
+		ArrayList<Fornecedor> fornecedores = null;
+		try {
+			fornecedores = fornecedorController.buscarTodosFornecedores();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (Fornecedor fornecedor : fornecedores) {
+			comboBoxFornecedor.addItem(fornecedor);
+		}
 
 		panel.add(comboBoxFornecedor, "cell 1 25 7 1,growx");
 

@@ -53,11 +53,42 @@ public class ProdutoDAO {
 		return false;
 	}
 
+	public Produto buscarProdutos(int id_Produto) {
+	    String sql = "SELECT p.*, f.nome_Fornecedor FROM produtos p JOIN fornecedores f ON p.fornecedor = f.id_Fornecedor WHERE p.id_Produto = ?";
+	    Produto p = null;
+
+	    try {
+	        pst = conn.prepareStatement(sql);
+	        pst.setInt(1, id_Produto);
+
+	        ResultSet rs = pst.executeQuery();
+
+	        if (rs.next()) {
+	            p = new Produto();
+	            p.setId_Produto(rs.getInt("id_Produto"));
+	            p.setNomeProduto(rs.getString("nome_Produto"));
+	            p.setTamanho(rs.getString("tamanho"));
+	            p.setGenero(rs.getString("genero"));
+	            p.setPreco(rs.getFloat("preco"));
+	            p.setQtdEstoque(rs.getInt("qntd_Estoque"));
+
+	            Fornecedor fornecedor = new Fornecedor();
+	            fornecedor.setID_fornecedor(rs.getInt("fornecedor"));
+	            fornecedor.setNome_Fornecedor(rs.getString("nome_Fornecedor"));
+	            p.setFornecedor(fornecedor);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return p;
+	}
+
 	public ArrayList<Produto> buscarProdLupa(String campo, String valor) {
 	    ArrayList<Produto> listaProdutos = new ArrayList<>();
 
 	    try {
-	        String sql = "SELECT p.*, f.nome_Fornecedor FROM produtos p JOIN fornecedor f ON p.fornecedor = f.id_Fornecedor";
+	        String sql = "SELECT p.*, f.nome_Fornecedor FROM produtos p JOIN fornecedores f ON p.fornecedor = f.id_Fornecedor";
 	        
 	        if (!campo.isEmpty()) {
 	            sql += " WHERE " + campo + " LIKE ?";
@@ -93,6 +124,7 @@ public class ProdutoDAO {
 
 	    return listaProdutos;
 	}
+
 
 	
 	public boolean alterarProduto(Produto p) {
@@ -136,37 +168,6 @@ public class ProdutoDAO {
 
 			return false;
 		}
-	}
-
-	public Produto buscarProdutos(int id_Produto) {
-	    String sql = "SELECT p.*, f.nome_Fornecedor FROM produtos p JOIN fornecedor f ON p.fornecedor = f.id_Fornecedor WHERE p.id_Produto = ?";
-	    Produto p = null;
-
-	    try {
-	        pst = conn.prepareStatement(sql);
-	        pst.setInt(1, id_Produto);
-
-	        ResultSet rs = pst.executeQuery();
-
-	        if (rs.next()) {
-	            p = new Produto();
-	            p.setId_Produto(rs.getInt("id_Produto"));
-	            p.setNomeProduto(rs.getString("nome_Produto"));
-	            p.setTamanho(rs.getString("tamanho"));
-	            p.setGenero(rs.getString("genero"));
-	            p.setPreco(rs.getFloat("preco"));
-	            p.setQtdEstoque(rs.getInt("qntd_Estoque"));
-
-	            Fornecedor fornecedor = new Fornecedor();
-	            fornecedor.setID_fornecedor(rs.getInt("fornecedor"));
-	            fornecedor.setNome_Fornecedor(rs.getString("nome_Fornecedor"));
-	            p.setFornecedor(fornecedor);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-
-	    return p;
 	}
 
 	public Produto buscarFornecedor(int idProduto) {

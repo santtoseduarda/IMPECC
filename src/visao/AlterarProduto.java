@@ -13,7 +13,10 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,19 +26,26 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controle.FornecedorController;
 import controle.FuncionarioDAO;
 import controle.ProdutoController;
 import controle.ProdutoDAO;
+import modelo.Fornecedor;
 import modelo.Funcionario;
 import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.JComboBox;
 
 public class AlterarProduto extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel contentPane_1;
-	private JTextField txtFornecedor;
-	private JTextField txtQuantidadeEstoque;
+	public JTextField txtQuantidadeEstoque;
+	public JTextField txtNome;
+	public JTextField txtPreço;
+	public JComboBox<Fornecedor> comboBoxFornecedor;
+	public JComboBox comboBoxGenero;
+	public JComboBox comboBoxTamanho;
 
 	public AlterarProduto(ProdutoController produtoController) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,8 +109,7 @@ public class AlterarProduto extends JFrame {
 
 		JPanel panel = new JPanel();
 		contentPane_1.add(panel, "cell 3 2 29 83,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][grow][][grow][grow 50][grow][][][grow]",
-				"[][][][][][grow][][][][][][grow][][][][][grow][][][][grow][][][][][][grow][][][][][grow][][][][grow][][][][]"));
+		panel.setLayout(new MigLayout("", "[grow][grow][grow][][grow][grow 50][grow][][][grow]", "[][][][][][grow][][][][][][grow][][][][][][grow][][][][grow][][][][][][grow][][][][][grow][][][][grow][][][][]"));
 
 		JLabel lblvoltar = new JLabel("");
 		lblvoltar.addMouseListener(produtoController.voltarListagem());
@@ -111,43 +120,56 @@ public class AlterarProduto extends JFrame {
 		JLabel lblNome = new JLabel("Nome");
 		panel.add(lblNome, "cell 1 3");
 
-		JTextField txtNome = new JTextField();
+		txtNome = new JTextField();
 		panel.add(txtNome, "cell 1 4 7 1,growx");
 		txtNome.setColumns(10);
 
 		JLabel lblTamanho = new JLabel("Tamanho");
 		panel.add(lblTamanho, "cell 1 8");
-
-		JTextField txtTamanho = new JTextField();
-		panel.add(txtTamanho, "cell 1 9 7 1,growx");
-		txtTamanho.setColumns(10);
+		
+		comboBoxTamanho = new JComboBox();
+		panel.add(comboBoxTamanho, "cell 1 9 7 1,growx");
+		comboBoxTamanho.setModel(new DefaultComboBoxModel(new String[] { "Selecione um Item", "PP", "P", "M", "G", "GG" }));
 
 		JLabel lblGenero = new JLabel("Gênero");
 		panel.add(lblGenero, "cell 1 13");
-
-		JTextField txtGenero = new JTextField();
-		panel.add(txtGenero, "cell 1 14 7 1,growx");
-		txtGenero.setColumns(10);
+		
+		comboBoxGenero = new JComboBox();
+		panel.add(comboBoxGenero, "cell 1 14 7 1,growx");
+		comboBoxGenero.setModel(new DefaultComboBoxModel(new String[] { "Selecione um Item", "Feminino", "Masculino", "Unissex" }));
 
 		JLabel lblPreço = new JLabel("Preço");
-		panel.add(lblPreço, "cell 1 18");
+		panel.add(lblPreço, "cell 1 19");
 
-		JTextField txtPreço = new JTextField();
-		panel.add(txtPreço, "cell 1 19 7 1,growx");
+		txtPreço = new JTextField();
+		panel.add(txtPreço, "cell 1 20 7 1,growx");
 		txtPreço.setColumns(10);
 
 		JLabel lblfornecedor = new JLabel("Fornecedor");
-		panel.add(lblfornecedor, "cell 1 23");
+		panel.add(lblfornecedor, "cell 1 24");
+		
+		comboBoxFornecedor = new JComboBox();
+		panel.add(comboBoxFornecedor, "cell 1 25 7 1,growx");
+		comboBoxFornecedor = new JComboBox<>();
+		FornecedorController fornecedorController = new FornecedorController();
 
-		txtFornecedor = new JTextField();
-		panel.add(txtFornecedor, "cell 1 24 7 1,growx");
-		txtFornecedor.setColumns(10);
+		ArrayList<Fornecedor> fornecedores = null;
+		try {
+			fornecedores = fornecedorController.buscarTodosFornecedores();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (Fornecedor fornecedor : fornecedores) {
+			comboBoxFornecedor.addItem(fornecedor);
+		}
+
 
 		JLabel lblQuantidadeEstoque = new JLabel("Quantida em Estoque");
-		panel.add(lblQuantidadeEstoque, "cell 1 28");
+		panel.add(lblQuantidadeEstoque, "cell 1 29");
 
 		txtQuantidadeEstoque = new JTextField();
-		panel.add(txtQuantidadeEstoque, "cell 1 29 7 1,growx");
+		panel.add(txtQuantidadeEstoque, "cell 1 30 7 1,growx");
 		txtQuantidadeEstoque.setColumns(10);
 
 		JLabel lblLinha = new JLabel("");
@@ -240,10 +262,10 @@ public class AlterarProduto extends JFrame {
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
-		//btnAdicionar.addActionListener(produtoController.salvarEdicoes());
+		btnAdicionar.addActionListener(produtoController.salvarEdicoes());
 		 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
-		//btnLimparCampos.addActionListener(produtoController.limparCamposEditarFuncionarioProduto());
+		btnLimparCampos.addActionListener(produtoController.limparCamposEditarProduto());
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE); contentPane.add(btnLimparCampos,

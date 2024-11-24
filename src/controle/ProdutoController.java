@@ -11,6 +11,7 @@ import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.Caret;
 
 import modelo.Fornecedor;
 import modelo.Funcionario;
@@ -68,7 +69,7 @@ public class ProdutoController {
 
 	public ActionListener excluirProduto() {
 		return new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
@@ -103,6 +104,7 @@ public class ProdutoController {
 		};
 
 	}
+
 	protected void pesquisarPorCampo(String campo, String valor) {
 		DefaultTableModel modeloTabela = (DefaultTableModel) viewL.table.getModel();
 		modeloTabela.setRowCount(0);
@@ -221,51 +223,15 @@ public class ProdutoController {
 		};
 	}
 
-	/*public ActionListener salvarEdicoes() {
-		return null;
-		return new ActionListener() { 
-			public void actionPerformed(ActionEvent e) {
-				int posicaoSelecionada = viewL.table.getSelectedRow();
-				if (posicaoSelecionada >= 0) {
-					DefaultTableModel modeloTabela = (DefaultTableModel) viewL.table.getModel();
-					int idProduto = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
-					
-					produto.setNomeProduto(nomeProduto);
-					produto.setTamanho(tamanho);
-					produto.setGenero(genero);
-					produto.setPreco(precoConvert);
-					produto.setFornecedor(fornecedor);
-					produto.setQtdEstoque(qntEstoqueConvert);
-					
-				}
-			 
-				
-			  
-			  ProdutoDAO funcionarioAlterado = new ProdutoDAO(); try {
-			  funcionarioAlterado.alterarFuncionario(produto); ListagemFuncionarios
-			  janelaListagem = new ListagemFuncionarios(); janelaListagem.setVisible(true);
-			  dispose();
-			  
-			  } catch (Exception ex) { JOptionPane.showMessageDialog(null,
-			  "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
-			  JOptionPane.ERROR_MESSAGE); }
-			  
-			  }
-
-		}	
-	}
-
-	public ActionListener limparCamposEditarFuncionarioProduto() {
-		return new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-		}
-		};
-	}*/
-
 	private void mostrarDados(Produto p) {
+		viewA.txtNome.setText(p.getNomeProduto());
+		viewA.comboBoxTamanho.setSelectedItem(p.getTamanho());
+		viewA.comboBoxGenero.setSelectedItem(p.getGenero());
+		viewA.txtPreço.setText(String.valueOf(p.getPreco()));
 
+		viewA.comboBoxFornecedor.setSelectedItem(p.getFornecedor().getNome_Fornecedor());
+
+		viewA.txtQuantidadeEstoque.setText(String.valueOf(p.getQtdEstoque()));
 	}
 
 	public ActionListener buscaProduto() {
@@ -294,5 +260,67 @@ public class ProdutoController {
 				}
 			}
 		};
+	}
+
+	public ActionListener limparCamposEditarProduto() {
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				viewA.txtNome.setText("");
+				viewA.txtPreço.setText("");
+				viewA.txtQuantidadeEstoque.setText("");
+				viewC.comboBoxTamanho.setSelectedItem(null);
+				viewC.comboBoxGenero.setSelectedItem(null);
+				viewC.comboBoxFornecedor.setSelectedItem(null);
+			}
+		};
+	}
+
+	public ActionListener salvarEdicoes() {
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int posicaoSelecionada = viewL.table.getSelectedRow();
+
+				if (posicaoSelecionada >= 0) {
+
+					DefaultTableModel modeloTabela = (DefaultTableModel) viewL.table.getModel();
+					int idProduto = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+					if (validarCamposEditarProduto()) {
+						Produto produto = new Produto();
+
+						produto.setNomeProduto(viewA.txtNome.getText());
+						produto.setTamanho(viewA.comboBoxTamanho.getSelectedItem().toString());
+						produto.setGenero(viewA.comboBoxGenero.getSelectedItem().toString());
+						produto.setPreco(Float.parseFloat(viewA.txtPreço.getText()));
+
+						Fornecedor fornecedorSelecionado = (Fornecedor) viewA.comboBoxFornecedor.getSelectedItem();
+						produto.setFornecedor(fornecedorSelecionado);
+						produto.setQtdEstoque(Integer.parseInt(viewA.txtQuantidadeEstoque.getText()));
+						;
+
+						try {
+							boolean sucesso = novoProduto.alterarProduto(produto);
+							if (sucesso) {
+								viewL.setVisible(true);
+								viewA.dispose();
+								atualizarTabela("", "");
+							} else {
+								JOptionPane.showMessageDialog(null,
+										"Erro ao alterar funcionário: Nenhuma linha foi afetada.", "Erro",
+										JOptionPane.ERROR_MESSAGE);
+							}
+						} catch (Exception ex) {
+							JOptionPane.showMessageDialog(null, "Erro ao alterar funcionário: " + ex.getMessage(),
+									"Erro", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+
+				}
+			}
+		};
+	}
+
+	protected boolean validarCamposEditarProduto() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

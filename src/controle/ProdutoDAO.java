@@ -155,7 +155,6 @@ public class ProdutoDAO {
 	}
 
 	public boolean excluirProdutos(int id_Produto) {
-		// TODO Auto-generated method stub
 
 		String sql = "DELETE FROM produtos WHERE id_Produto = ?";
 

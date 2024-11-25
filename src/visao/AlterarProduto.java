@@ -87,6 +87,8 @@ public class AlterarProduto extends JFrame {
 		lblEditarProdutos.setForeground(new Color(255, 255, 255));
 		lblEditarProdutos.setFont(fontBold.deriveFont(Font.PLAIN, 45));
 		contentPane.add(lblEditarProdutos, "cell 3 1");
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(new ImageIcon(

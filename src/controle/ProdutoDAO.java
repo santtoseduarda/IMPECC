@@ -128,26 +128,31 @@ public class ProdutoDAO {
 
 	
 	public boolean alterarProduto(Produto p) {
-        String sql = "UPDATE produtos SET nome_Produto = ?, tamanho = ?, genero = ?, preco = ?, qntd_Estoque = ?, fornecedor = ? WHERE id_Produto = ?";
-        
-        try  {
-        	
-        	PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, p.getNomeProduto());
-            pst.setString(2, p.getTamanho());
-            pst.setString(3, p.getGenero());
-            pst.setDouble(4, p.getPreco());
-            pst.setLong(5, p.getQtdEstoque());
-            pst.setInt(6, p.getFornecedor().getID_fornecedor());
-            pst.setInt(7, p.getId_Produto());
-            pst.executeUpdate();
-            return true;
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+	    String sql = "UPDATE produtos SET nome_Produto = ?, tamanho = ?, genero = ?, preco = ?, qntd_Estoque = ?, fornecedor = ? WHERE id_Produto = ?";
+	    
+	    try {
+	        PreparedStatement pst = conn.prepareStatement(sql);
+	        pst.setString(1, p.getNomeProduto());
+	        pst.setString(2, p.getTamanho());
+	        pst.setString(3, p.getGenero());
+	        pst.setDouble(4, p.getPreco());
+	        pst.setLong(5, p.getQtdEstoque());
+	        pst.setInt(6, p.getFornecedor().getID_fornecedor());
+	        pst.setInt(7, p.getId_Produto());
+	        
+	        int rowsAffected = pst.executeUpdate();
+	        if (rowsAffected > 0) {
+	            System.out.println("Produto alterado com sucesso.");
+	            return true;
+	        } else {
+	            System.out.println("Nenhuma linha foi alterada. Verifique o ID ou os valores fornecidos.");
+	            return false;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
 
 	public boolean excluirProdutos(int id_Produto) {
 		// TODO Auto-generated method stub

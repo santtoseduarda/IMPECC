@@ -150,19 +150,6 @@ public class AlterarProduto extends JFrame {
 		
 		comboBoxFornecedor = new JComboBox();
 		panel.add(comboBoxFornecedor, "cell 1 25 7 1,growx");
-		comboBoxFornecedor = new JComboBox<>();
-		FornecedorController fornecedorController = new FornecedorController();
-
-		ArrayList<Fornecedor> fornecedores = null;
-		try {
-			fornecedores = fornecedorController.buscarTodosFornecedores();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (Fornecedor fornecedor : fornecedores) {
-			comboBoxFornecedor.addItem(fornecedor);
-		}
 
 
 		JLabel lblQuantidadeEstoque = new JLabel("Quantida em Estoque");
@@ -251,18 +238,12 @@ public class AlterarProduto extends JFrame {
 		contentPane_1.add(btnCancelar, "cell 18 88,aligny bottom");
 
 		JButton btnSalvarEdicoes = new JButton("Salvar Edições");
+		btnSalvarEdicoes.addActionListener(produtoController.salvarEdicoes());
 		btnSalvarEdicoes.setForeground(Color.RED);
 		btnSalvarEdicoes.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSalvarEdicoes.setBackground(new Color(255, 255, 255));
 		contentPane_1.add(btnSalvarEdicoes, "cell 23 88,aligny bottom");
 
-	
-		JButton btnAdicionar = new JButton("Salvar Edições");
-		btnAdicionar.setForeground(new Color(255, 0, 0));
-		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnAdicionar.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
-		btnAdicionar.addActionListener(produtoController.salvarEdicoes());
 		 
 		JButton btnLimparCampos = new JButton("Limpar Campos");
 		btnLimparCampos.addActionListener(produtoController.limparCamposEditarProduto());

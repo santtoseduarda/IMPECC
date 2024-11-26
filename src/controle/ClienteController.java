@@ -19,6 +19,8 @@ import modelo.Cliente;
 import visao.AlterarCliente;
 import visao.CadastroCliente;
 import visao.ListagemClientes;
+import visao.MensagemView;
+import visao.MensagemViewOp;
 
 public class ClienteController {
 
@@ -85,8 +87,8 @@ public class ClienteController {
 						janelaCadastro.dispose();
 
 					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(null, "Erro ao cadastrar cliente: " + ex.getMessage(), "Erro",
-								JOptionPane.ERROR_MESSAGE);
+						new MensagemView("Erro ao cadastrar cliente.", "Erro de cadastro", 0);
+	
 					}
 				}
 			}
@@ -101,23 +103,20 @@ public class ClienteController {
 
 			// Verifica se a data é maior que a data atual
 			if (data.isAfter(LocalDate.now())) {
-				JOptionPane.showMessageDialog(null, "Data de nascimento não pode ser no futuro.", "Erro",
-						JOptionPane.ERROR_MESSAGE);
+				new MensagemView("Data de nascimento não pode ser no futuro.", "Erro de cadastro", 0);
 				return false;
 			}
 
 			// Verifica a idade (mínimo de 18 anos e máximo de 120 anos)
 			long idade = ChronoUnit.YEARS.between(data, LocalDate.now());
 			if (idade < 18 || idade > 120) {
-				JOptionPane.showMessageDialog(null, "A idade deve ser entre 18 e 120 anos.", "Erro",
-						JOptionPane.ERROR_MESSAGE);
+				new MensagemView("A idade deve ser entre 18 e 120 anos.", "Erro de cadastro", 0);
 				return false;
 			}
 
 			return true; // Data é válida e dentro do intervalo
 		} catch (DateTimeParseException e) {
-			JOptionPane.showMessageDialog(null, "Data inválida. O formato correto é dd/MM/yyyy.", "Erro",
-					JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Data inválida. O formato correto é dd/MM/yyyy.", "Erro de cadastro", 0);
 			return false;
 		}
 	}
@@ -130,8 +129,7 @@ public class ClienteController {
 		String email = janelaCadastro.txtEmail.getText();
 
 		if (nome.isEmpty() || dataNasc.isEmpty() || cpf.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", 0);
 			return false;
 		}
 
@@ -140,20 +138,17 @@ public class ClienteController {
 		}
 
 		if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
-			JOptionPane.showMessageDialog(null, "CPF inválido. Deve estar no formato 000.000.000-00",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("CPF inválido. Deve estar no formato 000.000.000-00", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!email.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
-			JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("E-mail inválido. Deve conter '@' e um domínio válido.", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!telefone.matches("\\(\\d{2}\\)\\d{5}-\\d{4}")) { // Celular no formato (00)00000-0000
-			JOptionPane.showMessageDialog(null, "Celular inválido. Deve estar no formato (00)00000-0000.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Celular inválido. Deve estar no formato (00)00000-0000.", "Erro de cadastro", 0);
 			return false;
 
 		}
@@ -180,12 +175,14 @@ public class ClienteController {
 
 					DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
 					int idCliente = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+					
+					
 
-					int confirmacao = JOptionPane.showConfirmDialog(null,
-							"Você tem certeza que deseja excluir o cliente?", "Confirmação de Exclusão",
-							JOptionPane.YES_NO_OPTION);
+					MensagemViewOp mve = new MensagemViewOp("Você tem certeza que deseja excluir o cliente?", "Exclusão de Cliente");
+					
+					int confirmacao = mve.getResposta();
 
-					if (confirmacao == JOptionPane.YES_OPTION) {
+					if (confirmacao == 1) {
 
 						ClienteDAO cdao = new ClienteDAO();
 						boolean certo = cdao.excluirCliente(idCliente);
@@ -193,15 +190,15 @@ public class ClienteController {
 						if (certo) {
 
 							modeloTabela.removeRow(posicaoSelecionada);
-							JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso.");
+							new MensagemView("Cliente excluído com sucesso.", "Exclusão", 1);
 							atualizarTabela("", "");
 
 						} else {
-							JOptionPane.showMessageDialog(null, "Erro ao excluir o cliente.");
+							new MensagemView("Erro ao excluir o cliente", "Erro de exclusão", 0);
 						}
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Por favor, selecione um cliente para excluir.");
+					new MensagemView("Por favor, selecione um cliente para excluir.", "Atenção", 0);
 				}
 			}
 
@@ -214,12 +211,10 @@ public class ClienteController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int resposta = JOptionPane.showConfirmDialog(null, "Você realmente deseja sair?", "Confirmação",
-						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
+				MensagemViewOp mve = new MensagemViewOp("Você realmente deseja sair?", "Confirmação");
+				int resposta =  mve.getResposta();
 				// Verifica a resposta
-				if (resposta == JOptionPane.YES_OPTION) {
-
+				if (resposta == 1) {
 					// botar o controller login para abrir a tela
 					LoginController logController = new LoginController();
 					logController.iniciarLogin();
@@ -268,12 +263,11 @@ public class ClienteController {
 						janelaAlterar.setVisible(true);
 						janelaListagem.dispose();
 					} else {
-						System.out.println("cliente não encontrado.");
-						JOptionPane.showMessageDialog(janelaListagem, "cliente não encontrado.");
+						new MensagemView("Cliente não encontrado", "Atenção", 0);
+	
 					}
 				} else {
-					System.out.println("Nenhuma linha selecionada.");
-					JOptionPane.showMessageDialog(janelaListagem, "Por favor, selecione um cliente para alterar.");
+					new MensagemView("Por favor, selecione um cliente para alterar.", "Atenção", 0);
 				}
 			}
 		};
@@ -315,13 +309,10 @@ public class ClienteController {
 								janelaAlterar.dispose();
 								atualizarTabela("", "");
 							} else {
-								JOptionPane.showMessageDialog(null,
-										"Erro ao alterar cliente: Nenhuma linha foi afetada.", "Erro",
-										JOptionPane.ERROR_MESSAGE);
+								new MensagemView("Erro ao alterar cliente: Nenhuma linha foi afetada.", "Erro", 0);
 							}
 						} catch (Exception ex) {
-							JOptionPane.showMessageDialog(null, "Erro ao alterar cliente: " + ex.getMessage(), "Erro",
-									JOptionPane.ERROR_MESSAGE);
+							new MensagemView("Erro ao alterar cliente.", "Erro", 0);
 						}
 					}
 				}
@@ -337,8 +328,7 @@ public class ClienteController {
 		String email = janelaAlterar.txtEmailCliente.getText();
 
 		if (nome.isEmpty() || dataNasc.isEmpty() || cpf.isEmpty() || telefone.isEmpty() || email.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", 0);
 			return false;
 		}
 
@@ -347,20 +337,17 @@ public class ClienteController {
 		}
 
 		if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
-			JOptionPane.showMessageDialog(null, "CPF inválido. Deve estar no formato 000.000.000-00",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("CPF inválido. Deve estar no formato 000.000.000-00", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!email.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
-			JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("E-mail inválido. Deve conter '@' e um domínio válido.", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!telefone.matches("\\(\\d{2}\\)\\d{5}-\\d{4}")) { // Celular no formato (00)00000-0000
-			JOptionPane.showMessageDialog(null, "Celular inválido. Deve estar no formato (00)00000-0000.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Celular inválido. Deve estar no formato (00)00000-0000.", "Erro de cadastro", 0);
 			return false;
 
 		}

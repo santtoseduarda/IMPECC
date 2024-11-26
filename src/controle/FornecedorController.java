@@ -16,6 +16,8 @@ import modelo.Fornecedor;
 import visao.AlterarFornecedor;
 import visao.CadastroFornecedores;
 import visao.ListagemFornecedor;
+import visao.MensagemView;
+import visao.MensagemViewOp;
 
 public class FornecedorController {
 
@@ -61,12 +63,10 @@ public class FornecedorController {
 						viewa.setVisible(true);
 						viewl.dispose();
 					} else {
-						System.out.println("Fornecedor não encontrado.");
-						JOptionPane.showMessageDialog(viewl, "Fornecedor não encontrado.");
+						new MensagemView("Fornecedor não encontrado.", "Atenção", 0);
 					}
 				} else {
-					System.out.println("Nenhuma linha selecionada.");
-					JOptionPane.showMessageDialog(viewl, "Por favor, selecione um fornecedor para alterar.");
+					new MensagemView("Por favor, selecione um fornecedor para alterar.", "Atenção", 0);
 				}
 			}
 		};
@@ -83,11 +83,11 @@ public class FornecedorController {
 					DefaultTableModel modeloTabela = (DefaultTableModel) viewl.table.getModel();
 					int idFornecedor = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
 
-					int confirmacao = JOptionPane.showConfirmDialog(null,
-							"Você tem certeza que deseja excluir o fornecedor?", "Confirmação de Exclusão",
-							JOptionPane.YES_NO_OPTION);
+					MensagemViewOp mve = new MensagemViewOp("Você tem certeza que deseja excluir o fornecedor?", "Exclusão de Fornecedor");
 
-					if (confirmacao == JOptionPane.YES_OPTION) {
+					int confirmacao = mve.getResposta();
+
+					if (confirmacao == 1) {
 
 						// vai excluir o fornecedor
 						FornecedorDAO frdao = new FornecedorDAO();
@@ -96,14 +96,14 @@ public class FornecedorController {
 						if (certo) {
 
 							modeloTabela.removeRow(posicaoSelecionada);
-							JOptionPane.showMessageDialog(null, "Fornecedor excluído com sucesso.");
+							new MensagemView("Fornecedor excluído com sucesso", "Exclusão", 1);
 
 						} else {
-							JOptionPane.showMessageDialog(null, "Erro ao excluir o fornecedor.");
+							new MensagemView("Erro ao excluir o fornecedor", "Erro de exclusão", 0);
 						}
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Por favor, selecione um fornecedor para excluir.");
+					new MensagemView("Por favor, selecione um fornecedor para excluir.", "Atenção", 0);
 				}
 			}
 		};
@@ -112,11 +112,10 @@ public class FornecedorController {
 	public ActionListener sairSistema() {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int resposta = JOptionPane.showConfirmDialog(null, "Você realmente deseja sair?", "Confirmação",
-						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
+				MensagemViewOp mve = new MensagemViewOp("Você realmente deseja sair?", "Confirmação");
+				int resposta =  mve.getResposta();
 				// Verifica a resposta
-				if (resposta == JOptionPane.YES_OPTION) {
+				if (resposta == 1) {
 					LoginController logController = new LoginController();
 					logController.iniciarLogin();
 				}
@@ -193,8 +192,7 @@ public class FornecedorController {
 						viewc.dispose();
 
 					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(null, "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
-								JOptionPane.ERROR_MESSAGE);
+						new MensagemView("Erro ao cadastrar funcionário", "Erro", 0);
 					}
 
 				}
@@ -221,26 +219,22 @@ public class FornecedorController {
 		String telefone = viewc.txtTelefone.getText();
 
 		if (nome.isEmpty() || cnpj.isEmpty() || email.isEmpty() || telefone.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!cnpj.matches("\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}")) {
-			JOptionPane.showMessageDialog(null, "CNPJ inválido. Deve estar no formato 00.000.000/0000-00",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("CNPJ inválido. Deve estar no formato 00.000.000/0000-00", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
-			JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("E-mail inválido. Deve conter '@' e um domínio válido.", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!telefone.matches("\\(\\d{2}\\)\\d{5}-\\d{4}")) { // Celular no formato (00)00000-0000
-			JOptionPane.showMessageDialog(null, "Celular inválido. Deve estar no formato (00)00000-0000.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Celular inválido. Deve estar no formato (00)00000-0000.", "Erro de cadastro", 0);
 			return false;
 
 		}
@@ -302,13 +296,10 @@ public class FornecedorController {
 								viewl.setVisible(true);
 								viewa.dispose();
 							} else {
-								JOptionPane.showMessageDialog(null,
-										"Erro ao alterar fornecedor: Nenhuma linha foi afetada.", "Erro",
-										JOptionPane.ERROR_MESSAGE);
+								new MensagemView("Erro ao alterar fornecedor: Nenhuma linha foi afetada.", "Erro", 0);
 							}
 						} catch (Exception ex) {
-							JOptionPane.showMessageDialog(null, "Erro ao alterar fornecedor: " + ex.getMessage(),
-									"Erro", JOptionPane.ERROR_MESSAGE);
+							new MensagemView("Erro ao alterar fornecedor.", "Erro", 0);
 						}
 					}
 
@@ -324,26 +315,22 @@ public class FornecedorController {
 		String telefone = viewa.txtTelefoneFornecedor.getText();
 
 		if (nome.isEmpty() || cnpj.isEmpty() || email.isEmpty() || telefone.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!cnpj.matches("\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}")) {
-			JOptionPane.showMessageDialog(null, "CNPJ inválido. Deve estar no formato 00.000.000/0000-00",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("CNPJ inválido. Deve estar no formato 00.000.000/0000-00", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
-			JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("E-mail inválido. Deve conter '@' e um domínio válido.", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!telefone.matches("\\(\\d{2}\\)\\d{5}-\\d{4}")) { // Celular no formato (00)00000-0000
-			JOptionPane.showMessageDialog(null, "Celular inválido. Deve estar no formato (00)00000-0000.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Celular inválido. Deve estar no formato (00)00000-0000.", "Erro de cadastro", 0);
 			return false;
 
 		}

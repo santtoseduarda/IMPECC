@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import visao.CadastroFuncionario;
+import visao.MensagemView;
 import visao.TelaInicial;
 import visao.TelaLogin;
 
@@ -45,10 +46,7 @@ public class LoginController {
 			            
 			        } else {
 			            // Se o login ou a senha estiverem errados, mostra uma mensagem de erro
-			            javax.swing.JOptionPane.showMessageDialog(null,
-			                    "Login ou senha incorretos!",
-			                    "Erro de login",
-			                    javax.swing.JOptionPane.ERROR_MESSAGE);
+			        	new MensagemView("Login ou senha incorretos!", "Erro de login", 0);
 			        }
 			}
 		};

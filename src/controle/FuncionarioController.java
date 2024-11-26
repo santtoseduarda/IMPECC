@@ -16,6 +16,8 @@ import visao.AlterarFuncionario;
 import visao.CadastroFuncionario;
 import visao.CadastroFuncionarios;
 import visao.ListagemFuncionarios;
+import visao.MensagemView;
+import visao.MensagemViewOp;
 
 public class FuncionarioController {
 	FuncionarioDAO fdao = new FuncionarioDAO();
@@ -24,10 +26,11 @@ public class FuncionarioController {
 	ListagemFuncionarios janelaListagem = new ListagemFuncionarios(this);
 	CadastroFuncionario janelaLoginCadastro = new CadastroFuncionario(this);
 	TelaInternaController telaInternaController = new TelaInternaController();
-	
+
 	public FuncionarioController() {
 		telaInternaController.setTela(janelaListagem);
 	}
+
 	public void iniciarCadastroFunc() {
 		limparCamposCadFuncionario();
 		janelaCadastro.setVisible(true);
@@ -67,8 +70,7 @@ public class FuncionarioController {
 						janelaCadastro.dispose();
 
 					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(null, "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
-								JOptionPane.ERROR_MESSAGE);
+						new MensagemView("Erro ao cadastrar funcionário.", "Erro de cadastro", 0);
 					}
 				}
 			}
@@ -88,11 +90,12 @@ public class FuncionarioController {
 					DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
 					int idFuncionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
 
-					int confirmacao = JOptionPane.showConfirmDialog(null,
-							"Você tem certeza que deseja excluir o funcionário?", "Confirmação de Exclusão",
-							JOptionPane.YES_NO_OPTION);
+					MensagemViewOp mve = new MensagemViewOp("Você tem certeza que deseja excluir o funcionário?", "Exclusão de Funcionário");
 
-					if (confirmacao == JOptionPane.YES_OPTION) {
+					int confirmacao = mve.getResposta();
+
+
+					if (confirmacao == 1) {
 
 						FuncionarioDAO fdao = new FuncionarioDAO();
 						boolean certo = fdao.excluirFuncionario(idFuncionario);
@@ -100,15 +103,14 @@ public class FuncionarioController {
 						if (certo) {
 
 							modeloTabela.removeRow(posicaoSelecionada);
-							JOptionPane.showMessageDialog(null, "Funcionário excluído com sucesso.");
+							new MensagemView("Funcionário excluído com sucesso.", "Exclusão", 1);
 							atualizarTabela("", "");
 
 						} else {
-							JOptionPane.showMessageDialog(null, "Erro ao excluir o funcionário.");
-						}
+							new MensagemView("Erro ao excluir o funcionário", "Erro de exclusão", 0);						}
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Por favor, selecione um funcionário para excluir.");
+					new MensagemView("Por favor, selecione um funcionário para excluir.", "Atenção", 0);
 				}
 			}
 
@@ -140,12 +142,10 @@ public class FuncionarioController {
 						janelaAlterar.setVisible(true);
 						janelaListagem.dispose();
 					} else {
-						System.out.println("Funcionário não encontrado.");
-						JOptionPane.showMessageDialog(janelaListagem, "Funcionário não encontrado.");
+						new MensagemView("Funcionário não encontrado", "Atenção", 0);
 					}
 				} else {
-					System.out.println("Nenhuma linha selecionada.");
-					JOptionPane.showMessageDialog(janelaListagem, "Por favor, selecione um funcionário para alterar.");
+					new MensagemView("Por favor, selecione um funcionário para alterar.", "Atenção", 0);
 				}
 			}
 		};
@@ -177,13 +177,12 @@ public class FuncionarioController {
 								janelaAlterar.dispose();
 								atualizarTabela("", "");
 							} else {
-								JOptionPane.showMessageDialog(null,
-										"Erro ao alterar funcionário: Nenhuma linha foi afetada.", "Erro",
-										JOptionPane.ERROR_MESSAGE);
+								new MensagemView("Erro ao alterar funcionário: Nenhuma linha foi afetada.", "Erro", 0);
+								
 							}
 						} catch (Exception ex) {
-							JOptionPane.showMessageDialog(null, "Erro ao alterar funcionário: " + ex.getMessage(),
-									"Erro", JOptionPane.ERROR_MESSAGE);
+							new MensagemView("Erro ao funcionário cliente.", "Erro", 0);
+
 						}
 					}
 
@@ -197,11 +196,11 @@ public class FuncionarioController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int resposta = JOptionPane.showConfirmDialog(null, "Você realmente deseja sair?", "Confirmação",
-						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				MensagemViewOp mve = new MensagemViewOp("Você realmente deseja sair?", "Confirmação");
+				int resposta =  mve.getResposta();
 
 				// Verifica a resposta
-				if (resposta == JOptionPane.YES_OPTION) {
+				if (resposta == 1) {
 
 					// botar o controller login para abrir a tela
 					LoginController logController = new LoginController();
@@ -266,12 +265,13 @@ public class FuncionarioController {
 			}
 		};
 	}
+
 	public MouseListener voltarLogin() {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				LoginController loginController = new LoginController();
-				//FuncionarioController funcionarioController = new FuncionarioController();
+				// FuncionarioController funcionarioController = new FuncionarioController();
 				loginController.iniciarLogin();
 				janelaLoginCadastro.dispose();
 			}
@@ -329,26 +329,22 @@ public class FuncionarioController {
 
 		if (nomeFuncionario.isEmpty() || email_Funcionario.isEmpty() || celular.isEmpty() || cpf.isEmpty()
 				|| login.isEmpty() || senha.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) { // CPF no formato 000.000.000-00
-			JOptionPane.showMessageDialog(null, "CPF inválido. Deve estar no formato 000.000.000-00.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("CPF inválido. Deve estar no formato 000.000.000-00", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!email_Funcionario.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
-			JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("E-mail inválido. Deve conter '@' e um domínio válido.", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!celular.matches("\\(\\d{2}\\)\\d{5}-\\d{4}")) { // Celular no formato (00)00000-0000
-			JOptionPane.showMessageDialog(null, "Celular inválido. Deve estar no formato (00)00000-0000.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Celular inválido. Deve estar no formato (00)00000-0000.", "Erro de cadastro", 0);
 			return false;
 		}
 		return true;
@@ -364,26 +360,22 @@ public class FuncionarioController {
 
 		if (nomeFuncionario.isEmpty() || email_Funcionario.isEmpty() || celular.isEmpty() || cpf.isEmpty()
 				|| login.isEmpty() || senha.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) { // CPF no formato 000.000.000-00
-			JOptionPane.showMessageDialog(null, "CPF inválido. Deve estar no formato 000.000.000-00.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("CPF inválido. Deve estar no formato 000.000.000-00", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!email_Funcionario.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
-			JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("E-mail inválido. Deve conter '@' e um domínio válido.", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!celular.matches("\\(\\d{2}\\)\\d{5}-\\d{4}")) { // Celular no formato (00)00000-0000
-			JOptionPane.showMessageDialog(null, "Celular inválido. Deve estar no formato (00)00000-0000.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Celular inválido. Deve estar no formato (00)00000-0000.", "Erro de cadastro", 0);
 			return false;
 		}
 		return true;
@@ -399,26 +391,22 @@ public class FuncionarioController {
 
 		if (nomeFuncionario.isEmpty() || email_Funcionario.isEmpty() || celular.isEmpty() || cpf.isEmpty()
 				|| login.isEmpty() || senha.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) { // CPF no formato 000.000.000-00
-			JOptionPane.showMessageDialog(null, "CPF inválido. Deve estar no formato 000.000.000-00.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("CPF inválido. Deve estar no formato 000.000.000-00", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!email_Funcionario.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
-			JOptionPane.showMessageDialog(null, "E-mail inválido. Deve conter '@' e um domínio válido.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("E-mail inválido. Deve conter '@' e um domínio válido.", "Erro de cadastro", 0);
 			return false;
 		}
 
 		if (!celular.matches("\\(\\d{2}\\)\\d{5}-\\d{4}")) { // Celular no formato (00)00000-0000
-			JOptionPane.showMessageDialog(null, "Celular inválido. Deve estar no formato (00)00000-0000.",
-					"Erro de cadastro", JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Celular inválido. Deve estar no formato (00)00000-0000.", "Erro de cadastro", 0);
 			return false;
 		}
 		return true;
@@ -448,8 +436,7 @@ public class FuncionarioController {
 
 						janelaLoginCadastro.dispose();
 					} catch (Exception ex) {
-						JOptionPane.showMessageDialog(null, "Erro ao cadastrar funcionário: " + ex.getMessage(), "Erro",
-								JOptionPane.ERROR_MESSAGE);
+						new MensagemView("Erro ao cadastrar funcionário.", "Erro", 0);
 					}
 				}
 			}

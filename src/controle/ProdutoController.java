@@ -22,6 +22,8 @@ import visao.CadastroFuncionario;
 import visao.CadastroProduto;
 import visao.ListagemFuncionarios;
 import visao.ListagemProdutos;
+import visao.MensagemView;
+import visao.MensagemViewOp;
 
 public class ProdutoController {
 
@@ -39,11 +41,11 @@ public class ProdutoController {
 	public ActionListener sairSistema() {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int resposta = JOptionPane.showConfirmDialog(null, "Você realmente deseja sair?", "Confirmação",
-						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
+				MensagemViewOp mve = new MensagemViewOp("Você realmente deseja sair?", "Confirmação");
+				int resposta =  mve.getResposta();
+				
 				// Verifica a resposta
-				if (resposta == JOptionPane.YES_OPTION) {
+				if (resposta == 1) {
 					LoginController logController = new LoginController();
 					logController.iniciarLogin();
 				}
@@ -87,25 +89,24 @@ public class ProdutoController {
 					DefaultTableModel modeloTabela = (DefaultTableModel) viewL.table.getModel();
 					int idProduto = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
 
-					int confirmacao = JOptionPane.showConfirmDialog(null,
-							"Você tem certeza que deseja excluir o produto?", "Confirmação de Exclusão",
-							JOptionPane.YES_NO_OPTION);
-
-					if (confirmacao == JOptionPane.YES_OPTION) {
+					MensagemViewOp mve = new MensagemViewOp("Você tem certeza que deseja excluir o cliente?", "Exclusão de Cliente");
+					int confirmacao = mve.getResposta();
+					
+					if (confirmacao == 1) {
 
 						boolean certo = novoProduto.excluirProdutos(idProduto);
 
 						if (certo) {
 
 							modeloTabela.removeRow(posicaoSelecionada);
-							JOptionPane.showMessageDialog(null, "Produto excluído com sucesso.");
+							new MensagemView("Produto excluído com sucesso.", "Exclusão", 1);
 
 						} else {
-							JOptionPane.showMessageDialog(null, "Erro ao excluir o produto.");
+							new MensagemView("Erro ao excluir o produto", "Erro de exclusão", 0);
 						}
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Por favor, selecione um produto para excluir.");
+					new MensagemView("Por favor, selecione um produto para excluir.", "Atenção", 0);
 				}
 			}
 		};
@@ -172,9 +173,7 @@ public class ProdutoController {
 	                    viewC.dispose();
 
 	                } catch (NumberFormatException ex) {
-	                    javax.swing.JOptionPane.showMessageDialog(null,
-	                            "Preencha os campos de Preço e Quantidade corretamente (somente números).",
-	                            "Erro de cadastro", javax.swing.JOptionPane.ERROR_MESSAGE);
+						new MensagemView("Preencha os campos de Preço e Quantidade corretamente (somente números).", "Erro de cadastro", 0);
 	                }
 	            }
 	        }
@@ -199,16 +198,14 @@ public class ProdutoController {
 	        Float.parseFloat(preco);
 	        Integer.parseInt(qntEstoque);
 	    } catch (NumberFormatException e) {
-	        javax.swing.JOptionPane.showMessageDialog(null, 
-	            "Preencha os campos de Preço e Quantidade corretamente (somente números).", 
-	            "Erro de cadastro", javax.swing.JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Preencha os campos de Preço e Quantidade corretamente (somente números).", "Erro de cadastro", 0);
 	        return false;
 	    }
 
 	    if (nomeProduto.isEmpty() || tamanho.isEmpty() || genero.isEmpty() || preco.isEmpty() || fornecedor.isEmpty()
 	            || qntEstoque.isEmpty()) {
-	        javax.swing.JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
-	                "Erro de cadastro", javax.swing.JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", 0);
+	     
 	        return false;
 	    }
 	    return true;
@@ -262,7 +259,7 @@ public class ProdutoController {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(viewA, "Erro ao carregar fornecedores.");
+			new MensagemView("Erro ao carregar fornecedores.", "Erro", 0);
 		}
 
 	}
@@ -284,12 +281,10 @@ public class ProdutoController {
 						viewA.setVisible(true);
 						viewL.dispose();
 					} else {
-						System.out.println("Produto não encontrado.");
-						JOptionPane.showMessageDialog(viewL, "Produto não encontrado.");
+						new MensagemView("Produto não encontrado.", "Atenção", 0);
 					}
 				} else {
-					System.out.println("Nenhuma linha selecionada.");
-					JOptionPane.showMessageDialog(viewL, "Por favor, selecione um produto para alterar.");
+					new MensagemView("Por favor, selecione um produto para alterar.", "Atenção", 0);
 				}
 			}
 		};
@@ -338,13 +333,12 @@ public class ProdutoController {
 	                        viewA.dispose();
 	                        atualizarTabela("", "");
 	                    } else {
-	                        JOptionPane.showMessageDialog(null,
-	                                "Erro ao alterar funcionário: Nenhuma linha foi afetada.", "Erro",
-	                                JOptionPane.ERROR_MESSAGE);
+	    					new MensagemView("Erro ao alterar produto: Nenhuma linha foi afetada.", "Erro", 0);
+	                        
 	                    }
 	                } catch (Exception ex) {
-	                    JOptionPane.showMessageDialog(null, "Erro ao alterar funcionário: " + ex.getMessage(),
-	                            "Erro", JOptionPane.ERROR_MESSAGE);
+    					new MensagemView("Erro ao alterar produto!", "Erro", 0);
+
 	                }
 	            }
 	            }
@@ -371,16 +365,14 @@ public class ProdutoController {
 	        Float.parseFloat(preco);
 	        Integer.parseInt(qntEstoque);
 	    } catch (NumberFormatException e) {
-	        javax.swing.JOptionPane.showMessageDialog(null, 
-	            "Preencha os campos de Preço e Quantidade corretamente (somente números).", 
-	            "Erro de cadastro", javax.swing.JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Preencha os campos de Preço e Quantidade corretamente (somente números).", "Erro de cadastro", 0);
+	
 	        return false;
 	    }
 
 	    if (nomeProduto.isEmpty() || tamanho.isEmpty() || genero.isEmpty() || preco.isEmpty() || fornecedor.isEmpty()
 	            || qntEstoque.isEmpty()) {
-	        javax.swing.JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
-	                "Erro de cadastro", javax.swing.JOptionPane.ERROR_MESSAGE);
+			new MensagemView("Todos os campos obrigatórios (*) devem ser preenchidos!", "Erro de cadastro", 0);
 	        return false;
 	    }
 	    return true;

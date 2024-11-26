@@ -50,7 +50,8 @@ public class CadastroProduto extends JFrame {
 	public JTextField txtNomeProduto;
 
 	public CadastroProduto(ProdutoController produtoController) {
-		CadastroProduto janelaCadastroProduto = this;
+		
+		
 		setTitle("Cadastro Produto");
 		Font fontRegular = null;
 		Font fontBold = null;

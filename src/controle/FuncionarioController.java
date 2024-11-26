@@ -442,5 +442,9 @@ public class FuncionarioController {
 			}
 		};
 	}
+	public void janelaCadastro() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

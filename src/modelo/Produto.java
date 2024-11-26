@@ -1,8 +1,5 @@
 package modelo;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 public class Produto {
 
 	private int id_Produto;
@@ -10,7 +7,6 @@ public class Produto {
 	private String marca;
 	private String genero;
 	private float preco;
-	private int codBarra;
 	private int qtdEstoque;
 	private String tamanho;
 	private Fornecedor fornecedor;
@@ -71,14 +67,6 @@ public class Produto {
 		this.preco = precoConvert;
 	}
 
-	public int getCodBarra() {
-		return codBarra;
-	}
-
-	public void setCodBarra(int codBarraConvert) {
-		this.codBarra = codBarraConvert;
-	}
-
 	public int getQtdEstoque() {
 		return qtdEstoque;
 	}
@@ -87,4 +75,9 @@ public class Produto {
 		this.qtdEstoque = qntEstoqueConvert;
 	}
 
+	
+	@Override
+    public String toString() {
+        return nomeProduto;
+    }
 }

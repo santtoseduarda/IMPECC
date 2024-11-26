@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -12,6 +13,9 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Cliente;
+import modelo.Fornecedor;
+import modelo.ItemVenda;
+import modelo.Produto;
 import modelo.Venda;
 import visao.CadastroVendas;
 import visao.ListagemVendas;
@@ -116,6 +120,55 @@ public class VendaController {
 			}
 		}
 	}
+
+	public ActionListener adicionarCarrinho() {
+	    return new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            try {
+	                // Obter o produto selecionado e a quantidade do spinner
+	                Produto produtoSelecionado = (Produto) janelaCadastro.comboBoxProd.getSelectedItem();
+	                int quantidade = (Integer) janelaCadastro.getSpinnerQntd().getValue();
+
+	                // Verificar se os valores são válidos
+	                if (produtoSelecionado == null || quantidade <= 0) {
+	                    JOptionPane.showMessageDialog(janelaCadastro, "Selecione um produto e insira uma quantidade válida.", "Erro", JOptionPane.ERROR_MESSAGE);
+	                    return;
+	                }
+
+	                // Criar um novo ItemVenda
+	                ItemVenda itemVenda = new ItemVenda();
+	                itemVenda.setProduto(produtoSelecionado);
+	                itemVenda.setQntd(quantidade);
+	                itemVenda.setPreco(produtoSelecionado.getPreco());
+	                itemVenda.setPrecoTotal(quantidade * produtoSelecionado.getPreco());
+
+	                // Adicionar o item à lista de itens da venda
+	                venda.getItensVenda().add(itemVenda);
+
+	                // Atualizar a tabela
+	                DefaultTableModel model = (DefaultTableModel) janelaCadastro.table.getModel();
+	                model.addRow(new Object[]{
+	                    produtoSelecionado.getId_Produto(),
+	                    produtoSelecionado.getNomeProduto(),
+	                    quantidade,
+	                    produtoSelecionado.getPreco(),
+	                    itemVenda.getPrecoTotal()
+	                });
+
+	                // Atualizar o total geral
+	                float totalGeral = venda.getTotal() + itemVenda.getPrecoTotal();
+	                venda.setTotal(totalGeral);
+	                janelaCadastro.lblPreco.setText(String.format("%.2f", totalGeral));
+
+	                JOptionPane.showMessageDialog(janelaCadastro, "Produto adicionado ao carrinho com sucesso!");
+	            } catch (Exception ex) {
+	                JOptionPane.showMessageDialog(janelaCadastro, "Erro ao adicionar o produto ao carrinho: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+	            }
+	        }
+	    };
+	}
+
 	
 
 }

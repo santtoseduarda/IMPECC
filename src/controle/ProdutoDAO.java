@@ -1,6 +1,6 @@
 package controle;
 
-import java.sql.Connection; 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,7 +43,6 @@ public class ProdutoDAO {
 			pst.setLong(5, p.getQtdEstoque());
 			pst.setInt(6, p.getFornecedor().getID_fornecedor());
 			pst.executeUpdate();
-			
 
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -54,104 +53,102 @@ public class ProdutoDAO {
 	}
 
 	public Produto buscarProdutos(int id_Produto) {
-	    String sql = "SELECT p.*, f.nome_Fornecedor FROM produtos p JOIN fornecedores f ON p.fornecedor = f.id_Fornecedor WHERE p.id_Produto = ?";
-	    Produto p = null;
+		String sql = "SELECT p.*, f.nome_Fornecedor FROM produtos p JOIN fornecedores f ON p.fornecedor = f.id_Fornecedor WHERE p.id_Produto = ?";
+		Produto p = null;
 
-	    try {
-	        pst = conn.prepareStatement(sql);
-	        pst.setInt(1, id_Produto);
+		try {
+			pst = conn.prepareStatement(sql);
+			pst.setInt(1, id_Produto);
 
-	        ResultSet rs = pst.executeQuery();
+			ResultSet rs = pst.executeQuery();
 
-	        if (rs.next()) {
-	            p = new Produto();
-	            p.setId_Produto(rs.getInt("id_Produto"));
-	            p.setNomeProduto(rs.getString("nome_Produto"));
-	            p.setTamanho(rs.getString("tamanho"));
-	            p.setGenero(rs.getString("genero"));
-	            p.setPreco(rs.getFloat("preco"));
-	            p.setQtdEstoque(rs.getInt("qntd_Estoque"));
+			if (rs.next()) {
+				p = new Produto();
+				p.setId_Produto(rs.getInt("id_Produto"));
+				p.setNomeProduto(rs.getString("nome_Produto"));
+				p.setTamanho(rs.getString("tamanho"));
+				p.setGenero(rs.getString("genero"));
+				p.setPreco(rs.getFloat("preco"));
+				p.setQtdEstoque(rs.getInt("qntd_Estoque"));
 
-	            Fornecedor fornecedor = new Fornecedor();
-	            fornecedor.setID_fornecedor(rs.getInt("fornecedor"));
-	            fornecedor.setNome_Fornecedor(rs.getString("nome_Fornecedor"));
-	            p.setFornecedor(fornecedor);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
+				Fornecedor fornecedor = new Fornecedor();
+				fornecedor.setID_fornecedor(rs.getInt("fornecedor"));
+				fornecedor.setNome_Fornecedor(rs.getString("nome_Fornecedor"));
+				p.setFornecedor(fornecedor);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-	    return p;
+		return p;
 	}
 
 	public ArrayList<Produto> buscarProdLupa(String campo, String valor) {
-	    ArrayList<Produto> listaProdutos = new ArrayList<>();
+		ArrayList<Produto> listaProdutos = new ArrayList<>();
 
-	    try {
-	        String sql = "SELECT p.*, f.nome_Fornecedor FROM produtos p JOIN fornecedores f ON p.fornecedor = f.id_Fornecedor";
-	        
-	        if (!campo.isEmpty()) {
-	            sql += " WHERE " + campo + " LIKE ?";
-	        }
+		try {
+			String sql = "SELECT p.*, f.nome_Fornecedor FROM produtos p JOIN fornecedores f ON p.fornecedor = f.id_Fornecedor";
 
-	        PreparedStatement pst = conn.prepareStatement(sql);
+			if (!campo.isEmpty()) {
+				sql += " WHERE " + campo + " LIKE ?";
+			}
 
-	        if (!campo.isEmpty()) {
-	            pst.setString(1, "%" + valor + "%");
-	        }
+			PreparedStatement pst = conn.prepareStatement(sql);
 
-	        ResultSet rs = pst.executeQuery();
+			if (!campo.isEmpty()) {
+				pst.setString(1, "%" + valor + "%");
+			}
 
-	        while (rs.next()) {
-	            Produto p = new Produto();
-	            p.setId_Produto(rs.getInt("id_Produto"));
-	            p.setNomeProduto(rs.getString("nome_Produto"));
-	            p.setTamanho(rs.getString("tamanho"));
-	            p.setGenero(rs.getString("genero"));
-	            p.setPreco(rs.getFloat("preco"));
-	            p.setQtdEstoque(rs.getInt("qntd_Estoque"));
+			ResultSet rs = pst.executeQuery();
 
-	            Fornecedor fornecedor = new Fornecedor();
-	            fornecedor.setID_fornecedor(rs.getInt("fornecedor"));
-	            fornecedor.setNome_Fornecedor(rs.getString("nome_Fornecedor"));
-	            p.setFornecedor(fornecedor);
+			while (rs.next()) {
+				Produto p = new Produto();
+				p.setId_Produto(rs.getInt("id_Produto"));
+				p.setNomeProduto(rs.getString("nome_Produto"));
+				p.setTamanho(rs.getString("tamanho"));
+				p.setGenero(rs.getString("genero"));
+				p.setPreco(rs.getFloat("preco"));
+				p.setQtdEstoque(rs.getInt("qntd_Estoque"));
 
-	            listaProdutos.add(p);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
+				Fornecedor fornecedor = new Fornecedor();
+				fornecedor.setID_fornecedor(rs.getInt("fornecedor"));
+				fornecedor.setNome_Fornecedor(rs.getString("nome_Fornecedor"));
+				p.setFornecedor(fornecedor);
 
-	    return listaProdutos;
+				listaProdutos.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listaProdutos;
 	}
 
-
-	
 	public boolean alterarProduto(Produto p) {
-	    String sql = "UPDATE produtos SET nome_Produto = ?, tamanho = ?, genero = ?, preco = ?, qntd_Estoque = ?, fornecedor = ? WHERE id_Produto = ?";
-	    
-	    try {
-	        PreparedStatement pst = conn.prepareStatement(sql);
-	        pst.setString(1, p.getNomeProduto());
-	        pst.setString(2, p.getTamanho());
-	        pst.setString(3, p.getGenero());
-	        pst.setDouble(4, p.getPreco());
-	        pst.setLong(5, p.getQtdEstoque());
-	        pst.setInt(6, p.getFornecedor().getID_fornecedor());
-	        pst.setInt(7, p.getId_Produto());
-	        
-	        int rowsAffected = pst.executeUpdate();
-	        if (rowsAffected > 0) {
-	            System.out.println("Produto alterado com sucesso.");
-	            return true;
-	        } else {
-	            System.out.println("Nenhuma linha foi alterada. Verifique o ID ou os valores fornecidos.");
-	            return false;
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        return false;
-	    }
+		String sql = "UPDATE produtos SET nome_Produto = ?, tamanho = ?, genero = ?, preco = ?, qntd_Estoque = ?, fornecedor = ? WHERE id_Produto = ?";
+
+		try {
+			PreparedStatement pst = conn.prepareStatement(sql);
+			pst.setString(1, p.getNomeProduto());
+			pst.setString(2, p.getTamanho());
+			pst.setString(3, p.getGenero());
+			pst.setDouble(4, p.getPreco());
+			pst.setLong(5, p.getQtdEstoque());
+			pst.setInt(6, p.getFornecedor().getID_fornecedor());
+			pst.setInt(7, p.getId_Produto());
+
+			int rowsAffected = pst.executeUpdate();
+			if (rowsAffected > 0) {
+				System.out.println("Produto alterado com sucesso.");
+				return true;
+			} else {
+				System.out.println("Nenhuma linha foi alterada. Verifique o ID ou os valores fornecidos.");
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	public boolean excluirProdutos(int id_Produto) {
@@ -174,8 +171,21 @@ public class ProdutoDAO {
 		}
 	}
 
-	public Produto buscarFornecedor(int idProduto) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Produto> buscarTodosProdutos() throws SQLException {
+		ArrayList<Produto> produtos = new ArrayList<>();
+		String sql = "SELECT id_Produto, nome_Produto FROM produtos";
+		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Produto produto = new Produto();
+
+				produto.setId_Produto(rs.getInt("id_Produto"));
+				produto.setNomeProduto(rs.getString("nome_Produto"));
+				produtos.add(produto);
+
+			}
+		}
+		return produtos;
 	}
+
 }

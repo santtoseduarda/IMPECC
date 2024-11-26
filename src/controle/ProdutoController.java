@@ -32,7 +32,7 @@ public class ProdutoController {
 	public ProdutoController() {
 		telaInternaController.setTela(viewL);
 	}
-	
+
 	public void abrirListagemProdutos() {
 		atualizarTabela("", "");
 		viewL.setVisible(true);
@@ -152,26 +152,27 @@ public class ProdutoController {
 	}
 
 	public ActionListener adicionarProduto() {
-	    return new ActionListener() {
-	        public void actionPerformed(ActionEvent e) {
-	            if (validarCamposProd()) {
-	                try {
-	                    produto.setNomeProduto(viewC.txtNomeProduto.getText());
-	                    produto.setTamanho(viewC.comboBoxTamanho.getSelectedItem().toString());
-	                    produto.setGenero(viewC.comboBoxGenero.getSelectedItem().toString());
-	                    produto.setFornecedor((Fornecedor) viewC.comboBoxFornecedor.getSelectedItem());
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (validarCamposProd()) {
+					try {
+						produto.setNomeProduto(viewC.txtNomeProduto.getText());
+						produto.setTamanho(viewC.comboBoxTamanho.getSelectedItem().toString());
+						produto.setGenero(viewC.comboBoxGenero.getSelectedItem().toString());
+						produto.setFornecedor((Fornecedor) viewC.comboBoxFornecedor.getSelectedItem());
 
-	                    float precoConvert = Float.parseFloat(viewC.txtPreco.getText());
-	                    int qntEstoqueConvert = Integer.parseInt(viewC.txtQntdEstoque.getText());
+						float precoConvert = Float.parseFloat(viewC.txtPreco.getText());
+						int qntEstoqueConvert = Integer.parseInt(viewC.txtQntdEstoque.getText());
 
-	                    produto.setPreco(precoConvert);
-	                    produto.setQtdEstoque(qntEstoqueConvert);
+						produto.setPreco(precoConvert);
+						produto.setQtdEstoque(qntEstoqueConvert);
 
-	                    novoProduto.inserir(produto);
-	                    viewL.setVisible(true);
-	                    atualizarTabela("", "");
-	                    viewC.dispose();
+						novoProduto.inserir(produto);
+						viewL.setVisible(true);
+						atualizarTabela("", "");
+						viewC.dispose();
 
+<<<<<<< HEAD
 	                } catch (NumberFormatException ex) {
 						new MensagemView("Preencha os campos de Preço e Quantidade corretamente (somente números).", "Erro de cadastro", 0);
 	                }
@@ -209,6 +210,49 @@ public class ProdutoController {
 	        return false;
 	    }
 	    return true;
+=======
+					} catch (NumberFormatException ex) {
+						javax.swing.JOptionPane.showMessageDialog(null,
+								"Preencha os campos de Preço e Quantidade corretamente (somente números).",
+								"Erro de cadastro", javax.swing.JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		};
+	}
+
+	protected boolean validarCamposProd() {
+		String nomeProduto = viewC.txtNomeProduto.getText();
+		String tamanho = (viewC.comboBoxTamanho.getSelectedItem() != null)
+				? viewC.comboBoxTamanho.getSelectedItem().toString()
+				: "";
+		String genero = (viewC.comboBoxGenero.getSelectedItem() != null)
+				? viewC.comboBoxGenero.getSelectedItem().toString()
+				: "";
+		String preco = viewC.txtPreco.getText();
+		String fornecedor = (viewC.comboBoxFornecedor.getSelectedItem() != null)
+				? viewC.comboBoxFornecedor.getSelectedItem().toString()
+				: "";
+		String qntEstoque = viewC.txtQntdEstoque.getText();
+
+		try {
+			Float.parseFloat(preco);
+			Integer.parseInt(qntEstoque);
+		} catch (NumberFormatException e) {
+			javax.swing.JOptionPane.showMessageDialog(null,
+					"Preencha os campos de Preço e Quantidade corretamente (somente números).", "Erro de cadastro",
+					javax.swing.JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		if (nomeProduto.isEmpty() || tamanho.isEmpty() || genero.isEmpty() || preco.isEmpty() || fornecedor.isEmpty()
+				|| qntEstoque.isEmpty()) {
+			javax.swing.JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
+					"Erro de cadastro", javax.swing.JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
+>>>>>>> venda
 	}
 
 	public MouseListener voltarListagem() {
@@ -304,28 +348,25 @@ public class ProdutoController {
 	}
 
 	public ActionListener salvarEdicoes() {
-	    return new ActionListener() {
-	        public void actionPerformed(ActionEvent e) {
-	            int posicaoSelecionada = viewL.table.getSelectedRow();
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int posicaoSelecionada = viewL.table.getSelectedRow();
 
-	            if (posicaoSelecionada >= 0) {
-	                DefaultTableModel modeloTabela = (DefaultTableModel) viewL.table.getModel();
-	                int idProduto = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+				if (posicaoSelecionada >= 0) {
+					DefaultTableModel modeloTabela = (DefaultTableModel) viewL.table.getModel();
+					int idProduto = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
 
-	                if (validarCamposEditarProduto()) {
-	                Produto produto = new Produto();
-	                
-	                produto.setId_Produto(idProduto);
+					if (validarCamposEditarProduto()) {
+						Produto produto = new Produto();
 
-	                produto.setNomeProduto(viewA.txtNome.getText());
-	                produto.setTamanho(viewA.comboBoxTamanho.getSelectedItem().toString());
-	                produto.setGenero(viewA.comboBoxGenero.getSelectedItem().toString());
-	                produto.setPreco(Float.parseFloat(viewA.txtPreço.getText()));
+						produto.setId_Produto(idProduto);
 
-	                Fornecedor fornecedorSelecionado = (Fornecedor) viewA.comboBoxFornecedor.getSelectedItem();
-	                produto.setFornecedor(fornecedorSelecionado);
-	                produto.setQtdEstoque(Integer.parseInt(viewA.txtQuantidadeEstoque.getText()));
+						produto.setNomeProduto(viewA.txtNome.getText());
+						produto.setTamanho(viewA.comboBoxTamanho.getSelectedItem().toString());
+						produto.setGenero(viewA.comboBoxGenero.getSelectedItem().toString());
+						produto.setPreco(Float.parseFloat(viewA.txtPreço.getText()));
 
+<<<<<<< HEAD
 	                try {
 	                    boolean sucesso = novoProduto.alterarProduto(produto);
 	                    if (sucesso) {
@@ -344,11 +385,36 @@ public class ProdutoController {
 	            }
 	        }
 	    };
-	}
+=======
+						Fornecedor fornecedorSelecionado = (Fornecedor) viewA.comboBoxFornecedor.getSelectedItem();
+						produto.setFornecedor(fornecedorSelecionado);
+						produto.setQtdEstoque(Integer.parseInt(viewA.txtQuantidadeEstoque.getText()));
 
+						try {
+							boolean sucesso = novoProduto.alterarProduto(produto);
+							if (sucesso) {
+								viewL.setVisible(true);
+								viewA.dispose();
+								atualizarTabela("", "");
+							} else {
+								JOptionPane.showMessageDialog(null,
+										"Erro ao alterar funcionário: Nenhuma linha foi afetada.", "Erro",
+										JOptionPane.ERROR_MESSAGE);
+							}
+						} catch (Exception ex) {
+							JOptionPane.showMessageDialog(null, "Erro ao alterar funcionário: " + ex.getMessage(),
+									"Erro", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				}
+			}
+		};
+>>>>>>> venda
+	}
 
 	protected boolean validarCamposEditarProduto() {
 		String nomeProduto = viewA.txtNome.getText();
+<<<<<<< HEAD
 	    String tamanho = (viewA.comboBoxTamanho.getSelectedItem() != null)
 	            ? viewA.comboBoxTamanho.getSelectedItem().toString()
 	            : "";
@@ -376,6 +442,41 @@ public class ProdutoController {
 	        return false;
 	    }
 	    return true;
+=======
+		String tamanho = (viewA.comboBoxTamanho.getSelectedItem() != null)
+				? viewA.comboBoxTamanho.getSelectedItem().toString()
+				: "";
+		String genero = (viewA.comboBoxGenero.getSelectedItem() != null)
+				? viewA.comboBoxGenero.getSelectedItem().toString()
+				: "";
+		String preco = viewA.txtPreço.getText();
+		String fornecedor = (viewA.comboBoxFornecedor.getSelectedItem() != null)
+				? viewA.comboBoxFornecedor.getSelectedItem().toString()
+				: "";
+		String qntEstoque = viewA.txtQuantidadeEstoque.getText();
+
+		try {
+			Float.parseFloat(preco);
+			Integer.parseInt(qntEstoque);
+		} catch (NumberFormatException e) {
+			javax.swing.JOptionPane.showMessageDialog(null,
+					"Preencha os campos de Preço e Quantidade corretamente (somente números).", "Erro de cadastro",
+					javax.swing.JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+		if (nomeProduto.isEmpty() || tamanho.isEmpty() || genero.isEmpty() || preco.isEmpty() || fornecedor.isEmpty()
+				|| qntEstoque.isEmpty()) {
+			javax.swing.JOptionPane.showMessageDialog(null, "Todos os campos obrigatórios (*) devem ser preenchidos!",
+					"Erro de cadastro", javax.swing.JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
+	}
+
+	public ArrayList<Produto> buscarTodosProdutos() throws SQLException {
+		return novoProduto.buscarTodosProdutos();
+>>>>>>> venda
 	}
 
 }

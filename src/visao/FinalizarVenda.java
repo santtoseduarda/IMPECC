@@ -1,6 +1,7 @@
 package visao;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -111,40 +112,46 @@ public class FinalizarVenda extends JFrame {
 
 		JPanel panel = new JPanel();
 		contentPane.add(panel, "cell 3 2 30 83,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][][grow][][grow][grow 50][grow][][][grow]",
-				"[][][][][][][][][][][][][][][][][][grow][][][][][][][][][][][][][][][grow][][][][][grow][][][][]"));
+		panel.setLayout(new MigLayout("", "[grow][][][][][][][][][][][][grow][grow][grow]", "[grow][][][][][][][][][][][][][][][][][][grow 25][][][][][][][][][][][][][][][][][][][grow][][][][]"));
 
 		JLabel lblvoltar = new JLabel("");
 	//	lblvoltar.addMouseListener(clienteController.voltarListagem());
 		lblvoltar.setIcon(new ImageIcon(
 				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
 		panel.add(lblvoltar, "cell 0 0");
-
-		JLabel lblNomeCliente = new JLabel("NomeCliente");
-		panel.add(lblNomeCliente, "cell 1 2");
-
-		JLabel lblCpf1 = new JLabel("CPF");
-		panel.add(lblCpf1, "cell 3 2");
-
-		JLabel lblNome = new JLabel("");
-		panel.add(lblNome, "cell 1 3");
-
-		JLabel lblCpf = new JLabel("");
-		panel.add(lblCpf, "cell 3 3");
-
-		JLabel lblTotal = new JLabel("Total(R$):");
-		panel.add(lblTotal, "cell 1 6");
-
-		JLabel lblTotalPreco = new JLabel("");
-		panel.add(lblTotalPreco, "cell 2 6");
-
-		JLabel lblMetPag = new JLabel("Métodos De Pagamento");
-		panel.add(lblMetPag, "cell 1 11 1 2");
-
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(
-				new String[] { "Cartão de Crédito", "Cartão de Débito", "Dinheiro\t", "Pix" }));
-		panel.add(comboBox, "cell 1 13,growx");
+																				
+																						JLabel lblNomeCliente = new JLabel("NomeCliente");
+																						lblNomeCliente.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
+																						panel.add(lblNomeCliente, "cell 5 2 6 1,alignx left,aligny center");
+																		
+																				JLabel lblNome = new JLabel("");
+																				lblNome.setPreferredSize(new Dimension(90, 30));
+																				panel.add(lblNome, "cell 5 4 6 1");
+																
+																		JLabel lblCpf1 = new JLabel("CPF");
+																		lblCpf1.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
+																		panel.add(lblCpf1, "cell 5 7 7 1,alignx left,aligny center");
+														
+																JLabel lblCpf = new JLabel("");
+																lblCpf.setPreferredSize(new Dimension(90, 30));
+																panel.add(lblCpf, "cell 5 9 7 1");
+												
+														JLabel lblTotal = new JLabel("Total(R$):");
+														lblTotal.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
+														panel.add(lblTotal, "cell 5 12 7 1,alignx left,aligny center");
+										
+												JLabel lblTotalPreco = new JLabel("");
+												lblTotalPreco.setPreferredSize(new Dimension(90, 30));
+												panel.add(lblTotalPreco, "cell 5 14 7 1");
+								
+										JLabel lblMetPag = new JLabel("Métodos De Pagamento");
+										lblMetPag.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
+										panel.add(lblMetPag, "cell 5 17 7 1,alignx left,aligny center");
+										
+												JComboBox comboBox = new JComboBox();
+												comboBox.setPreferredSize(new Dimension(90, 30));
+												comboBox.setModel(new DefaultComboBoxModel(new String[] { "Cartão de Crédito", "Cartão de Débito", "Dinheiro\t", "Pix" }));
+												panel.add(comboBox, "cell 5 19 7 1,alignx left,aligny center");
 
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(

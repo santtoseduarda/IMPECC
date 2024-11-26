@@ -39,6 +39,7 @@ import javax.swing.DefaultComboBoxModel;
 
 public class CadastroProduto extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public JTextField txtPreco;
 	public JTextField txtQntdEstoque;
@@ -97,7 +98,7 @@ public class CadastroProduto extends JFrame {
 		contentPane.add(lblLinha1, "cell 1 2 2 1");
 
 		JLabel lblCarrinho = new JLabel("");
-		lblCarrinho.setIcon(new ImageIcon("C:\\Users\\Aluno\\Downloads\\IMPECC\\src\\img\\carrinho.png"));
+		lblCarrinho.setIcon(new ImageIcon("src/img/carrinho.png"));
 		contentPane.add(lblCarrinho, "cell 1 3");
 
 		JLabel lblVendas = new JLabel("Vendas");
@@ -107,8 +108,8 @@ public class CadastroProduto extends JFrame {
 
 		JPanel panel = new JPanel();
 		contentPane.add(panel, "cell 3 2 27 83,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][][grow][grow 50][grow][][][grow]",
-				"[][grow][grow][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow][grow][grow]"));
+		panel.setLayout(new MigLayout("", "[grow][grow][grow][][grow][grow 50][grow][][][grow]",
+				"[][][][][][grow][][][][][][grow][][][][][][grow][][][][grow][][][][][][grow][][][][][grow][][][][grow][][][][]"));
 
 		JLabel lblvoltar = new JLabel("");
 		lblvoltar.addMouseListener(produtoController.voltarListagem());

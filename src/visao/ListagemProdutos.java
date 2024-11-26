@@ -29,10 +29,8 @@ public class ListagemProdutos extends JFrame implements TelaInterna{
 	private JPanel contentPane;
 	private JTextField txtId;
 	private JTextField txtNome;
-	private JTextField txtCodBarra;
-	private JTextField txtTamanho;
 	private JTextField txtGenero;
-	private JTextField txtFornecedor;
+	private JTextField txtTamanho;
 	public JTable table;
 	private JLabel lblFornecedor;
 	private JLabel lblClientes;
@@ -40,6 +38,7 @@ public class ListagemProdutos extends JFrame implements TelaInterna{
 	private JLabel lblVendas;
 	private JLabel lblProdutos;
 	ProdutoController produtoController;
+	
 
 	public ListagemProdutos(ProdutoController produtoController) {
 		this.produtoController = produtoController;
@@ -80,63 +79,53 @@ public class ListagemProdutos extends JFrame implements TelaInterna{
 
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][][grow][][][][][][][][][][][][][][][][][][][][]",
-				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[][][][][grow][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblListagemProduto = new JLabel("Listagem de Produtos");
 		lblListagemProduto.setForeground(new Color(255, 255, 255));
 		lblListagemProduto.setFont(fontBold.deriveFont(Font.PLAIN, 45));
-		contentPane.add(lblListagemProduto, "cell 4 4");
+		contentPane.add(lblListagemProduto, "cell 3 4");
 
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(new ImageIcon(
 				new ImageIcon("src/img/image 6.png").getImage().getScaledInstance(215, 106, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLogo, "cell 2 0 2 6,alignx center,aligny center");
+		contentPane.add(lblLogo, "cell 1 0 2 6,alignx center,aligny center");
 
 		JLabel lblLinha1 = new JLabel("");
 		lblLinha1.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha1, "cell 2 7 2 1");
+		contentPane.add(lblLinha1, "cell 1 7 2 1");
 
 		JLabel lblCarrinho = new JLabel("");
 		lblCarrinho.setIcon(new ImageIcon(
 				new ImageIcon("src/img/carrinho.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
-		contentPane.add(lblCarrinho, "cell 2 8,alignx left,aligny center");
+		contentPane.add(lblCarrinho, "cell 1 8,alignx left,aligny center");
 
 		lblVendas = new JLabel("Vendas");
 		lblVendas.setForeground(new Color(255, 255, 255));
 		lblVendas.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblVendas, "cell 3 8,alignx left,aligny center");
+		contentPane.add(lblVendas, "cell 2 8,alignx left,aligny center");
 
 		JPanel panel = new JPanel();
-		
-		contentPane.add(panel, "cell 4 8 21 73,grow");
-		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][][][][][][grow]",
+		contentPane.add(panel, "cell 3 7 21 73,grow");
+		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][grow][][][][]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
 
 		JLabel lblId = new JLabel("ID");
-		lblId.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblId.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblId, "cell 1 0");
 
 		JLabel lblNome = new JLabel("Nome");
-		lblNome.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblNome.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblNome, "cell 4 0");
 
-		JLabel lbCodBarra = new JLabel("Cod. Barra");
-		lbCodBarra.setFont(fontBold.deriveFont(Font.PLAIN, 14));
-		panel.add(lbCodBarra, "cell 7 0");
+		JLabel lblGenero = new JLabel("Genero");
+		lblGenero.setFont(fontBold.deriveFont(Font.PLAIN, 15));
+		panel.add(lblGenero, "cell 7 0");
 
 		JLabel lblTamanho = new JLabel("Tamanho");
-		lblTamanho.setFont(fontBold.deriveFont(Font.PLAIN, 14));
+		lblTamanho.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblTamanho, "cell 10 0");
-
-		JLabel lblGenero = new JLabel("Gênero");
-		lblGenero.setFont(fontBold.deriveFont(Font.PLAIN, 14));
-		panel.add(lblGenero, "cell 13 0");
-
-		JLabel lblFornecedores = new JLabel("Fornecedor");
-		lblFornecedores.setFont(fontBold.deriveFont(Font.PLAIN, 14));
-		panel.add(lblFornecedores, "cell 16 0");
 
 		JLabel lblPesquisar = new JLabel("Pesquisar por : ");
 		lblPesquisar.setFont(fontBold.deriveFont(Font.PLAIN, 20));
@@ -162,18 +151,18 @@ public class ListagemProdutos extends JFrame implements TelaInterna{
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupaNome, "cell 5 1");
 
-		txtCodBarra = new JTextField();
-		panel.add(txtCodBarra, "cell 7 1,growx");
-		txtCodBarra.setColumns(10);
+		txtGenero = new JTextField();
+		panel.add(txtGenero, "cell 7 1,growx");
+		txtGenero.setColumns(10);
 
-		JLabel lupaCod = new JLabel("");
-		lupaCod.addMouseListener(produtoController.pesquisa("codBarra", txtCodBarra));
+		JLabel lupaGenero = new JLabel("");
+		lupaGenero.addMouseListener(produtoController.pesquisa("codBarra", txtGenero));
 		
-		lupaCod.setIcon(new ImageIcon(
+		lupaGenero.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
-		panel.add(lupaCod, "cell 8 1");
+		panel.add(lupaGenero, "cell 8 1");
 
-		JTextField txtTamanho = new JTextField();
+		txtTamanho = new JTextField();
 		panel.add(txtTamanho, "cell 10 1,growx");
 		txtTamanho.setColumns(10);
 
@@ -183,26 +172,6 @@ public class ListagemProdutos extends JFrame implements TelaInterna{
 		lupaTamanho.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupaTamanho, "cell 11 1,alignx trailing");
-
-		txtGenero = new JTextField();
-		txtGenero.setColumns(10);
-		panel.add(txtGenero, "cell 13 1,growx");
-
-		JLabel lupaGenero = new JLabel("");
-		lupaGenero.addMouseListener(produtoController.pesquisa("genero", txtGenero));
-		
-		lupaGenero.setIcon(new ImageIcon(ListagemProdutos.class.getResource("/img/procurar.png")));
-		panel.add(lupaGenero, "cell 14 1");
-
-		txtFornecedor = new JTextField();
-		txtFornecedor.setColumns(10);
-		panel.add(txtFornecedor, "cell 16 1,growx");
-
-		JLabel lupaFornecedor = new JLabel("");
-		lupaFornecedor.addMouseListener(produtoController.pesquisa("fornecedor", txtFornecedor));
-
-		lupaFornecedor.setIcon(new ImageIcon(ListagemProdutos.class.getResource("/img/procurar.png")));
-		panel.add(lupaFornecedor, "cell 17 1");
 
 		JScrollPane scrollPane = new JScrollPane();
 		panel.add(scrollPane, "cell 0 3 20 19,grow");
@@ -219,68 +188,68 @@ public class ListagemProdutos extends JFrame implements TelaInterna{
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha, "cell 2 9 2 1");
+		contentPane.add(lblLinha, "cell 1 9 2 1");
 
 		JLabel lblCaixa = new JLabel("");
 		lblCaixa.setIcon(new ImageIcon(
 				new ImageIcon("src/img/caixa.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
-		contentPane.add(lblCaixa, "cell 2 10,alignx left,aligny center");
-
+		contentPane.add(lblCaixa, "cell 1 10,alignx left,aligny center");
 
 		lblProdutos = new JLabel("Produtos");
 		lblProdutos.setForeground(new Color(255, 255, 255));
 		lblProdutos.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblProdutos, "cell 3 10,alignx left,aligny center");
+		contentPane.add(lblProdutos, "cell 2 10,alignx left,aligny center");
 
 		JLabel lblLinha2 = new JLabel("");
 		lblLinha2.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha2, "cell 2 11 2 1");
+		contentPane.add(lblLinha2, "cell 1 11 2 1");
 
 		JLabel lblCliente = new JLabel("");
 		lblCliente.setIcon(new ImageIcon(
 				new ImageIcon("src/img/cliente.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
-		contentPane.add(lblCliente, "cell 2 12,alignx left,aligny center");
+		contentPane.add(lblCliente, "cell 1 12,alignx left,aligny center");
 
 		lblClientes = new JLabel("Clientes");
 		lblClientes.setForeground(new Color(255, 255, 255));
 		lblClientes.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblClientes, "cell 3 12");
+		contentPane.add(lblClientes, "cell 2 12");
 
 		JLabel lblLinha3 = new JLabel("");
 		lblLinha3.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha3, "cell 2 13 2 1");
+		contentPane.add(lblLinha3, "cell 1 13 2 1");
 
 		JLabel lblCaminhao = new JLabel("");
 		lblCaminhao.setIcon(new ImageIcon(
 				new ImageIcon("src/img/caminhao.png").getImage().getScaledInstance(40, 35, Image.SCALE_DEFAULT)));
-		contentPane.add(lblCaminhao, "cell 2 15,alignx left,aligny center");
+		contentPane.add(lblCaminhao, "cell 1 15,alignx left,aligny center");
 
 		lblFornecedor = new JLabel("Fornecedores");
+		
 		lblFornecedor.setForeground(new Color(255, 255, 255));
 		lblFornecedor.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblFornecedor, "cell 3 15");
+		contentPane.add(lblFornecedor, "cell 2 15");
 
 		JLabel lblLinha4 = new JLabel("");
 		lblLinha4.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha4, "cell 2 16 2 1");
+		contentPane.add(lblLinha4, "cell 1 16 2 1");
 
 		JLabel lblFuncionario = new JLabel("");
 		lblFuncionario.setIcon(new ImageIcon(
 				new ImageIcon("src/img/funcionario.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
-		contentPane.add(lblFuncionario, "cell 2 17,alignx left,aligny center");
+		contentPane.add(lblFuncionario, "cell 1 17,alignx left,aligny center");
 
 		lblFuncionarios = new JLabel("Funcionários");
 		lblFuncionarios.setForeground(new Color(255, 255, 255));
 		lblFuncionarios.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblFuncionarios, "cell 3 17");
+		contentPane.add(lblFuncionarios, "cell 2 17");
 
 		JLabel lblLinha5 = new JLabel("");
 		lblLinha5.setIcon(new ImageIcon(
 				new ImageIcon("src/img/Line7.png").getImage().getScaledInstance(215, 1, Image.SCALE_DEFAULT)));
-		contentPane.add(lblLinha5, "cell 2 19 2 1");
+		contentPane.add(lblLinha5, "cell 1 19 2 1");
 
 		JButton btnSair = new JButton("Sair");
 		btnSair.addActionListener(produtoController.sairSistema());

@@ -1,6 +1,7 @@
 package visao;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -119,39 +120,47 @@ public class CadastroProduto extends JFrame {
 		panel.add(lblvoltar, "cell 0 0");
 
 		JLabel lblNome = new JLabel("Nome Produto:*");
+		lblNome.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		panel.add(lblNome, "cell 1 3,growx,aligny bottom");
 
 		txtNomeProduto = new JTextField();
+		txtNomeProduto.setPreferredSize(new Dimension(90, 30));
 		panel.add(txtNomeProduto, "cell 1 5 7 1,growx,aligny bottom");
 		txtNomeProduto.setColumns(10);
 
 		JLabel lblTamanho = new JLabel("Tamanho:*");
+		lblTamanho.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		panel.add(lblTamanho, "cell 1 11,growx,aligny bottom");
 
 		comboBoxTamanho = new JComboBox();
-		comboBoxTamanho
-				.setModel(new DefaultComboBoxModel(new String[] { "Selecione um Item", "PP", "P", "M", "G", "GG" }));
+		comboBoxTamanho.setPreferredSize(new Dimension(90, 30));
+		comboBoxTamanho.setModel(new DefaultComboBoxModel(new String[] { "Selecione um Item", "PP", "P", "M", "G", "GG" }));
 		panel.add(comboBoxTamanho, "cell 1 13 7 1,growx");
 
 		JLabel lblGenero = new JLabel("Gênero:*");
+		lblGenero.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		panel.add(lblGenero, "cell 1 15,growx,aligny bottom");
 
 		comboBoxGenero = new JComboBox();
-		comboBoxGenero.setModel(
-				new DefaultComboBoxModel(new String[] { "Selecione um Item", "Feminino", "Masculino", "Unissex" }));
+		comboBoxGenero.setPreferredSize(new Dimension(90, 30));
+		comboBoxGenero.setModel(new DefaultComboBoxModel(new String[] { "Selecione um Item", "Feminino", "Masculino", "Unissex" }));
 		panel.add(comboBoxGenero, "cell 1 17 7 1,growx");
 
 		JLabel lblPreco = new JLabel("Preço:*");
+		lblPreco.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		panel.add(lblPreco, "cell 1 19,growx,aligny bottom");
 
 		txtPreco = new JTextField();
+		txtPreco.setPreferredSize(new Dimension(90, 30));
 		txtPreco.setColumns(10);
 		panel.add(txtPreco, "cell 1 21 7 1,growx,aligny bottom");
 
 		JLabel lblForn = new JLabel("Fornecedor:*");
+		lblForn.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		panel.add(lblForn, "cell 1 23,growx,aligny bottom");
 
 		comboBoxFornecedor = new JComboBox<>();
+		comboBoxFornecedor.setPreferredSize(new Dimension(90, 30));
 		FornecedorController fornecedorController = new FornecedorController();
 
 		ArrayList<Fornecedor> fornecedores = null;
@@ -168,9 +177,11 @@ public class CadastroProduto extends JFrame {
 		panel.add(comboBoxFornecedor, "cell 1 25 7 1,growx");
 
 		JLabel lblQntdEstoque = new JLabel("Quantidade em estoque:*");
+		lblQntdEstoque.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		panel.add(lblQntdEstoque, "cell 1 27,growx,aligny bottom");
 
 		txtQntdEstoque = new JTextField();
+		txtQntdEstoque.setPreferredSize(new Dimension(90, 30));
 		txtQntdEstoque.setColumns(10);
 		panel.add(txtQntdEstoque, "cell 1 29 7 1,growx,aligny bottom");
 

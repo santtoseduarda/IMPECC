@@ -12,7 +12,6 @@ import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 import controle.FuncionarioController;
 import net.miginfocom.swing.MigLayout;
 
-public class CadastroFuncionarios extends JFrame {
+public class CadastroFuncionarios extends JFrame implements TelaInterna {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -35,11 +34,13 @@ public class CadastroFuncionarios extends JFrame {
 	private JLabel lblVendas;
 	private JLabel lblProdutos;
 	private JLabel lblClientes;
-	private JComponent lblFornecedor;
+	private JLabel lblFornecedor;
 	private JLabel lblFuncionarios;
+	FuncionarioController funcionarioController;
 
 	public CadastroFuncionarios(FuncionarioController funcionarioController) {
-
+		this.funcionarioController = funcionarioController;
+		
 		setTitle("Cadastro Funcionário");
 		Font fontRegular = null;
 		Font fontBold = null;
@@ -251,6 +252,36 @@ public class CadastroFuncionarios extends JFrame {
 		btnLimparCampos.setBackground(Color.WHITE);
 		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
 
+	}
+
+	@Override
+	public JLabel getLabelFornecedor() {
+		// TODO Auto-generated method stub
+		return lblFornecedor;
+	}
+
+	@Override
+	public JLabel getLabelCliente() {
+		// TODO Auto-generated method stub
+		return lblClientes;
+	}
+
+	@Override
+	public JLabel getLabelFuncionario() {
+		// TODO Auto-generated method stub
+		return lblFuncionarios;
+	}
+
+	@Override
+	public JLabel getLabelVendas() {
+		// TODO Auto-generated method stub
+		return lblVendas;
+	}
+
+	@Override
+	public JLabel getLabelProduto() {
+		// TODO Auto-generated method stub
+		return lblProdutos;
 	}
 
 }

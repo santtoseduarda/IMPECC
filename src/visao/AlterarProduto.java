@@ -1,6 +1,7 @@
 package visao;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -120,44 +121,56 @@ public class AlterarProduto extends JFrame {
 		panel.add(lblvoltar, "cell 0 0");
 
 		JLabel lblNome = new JLabel("Nome");
+		lblNome.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		panel.add(lblNome, "cell 1 3");
 
 		txtNome = new JTextField();
+		txtNome.setPreferredSize(new Dimension(90, 30));
 		panel.add(txtNome, "cell 1 4 7 1,growx");
 		txtNome.setColumns(10);
 
 		JLabel lblTamanho = new JLabel("Tamanho");
+		lblTamanho.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		panel.add(lblTamanho, "cell 1 8");
 		
 		comboBoxTamanho = new JComboBox();
+		comboBoxTamanho.setPreferredSize(new Dimension(90, 30));
 		panel.add(comboBoxTamanho, "cell 1 9 7 1,growx");
 		comboBoxTamanho.setModel(new DefaultComboBoxModel(new String[] { "Selecione um Item", "PP", "P", "M", "G", "GG" }));
 
 		JLabel lblGenero = new JLabel("Gênero");
+		lblGenero.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		panel.add(lblGenero, "cell 1 13");
 		
 		comboBoxGenero = new JComboBox();
+		comboBoxGenero.setPreferredSize(new Dimension(90, 30));
 		panel.add(comboBoxGenero, "cell 1 14 7 1,growx");
 		comboBoxGenero.setModel(new DefaultComboBoxModel(new String[] { "Selecione um Item", "Feminino", "Masculino", "Unissex" }));
 
 		JLabel lblPreço = new JLabel("Preço");
+		lblPreço.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		panel.add(lblPreço, "cell 1 19");
 
 		txtPreço = new JTextField();
+		txtPreço.setPreferredSize(new Dimension(90, 30));
 		panel.add(txtPreço, "cell 1 20 7 1,growx");
 		txtPreço.setColumns(10);
 
 		JLabel lblfornecedor = new JLabel("Fornecedor");
+		lblfornecedor.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		panel.add(lblfornecedor, "cell 1 24");
 		
 		comboBoxFornecedor = new JComboBox();
+		comboBoxFornecedor.setPreferredSize(new Dimension(90, 30));
 		panel.add(comboBoxFornecedor, "cell 1 25 7 1,growx");
 
 
 		JLabel lblQuantidadeEstoque = new JLabel("Quantida em Estoque");
+		lblQuantidadeEstoque.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
 		panel.add(lblQuantidadeEstoque, "cell 1 29");
 
 		txtQuantidadeEstoque = new JTextField();
+		txtQuantidadeEstoque.setPreferredSize(new Dimension(90, 30));
 		panel.add(txtQuantidadeEstoque, "cell 1 30 7 1,growx");
 		txtQuantidadeEstoque.setColumns(10);
 

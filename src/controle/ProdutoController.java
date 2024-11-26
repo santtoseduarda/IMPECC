@@ -8,19 +8,14 @@ import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.Caret;
 
 import modelo.Fornecedor;
-import modelo.Funcionario;
 import modelo.Produto;
 import visao.AlterarProduto;
-import visao.CadastroFuncionario;
 import visao.CadastroProduto;
-import visao.ListagemFuncionarios;
 import visao.ListagemProdutos;
 
 public class ProdutoController {
@@ -30,7 +25,12 @@ public class ProdutoController {
 	AlterarProduto viewA = new AlterarProduto(this);
 	Produto produto = new Produto();
 	ProdutoDAO novoProduto = new ProdutoDAO();
+	TelaInternaController telaInternaController = new TelaInternaController();
 
+	public ProdutoController() {
+		telaInternaController.setTela(viewL);
+	}
+	
 	public void abrirListagemProdutos() {
 		atualizarTabela("", "");
 		viewL.setVisible(true);

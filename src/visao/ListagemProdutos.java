@@ -1,24 +1,18 @@
 package visao;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -26,13 +20,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controle.FuncionarioController;
-import controle.FuncionarioDAO;
 import controle.ProdutoController;
-import controle.ProdutoDAO;
-import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JTabbedPane;
 
 public class ListagemProdutos extends JFrame implements TelaInterna{
 
@@ -50,19 +39,19 @@ public class ListagemProdutos extends JFrame implements TelaInterna{
 	private JLabel lblFuncionarios;
 	private JLabel lblVendas;
 	private JLabel lblProdutos;
-	private ProdutoController produtoController;
+	ProdutoController produtoController;
 
 	public ListagemProdutos(ProdutoController produtoController) {
 		this.produtoController = produtoController;
 
-		Font fontRegular = null;
+	//	Font fontRegular = null;
 		Font fontBold = null;
 
-		BufferedInputStream fontRegulaFile = null;
+	//	BufferedInputStream fontRegulaFile = null;
 		BufferedInputStream fontBoldFile = null;
 
 		try {
-			fontRegulaFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Regular.TTF"));
+	//		fontRegulaFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Regular.TTF"));
 			fontBoldFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Bold.TTF"));
 
 		} catch (FileNotFoundException e) {
@@ -70,7 +59,7 @@ public class ListagemProdutos extends JFrame implements TelaInterna{
 			e.printStackTrace();
 		}
 		try {
-			fontRegular = Font.createFont(Font.TRUETYPE_FONT, fontRegulaFile);
+	//		fontRegular = Font.createFont(Font.TRUETYPE_FONT, fontRegulaFile);
 			fontBold = Font.createFont(Font.TRUETYPE_FONT, fontBoldFile);
 
 		} catch (FontFormatException e) {
@@ -120,12 +109,7 @@ public class ListagemProdutos extends JFrame implements TelaInterna{
 		contentPane.add(lblVendas, "cell 3 8,alignx left,aligny center");
 
 		JPanel panel = new JPanel();
-		/*panel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				pesquisarPorCampo("id_Produto", txtId.getText());
-			}
-		});*/
+		
 		contentPane.add(panel, "cell 4 8 21 73,grow");
 		panel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][][][][][][grow]",
 				"[][][][][][][][][][][][][][][][][][][][][][][][][][][]"));

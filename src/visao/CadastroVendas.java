@@ -9,12 +9,15 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -23,7 +26,10 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controle.ProdutoController;
 import controle.VendaController;
+import modelo.Fornecedor;
+import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
 
 public class CadastroVendas extends JFrame {
@@ -31,7 +37,9 @@ public class CadastroVendas extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtCPFcliente;
-	private JTable table;
+	public JTable table;
+	public JComboBox<Object> comboBoxProd;
+	public JSpinner spinnerQntd;
 
 	public CadastroVendas(VendaController vendaController) {
 
@@ -96,15 +104,27 @@ public class CadastroVendas extends JFrame {
 		lblProduto.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblProduto, "cell 2 9");
 
-		JComboBox<?> comboBoxProd = new JComboBox<Object>();
+		comboBoxProd = new JComboBox<>();
 		comboBoxProd.setPreferredSize(new Dimension(100, 30));
 		contentPane.add(comboBoxProd, "cell 2 10 2 1,growx");
-
+		ProdutoController produtoController = new ProdutoController();
+		
+		ArrayList<Produto> produtos = null;
+		try {
+			produtos = produtoController.buscarTodosProdutos();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (Produto produto : produtos) {
+			comboBoxProd.addItem(produto);
+		}
+		
 		JLabel lblQntd = new JLabel("Quantidade:");
 		lblQntd.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblQntd, "cell 7 9");
 
-		JSpinner spinnerQntd = new JSpinner();
+		spinnerQntd = new JSpinner();
 		spinnerQntd.setPreferredSize(new Dimension(100, 30));
 		contentPane.add(spinnerQntd, "cell 7 10");
 
@@ -122,6 +142,7 @@ public class CadastroVendas extends JFrame {
 		contentPane.add(lblNomeCliente, "cell 18 9,alignx left,growy");
 
 		JButton btnAdicionar = new JButton("Adicionar ao Carrinho");
+		btnAdicionar.addActionListener(vendaController.adicionarCarrinho());
 		btnAdicionar.setPreferredSize(new Dimension(100, 30));
 		btnAdicionar.setForeground(Color.RED);
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 17));
@@ -178,5 +199,11 @@ public class CadastroVendas extends JFrame {
 		contentPane.add(btnFinalizarVenda, "cell 21 79,grow");
 
 	}
+	
+	public JSpinner getSpinnerQntd() {
+	    return spinnerQntd;
+	}
+
+
 
 }

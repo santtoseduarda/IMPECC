@@ -377,4 +377,8 @@ public class ProdutoController {
 	    return true;
 	}
 
+	public ArrayList<Produto> buscarTodosProdutos() throws SQLException {
+		return novoProduto.buscarTodosProdutos();
+	}
+
 }

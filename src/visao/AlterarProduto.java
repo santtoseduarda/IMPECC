@@ -1,11 +1,9 @@
 package visao;
 
 import java.awt.Color;
-<<<<<<< HEAD
 import java.awt.Dimension;
 import java.awt.EventQueue;
-=======
->>>>>>> venda
+
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;

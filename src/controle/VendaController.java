@@ -169,6 +169,11 @@ public class VendaController {
 	    };
 	}
 
+	public void abrirTelaAdicionarVenda() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

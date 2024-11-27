@@ -19,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 import controle.FuncionarioController;
 import net.miginfocom.swing.MigLayout;
 
-public class CadastroFuncionario extends JFrame {
+public class CadastroFuncionario extends JFrame implements TelaInterna{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;

@@ -6,180 +6,133 @@ import java.awt.event.MouseListener;
 import visao.TelaInicial;
 
 public class TelaInicialController {
-	TelaInicial janelaTela = new TelaInicial(this);
+    private TelaInicial janelaTela;
 
-	public MouseListener abrirTelaFornecedor() {
-		return new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				FornecedorController fornecedorController = new FornecedorController();
-				fornecedorController.abrirListagemFornecedor();
-				janelaTela.dispose();
-			}
+    public TelaInicialController() {
+        // Aqui, a TelaInicial é criada corretamente no momento da inicialização do controlador
+        janelaTela = new TelaInicial(this);
+    }
 
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
+    public MouseListener abrirTelaFornecedor() {
+        return new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                fecharTelaInicial(); // Fecha a tela inicial
+                FornecedorController fornecedorController = new FornecedorController();
+                fornecedorController.abrirListagemFornecedor();
+            }
 
-			}
+            @Override
+            public void mousePressed(MouseEvent e) {}
 
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
+            @Override
+            public void mouseReleased(MouseEvent e) {}
 
-			}
+            @Override
+            public void mouseEntered(MouseEvent e) {}
 
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
+            @Override
+            public void mouseExited(MouseEvent e) {}
+        };
+    }
 
-			}
+    public MouseListener abrirTelaFuncionario() {
+        return new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                fecharTelaInicial(); // Fecha a tela inicial
+                FuncionarioController funcionarioController = new FuncionarioController();
+                funcionarioController.abrirListagem();
+            }
 
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
+            @Override
+            public void mousePressed(MouseEvent e) {}
 
-			}
-		};
-	}
+            @Override
+            public void mouseReleased(MouseEvent e) {}
 
-	public MouseListener abrirTelaFuncionario() {
-		return new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				FuncionarioController funcionarioController = new FuncionarioController();
-				funcionarioController.abrirListagem();
-				janelaTela.dispose();
-			}
+            @Override
+            public void mouseEntered(MouseEvent e) {}
 
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
+            @Override
+            public void mouseExited(MouseEvent e) {}
+        };
+    }
 
-			}
+    public MouseListener abrirTelaProduto() {
+        return new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                fecharTelaInicial(); // Fecha a tela inicial
+                ProdutoController produtoController = new ProdutoController();
+                produtoController.abrirListagemProdutos();
+            }
 
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
+            @Override
+            public void mousePressed(MouseEvent e) {}
 
-			}
+            @Override
+            public void mouseReleased(MouseEvent e) {}
 
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
+            @Override
+            public void mouseEntered(MouseEvent e) {}
 
-			}
+            @Override
+            public void mouseExited(MouseEvent e) {}
+        };
+    }
 
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
+    public MouseListener abrirTelaCliente() {
+        return new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                fecharTelaInicial(); // Fecha a tela inicial
+                ClienteController clienteController = new ClienteController();
+                clienteController.abrirListagemCLientes();
+            }
 
-			}
-		};
-	}
+            @Override
+            public void mousePressed(MouseEvent e) {}
 
-	public MouseListener abrirTelaProduto() {
-		return new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ProdutoController produtoController = new ProdutoController();
-				produtoController.abrirListagemProdutos();
-				janelaTela.dispose();
-			}
+            @Override
+            public void mouseReleased(MouseEvent e) {}
 
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
+            @Override
+            public void mouseEntered(MouseEvent e) {}
 
-			}
+            @Override
+            public void mouseExited(MouseEvent e) {}
+        };
+    }
 
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
+    public MouseListener abrirTelaVendas() {
+        return new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                fecharTelaInicial(); // Fecha a tela inicial
+                VendaController vendaController = new VendaController();
+                vendaController.abrirListagemVenda();
+            }
 
-			}
+            @Override
+            public void mousePressed(MouseEvent e) {}
 
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
+            @Override
+            public void mouseReleased(MouseEvent e) {}
 
-			}
+            @Override
+            public void mouseEntered(MouseEvent e) {}
 
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
+            @Override
+            public void mouseExited(MouseEvent e) {}
+        };
+    }
 
-			}
-		};
-	}
-
-	public MouseListener abrirTelaCliente() {
-		return new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ClienteController clienteController = new ClienteController();
-				clienteController.abrirListagemCLientes();
-				janelaTela.dispose();
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		};
-	}
-
-	public MouseListener abrirTelaVendas() {
-		return new MouseListener() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-		            VendaController vendaController = new VendaController();
-		            vendaController.abrirListagemVenda();
-		            janelaTela.dispose();
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		};
-	}
+    // Método responsável por fechar a tela inicial corretamente
+    private void fecharTelaInicial() {
+        if (janelaTela != null) {
+            janelaTela.dispose(); // Fecha a janela e libera os recursos
+            janelaTela = null; // Garantir que a referência à janela seja removida
+        }
+    }
 }

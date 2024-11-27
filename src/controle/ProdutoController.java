@@ -8,6 +8,9 @@ import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -380,5 +383,41 @@ public class ProdutoController {
 	public ArrayList<Produto> buscarTodosProdutos() throws SQLException {
 		return novoProduto.buscarTodosProdutos();
 	}
+	    // Adiciona o produto ao carrinho (tabela)
+	    public ActionListener adicionarAoCarrinho(JComboBox<Produto> comboBoxProduto, JSpinner spinnerQuantidade, JTable tabelaCarrinho) {
+	        return new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                // Obter o produto selecionado
+	                Produto produtoSelecionado = (Produto) comboBoxProduto.getSelectedItem();
+	                
+	                if (produtoSelecionado == null) {
+	                    new MensagemView("Selecione um produto para adicionar ao carrinho.", "Atenção", 0);
+	                    return;
+	                }
 
-}
+	                // Obter a quantidade escolhida
+	                int quantidade = (int) spinnerQuantidade.getValue();
+	                if (quantidade <= 0) {
+	                    new MensagemView("A quantidade deve ser maior que zero.", "Erro", 0);
+	                    return;
+	                }
+
+	                // Calcular o preço total
+	                float precoUnitario = produtoSelecionado.getPreco();
+	                float precoTotal = precoUnitario * quantidade;
+
+	                // Adicionar o produto na tabela
+	                DefaultTableModel modeloTabela = (DefaultTableModel) tabelaCarrinho.getModel();
+	                modeloTabela.addRow(new Object[]{
+	                    produtoSelecionado.getNomeProduto(),  // Nome do produto
+	                    quantidade,                           // Quantidade
+	                    String.format("%.2f", precoUnitario), // Preço unitário
+	                    String.format("%.2f", precoTotal)     // Preço total
+	                });
+
+	                new MensagemView("Produto adicionado ao carrinho com sucesso!", "Confirmação", 1);
+	            }
+	        };
+	    }
+	}

@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -53,26 +54,31 @@ public class FuncionarioController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (validarCamposCadastroFuncionario()) {
+				try {
+					if (validarCamposCadastroFuncionario()) {
 
-					Funcionario cadastro = new Funcionario();
-					cadastro.setLogin(janelaCadastro.txtLogin.getText());
-					cadastro.setSenha(janelaCadastro.txtSenha.getText());
-					cadastro.setCelular(janelaCadastro.txtCelular.getText());
-					cadastro.setCpf(janelaCadastro.txtCPF.getText());
-					cadastro.setEmail_Funcionario(janelaCadastro.txtEmail.getText());
-					cadastro.setNomeFuncionario(janelaCadastro.txtNomeCompleto.getText());
+						Funcionario cadastro = new Funcionario();
+						cadastro.setLogin(janelaCadastro.txtLogin.getText());
+						cadastro.setSenha(janelaCadastro.txtSenha.getText());
+						cadastro.setCelular(janelaCadastro.txtCelular.getText());
+						cadastro.setCpf(janelaCadastro.txtCPF.getText());
+						cadastro.setEmail_Funcionario(janelaCadastro.txtEmail.getText());
+						cadastro.setNomeFuncionario(janelaCadastro.txtNomeCompleto.getText());
 
-					FuncionarioDAO novoFuncionario = new FuncionarioDAO();
-					try {
-						novoFuncionario.inserir(cadastro);
-						janelaListagem.setVisible(true);
-						atualizarTabela("", "");
-						janelaCadastro.dispose();
+						FuncionarioDAO novoFuncionario = new FuncionarioDAO();
+						try {
+							novoFuncionario.inserir(cadastro);
+							janelaListagem.setVisible(true);
+							atualizarTabela("", "");
+							janelaCadastro.dispose();
 
-					} catch (Exception ex) {
-						new MensagemView("Erro ao cadastrar funcionário.", "Erro de cadastro", 0);
+						} catch (Exception ex) {
+							new MensagemView("Erro ao cadastrar funcionário.", "Erro de cadastro", 0);
+						}
 					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 
@@ -91,10 +97,10 @@ public class FuncionarioController {
 					DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
 					int idFuncionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
 
-					MensagemViewOp mve = new MensagemViewOp("Você tem certeza que deseja excluir o funcionário?", "Exclusão de Funcionário");
+					MensagemViewOp mve = new MensagemViewOp("Você tem certeza que deseja excluir o funcionário?",
+							"Exclusão de Funcionário");
 
 					int confirmacao = mve.getResposta();
-
 
 					if (confirmacao == 1) {
 
@@ -108,7 +114,8 @@ public class FuncionarioController {
 							atualizarTabela("", "");
 
 						} else {
-							new MensagemView("Erro ao excluir o funcionário", "Erro de exclusão", 0);						}
+							new MensagemView("Erro ao excluir o funcionário", "Erro de exclusão", 0);
+						}
 					}
 				} else {
 					new MensagemView("Por favor, selecione um funcionário para excluir.", "Atenção", 0);
@@ -161,30 +168,36 @@ public class FuncionarioController {
 
 					DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
 					int idFuncionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
-					if (validarCamposEditarFuncionarios()) {
-						Funcionario funcionario = new Funcionario();
+					try {
+						if (validarCamposEditarFuncionarios()) {
+							Funcionario funcionario = new Funcionario();
 
-						funcionario.setNomeFuncionario(janelaAlterar.txtNomeCompleto.getText());
-						funcionario.setEmail_Funcionario(janelaAlterar.txtEmail.getText());
-						funcionario.setCelular(janelaAlterar.txtCelular.getText());
-						funcionario.setCpf(janelaAlterar.txtCPF.getText());
-						funcionario.setLogin(janelaAlterar.txtLogin.getText());
-						funcionario.setSenha(janelaAlterar.txtSenha.getText());
+							funcionario.setNomeFuncionario(janelaAlterar.txtNomeCompleto.getText());
+							funcionario.setEmail_Funcionario(janelaAlterar.txtEmail.getText());
+							funcionario.setCelular(janelaAlterar.txtCelular.getText());
+							funcionario.setCpf(janelaAlterar.txtCPF.getText());
+							funcionario.setLogin(janelaAlterar.txtLogin.getText());
+							funcionario.setSenha(janelaAlterar.txtSenha.getText());
 
-						try {
-							boolean sucesso = fdao.alterarFuncionario(funcionario, idFuncionario);
-							if (sucesso) {
-								janelaListagem.setVisible(true);
-								janelaAlterar.dispose();
-								atualizarTabela("", "");
-							} else {
-								new MensagemView("Erro ao alterar funcionário: Nenhuma linha foi afetada.", "Erro", 0);
-								
+							try {
+								boolean sucesso = fdao.alterarFuncionario(funcionario, idFuncionario);
+								if (sucesso) {
+									janelaListagem.setVisible(true);
+									janelaAlterar.dispose();
+									atualizarTabela("", "");
+								} else {
+									new MensagemView("Erro ao alterar funcionário: Nenhuma linha foi afetada.", "Erro",
+											0);
+
+								}
+							} catch (Exception ex) {
+								new MensagemView("Erro ao funcionário cliente.", "Erro", 0);
+
 							}
-						} catch (Exception ex) {
-							new MensagemView("Erro ao funcionário cliente.", "Erro", 0);
-
 						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 
 				}
@@ -198,7 +211,7 @@ public class FuncionarioController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MensagemViewOp mve = new MensagemViewOp("Você realmente deseja sair?", "Confirmação");
-				int resposta =  mve.getResposta();
+				int resposta = mve.getResposta();
 
 				// Verifica a resposta
 				if (resposta == 1) {
@@ -321,7 +334,7 @@ public class FuncionarioController {
 		}
 	}
 
-	public boolean validarCamposEditarFuncionarios() {
+	public boolean validarCamposEditarFuncionarios() throws SQLException {
 		String nomeFuncionario = janelaAlterar.txtNomeCompleto.getText();
 		String email_Funcionario = janelaAlterar.txtEmail.getText();
 		String celular = janelaAlterar.txtCelular.getText();
@@ -349,10 +362,20 @@ public class FuncionarioController {
 			new MensagemView("Celular inválido. Deve estar no formato (00)00000-0000.", "Erro de cadastro", 0);
 			return false;
 		}
+
+		if (cpfJaCadastradoFuncionario(cpf)) {
+			new MensagemView("CPF já cadastrado no sistema! Informe o CPF corretamente.", "Erro de cadastro", 0);
+			return false;
+		}
 		return true;
 	}
 
-	public boolean validarCamposCadastroFuncionario() {
+	private boolean cpfJaCadastradoFuncionario(String cpf) throws SQLException {
+		Funcionario funcionario = fdao.buscarCPF(cpf);
+		return funcionario != null;
+	}
+
+	public boolean validarCamposCadastroFuncionario() throws SQLException {
 		String nomeFuncionario = janelaCadastro.txtNomeCompleto.getText();
 		String email_Funcionario = janelaCadastro.txtEmail.getText();
 		String celular = janelaCadastro.txtCelular.getText();
@@ -380,10 +403,26 @@ public class FuncionarioController {
 			new MensagemView("Celular inválido. Deve estar no formato (00)00000-0000.", "Erro de cadastro", 0);
 			return false;
 		}
+
+		if (cpfJaCadastradoFuncionario(cpf)) {
+			new MensagemView("CPF já cadastrado no sistema! Informe o CPF corretamente.", "Erro de cadastro", 0);
+			return false;
+		}
+
+		if (loginJaExiste(login)) {
+			new MensagemView("Login já cadastrado no sistema! Informe outro login.", "Erro de cadastro", 0);
+			return false;
+		}
+
 		return true;
 	}
 
-	public boolean validarCamposCadastroFuncionariosLogin() {
+	private boolean loginJaExiste(String login) throws SQLException {
+		Funcionario funcionario = fdao.loginJaExiste(login);
+		return funcionario != null;
+	}
+
+	public boolean validarCamposCadastroFuncionariosLogin() throws SQLException {
 		String nomeFuncionario = janelaLoginCadastro.txtNomeCompleto.getText();
 		String email_Funcionario = janelaLoginCadastro.txtEmail.getText();
 		String celular = janelaLoginCadastro.txtCelular.getText();
@@ -411,6 +450,17 @@ public class FuncionarioController {
 			new MensagemView("Celular inválido. Deve estar no formato (00)00000-0000.", "Erro de cadastro", 0);
 			return false;
 		}
+		
+		if (cpfJaCadastradoFuncionario(cpf)) {
+			new MensagemView("CPF já cadastrado no sistema! Informe o CPF corretamente.", "Erro de cadastro", 0);
+			return false;
+		}
+
+		if (loginJaExiste(login)) {
+			new MensagemView("Login já cadastrado no sistema! Informe outro Login.", "Erro de cadastro", 0);
+			return false;
+		}
+
 		return true;
 	}
 
@@ -418,35 +468,40 @@ public class FuncionarioController {
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Entrou aqui");
-				if (validarCamposCadastroFuncionariosLogin()) {
-					Funcionario cadastro = new Funcionario();
+				try {
+					if (validarCamposCadastroFuncionariosLogin()) {
+						Funcionario cadastro = new Funcionario();
 
-					// Capturando os dados dos campos de texto
-					cadastro.setNomeFuncionario(janelaLoginCadastro.txtNomeCompleto.getText());
-					cadastro.setEmail_Funcionario(janelaLoginCadastro.txtEmail.getText());
-					cadastro.setCelular(janelaLoginCadastro.txtCelular.getText());
-					cadastro.setCpf(janelaLoginCadastro.txtCPF.getText());
-					cadastro.setLogin(janelaLoginCadastro.txtLogin.getText());
-					cadastro.setSenha(janelaLoginCadastro.txtSenha.getText());
+						// Capturando os dados dos campos de texto
+						cadastro.setNomeFuncionario(janelaLoginCadastro.txtNomeCompleto.getText());
+						cadastro.setEmail_Funcionario(janelaLoginCadastro.txtEmail.getText());
+						cadastro.setCelular(janelaLoginCadastro.txtCelular.getText());
+						cadastro.setCpf(janelaLoginCadastro.txtCPF.getText());
+						cadastro.setLogin(janelaLoginCadastro.txtLogin.getText());
+						cadastro.setSenha(janelaLoginCadastro.txtSenha.getText());
 
-					FuncionarioDAO novoFuncionario = new FuncionarioDAO();
-					try {
-						novoFuncionario.inserir(cadastro);
-						LoginController loginController = new LoginController();
-						loginController.iniciarLogin();
+						FuncionarioDAO novoFuncionario = new FuncionarioDAO();
+						try {
+							novoFuncionario.inserir(cadastro);
+							LoginController loginController = new LoginController();
+							loginController.iniciarLogin();
 
-						janelaLoginCadastro.dispose();
-					} catch (Exception ex) {
-						new MensagemView("Erro ao cadastrar funcionário.", "Erro", 0);
+							janelaLoginCadastro.dispose();
+						} catch (Exception ex) {
+							new MensagemView("Erro ao cadastrar funcionário.", "Erro", 0);
+						}
 					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		};
 	}
+
 	public void janelaCadastro() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

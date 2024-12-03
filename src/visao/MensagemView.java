@@ -27,7 +27,7 @@ public class MensagemView extends JDialog {
 
 	public MensagemView(String mensagem, String titulo, int tipo) {
 		setTitle(titulo);
-		setSize(500, 200);
+		setSize(600, 200);
 		setModal(true);
 
 		JPanel painel = new JPanel();

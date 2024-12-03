@@ -150,7 +150,7 @@ public class ProdutoController {
 		if (listaProdutos != null && !listaProdutos.isEmpty()) {
 			for (Produto p : listaProdutos) {
 				modeloTabela.addRow(new Object[] { p.getId_Produto(), p.getNomeProduto(), p.getTamanho(), p.getGenero(),
-						p.getPreco(), p.getFornecedor().getNome_Fornecedor(), p.getQtdEstoque() });
+						String.format("%.2f", p.getPreco()), p.getFornecedor().getNome_Fornecedor(), p.getQtdEstoque() });
 			}
 		}
 	}
@@ -165,7 +165,8 @@ public class ProdutoController {
 	                    produto.setGenero(viewC.comboBoxGenero.getSelectedItem().toString());
 	                    produto.setFornecedor((Fornecedor) viewC.comboBoxFornecedor.getSelectedItem());
 
-	                    float precoConvert = Float.parseFloat(viewC.txtPreco.getText());
+	                    float precoConvert = Float.parseFloat(viewC.txtPreco.getText().replace(",", "."));
+	                    
 	                    int qntEstoqueConvert = Integer.parseInt(viewC.txtQntdEstoque.getText());
 
 	                    produto.setPreco(precoConvert);
@@ -192,7 +193,7 @@ public class ProdutoController {
 	    String genero = (viewC.comboBoxGenero.getSelectedItem() != null)
 	            ? viewC.comboBoxGenero.getSelectedItem().toString()
 	            : "";
-	    String preco = viewC.txtPreco.getText();
+	    String preco = viewC.txtPreco.getText().replace(",", ".");
 	    String fornecedor = (viewC.comboBoxFornecedor.getSelectedItem() != null)
 	            ? viewC.comboBoxFornecedor.getSelectedItem().toString()
 	            : "";
@@ -244,7 +245,7 @@ public class ProdutoController {
 		viewA.txtNome.setText(p.getNomeProduto());
 		viewA.comboBoxTamanho.setSelectedItem(p.getTamanho());
 		viewA.comboBoxGenero.setSelectedItem(p.getGenero());
-		viewA.txtPreço.setText(String.valueOf(p.getPreco()));
+		viewA.txtPreço.setText(String.valueOf(p.getPreco()).format("%.2f").replace(".", ","));
 		viewA.txtQuantidadeEstoque.setText(String.valueOf(p.getQtdEstoque()));
 
 		FornecedorController fornecedorController = new FornecedorController();
@@ -324,7 +325,7 @@ public class ProdutoController {
 	                produto.setNomeProduto(viewA.txtNome.getText());
 	                produto.setTamanho(viewA.comboBoxTamanho.getSelectedItem().toString());
 	                produto.setGenero(viewA.comboBoxGenero.getSelectedItem().toString());
-	                produto.setPreco(Float.parseFloat(viewA.txtPreço.getText()));
+	                produto.setPreco(Float.parseFloat(viewA.txtPreço.getText().replace(",", ".")));
 
 	                Fornecedor fornecedorSelecionado = (Fornecedor) viewA.comboBoxFornecedor.getSelectedItem();
 	                produto.setFornecedor(fornecedorSelecionado);
@@ -359,7 +360,7 @@ public class ProdutoController {
 	    String genero = (viewA.comboBoxGenero.getSelectedItem() != null)
 	            ? viewA.comboBoxGenero.getSelectedItem().toString()
 	            : "";
-	    String preco = viewA.txtPreço.getText();
+	    String preco = viewA.txtPreço.getText().replace(",", ".");
 	    String fornecedor = (viewA.comboBoxFornecedor.getSelectedItem() != null)
 	            ? viewA.comboBoxFornecedor.getSelectedItem().toString()
 	            : "";

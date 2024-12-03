@@ -127,7 +127,7 @@ public class FornecedorDAO {
 
 		try {
 			pst = conn.prepareStatement(alterarFornecedor);
-			
+
 			pst.setString(1, fornecedor.getNome_Fornecedor());
 			pst.setString(2, fornecedor.getEmail_Fornecedor());
 			pst.setString(3, fornecedor.getTelefone_Fornecedor());
@@ -174,21 +174,40 @@ public class FornecedorDAO {
 		return null;
 
 	}
-	
+
 	public ArrayList<Fornecedor> buscarTodosFornecedores() throws SQLException {
-	    ArrayList<Fornecedor> fornecedores = new ArrayList<>();
-	    String sql = "SELECT id_Fornecedor, nome_Fornecedor FROM fornecedores";
-	    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-	        ResultSet rs = stmt.executeQuery();
-	        while (rs.next()) {
+		ArrayList<Fornecedor> fornecedores = new ArrayList<>();
+		String sql = "SELECT id_Fornecedor, nome_Fornecedor FROM fornecedores";
+		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
 				Fornecedor fornecedor = new Fornecedor();
 				fornecedor.setID_fornecedor(rs.getInt("id_Fornecedor"));
 				fornecedor.setNome_Fornecedor(rs.getString("nome_Fornecedor"));
-	            fornecedores.add(fornecedor);
-	        }
-	    }
-	    return fornecedores;
+				fornecedores.add(fornecedor);
+			}
+		}
+		return fornecedores;
 	}
 
+	public Fornecedor buscarPorCnpj(String cnpj) throws SQLException {
+	    String sql = "SELECT * FROM fornecedores WHERE cnpj = ?";
+	    
+	    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        stmt.setString(1, cnpj);
 
+	        ResultSet rs = stmt.executeQuery();
+
+	        if (rs.next()) {
+	            Fornecedor fornecedor = new Fornecedor();
+	            fornecedor.setID_fornecedor(rs.getInt("id_fornecedor"));
+	            fornecedor.setNome_Fornecedor(rs.getString("nome_fornecedor"));
+	            fornecedor.setEmail_Fornecedor(rs.getString("email_fornecedor"));
+	            fornecedor.setTelefone_Fornecedor(rs.getString("telefone_fornecedor"));
+	            fornecedor.setCNPJ(rs.getString("cnpj"));
+	            return fornecedor;
+	        }
+	    }
+	    return null;
+	}
 }

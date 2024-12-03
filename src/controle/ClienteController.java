@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -68,28 +69,33 @@ public class ClienteController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (validarCamposCadastroClientes()) {
+				try {
+					if (validarCamposCadastroClientes()) {
 
-					Cliente cadastro = new Cliente();
+						Cliente cadastro = new Cliente();
 
-					cadastro.setNomeCliente(janelaCadastro.txtNome.getText());
-					cadastro.setDataNasc(janelaCadastro.txtDataNsc.getText());
-					cadastro.setCpf_Cliente(janelaCadastro.txtCPF.getText());
-					cadastro.setTelefone(janelaCadastro.txtTelefone.getText());
-					cadastro.setEmail(janelaCadastro.txtEmail.getText());
+						cadastro.setNomeCliente(janelaCadastro.txtNome.getText());
+						cadastro.setDataNasc(janelaCadastro.txtDataNsc.getText());
+						cadastro.setCpf_Cliente(janelaCadastro.txtCPF.getText());
+						cadastro.setTelefone(janelaCadastro.txtTelefone.getText());
+						cadastro.setEmail(janelaCadastro.txtEmail.getText());
 
-					ClienteDAO novoCliente = new ClienteDAO();
+						ClienteDAO novoCliente = new ClienteDAO();
 
-					try {
-						novoCliente.inserir(cadastro);
-						janelaListagem.setVisible(true);
-						atualizarTabela("", "");
-						janelaCadastro.dispose();
+						try {
+							novoCliente.inserir(cadastro);
+							janelaListagem.setVisible(true);
+							atualizarTabela("", "");
+							janelaCadastro.dispose();
 
-					} catch (Exception ex) {
-						new MensagemView("Erro ao cadastrar cliente.", "Erro de cadastro", 0);
-	
+						} catch (Exception ex) {
+							new MensagemView("Erro ao cadastrar cliente.", "Erro de cadastro", 0);
+
+						}
 					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 
@@ -121,7 +127,7 @@ public class ClienteController {
 		}
 	}
 
-	public boolean validarCamposCadastroClientes() {
+	public boolean validarCamposCadastroClientes() throws SQLException {
 		String nome = janelaCadastro.txtNome.getText();
 		String dataNasc = janelaCadastro.txtDataNsc.getText();
 		String cpf = janelaCadastro.txtCPF.getText();
@@ -150,9 +156,18 @@ public class ClienteController {
 		if (!telefone.matches("\\(\\d{2}\\)\\d{5}-\\d{4}")) { // Celular no formato (00)00000-0000
 			new MensagemView("Celular inválido. Deve estar no formato (00)00000-0000.", "Erro de cadastro", 0);
 			return false;
-
 		}
+		
+		if (cpfJaCadastrado(cpf)) {
+	        new MensagemView("CPF já cadastrado no sistema! Informe o CPF corretamente.", "Erro de cadastro", 0);
+	        return false;
+	    }
 		return true;
+	}
+
+	private boolean cpfJaCadastrado(String cpf) throws SQLException {
+		Cliente cliente = cdao.buscarCPF(cpf);
+		return cliente != null;
 	}
 
 	public void limparCamposCadClientes() {
@@ -293,35 +308,40 @@ public class ClienteController {
 
 					DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
 					int id_Cliente = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
-					if (validarCamposEditarCliente()) {
-						Cliente alterar = new Cliente();
+					try {
+						if (validarCamposEditarCliente()) {
+							Cliente alterar = new Cliente();
 
-						alterar.setId_Cliente(id_Cliente);
-						alterar.setNomeCliente(janelaAlterar.txtNomeCliente.getText());
-						alterar.setDataNasc(janelaAlterar.txtDataNascCliente.getText());
-						alterar.setCpf_Cliente(janelaAlterar.txtCpfCliente.getText());
-						alterar.setTelefone(janelaAlterar.txtTelefoneCliente.getText());
-						alterar.setEmail(janelaAlterar.txtEmailCliente.getText());
+							alterar.setId_Cliente(id_Cliente);
+							alterar.setNomeCliente(janelaAlterar.txtNomeCliente.getText());
+							alterar.setDataNasc(janelaAlterar.txtDataNascCliente.getText());
+							alterar.setCpf_Cliente(janelaAlterar.txtCpfCliente.getText());
+							alterar.setTelefone(janelaAlterar.txtTelefoneCliente.getText());
+							alterar.setEmail(janelaAlterar.txtEmailCliente.getText());
 
-						try {
-							boolean sucesso = cdao.alterarCliente(alterar);
-							if (sucesso) {
-								janelaListagem.setVisible(true);
-								janelaAlterar.dispose();
-								atualizarTabela("", "");
-							} else {
-								new MensagemView("Erro ao alterar cliente: Nenhuma linha foi afetada.", "Erro", 0);
+							try {
+								boolean sucesso = cdao.alterarCliente(alterar);
+								if (sucesso) {
+									janelaListagem.setVisible(true);
+									janelaAlterar.dispose();
+									atualizarTabela("", "");
+								} else {
+									new MensagemView("Erro ao alterar cliente: Nenhuma linha foi afetada.", "Erro", 0);
+								}
+							} catch (Exception ex) {
+								new MensagemView("Erro ao alterar cliente.", "Erro", 0);
 							}
-						} catch (Exception ex) {
-							new MensagemView("Erro ao alterar cliente.", "Erro", 0);
 						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 				}
 			}
 		};
 	}
 
-	public boolean validarCamposEditarCliente() {
+	public boolean validarCamposEditarCliente() throws SQLException {
 		String nome = janelaAlterar.txtNomeCliente.getText();
 		String dataNasc = janelaAlterar.txtDataNascCliente.getText();
 		String cpf = janelaAlterar.txtCpfCliente.getText();
@@ -352,6 +372,11 @@ public class ClienteController {
 			return false;
 
 		}
+		
+		if (cpfJaCadastrado(cpf)) {
+	        new MensagemView("CPF já cadastrado no sistema! Informe o CPF corretamente.", "Erro de cadastro", 0);
+	        return false;
+	    }
 		return true;
 	}
 

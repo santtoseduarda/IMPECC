@@ -176,27 +176,32 @@ public class FornecedorController {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (validarCamposCadastroFornecedores()) {
+				try {
+					if (validarCamposCadastroFornecedores()) {
 
-					Fornecedor cadastro = new Fornecedor();
+						Fornecedor cadastro = new Fornecedor();
 
-					cadastro.setNome_Fornecedor(viewc.txtNome.getText());
-					cadastro.setCNPJ(viewc.txtCnpj.getText());
-					cadastro.setEmail_Fornecedor(viewc.txtEmail.getText());
-					cadastro.setTelefone_Fornecedor(viewc.txtTelefone.getText());
+						cadastro.setNome_Fornecedor(viewc.txtNome.getText());
+						cadastro.setCNPJ(viewc.txtCnpj.getText());
+						cadastro.setEmail_Fornecedor(viewc.txtEmail.getText());
+						cadastro.setTelefone_Fornecedor(viewc.txtTelefone.getText());
 
-					FornecedorDAO novoFornecedor = new FornecedorDAO();
+						FornecedorDAO novoFornecedor = new FornecedorDAO();
 
-					try {
-						novoFornecedor.inserir(cadastro);
-						viewl.setVisible(true);
-						atualizarTabela("", "");
-						viewc.dispose();
+						try {
+							novoFornecedor.inserir(cadastro);
+							viewl.setVisible(true);
+							atualizarTabela("", "");
+							viewc.dispose();
 
-					} catch (Exception ex) {
-						new MensagemView("Erro ao cadastrar funcionário", "Erro", 0);
+						} catch (Exception ex) {
+							new MensagemView("Erro ao cadastrar funcionário", "Erro", 0);
+						}
+
 					}
-
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 
 			}
@@ -213,8 +218,7 @@ public class FornecedorController {
 		};
 	}
 
-	// arrumar essas validações
-	public boolean validarCamposCadastroFornecedores() {
+	public boolean validarCamposCadastroFornecedores() throws SQLException {
 		String nome = viewc.txtNome.getText();
 		String cnpj = viewc.txtCnpj.getText();
 		String email = viewc.txtEmail.getText();
@@ -229,6 +233,11 @@ public class FornecedorController {
 			new MensagemView("CNPJ inválido. Deve estar no formato 00.000.000/0000-00", "Erro de cadastro", 0);
 			return false;
 		}
+		
+		if (isCnpjSequencial(cnpj)) {
+	        new MensagemView("CNPJ inválido. Não pode conter números sequenciais repetidos.", "Erro de cadastro", 0);
+	        return false;
+	    }
 
 		if (!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
 			new MensagemView("E-mail inválido. Deve conter '@' e um domínio válido.", "Erro de cadastro", 0);
@@ -240,7 +249,29 @@ public class FornecedorController {
 			return false;
 
 		}
+		
+		if (cnpjJaCadastrado(cnpj)) {
+	        new MensagemView("CNPJ já cadastrado no sistema! Informe o CNPJ corretamente.", "Erro de cadastro", 0);
+	        return false;
+	    }
 		return true;
+	}
+
+	private boolean isCnpjSequencial(String cnpj) {
+		String numerosCnpj = cnpj.replaceAll("\\D", "");
+
+	    char primeiroChar = numerosCnpj.charAt(0);
+	    for (int i = 1; i < numerosCnpj.length(); i++) {
+	        if (numerosCnpj.charAt(i) != primeiroChar) {
+	            return false;
+	        }
+	    }
+	    return true;
+	}
+
+	private boolean cnpjJaCadastrado(String cnpj) throws SQLException {
+		Fornecedor fornecedor = fordao.buscarPorCnpj(cnpj);
+	    return fornecedor != null;
 	}
 
 	public void limparCamposCadFornecedor() {
@@ -282,27 +313,32 @@ public class FornecedorController {
 
 					DefaultTableModel modeloTabela = (DefaultTableModel) viewl.table.getModel();
 					int idFornecedor = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
-					if (validarCamposEditarForn()) {
-						Fornecedor fornecedor = new Fornecedor();
+					try {
+						if (validarCamposEditarForn()) {
+							Fornecedor fornecedor = new Fornecedor();
 
-						fornecedor.setID_fornecedor(idFornecedor);
-						fornecedor.setTelefone_Fornecedor(viewa.txtTelefoneFornecedor.getText());
-						fornecedor.setCNPJ(viewa.txtCnpj.getText());
-						fornecedor.setEmail_Fornecedor(viewa.txtEmailFornecedor.getText());
-						fornecedor.setNome_Fornecedor(viewa.txtNomeFornecedor.getText());
+							fornecedor.setID_fornecedor(idFornecedor);
+							fornecedor.setTelefone_Fornecedor(viewa.txtTelefoneFornecedor.getText());
+							fornecedor.setCNPJ(viewa.txtCnpj.getText());
+							fornecedor.setEmail_Fornecedor(viewa.txtEmailFornecedor.getText());
+							fornecedor.setNome_Fornecedor(viewa.txtNomeFornecedor.getText());
 
-						try {
-							boolean sucesso = fordao.alterarFornecedor(fornecedor);
-							if (sucesso) {
-								atualizarTabela("", "");
-								viewl.setVisible(true);
-								viewa.dispose();
-							} else {
-								new MensagemView("Erro ao alterar fornecedor: Nenhuma linha foi afetada.", "Erro", 0);
+							try {
+								boolean sucesso = fordao.alterarFornecedor(fornecedor);
+								if (sucesso) {
+									atualizarTabela("", "");
+									viewl.setVisible(true);
+									viewa.dispose();
+								} else {
+									new MensagemView("Erro ao alterar fornecedor: Nenhuma linha foi afetada.", "Erro", 0);
+								}
+							} catch (Exception ex) {
+								new MensagemView("Erro ao alterar fornecedor.", "Erro", 0);
 							}
-						} catch (Exception ex) {
-							new MensagemView("Erro ao alterar fornecedor.", "Erro", 0);
 						}
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 
 				}
@@ -310,7 +346,7 @@ public class FornecedorController {
 		};
 	}
 
-	protected boolean validarCamposEditarForn() {
+	protected boolean validarCamposEditarForn() throws SQLException {
 		String nome = viewa.txtNomeFornecedor.getText();
 		String cnpj = viewa.txtCnpj.getText();
 		String email = viewa.txtEmailFornecedor.getText();
@@ -334,8 +370,13 @@ public class FornecedorController {
 		if (!telefone.matches("\\(\\d{2}\\)\\d{5}-\\d{4}")) { // Celular no formato (00)00000-0000
 			new MensagemView("Celular inválido. Deve estar no formato (00)00000-0000.", "Erro de cadastro", 0);
 			return false;
-
 		}
+		
+		if (cnpjJaCadastrado(cnpj)) {
+	        new MensagemView("CNPJ já cadastrado no sistema!", "Erro de cadastro", 0);
+	        return false;
+	    }
+		
 		return true;
 	}
 

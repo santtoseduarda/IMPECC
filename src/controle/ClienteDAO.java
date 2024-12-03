@@ -177,4 +177,28 @@ public class ClienteDAO {
 
 	}
 
+	public Cliente buscarCPF(String cpf) throws SQLException {
+		String sql = "SELECT * FROM clientes WHERE cpf_Cliente = ?";
+		
+		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        stmt.setString(1, cpf);
+
+	        ResultSet rs = stmt.executeQuery();
+
+	        if (rs.next()) {
+	            Cliente cliente = new Cliente();
+	            cliente.setId_Cliente(rs.getInt("id_Cliente"));
+				cliente.setNomeCliente(rs.getString("nome_Cliente"));
+				cliente.setEmail(rs.getString("email_Cliente"));
+				cliente.setCpf_Cliente(rs.getString("cpf_Cliente"));
+				cliente.setTelefone(rs.getString("telefone_Cliente"));
+				cliente.setDataNasc(rs.getString("data_Nasc"));
+				
+	            return cliente;
+	        }
+	    }
+		
+		return null;
+	}
+
 }

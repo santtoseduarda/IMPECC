@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 import BancodeDados.Conexao;
 import BancodeDados.ConexaoBanco;
+import modelo.Cliente;
 import modelo.Funcionario;
 import visao.AlterarFuncionario;
 
@@ -59,7 +60,7 @@ public class FuncionarioDAO {
 			pst.setString(4, f.getCpf());
 			pst.setString(5, f.getLogin());
 			pst.setString(6, f.getSenha());
-			
+
 			pst.executeUpdate();
 
 		} catch (SQLException e1) {
@@ -90,35 +91,34 @@ public class FuncionarioDAO {
 	}
 
 	public ArrayList<Funcionario> buscarFuncLupa(String campo, String valor) {
-		    ArrayList<Funcionario> listaFuncionarios = new ArrayList<>();
-		    String sql = "SELECT * FROM funcionarios";
+		ArrayList<Funcionario> listaFuncionarios = new ArrayList<>();
+		String sql = "SELECT * FROM funcionarios";
 
-		    if (campo != null && !campo.isEmpty()) {
-		        sql += " WHERE " + campo + " LIKE ?";
-		    }
-
-		    try (PreparedStatement pst = conn.prepareStatement(sql)) {
-		        if (campo != null && !campo.isEmpty()) {
-		            pst.setString(1, "%" + valor + "%");
-		        }
-
-		        ResultSet rs = pst.executeQuery();
-		        while (rs.next()) {
-		            Funcionario f = new Funcionario();
-		            f.setId_Funcionario(rs.getInt("id_Funcionario"));
-		            f.setNomeFuncionario(rs.getString("nome_Funcionario"));
-		            f.setEmail_Funcionario(rs.getString("email_Funcionario"));
-		            f.setCpf(rs.getString("cpf"));
-		            f.setCelular(rs.getString("celular"));
-		            f.setLogin(rs.getString("login"));
-		            listaFuncionarios.add(f);
-		        }
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }
-		    return listaFuncionarios;
+		if (campo != null && !campo.isEmpty()) {
+			sql += " WHERE " + campo + " LIKE ?";
 		}
 
+		try (PreparedStatement pst = conn.prepareStatement(sql)) {
+			if (campo != null && !campo.isEmpty()) {
+				pst.setString(1, "%" + valor + "%");
+			}
+
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				Funcionario f = new Funcionario();
+				f.setId_Funcionario(rs.getInt("id_Funcionario"));
+				f.setNomeFuncionario(rs.getString("nome_Funcionario"));
+				f.setEmail_Funcionario(rs.getString("email_Funcionario"));
+				f.setCpf(rs.getString("cpf"));
+				f.setCelular(rs.getString("celular"));
+				f.setLogin(rs.getString("login"));
+				listaFuncionarios.add(f);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listaFuncionarios;
+	}
 
 	public boolean excluirFuncionario(int idFuncionario) {
 		// TODO Auto-generated method stub
@@ -141,51 +141,50 @@ public class FuncionarioDAO {
 		}
 	}
 
-
 	public boolean alterarFuncionario(Funcionario f, int idFuncionario) {
-	    String alterar = "UPDATE funcionarios SET nome_Funcionario = ?, email_Funcionario = ?, celular = ?, cpf = ?, login = ?, senha = ? WHERE id_Funcionario = ?";
+		String alterar = "UPDATE funcionarios SET nome_Funcionario = ?, email_Funcionario = ?, celular = ?, cpf = ?, login = ?, senha = ? WHERE id_Funcionario = ?";
 
-	    try {
-	        pst = conn.prepareStatement(alterar);
-	        pst.setString(1, f.getNomeFuncionario());
-	        pst.setString(2, f.getEmail_Funcionario());
-	        pst.setString(3, f.getCelular());
-	        pst.setString(4, f.getCpf());
-	        pst.setString(5, f.getLogin());
-	        pst.setString(6, f.getSenha());
-	        pst.setInt(7, idFuncionario); // Certifique-se de que o ID está sendo configurado corretamente no objeto Funcionario
+		try {
+			pst = conn.prepareStatement(alterar);
+			pst.setString(1, f.getNomeFuncionario());
+			pst.setString(2, f.getEmail_Funcionario());
+			pst.setString(3, f.getCelular());
+			pst.setString(4, f.getCpf());
+			pst.setString(5, f.getLogin());
+			pst.setString(6, f.getSenha());
+			pst.setInt(7, idFuncionario); // Certifique-se de que o ID está sendo configurado corretamente no objeto
+											// Funcionario
 
-	        int rowsAffected = pst.executeUpdate();
-	        return rowsAffected > 0; // Retorna true se a alteração foi bem-sucedida
-	    } catch (SQLException e1) {
-	        e1.printStackTrace();
-	    }
-	    return false;
+			int rowsAffected = pst.executeUpdate();
+			return rowsAffected > 0; // Retorna true se a alteração foi bem-sucedida
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return false;
 	}
 
-
 	public Funcionario buscarFuncionario(int id_Funcionario) {
-		
+
 		String mostrarDados = "SELECT * FROM funcionarios WHERE id_Funcionario = ?";
 		Funcionario f = null;
-		
+
 		try {
 			pst = conn.prepareStatement(mostrarDados);
-	        pst.setInt(1, id_Funcionario); // Use o id_Funcionario passado como parâmetro
+			pst.setInt(1, id_Funcionario); // Use o id_Funcionario passado como parâmetro
 
-	        ResultSet rs = pst.executeQuery(); // Aqui você deve usar executeQuery()
+			ResultSet rs = pst.executeQuery(); // Aqui você deve usar executeQuery()
 
-	        if (rs.next()) { // Se houver resultados, preencha o objeto Funcionario
-	            f = new Funcionario();
-	            f.setId_Funcionario(rs.getInt("id_Funcionario")); // Adicione isso se necessário
-	            f.setNomeFuncionario(rs.getString("nome_Funcionario"));
-	            f.setEmail_Funcionario(rs.getString("email_Funcionario"));
-	            f.setLogin(rs.getString("login"));
-	            f.setSenha(rs.getString("senha"));
-	            f.setCelular(rs.getString("celular"));
-	            f.setCpf(rs.getString("cpf"));
-	            return f;
-	        }
+			if (rs.next()) { // Se houver resultados, preencha o objeto Funcionario
+				f = new Funcionario();
+				f.setId_Funcionario(rs.getInt("id_Funcionario")); // Adicione isso se necessário
+				f.setNomeFuncionario(rs.getString("nome_Funcionario"));
+				f.setEmail_Funcionario(rs.getString("email_Funcionario"));
+				f.setLogin(rs.getString("login"));
+				f.setSenha(rs.getString("senha"));
+				f.setCelular(rs.getString("celular"));
+				f.setCpf(rs.getString("cpf"));
+				return f;
+			}
 
 			pst.executeQuery();
 
@@ -195,7 +194,58 @@ public class FuncionarioDAO {
 		}
 		return null;
 
-		
 	}
+
+	public Funcionario buscarCPF(String cpf) throws SQLException {
+		String sql = "SELECT * FROM funcionarios WHERE cpf = ?";
+
+		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, cpf);
+
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				Funcionario f = new Funcionario();
+				f.setId_Funcionario(rs.getInt("id_Funcionario"));
+				f.setNomeFuncionario(rs.getString("nome_Funcionario"));
+				f.setEmail_Funcionario(rs.getString("email_Funcionario"));
+				f.setLogin(rs.getString("login"));
+				f.setSenha(rs.getString("senha"));
+				f.setCelular(rs.getString("celular"));
+				f.setCpf(rs.getString("cpf"));
+
+				return f;
+			}
+		}
+
+		return null;
+	}
+	
+	public Funcionario loginJaExiste(String login) throws SQLException {
+	    String sql = "SELECT * FROM funcionarios WHERE login = ?";
+
+	    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        stmt.setString(1, login);
+
+	        ResultSet rs = stmt.executeQuery();
+
+	        if (rs.next()) {
+
+	            Funcionario f = new Funcionario();
+	            f.setId_Funcionario(rs.getInt("id_Funcionario"));
+	            f.setNomeFuncionario(rs.getString("nome_Funcionario"));
+	            f.setEmail_Funcionario(rs.getString("email_Funcionario"));
+	            f.setLogin(rs.getString("login"));
+	            f.setSenha(rs.getString("senha"));
+	            f.setCelular(rs.getString("celular"));
+	            f.setCpf(rs.getString("cpf"));
+	            return f; 
+	        }
+	    }
+
+	    return null;
+	}
+
+
 
 }

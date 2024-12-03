@@ -40,7 +40,7 @@ public class CadastroFornecedores extends JFrame implements TelaInterna {
 	public CadastroFornecedores(FornecedorController fornecedorController) {
 		this.fornecedorController = fornecedorController;
 		
-		setTitle("Cadastro Funcionário");
+		setTitle("Cadastro Fornecedor");
 		Font fontRegular = null;
 		Font fontBold = null;
 

@@ -23,8 +23,7 @@ public class LoginController {
 	
 	public void telaInicial(){
 		TelaInicialController telaInicialController = new TelaInicialController();
-		TelaInicial novaJanela = new TelaInicial(telaInicialController);
-        novaJanela.setVisible(true);
+		telaInicialController.abrirTelaInicial();
 	}
 
 	public void iniciarLogin() {

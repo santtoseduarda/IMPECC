@@ -210,4 +210,10 @@ public class TelaInternaController {
 		});
 
 	}
+
+	public void fecharTela() {
+		// TODO Auto-generated method stub
+		tela.dispose();
+		
+	}
 }

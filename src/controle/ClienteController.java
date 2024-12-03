@@ -218,6 +218,7 @@ public class ClienteController {
 					// botar o controller login para abrir a tela
 					LoginController logController = new LoginController();
 					logController.iniciarLogin();
+					telaInternaController.fecharTela();
 				}
 
 			}

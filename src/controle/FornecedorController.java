@@ -39,6 +39,7 @@ public class FornecedorController {
 
 	public void cadastroFornecedor() {
 		limparCamposCadFornecedor();
+		telaInternaController.setTela(viewc);
 		viewc.setVisible(true);
 		viewl.dispose();
 	}
@@ -118,6 +119,7 @@ public class FornecedorController {
 				if (resposta == 1) {
 					LoginController logController = new LoginController();
 					logController.iniciarLogin();
+					telaInternaController.fecharTela();
 				}
 
 			}

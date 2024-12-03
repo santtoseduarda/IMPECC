@@ -258,7 +258,7 @@ public class ListagemProdutos extends JFrame implements TelaInterna{
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnSair, "cell 3 79 1 4,aligny bottom");
+		contentPane.add(btnSair, "cell 2 78 1 4,aligny bottom");
 
 		JButton btnAdicionar = new JButton("Adicionar Produto");
 		btnAdicionar.addActionListener(produtoController.cadastroProduto());

@@ -135,4 +135,9 @@ public class TelaInicialController {
             janelaTela = null; // Garantir que a referência à janela seja removida
         }
     }
+
+	public void abrirTelaInicial() {
+		janelaTela.setVisible(true);
+		
+	}
 }

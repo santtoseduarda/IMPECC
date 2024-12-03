@@ -171,7 +171,7 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Id Venda", "Total", "Data Compra", "Cliente", "Funcionario" }));
+				new String[] {"ID Venda", "Total", "Data Compra", "Cliente", "Funcionario" }));
 		scrollPane.setViewportView(table);
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(
@@ -246,11 +246,7 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 		contentPane.add(btnSair, "cell 2 78 1 4,aligny bottom");
 
 		JButton btnCadastrarVenda = new JButton("Cadastrar Venda");
-		btnCadastrarVenda.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				vendaController.iniciarCadastroVenda();
-			}
-		});
+		btnCadastrarVenda.addActionListener(vendaController.iniciarCadastroVenda());
 		btnCadastrarVenda.setForeground(new Color(255, 0, 0));
 		btnCadastrarVenda.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnCadastrarVenda.setBackground(new Color(255, 255, 255));

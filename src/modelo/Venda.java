@@ -4,11 +4,38 @@ import java.util.ArrayList;
 
 public class Venda {
     private int idVenda;
-    private ArrayList<ItemVenda> itensVenda;
+    private ArrayList<ItemVenda> carrinho;
     private double valorTotal;
+    private String Mtd_Pagamento;
+    private int idCliente;
+    private int idFuncionario;
 
-    public Venda() {
-        itensVenda = new ArrayList<>();
+    public int getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
+	}
+
+	public int getIdFuncionario() {
+		return idFuncionario;
+	}
+
+	public void setIdFuncionario(int idFuncionario) {
+		this.idFuncionario = idFuncionario;
+	}
+
+	public String getMtd_Pagamento() {
+		return Mtd_Pagamento;
+	}
+
+	public void setMtd_Pagamento(String mtd_Pagamento) {
+		Mtd_Pagamento = mtd_Pagamento;
+	}
+
+	public Venda() {
+		carrinho = new ArrayList<>();
         valorTotal = 0.0;
     }
 
@@ -21,11 +48,11 @@ public class Venda {
     }
 
     public ArrayList<ItemVenda> getItensVenda() {
-        return itensVenda;
+        return carrinho;
     }
 
-    public void setItensVenda(ArrayList<ItemVenda> itensVenda) {
-        this.itensVenda = itensVenda;
+    public void setItensVenda(ArrayList<ItemVenda> carrinho) {
+        this.carrinho = carrinho;
     }
 
     public double getValorTotal() {
@@ -37,7 +64,7 @@ public class Venda {
     }
 
     public void adicionarItem(ItemVenda item) {
-        itensVenda.add(item);
+    	carrinho.add(item);
         valorTotal += item.getPrecoTotal();
     }
 }

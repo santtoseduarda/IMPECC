@@ -143,4 +143,34 @@ public class CadastroFuncionario extends JFrame implements TelaInterna{
 		btnCadastrar.addActionListener(funcionarioController.cadastrarFuncionarioLogin());
 	}
 
+	@Override
+	public JLabel getLabelFornecedor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JLabel getLabelCliente() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JLabel getLabelFuncionario() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JLabel getLabelVendas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public JLabel getLabelProduto() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

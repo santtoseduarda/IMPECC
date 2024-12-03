@@ -143,7 +143,7 @@ public class CadastroVendas extends JFrame {
 		contentPane.add(lblNomeCliente, "cell 18 9,alignx left,growy");
 
 		JButton btnAdicionar = new JButton("Adicionar ao Carrinho");
-		btnAdicionar.addActionListener(vendaController.adicionarCarrinho());
+		//btnAdicionar.addActionListener(vendaController.adicionarCarrinho());
 		btnAdicionar.setPreferredSize(new Dimension(100, 30));
 		btnAdicionar.setForeground(Color.RED);
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 17));
@@ -164,7 +164,7 @@ public class CadastroVendas extends JFrame {
 
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "ID Venda", "Produto", "Quantidade", "Preço Un.", "Total" }));
+				new String[] {"Produto", "Quantidade", "Preço Un.", "Total" }));
 		table.setPreferredScrollableViewportSize(new Dimension(800, 400));// Tamanho
 
 		scrollPane.setViewportView(table);

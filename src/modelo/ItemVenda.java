@@ -3,7 +3,7 @@ package modelo;
 public class ItemVenda {
     private Produto produto;
     private int quantidade;
-    private double precoTotal;
+    
 
     public Produto getProduto() {
         return produto;
@@ -19,14 +19,18 @@ public class ItemVenda {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
-        calcularPrecoTotal();
+        getPrecoTotal();
     }
 
-    public double getPrecoTotal() {
-        return precoTotal;
-    }
+	public float getPrecoTotal() {
+		return produto.getPreco()*quantidade;
+	}
 
-    private void calcularPrecoTotal() {
-        this.precoTotal = quantidade * produto.getPreco();
-    }
+public float getprecoProduto() {
+	return produto.getPreco();
+}
+    
+
+
+	
 }

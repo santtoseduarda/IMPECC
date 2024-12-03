@@ -159,7 +159,7 @@ public class CadastroFuncionario extends JFrame implements TelaInterna{
 	@Override
 	public JLabel getLabelFuncionario() {
 		// TODO Auto-generated method stub
-		return lblCadFunc;
+		return null;
 	}
 
 	@Override

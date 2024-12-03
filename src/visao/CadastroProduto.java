@@ -36,9 +36,10 @@ import modelo.Funcionario;
 import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.DefaultComboBoxModel;
 
-public class CadastroProduto extends JFrame {
+public class CadastroProduto extends JFrame implements TelaInterna {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -48,6 +49,11 @@ public class CadastroProduto extends JFrame {
 	public JComboBox comboBoxGenero;
 	public JComboBox comboBoxTamanho;
 	public JTextField txtNomeProduto;
+	private JLabel lblProdutos;
+	private JLabel lblClientes;
+	private JLabel lblFuncionarios;
+	private JLabel lblFornecedor;
+	private JLabel lblVendas;
 
 	public CadastroProduto(ProdutoController produtoController) {
 		
@@ -103,7 +109,7 @@ public class CadastroProduto extends JFrame {
 		lblCarrinho.setIcon(new ImageIcon("src/img/carrinho.png"));
 		contentPane.add(lblCarrinho, "cell 1 3");
 
-		JLabel lblVendas = new JLabel("Vendas");
+		lblVendas = new JLabel("Vendas");
 		lblVendas.setForeground(new Color(255, 255, 255));
 		lblVendas.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblVendas, "cell 2 3,alignx left,aligny center");
@@ -196,7 +202,7 @@ public class CadastroProduto extends JFrame {
 				new ImageIcon("src/img/caixa.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCaixa, "cell 1 5");
 
-		JLabel lblProdutos = new JLabel("Produtos");
+		lblProdutos = new JLabel("Produtos");
 		lblProdutos.setForeground(new Color(255, 255, 255));
 		lblProdutos.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblProdutos, "cell 2 5,alignx left,aligny center");
@@ -211,7 +217,7 @@ public class CadastroProduto extends JFrame {
 				new ImageIcon("src/img/cliente.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCliente, "cell 1 7,alignx left,aligny center");
 
-		JLabel lblClientes = new JLabel("Clientes");
+		lblClientes = new JLabel("Clientes");
 		lblClientes.setForeground(new Color(255, 255, 255));
 		lblClientes.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblClientes, "cell 2 7");
@@ -226,7 +232,7 @@ public class CadastroProduto extends JFrame {
 				new ImageIcon("src/img/caminhao.png").getImage().getScaledInstance(40, 35, Image.SCALE_DEFAULT)));
 		contentPane.add(lblCaminhao, "cell 1 10,alignx left,aligny center");
 
-		JLabel lblFornecedor = new JLabel("Fornecedores");
+		lblFornecedor = new JLabel("Fornecedores");
 		lblFornecedor.setForeground(new Color(255, 255, 255));
 		lblFornecedor.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblFornecedor, "cell 2 10");
@@ -241,7 +247,7 @@ public class CadastroProduto extends JFrame {
 				new ImageIcon("src/img/funcionario.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT)));
 		contentPane.add(lblFuncionario, "cell 1 13,alignx left,aligny center");
 
-		JLabel lblFuncionarios = new JLabel("Funcionários");
+		lblFuncionarios = new JLabel("Funcionários");
 		lblFuncionarios.setForeground(new Color(255, 255, 255));
 		lblFuncionarios.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblFuncionarios, "cell 2 13");
@@ -273,5 +279,36 @@ public class CadastroProduto extends JFrame {
 		btnLimparCampos.setBackground(Color.WHITE);
 		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
 
+	}
+
+	@Override
+	public JLabel getLabelFornecedor() {
+		// TODO Auto-generated method stub
+		return lblFornecedor;
+		
+	}
+
+	@Override
+	public JLabel getLabelCliente() {
+		// TODO Auto-generated method stub
+		return lblClientes;
+	}
+
+	@Override
+	public JLabel getLabelFuncionario() {
+		// TODO Auto-generated method stub
+		return lblFuncionarios;
+	}
+
+	@Override
+	public JLabel getLabelVendas() {
+		// TODO Auto-generated method stub
+		return lblVendas;
+	}
+
+	@Override
+	public JLabel getLabelProduto() {
+		// TODO Auto-generated method stub
+		return lblProdutos;
 	}
 }

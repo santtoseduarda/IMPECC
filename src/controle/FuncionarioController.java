@@ -33,6 +33,7 @@ public class FuncionarioController {
 
 	public void iniciarCadastroFunc() {
 		limparCamposCadFuncionario();
+		telaInternaController.setTela(janelaCadastro);
 		janelaCadastro.setVisible(true);
 		janelaListagem.dispose();
 	}
@@ -205,6 +206,7 @@ public class FuncionarioController {
 					// botar o controller login para abrir a tela
 					LoginController logController = new LoginController();
 					logController.iniciarLogin();
+					telaInternaController.fecharTela();
 				}
 
 			}

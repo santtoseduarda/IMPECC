@@ -50,6 +50,7 @@ public class ProdutoController {
 				if (resposta == 1) {
 					LoginController logController = new LoginController();
 					logController.iniciarLogin();
+					telaInternaController.fecharTela();
 				}
 
 			}
@@ -62,6 +63,7 @@ public class ProdutoController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				limparCamposCad();
+				telaInternaController.setTela(viewC);
 				viewC.setVisible(true);
 				viewL.dispose();
 

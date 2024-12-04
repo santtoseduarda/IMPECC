@@ -73,22 +73,53 @@ public class FuncionarioDAO {
 
 	public boolean verificarLogin(String login, String senha) {
 
-		String verificacao = "SELECT * FROM funcionarios WHERE login = ? AND senha = ?";
+		    String verificacao = "SELECT * FROM funcionarios WHERE login = ?";
 
-		try {
-			PreparedStatement pst = conn.prepareStatement(verificacao);
+		    try {
+		        PreparedStatement pst = conn.prepareStatement(verificacao);
 
-			pst.setString(1, login);
-			pst.setString(2, senha);
-			ResultSet res = pst.executeQuery();
+		        pst.setString(1, login);
+		        ResultSet res = pst.executeQuery();
 
-			// Se houver um resultado, o login é válido
-			return res.next(); // Se houver pelo menos uma linha, o login está correto
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false; // Retorna falso em caso de erro
+		        // Se encontrar o login no banco, verificar o login e a senha
+		        if (res.next()) {
+		            String loginBanco = res.getString("login");
+		            String senhaBanco = res.getString("senha");
+		            
+		            // Comparar login e senha fornecidos com os armazenados no banco (case-sensitive)
+		            if (loginBanco.equals(login) && senhaBanco.equals(senha)) {
+		                return true; // Login e senha válidos
+		            }
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        return false; // Retorna falso em caso de erro
+		    }
+		    return false; // Retorna falso se o login ou senha não forem válidos
 		}
-	}
+
+
+		   /* String verificacao = "SELECT * FROM funcionarios WHERE login = ?";
+
+		    try {
+		        PreparedStatement pst = conn.prepareStatement(verificacao);
+
+		        pst.setString(1, login);
+		        ResultSet res = pst.executeQuery();
+
+		        if (res.next()) {
+		            String senhaBanco = res.getString("senha");
+		            
+		            if (senhaBanco.equals(senha)) {
+		                return true; // Login válido
+		            }
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        return false; 
+		    }
+		    return false; 
+		}*/
 
 	public ArrayList<Funcionario> buscarFuncLupa(String campo, String valor) {
 		ArrayList<Funcionario> listaFuncionarios = new ArrayList<>();

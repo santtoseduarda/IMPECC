@@ -27,10 +27,29 @@ public class VendaController {
 	CadastroVendas janelaCadastro = new CadastroVendas(this);
 	TelaInternaController telaInternaController = new TelaInternaController();
 	
+	
 	public VendaController() {
 		telaInternaController.setTela(janelaListagem);
+		configurarListeners();
 	}
 	
+	private class VendasListeners implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if ("adicionarCarinhoAction".equals(e.getActionCommand())) {
+				
+			}else if ("okAction".equals(e.getActionCommand())) {
+				String cpf = janelaCadastro.getCpfCliente();
+				Cliente cliente = novaVenda.buscarCliente(cpf);
+				System.out.println(cliente.getId_Cliente());
+			}
+		}
+	}
+
+	private void configurarListeners() {
+		janelaCadastro.addcadastroVendasListener(new VendasListeners());
+	}
+
 	public void abrirListagemVenda() {
 		atualizarTabela("", "");
 		janelaListagem.setVisible(true);
@@ -91,6 +110,7 @@ public class VendaController {
 			}
 		};
 	}
+	
 	
 	
 

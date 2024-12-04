@@ -62,6 +62,7 @@ public class LoginController {
 				if(view.SenhaVisivel == false) {
 					System.out.print("mostrar senha");
 					
+
 					view.txtSenha.setEchoChar('\0');
 					view.SenhaVisivel = true;
 				} else {

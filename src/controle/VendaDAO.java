@@ -215,11 +215,44 @@ public class VendaDAO {
 			return false;
 		}
 	}
+	
+	public Cliente buscarCliente(String cpf) {
+		String sql = "SELECT c.*,  FROM clientes c WHERE cpf_Cliente = ?";
+		Cliente c =null;
+		
+		try {
+			pst = conn.prepareStatement(sql);
+			pst.setString(1, cpf);
+
+			ResultSet rs = pst.executeQuery();
+
+			if (rs.next()) {
+				
+				c = new Cliente();
+				c.setId_Cliente(rs.getInt("id_Cliente"));
+				c.setNomeCliente(rs.getString("nome_Cliente"));
+				c.setDataNasc(rs.getString("data_Nasc"));
+				c.setCpf_Cliente(rs.getString("cpf_Cliente"));
+				c.setTelefone(rs.getString("telefone_Cliente"));
+				c.setEmail(rs.getString("email_Cliente"));
+			}
+				
+		
+		
+	}catch (SQLException e1) {
+		e1.printStackTrace();
+	}
+		return c;
+	}
+	
+	
 
 	// BUSCA VENDAS
 	public Venda buscarVendas(int idVenda) {
 		String sql = "SELECT v.*,  FROM vendas v JOIN clientes ON clientes.id_Cliente = vendas.id_Cliente JOIN funcionarios ON funcionarios.id_Funcionario = vendas.id_Funcionario WHERE id_venda = ?";
 		Venda v = null;
+		
+	
 
 		try {
 			pst = conn.prepareStatement(sql);

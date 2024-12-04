@@ -108,6 +108,7 @@ public class TelaLogin extends JFrame {
 		
 		txtSenha = new JPasswordField();
 		panel.add(txtSenha, "cell 1 6 2 1,growx");
+		
 		txtSenha.setColumns(10);
 
 		JButton btnAcessar = new JButton("Acessar");

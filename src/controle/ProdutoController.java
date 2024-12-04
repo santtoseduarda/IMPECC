@@ -245,7 +245,7 @@ public class ProdutoController {
 		viewA.txtNome.setText(p.getNomeProduto());
 		viewA.comboBoxTamanho.setSelectedItem(p.getTamanho());
 		viewA.comboBoxGenero.setSelectedItem(p.getGenero());
-		viewA.txtPreço.setText(String.valueOf(p.getPreco()).format("%.2f").replace(".", ","));
+		viewA.txtPreço.setText(String.format("%.2f", p.getPreco()).replace(".", ","));
 		viewA.txtQuantidadeEstoque.setText(String.valueOf(p.getQtdEstoque()));
 
 		FornecedorController fornecedorController = new FornecedorController();

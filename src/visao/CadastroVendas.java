@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -41,6 +42,8 @@ public class CadastroVendas extends JFrame {
 	public JTable table;
 	public JComboBox<Object> comboBoxProd;
 	public JSpinner spinnerQntd;
+	private JButton btnAdicionar;
+	private JButton btnOK;
 
 	public CadastroVendas(VendaController vendaController) {
 
@@ -142,15 +145,16 @@ public class CadastroVendas extends JFrame {
 		lblNomeCliente.setFont(fontRegular.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblNomeCliente, "cell 18 9,alignx left,growy");
 
-		JButton btnAdicionar = new JButton("Adicionar ao Carrinho");
-		//btnAdicionar.addActionListener(vendaController.adicionarCarrinho());
+		btnAdicionar = new JButton("Adicionar ao Carrinho");
+		btnAdicionar.setActionCommand("adicionarCarinhoAction");
 		btnAdicionar.setPreferredSize(new Dimension(100, 30));
 		btnAdicionar.setForeground(Color.RED);
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 17));
 		btnAdicionar.setBackground(Color.WHITE);
 		contentPane.add(btnAdicionar, "cell 12 10,grow");
 
-		JButton btnOK = new JButton("OK");
+		btnOK = new JButton("OK");
+		btnOK.setActionCommand("okAction");
 		btnOK.setPreferredSize(new Dimension(50, 30));
 		btnOK.setForeground(Color.RED);
 		btnOK.setFont(null);
@@ -204,7 +208,15 @@ public class CadastroVendas extends JFrame {
 	public JSpinner getSpinnerQntd() {
 	    return spinnerQntd;
 	}
+	
+	public void addcadastroVendasListener(ActionListener listener) {
+		btnAdicionar.addActionListener(listener);
+		btnOK.addActionListener(listener);
+	}
 
+	public String getCpfCliente() {
+		return txtCPFcliente.getText();
+	}
 
 
 }

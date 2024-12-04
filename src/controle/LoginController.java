@@ -67,7 +67,7 @@ public class LoginController {
 					view.panel.repaint();
 					view.SenhaVisivel = true;
 				} else {
-					System.out.print("ocular senha");
+					System.out.print("ocultar senha");
 					view.txtSenha.setText(view.txttSenhaVisivel.getText());
 
 					view.panel.remove(view.txttSenhaVisivel);

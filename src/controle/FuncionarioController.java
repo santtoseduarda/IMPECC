@@ -369,6 +369,7 @@ public class FuncionarioController {
 		}
 		return true;
 	}
+	
 
 	private boolean cpfJaCadastradoFuncionario(String cpf) throws SQLException {
 		Funcionario funcionario = fdao.buscarCPF(cpf);

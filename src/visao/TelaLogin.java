@@ -31,7 +31,7 @@ public class TelaLogin extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public JTextField txtLogin;
-	public JTextField txtSenha;
+	public JPasswordField txtSenha;
 	public boolean SenhaVisivel;
 	public JPanel panel;
 	public JTextField txttSenhaVisivel;

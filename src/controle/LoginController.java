@@ -14,7 +14,7 @@ public class LoginController {
 	TelaLogin view = new TelaLogin(this);
 	FuncionarioDAO fdao = new FuncionarioDAO();
 	FuncionarioController fcont = new FuncionarioController();
-
+	char caractereSenha = 's';
 
 	public void iniciarCadastro(){
 		fcont.janelaLoginCadastro.setVisible(true);
@@ -55,25 +55,20 @@ public class LoginController {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				if(caractereSenha == 's'){
+					caractereSenha = 	view.txtSenha.getEchoChar();
+				}
 				//clique do olho
 				if(view.SenhaVisivel == false) {
 					System.out.print("mostrar senha");
-					view.txttSenhaVisivel.setText(view.txtSenha.getText());
-
-					view.panel.remove(view.txtSenha);
-
-					view.panel.add(view.txttSenhaVisivel, "cell 1 6 2 1,growx");
-					view.panel.repaint();
+					
+					view.txtSenha.setEchoChar('\0');
 					view.SenhaVisivel = true;
 				} else {
-					System.out.print("ocultar senha");
-					view.txtSenha.setText(view.txttSenhaVisivel.getText());
-
-					view.panel.remove(view.txttSenhaVisivel);
-
-					view.panel.add(view.txtSenha, "cell 1 6 2 1,growx");
-					view.panel.repaint();
+					System.out.print("ocular senha");
+					
+					view.txtSenha.setEchoChar(caractereSenha);
+					
 					view.SenhaVisivel = false;
 					
 				}

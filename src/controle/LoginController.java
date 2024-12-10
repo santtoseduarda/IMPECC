@@ -40,6 +40,7 @@ public class LoginController {
 				 if (fdao.verificarLogin(login, senha)) {
 					 
 			            // Se a verificação for bem-sucedida, abre a tela inicial
+					
 			            telaInicial();
 			            view.dispose(); // Fecha a tela de login
 			            

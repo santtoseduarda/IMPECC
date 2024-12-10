@@ -18,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -29,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controle.ProdutoController;
 import controle.VendaController;
-import modelo.Fornecedor;
+import modelo.Funcionario;
 import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
 
@@ -44,8 +43,9 @@ public class CadastroVendas extends JFrame {
 	public JSpinner spinnerQntd;
 	private JButton btnAdicionar;
 	private JButton btnOK;
+	private JLabel lblNomeFunc;
 
-	public CadastroVendas(VendaController vendaController) {
+	public CadastroVendas(VendaController vendaController, Funcionario funcionarioLogado) {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1199, 1607);
@@ -81,6 +81,7 @@ public class CadastroVendas extends JFrame {
 			e.printStackTrace();
 		}
 
+		
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[][][grow][grow][][][][][][][][][][][][][][grow][][][][grow][]",
 				"[grow][][grow][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]"));
@@ -96,13 +97,10 @@ public class CadastroVendas extends JFrame {
 		lblCadVenda.setFont(fontBold.deriveFont(Font.PLAIN, 45));
 		contentPane.add(lblCadVenda, "cell 3 2");
 
-		JLabel lblFunc = new JLabel("Funcionário: ");
-		lblFunc.setFont(fontBold.deriveFont(Font.PLAIN, 22));
-		contentPane.add(lblFunc, "cell 20 2,alignx center,growy");
-
-		JLabel lblNomeFunc = new JLabel("Joao BlaBla");
+		lblNomeFunc = new JLabel("Funcionario :"+ (funcionarioLogado != null ? funcionarioLogado.getNomeFuncionario() : "Não identificado"));
 		lblNomeFunc.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
-		contentPane.add(lblNomeFunc, "cell 21 2,alignx left,aligny center");
+		add(lblNomeFunc, "span, wrap");
+		contentPane.add(lblNomeFunc, "cell 20 2,alignx left,aligny center");
 
 		JLabel lblProduto = new JLabel("Produto:");
 		lblProduto.setFont(fontBold.deriveFont(Font.PLAIN, 20));
@@ -111,6 +109,8 @@ public class CadastroVendas extends JFrame {
 		comboBoxProd = new JComboBox<>();
 		comboBoxProd.setPreferredSize(new Dimension(100, 30));
 		contentPane.add(comboBoxProd, "cell 2 10 2 1,growx");
+		
+		
 		ProdutoController produtoController = new ProdutoController();
 		
 		ArrayList<Produto> produtos = null;

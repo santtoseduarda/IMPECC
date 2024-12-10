@@ -369,7 +369,6 @@ public class FuncionarioController {
 		}
 		return true;
 	}
-	
 
 	private boolean cpfJaCadastradoFuncionario(String cpf) throws SQLException {
 		Funcionario funcionario = fdao.buscarCPF(cpf);
@@ -451,7 +450,7 @@ public class FuncionarioController {
 			new MensagemView("Celular inválido. Deve estar no formato (00)00000-0000.", "Erro de cadastro", 0);
 			return false;
 		}
-		
+
 		if (cpfJaCadastradoFuncionario(cpf)) {
 			new MensagemView("CPF já cadastrado no sistema! Informe o CPF corretamente.", "Erro de cadastro", 0);
 			return false;
@@ -503,6 +502,16 @@ public class FuncionarioController {
 	public void janelaCadastro() {
 		// TODO Auto-generated method stub
 
+	}
+
+	private static Funcionario funcionarioLogado;
+
+	public static void setFuncionarioLogado(Funcionario funcionario) {
+		funcionarioLogado = funcionario;
+	}
+
+	public static Funcionario getFuncionarioLogado() {
+		return funcionarioLogado;
 	}
 
 }

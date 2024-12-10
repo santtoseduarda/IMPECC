@@ -77,6 +77,7 @@ public class VendaController {
 				if (resposta == 1) {
 					LoginController logController = new LoginController();
 					logController.iniciarLogin();
+					telaInternaController.fecharTela();
 				}
 
 			}

@@ -36,6 +36,8 @@ public class TelaLogin extends JFrame {
 	public JPanel panel;
 	public JTextField txttSenhaVisivel;
 	LoginController loginController;
+	public JButton btnCadastre;
+	public JButton btnAcessar;
 
 	public TelaLogin(LoginController loginController) {
 		this.loginController = loginController;
@@ -111,13 +113,24 @@ public class TelaLogin extends JFrame {
 		
 		txtSenha.setColumns(10);
 
-		JButton btnAcessar = new JButton("Acessar");
+		btnAcessar = new JButton("Acessar");
 		btnAcessar.setForeground(new Color(255, 255, 255));
 		btnAcessar.setBackground(new Color(255, 0, 0));
 		btnAcessar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		
 		// controller faz logar
 		btnAcessar.addActionListener(this.loginController.logar()); //controller chama a view setActionComand
+		
+		btnAcessar.setActionCommand("login");
+		
+		btnCadastre = new JButton("Cadastre-se");
+		
+		btnCadastre.setActionCommand("cadastro");
+
+		
+		btnCadastre.setFont(fontBold.deriveFont(Font.PLAIN, 25));
+		panel.add(btnCadastre, "cell 1 11 2 1,alignx center");
+		
 		
 		JLabel btnOlho = new JLabel("");
 		btnOlho.setFont(new Font("Tahoma", Font.PLAIN, 9));
@@ -143,14 +156,11 @@ public class TelaLogin extends JFrame {
 		panel.add(btnEsqueceuSenha, "cell 1 7");
 		panel.add(btnAcessar, "cell 1 9 2 1,alignx center");
 		
-		JButton btnCadastre = new JButton("Cadastre-se");
-		btnCadastre.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// controller inicializa o cadastro
-				loginController.iniciarCadastro();
-			}
-		});
-		btnCadastre.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		panel.add(btnCadastre, "cell 1 11 2 1,alignx center");
 	}
+	
+	public void addTelaLoginListener(ActionListener listener) {
+		btnAcessar.addActionListener(listener);
+		btnCadastre.addActionListener(listener);
+	}
+
 }

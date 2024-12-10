@@ -138,6 +138,7 @@ public class FornecedorController {
 
 			modeloTabela.addRow(new Object[] { fr.getID_fornecedor(), fr.getNome_Fornecedor(), fr.getCNPJ(),
 					fr.getEmail_Fornecedor(), fr.getTelefone_Fornecedor(), });
+			
 		}
 	}
 
@@ -213,7 +214,7 @@ public class FornecedorController {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				viewl.setVisible(true);
-				viewc.dispose();
+				telaInternaController.fecharTela();
 			}
 		};
 	}
@@ -308,7 +309,6 @@ public class FornecedorController {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int posicaoSelecionada = viewl.table.getSelectedRow();
-
 				if (posicaoSelecionada >= 0) {
 
 					DefaultTableModel modeloTabela = (DefaultTableModel) viewl.table.getModel();
@@ -371,11 +371,6 @@ public class FornecedorController {
 			new MensagemView("Celular inválido. Deve estar no formato (00)00000-0000.", "Erro de cadastro", 0);
 			return false;
 		}
-		
-		if (cnpjJaCadastrado(cnpj)) {
-	        new MensagemView("CNPJ já cadastrado no sistema!", "Erro de cadastro", 0);
-	        return false;
-	    }
 		
 		return true;
 	}

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -30,6 +31,7 @@ public class CadastroFuncionario extends JFrame{
 	public JTextField txtSenha;
 	public JTextField txtCPF;
 	private JLabel lblCadFunc;
+	public JButton btnCadastrar;
 
 	public CadastroFuncionario(FuncionarioController funcionarioController) {
 
@@ -128,50 +130,24 @@ public class CadastroFuncionario extends JFrame{
 		contentPane.add(txtSenha, "cell 4 12 2 1,growx");
 		txtSenha.setColumns(10);
 
-		JButton btnSair = new JButton("Voltar");
-		btnSair.addMouseListener(funcionarioController.voltarLogin());
-		btnSair.setForeground(new Color(225, 0, 0));
-		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 22));
-		contentPane.add(btnSair, "cell 1 17 1 2,alignx left,aligny bottom");
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addMouseListener(funcionarioController.voltarLogin());
+		btnVoltar.setForeground(new Color(225, 0, 0));
+		btnVoltar.setFont(fontBold.deriveFont(Font.PLAIN, 22));
+		contentPane.add(btnVoltar, "cell 1 17 1 2,alignx left,aligny bottom");
 		
 
-		JButton btnCadastrar = new JButton("Cadastrar");
-		// cadastrar
+		btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.setActionCommand("cadastrar");
+		
 		btnCadastrar.setForeground(new Color(225, 225, 225));
 		btnCadastrar.setBackground(new Color(161, 0, 29));
 		btnCadastrar.setFont(fontBold.deriveFont(Font.PLAIN, 22));
 		contentPane.add(btnCadastrar, "flowx,cell 5 17 1 2,alignx right,aligny bottom");
-		btnCadastrar.addActionListener(funcionarioController.cadastrarFuncionarioLogin());
 	}
 
-	@Override
-	public JLabel getLabelFornecedor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public JLabel getLabelCliente() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public JLabel getLabelFuncionario() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public JLabel getLabelVendas() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public JLabel getLabelProduto() {
-		// TODO Auto-generated method stub
-		return null;
+	public void addCadastroFuncListener(ActionListener listener) {
+		btnCadastrar.addActionListener(listener);
 	}
 
 }

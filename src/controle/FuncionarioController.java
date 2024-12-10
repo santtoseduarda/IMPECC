@@ -288,7 +288,7 @@ public class FuncionarioController {
 				LoginController loginController = new LoginController();
 				// FuncionarioController funcionarioController = new FuncionarioController();
 				loginController.iniciarLogin();
-				janelaLoginCadastro.dispose();
+				telaInternaController.fecharTela();
 			}
 		};
 	}

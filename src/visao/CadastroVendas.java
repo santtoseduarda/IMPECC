@@ -44,6 +44,7 @@ public class CadastroVendas extends JFrame {
 	public JSpinner spinnerQntd;
 	private JButton btnAdicionar;
 	private JButton btnOK;
+	private JTextField txtCodProd;
 
 	public CadastroVendas(VendaController vendaController) {
 
@@ -108,21 +109,12 @@ public class CadastroVendas extends JFrame {
 		lblProduto.setFont(fontBold.deriveFont(Font.PLAIN, 20));
 		contentPane.add(lblProduto, "cell 2 9");
 
-		comboBoxProd = new JComboBox<>();
-		comboBoxProd.setPreferredSize(new Dimension(100, 30));
-		contentPane.add(comboBoxProd, "cell 2 10 2 1,growx");
-		ProdutoController produtoController = new ProdutoController();
 		
-		ArrayList<Produto> produtos = null;
-		try {
-			produtos = produtoController.buscarTodosProdutos();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (Produto produto : produtos) {
-			comboBoxProd.addItem(produto);
-		}
+		txtCodProd = new JTextField();
+		txtCodProd.setPreferredSize(new Dimension(100, 30));
+		contentPane.add(txtCodProd, "cell 2 10 2 1,growx");
+		txtCodProd.setColumns(10);
+		
 		
 		JLabel lblQntd = new JLabel("Quantidade:");
 		lblQntd.setFont(fontBold.deriveFont(Font.PLAIN, 20));
@@ -170,7 +162,6 @@ public class CadastroVendas extends JFrame {
 		table.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] {"Produto", "Quantidade", "Preço Un.", "Total" }));
 		table.setPreferredScrollableViewportSize(new Dimension(800, 400));// Tamanho
-
 		scrollPane.setViewportView(table);
 
 		JButton btnExcluir = new JButton("Excluir Produto");
@@ -216,6 +207,10 @@ public class CadastroVendas extends JFrame {
 
 	public String getCpfCliente() {
 		return txtCPFcliente.getText();
+	}
+	
+	public String getCodProd() {
+		return txtCodProd.getText();
 	}
 
 

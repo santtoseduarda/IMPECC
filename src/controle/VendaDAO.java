@@ -217,7 +217,7 @@ public class VendaDAO {
 	}
 	
 	public Cliente buscarCliente(String cpf) {
-		String sql = "SELECT c.*,  FROM clientes c WHERE cpf_Cliente = ?";
+		String sql = "SELECT c.*  FROM clientes c WHERE cpf_Cliente = ?";
 		Cliente c =null;
 		
 		try {

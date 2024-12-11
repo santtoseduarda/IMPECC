@@ -43,12 +43,15 @@ public class VendaController {
 				int codprod = Integer.parseInt(produto);
 				ProdutoDAO produtobd = new ProdutoDAO();
 				Produto p = produtobd.buscarProdutos(codprod);
-				System.out.println(p.getNomeProduto() + " " + p.getPreco());
 				
 				int quantidade = (int) janelaCadastro.spinnerQntd.getValue();
 				
 				double valorTotal = quantidade * p.getPreco();
-				System.out.println(valorTotal);
+				
+				DefaultTableModel modeloTabela = (DefaultTableModel) janelaCadastro.table.getModel();
+				
+				modeloTabela.addRow(new Object[] { p.getNomeProduto(), quantidade,p.getPreco(),
+						valorTotal});
 				
 			} else if ("okAction".equals(e.getActionCommand())) {
 				String cpf = janelaCadastro.getCpfCliente();
@@ -62,10 +65,10 @@ public class VendaController {
 		janelaCadastro.addcadastroVendasListener(new VendasListeners());
 	}
 
-	public void abrirListagemVenda() {
+	/*public void abrirListagemVenda() {
 		atualizarTabela("", "");
 		janelaListagem.setVisible(true);
-	}
+	}*/
 
 	public ActionListener sairSistema() {
 		return new ActionListener() {
@@ -86,22 +89,6 @@ public class VendaController {
 	}
 	
 	
-	public void atualizarTabela(String campo, String valor) {
-
-		DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
-		modeloTabela.setRowCount(0); // Limpa a tabela
-
-		// ClienteDAO cdao = new ClienteDAO();
-		ArrayList<Cliente> listaClientes = cdao.buscarClientesLupa(campo, valor);
-
-		if (listaClientes != null && !listaClientes.isEmpty()) {
-			for (Cliente c : listaClientes) {
-				// Adiciona os dados do cliente na tabela
-				modeloTabela.addRow(new Object[] { c.getId_Cliente(), c.getNomeCliente(), c.getDataNasc(),
-						c.getCpf_Cliente(), c.getTelefone(), c.getEmail() });
-			}
-		}
-	}
 
 	public ActionListener iniciarCadastroVenda() {
 		return new ActionListener() {

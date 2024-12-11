@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import controle.LoginController.LoginListener;
 import modelo.Funcionario;
 import visao.AlterarFuncionario;
 import visao.CadastroFuncionario;
@@ -30,6 +31,22 @@ public class FuncionarioController {
 
 	public FuncionarioController() {
 		telaInternaController.setTela(janelaListagem);
+		janelaLoginCadastro.addCadastroFuncListener( new CadastroFuncListener());
+	}
+	
+	private class CadastroFuncListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if ("voltar".equals(e.getActionCommand())) {
+				voltarLogin();
+			} else if ("cadastrar".equals(e.getActionCommand())){
+				iniciarCadastroFunc();
+			}
+		}
+	}
+	
+	private void configurarListeners() {
+		janelaLoginCadastro.addCadastroFuncListener(new CadastroFuncListener());		
 	}
 
 	public void iniciarCadastroFunc() {
@@ -281,15 +298,17 @@ public class FuncionarioController {
 		};
 	}
 
-	public MouseListener voltarLogin() {
-		return new MouseAdapter() {
+	public ActionListener voltarLogin() {
+		return new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				LoginController loginController = new LoginController();
 				// FuncionarioController funcionarioController = new FuncionarioController();
 				loginController.iniciarLogin();
 				telaInternaController.fecharTela();
 			}
+
+	
 		};
 	}
 
@@ -487,7 +506,7 @@ public class FuncionarioController {
 							LoginController loginController = new LoginController();
 							loginController.iniciarLogin();
 
-							janelaLoginCadastro.dispose();
+							telaInternaController.fecharTela();
 						} catch (Exception ex) {
 							new MensagemView("Erro ao cadastrar funcionário.", "Erro", 0);
 						}

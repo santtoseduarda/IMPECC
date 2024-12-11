@@ -32,6 +32,7 @@ public class CadastroFuncionario extends JFrame{
 	public JTextField txtCPF;
 	private JLabel lblCadFunc;
 	public JButton btnCadastrar;
+	private JButton btnVoltar;
 
 	public CadastroFuncionario(FuncionarioController funcionarioController) {
 
@@ -130,8 +131,8 @@ public class CadastroFuncionario extends JFrame{
 		contentPane.add(txtSenha, "cell 4 12 2 1,growx");
 		txtSenha.setColumns(10);
 
-		JButton btnVoltar = new JButton("Voltar");
-		btnVoltar.addMouseListener(funcionarioController.voltarLogin());
+		btnVoltar = new JButton("Voltar");
+		btnVoltar.setActionCommand("voltar");
 		btnVoltar.setForeground(new Color(225, 0, 0));
 		btnVoltar.setFont(fontBold.deriveFont(Font.PLAIN, 22));
 		contentPane.add(btnVoltar, "cell 1 17 1 2,alignx left,aligny bottom");
@@ -148,6 +149,7 @@ public class CadastroFuncionario extends JFrame{
 
 	public void addCadastroFuncListener(ActionListener listener) {
 		btnCadastrar.addActionListener(listener);
+		btnVoltar.addActionListener(listener);
 	}
 
 }

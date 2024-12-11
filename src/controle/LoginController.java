@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import modelo.Cliente;
 import visao.CadastroFuncionario;
 import visao.MensagemView;
 import visao.TelaInicial;
@@ -18,6 +19,10 @@ public class LoginController {
 	FuncionarioController fcont = new FuncionarioController();
 	char caractereSenha = 's';
 
+	public LoginController() {
+		configurarListeners();
+  	}
+	
 	public void iniciarCadastro(){
 		fcont.janelaLoginCadastro.setVisible(true);
 		view.dispose();
@@ -31,10 +36,24 @@ public class LoginController {
 	public void iniciarLogin() {
 		view.setVisible(true);
 	}
-
-	public ActionListener logar() {
-		return new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+	
+	public class LoginListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if ("login".equals(e.getActionCommand())) {
+				logar();
+			} else if ("cadastro".equals(e.getActionCommand())){
+				iniciarCadastro();
+			}
+		}
+	}
+	
+	private void configurarListeners() {
+		view.addTelaLoginListener(new LoginListener());		
+	}
+	
+	
+	public void logar() {
 				
 				String login = view.txtLogin.getText();
 		        String senha = view.txtSenha.getText();
@@ -42,16 +61,13 @@ public class LoginController {
 				 if (fdao.verificarLogin(login, senha)) {
 					 
 			            // Se a verificação for bem-sucedida, abre a tela inicial
-					
 			            telaInicial();
 			            view.dispose(); // Fecha a tela de login
 			            
 			        } else {
 			            // Se o login ou a senha estiverem errados, mostra uma mensagem de erro
 			        	new MensagemView("Login ou senha incorretos!", "Erro de login", 0);
-			        }
-			}
-		};
+			        };
 	}
 	
 	public MouseAdapter mostrarSenha() {

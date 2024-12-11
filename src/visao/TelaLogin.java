@@ -119,7 +119,6 @@ public class TelaLogin extends JFrame {
 		btnAcessar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		
 		// controller faz logar
-		btnAcessar.addActionListener(this.loginController.logar()); //controller chama a view setActionComand
 		
 		btnAcessar.setActionCommand("login");
 		

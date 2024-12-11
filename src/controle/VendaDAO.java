@@ -63,7 +63,7 @@ public class VendaDAO {
 	
 	// busca pela lupa
 
-	public ArrayList<Venda> buscarVendasLupa(String campo, String valor) {
+/*	public ArrayList<Venda> buscarVendasLupa(String campo, String valor) {
 	    ArrayList<Venda> listaVendas = new ArrayList<>();
 
 	    try {
@@ -107,7 +107,7 @@ public class VendaDAO {
 		}
 
 		return listaVendas;
-	}
+	}*/
 
 	// ALTERA UMA VENDA
 	public boolean alterarVenda(Venda v) {
@@ -173,19 +173,6 @@ public class VendaDAO {
 		return false;
 	}
 
-	// ADICIONA NO CARRINHO
-	public boolean adicionarCarrinho(ItemVenda item, ArrayList<ItemVenda> carrinho) {
-		for (ItemVenda i : carrinho) {
-			if (i.getProduto().getId_Produto() == item.getProduto().getId_Produto()) {
-				i.setQuantidade(i.getQuantidade() + item.getQuantidade());
-				i.setPrecoTotal(i.getPrecoTotal() + item.getProduto().getPreco() * item.getQuantidade());
-				return true;
-			}
-		}
-		
-		carrinho.add(item);
-		return true;
-	}
 
 	// CALCULA O TOTAL
 	public double calcularTotal(ArrayList<ItemVenda> carrinho) {
@@ -248,7 +235,7 @@ public class VendaDAO {
 	
 
 	// BUSCA VENDAS
-	public Venda buscarVendas(int idVenda) {
+/*	public Venda buscarVendas(int idVenda) {
 		String sql = "SELECT v.*,  FROM vendas v JOIN clientes ON clientes.id_Cliente = vendas.id_Cliente JOIN funcionarios ON funcionarios.id_Funcionario = vendas.id_Funcionario WHERE id_venda = ?";
 		Venda v = null;
 		
@@ -299,9 +286,9 @@ public class VendaDAO {
 		}
 
 		return null;
-	}
+	}*/
 
-	// BUSCA ITEM DA VENDA PELO ID DA VENDA
+	/*// BUSCA ITEM DA VENDA PELO ID DA VENDA
 	private ArrayList<ItemVenda> buscarItensVendaPorIdVenda(int idVenda) {
 		String mostrarDados = "SELECT *, venda_produtos.preco as preco_venda, produtos.preco as preco_produto FROM venda_produtos JOIN produtos ON venda_produtos.id_Produto = produtos.id_Produto WHERE id_venda = ?";
 		ArrayList<ItemVenda> lista = new ArrayList<ItemVenda>();
@@ -338,6 +325,6 @@ public class VendaDAO {
 		}
 
 		return null;
-	}
+	}*/
 
 }

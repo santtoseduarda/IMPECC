@@ -18,12 +18,12 @@ public class LoginController {
 	FuncionarioController fcont = new FuncionarioController();
 	char caractereSenha = 's';
 
-	public void iniciarCadastro(){
+	public void iniciarCadastro() {
 		fcont.janelaLoginCadastro.setVisible(true);
 		view.dispose();
 	}
-	
-	public void telaInicial(){
+
+	public void telaInicial() {
 		TelaInicialController telaInicialController = new TelaInicialController();
 		telaInicialController.abrirTelaInicial();
 	}
@@ -35,49 +35,49 @@ public class LoginController {
 	public ActionListener logar() {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				String login = view.txtLogin.getText();
-		        String senha = view.txtSenha.getText();
-		        				
-				 if (fdao.verificarLogin(login, senha)) {
-					 
-			            // Se a verificação for bem-sucedida, abre a tela inicial
-					
-			            telaInicial();
-			            view.dispose(); // Fecha a tela de login
-			            
-			        } else {
-			            // Se o login ou a senha estiverem errados, mostra uma mensagem de erro
-			        	new MensagemView("Login ou senha incorretos!", "Erro de login", 0);
-			        }
+				char[] senhaCharArray = view.txtSenha.getPassword(); // Alterado para getPassword
+				String senha = new String(senhaCharArray); // Convertendo char[] para String
+
+				if (fdao.verificarLogin(login, senha)) {
+
+					telaInicial();
+					view.dispose();
+
+				} else {
+
+					new MensagemView("Login ou senha incorretos!", "Erro de login", 0);
+				}
+
+				java.util.Arrays.fill(senhaCharArray, '\0');
 			}
 		};
 	}
-	
+
 	public MouseAdapter mostrarSenha() {
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(caractereSenha == 's'){
-					caractereSenha = 	view.txtSenha.getEchoChar();
+				if (caractereSenha == 's') {
+					caractereSenha = view.txtSenha.getEchoChar();
 				}
-				//clique do olho
-				if(view.SenhaVisivel == false) {
+				// clique do olho
+				if (view.SenhaVisivel == false) {
 					System.out.print("mostrar senha");
-					
 
 					view.txtSenha.setEchoChar('\0');
 					view.SenhaVisivel = true;
 				} else {
 					System.out.print("ocular senha");
-					
+
 					view.txtSenha.setEchoChar(caractereSenha);
-					
+
 					view.SenhaVisivel = false;
-					
+
 				}
 				view.panel.validate();
-			
+
 			}
 		};
 	}

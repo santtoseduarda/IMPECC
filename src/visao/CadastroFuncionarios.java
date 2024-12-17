@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -36,6 +37,10 @@ public class CadastroFuncionarios extends JFrame implements TelaInterna {
 	private JLabel lblClientes;
 	private JLabel lblFornecedor;
 	private JLabel lblFuncionarios;
+	public JButton btnLimparCampos;
+	public JButton btnAdicionar;
+	public JButton btnSair;
+
 	FuncionarioController funcionarioController;
 
 	public CadastroFuncionarios(FuncionarioController funcionarioController) {
@@ -229,31 +234,34 @@ public class CadastroFuncionarios extends JFrame implements TelaInterna {
 		txtSenha.setColumns(10);
 
 		// sair
-		JButton btnSair = new JButton("Sair");
-		btnSair.addActionListener(funcionarioController.sairSistema());
+		btnSair = new JButton("Sair");
+		btnSair.setActionCommand("sair");
+		
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSair, "cell 2 83 1 4,aligny bottom");
 
-		JButton btnAdicionar = new JButton("Adicionar Funcionário");
+		btnAdicionar = new JButton("Adicionar Funcionário");
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
 		// cadastrar
-		btnAdicionar.addActionListener(funcionarioController.cadastrarFuncionario());
+		
+		btnAdicionar.setActionCommand("cadastrarFunc");
 
 		// limpar campos
-		JButton btnLimparCampos = new JButton("Limpar Campos");
-		btnLimparCampos.addActionListener(funcionarioController.limparCamposCadastroFuncionario());
+		btnLimparCampos = new JButton("Limpar Campos");
+		btnLimparCampos.setActionCommand("LimparCampos");
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);
 		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
 
 	}
-
+	
+	
 	@Override
 	public JLabel getLabelFornecedor() {
 		// TODO Auto-generated method stub
@@ -283,5 +291,12 @@ public class CadastroFuncionarios extends JFrame implements TelaInterna {
 		// TODO Auto-generated method stub
 		return lblProdutos;
 	}
+	
+	public void addCadastroFuncListener(ActionListener listener) {
+		btnAdicionar.addActionListener(listener);
+		btnLimparCampos.addActionListener(listener);
+		btnSair.addActionListener(listener);
+	}
+
 
 }

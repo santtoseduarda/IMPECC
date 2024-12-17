@@ -165,8 +165,16 @@ public class ProdutoController {
 	                    produto.setGenero(viewC.comboBoxGenero.getSelectedItem().toString());
 	                    produto.setFornecedor((Fornecedor) viewC.comboBoxFornecedor.getSelectedItem());
 
-	                    float precoConvert = Float.parseFloat(viewC.txtPreco.getText().replace(",", "."));
-	                    
+	                    // Converte o preço, substituindo vírgula por ponto
+	                    String precoTexto = viewC.txtPreco.getText().replace(",", ".");
+	                    float precoConvert = Float.parseFloat(precoTexto);
+
+	                    // Verifica se o preço é válido (maior que zero)
+	                    if (precoConvert <= 0) {
+	                        new MensagemView("O preço deve ser maior que zero.", "Erro de cadastro", 0);
+	                        return;
+	                    }
+
 	                    int qntEstoqueConvert = Integer.parseInt(viewC.txtQntdEstoque.getText());
 
 	                    produto.setPreco(precoConvert);
@@ -178,7 +186,7 @@ public class ProdutoController {
 	                    viewC.dispose();
 
 	                } catch (NumberFormatException ex) {
-						new MensagemView("Preencha os campos de Preço e Quantidade corretamente (somente números).", "Erro de cadastro", 0);
+	                    new MensagemView("Preencha os campos de Preço e Quantidade corretamente (somente números).", "Erro de cadastro", 0);
 	                }
 	            }
 	        }
@@ -318,34 +326,40 @@ public class ProdutoController {
 	                int idProduto = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
 
 	                if (validarCamposEditarProduto()) {
-	                Produto produto = new Produto();
-	                
-	                produto.setId_Produto(idProduto);
+	                    Produto produto = new Produto();
+	                    
+	                    produto.setId_Produto(idProduto);
+	                    produto.setNomeProduto(viewA.txtNome.getText());
+	                    produto.setTamanho(viewA.comboBoxTamanho.getSelectedItem().toString());
+	                    produto.setGenero(viewA.comboBoxGenero.getSelectedItem().toString());
 
-	                produto.setNomeProduto(viewA.txtNome.getText());
-	                produto.setTamanho(viewA.comboBoxTamanho.getSelectedItem().toString());
-	                produto.setGenero(viewA.comboBoxGenero.getSelectedItem().toString());
-	                produto.setPreco(Float.parseFloat(viewA.txtPreço.getText().replace(",", ".")));
+	                    String precoTexto = viewA.txtPreço.getText().replace(",", ".");
+	                    float precoConvert = Float.parseFloat(precoTexto);
 
-	                Fornecedor fornecedorSelecionado = (Fornecedor) viewA.comboBoxFornecedor.getSelectedItem();
-	                produto.setFornecedor(fornecedorSelecionado);
-	                produto.setQtdEstoque(Integer.parseInt(viewA.txtQuantidadeEstoque.getText()));
-
-	                try {
-	                    boolean sucesso = novoProduto.alterarProduto(produto);
-	                    if (sucesso) {
-	                        viewL.setVisible(true);
-	                        viewA.dispose();
-	                        atualizarTabela("", "");
-	                    } else {
-	    					new MensagemView("Erro ao alterar produto: Nenhuma linha foi afetada.", "Erro", 0);
-	                        
+	                    if (precoConvert <= 0) {
+	                        new MensagemView("O preço deve ser maior que zero.", "Erro de edição", 0);
+	                        return;
 	                    }
-	                } catch (Exception ex) {
-    					new MensagemView("Erro ao alterar produto!", "Erro", 0);
 
+	                    produto.setPreco(precoConvert);
+
+	                    Fornecedor fornecedorSelecionado = (Fornecedor) viewA.comboBoxFornecedor.getSelectedItem();
+	                    produto.setFornecedor(fornecedorSelecionado);
+	                    produto.setQtdEstoque(Integer.parseInt(viewA.txtQuantidadeEstoque.getText()));
+
+	                    try {
+	                        boolean sucesso = novoProduto.alterarProduto(produto);
+	                        if (sucesso) {
+	                            viewL.setVisible(true);
+	                            viewA.dispose();
+	                            atualizarTabela("", "");
+	                        } else {
+	                            new MensagemView("Erro ao alterar produto: Nenhuma linha foi afetada.", "Erro", 0);
+	                        }
+	                    } catch (Exception ex) {
+	                        new MensagemView("Erro ao alterar produto!", "Erro", 0);
+	                    }
 	                }
-	            }
 	            }
 	        }
 	    };

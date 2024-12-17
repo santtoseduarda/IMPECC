@@ -118,7 +118,6 @@ public class TelaLogin extends JFrame {
 		btnAcessar.setBackground(new Color(255, 0, 0));
 		btnAcessar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		
-		// controller faz logar
 		
 		btnAcessar.setActionCommand("login");
 		

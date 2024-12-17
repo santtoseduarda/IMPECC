@@ -39,6 +39,10 @@ public class ListagemFuncionarios extends JFrame implements TelaInterna{
 	private JLabel lblProdutos;
 	private JLabel lblFuncionarios;
 	private JLabel lblVendas;
+	private JButton btnSair;
+	private JButton btnEditar;
+	private JButton btnExcluir;
+	private  JButton btnAdicionar;
 
 	public ListagemFuncionarios(FuncionarioController funcionarioController) {
 		this.funcionarioController = funcionarioController;
@@ -247,24 +251,20 @@ public class ListagemFuncionarios extends JFrame implements TelaInterna{
 		contentPane.add(lblLinha5, "cell 1 19 2 1");
 
 		// sair
-		JButton btnSair = new JButton("Sair");
-		btnSair.addActionListener(funcionarioController.sairSistema());
+		btnSair = new JButton("Sair");
+		btnSair.setActionCommand("sair");
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSair, "cell 2 78 1 4,aligny bottom");
 
 		// cadastrar funcionario
-		JButton btnAdicionar = new JButton("Adicionar Funcionário");
-		btnAdicionar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				funcionarioController.iniciarCadastroFunc();
-			}
-		});
+		btnAdicionar = new JButton("Adicionar Funcionário");
+		btnAdicionar.setActionCommand("AdicionarFunc");
 
 		// editar
-		JButton btnEditar = new JButton("Editar");
-		btnEditar.addActionListener(funcionarioController.buscaFuncionario());
+		btnEditar = new JButton("Editar");
+		btnEditar.setActionCommand("EditarFunc");
 
 		btnEditar.setForeground(new Color(255, 0, 0));
 		btnEditar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
@@ -272,8 +272,8 @@ public class ListagemFuncionarios extends JFrame implements TelaInterna{
 		contentPane.add(btnEditar, "cell 19 80 1 2");
 
 		// excluir
-		JButton btnExcluir = new JButton("Excluir");
-		btnExcluir.addActionListener(funcionarioController.excluirFuncionario());
+		btnExcluir = new JButton("Excluir");
+		btnExcluir.setActionCommand("excluirFunc");
 		btnExcluir.setForeground(new Color(255, 0, 0));
 		btnExcluir.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnExcluir.setBackground(new Color(255, 255, 255));
@@ -313,6 +313,14 @@ public class ListagemFuncionarios extends JFrame implements TelaInterna{
 	public JLabel getLabelProduto() {
 		// TODO Auto-generated method stub
 		return lblProdutos;
+	}
+	
+	public void addListagemFuncListener(ActionListener listener) {
+		btnSair.addActionListener(listener);
+		btnEditar.addActionListener(listener);
+		btnSair.addActionListener(listener);		
+		btnAdicionar.addActionListener(listener);
+
 	}
 
 }

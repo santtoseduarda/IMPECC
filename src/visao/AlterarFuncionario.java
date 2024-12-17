@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,6 +38,10 @@ public class AlterarFuncionario extends JFrame {
 	private JLabel lblClientes;
 	private JComponent lblFornecedor;
 	private JComponent lblFuncionarios;
+	private JButton btnLimparCampos;
+	private JButton btnAdicionar;
+	private JButton btnSair;
+	
 
 	public AlterarFuncionario(FuncionarioController funcionarioController) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -231,29 +236,36 @@ public class AlterarFuncionario extends JFrame {
 		panel.add(txtSenha, "cell 5 12 3 1,growx");
 		txtSenha.setColumns(10);
 
-		JButton btnSair = new JButton("Sair");
+		btnSair = new JButton("Sair");
 		// chamar o controller para sair do sistema
-		btnSair.addActionListener(funcionarioController.sairSistema());
+		btnSair.setActionCommand("sair");
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSair, "cell 2 83 1 4,aligny bottom");
 
-		JButton btnAdicionar = new JButton("Salvar Edições");
+		btnAdicionar = new JButton("Salvar Edições");
+		btnAdicionar.setActionCommand("salvarEdi");
 		btnAdicionar.setForeground(new Color(255, 0, 0));
 		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnAdicionar.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnAdicionar, "cell 28 85 1 4,aligny center");
-		btnAdicionar.addActionListener(funcionarioController.salvarEdicoes());
+		//btnAdicionar.addActionListener(funcionarioController.salvarEdicoes());
 
-		JButton btnLimparCampos = new JButton("Limpar Campos");
+		btnLimparCampos = new JButton("Limpar Campos");
 		// controller limpa os campos
-		btnLimparCampos.addActionListener(funcionarioController.limparCamposEditarFuncionario());
+		btnLimparCampos.setActionCommand("LimparCamposEdita");
 		btnLimparCampos.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnLimparCampos.setForeground(Color.RED);
 		btnLimparCampos.setBackground(Color.WHITE);
 		contentPane.add(btnLimparCampos, "cell 25 85 1 4,aligny center");
 
+	}
+	
+	public void addEdicaoFuncListener(ActionListener listener) {
+		btnAdicionar.addActionListener(listener);
+		btnLimparCampos.addActionListener(listener);
+		btnSair.addActionListener(listener);
 	}
 
 }

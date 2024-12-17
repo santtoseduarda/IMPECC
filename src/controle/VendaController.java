@@ -54,12 +54,15 @@ public class VendaController {
 						valorTotal});
 				
 			} else if ("okAction".equals(e.getActionCommand())) {
-				String cpf = janelaCadastro.getCpfCliente();
-				Cliente cliente = novaVenda.buscarCliente(cpf);
+			    String cpf = janelaCadastro.getCpfCliente(); // Pega o CPF digitado
+			    Cliente cliente = novaVenda.buscarCliente(cpf); // Busca o cliente no banco de dados
+
 			}
 		}
 
 	}
+	
+
 
 	private void configurarListeners() {
 		janelaCadastro.addcadastroVendasListener(new VendasListeners());
@@ -115,6 +118,49 @@ public class VendaController {
 	public void abrirListagemVenda() {
 		janelaListagem.setVisible(true);
 		
+	}
+
+	public ActionListener finalizarvenda() {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					if (validarCamposCadastroClientes()) {
+
+						Cliente cadastro = new Cliente();
+
+						cadastro.setNomeCliente(janelaCadastro.txtNome.getText());
+						cadastro.setDataNasc(janelaCadastro.txtDataNsc.getText());
+						cadastro.setCpf_Cliente(janelaCadastro.txtCPF.getText());
+						cadastro.setTelefone(janelaCadastro.txtTelefone.getText());
+						cadastro.setEmail(janelaCadastro.txtEmail.getText());
+
+						ClienteDAO novoCliente = new ClienteDAO();
+
+						try {
+							novoCliente.inserir(cadastro);
+							janelaListagem.setVisible(true);
+							atualizarTabela("", "");
+							janelaCadastro.dispose();
+
+						} catch (Exception ex) {
+							new MensagemView("Erro ao cadastrar cliente.", "Erro de cadastro", 0);
+
+						}
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
+		};
+	}
+
+	public static ActionListener finalizarVenda() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

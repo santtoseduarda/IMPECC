@@ -39,12 +39,14 @@ public class CadastroVendas extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtCPFcliente;
+	private JTextField txtNomeCliente;
 	public JTable table;
 	public JComboBox<Object> comboBoxProd;
 	public JSpinner spinnerQntd;
 	private JButton btnAdicionar;
 	private JButton btnOK;
 	private JTextField txtCodProd;
+	private JLabel lblPreco;
 
 	public CadastroVendas(VendaController vendaController) {
 
@@ -97,13 +99,6 @@ public class CadastroVendas extends JFrame {
 		lblCadVenda.setFont(fontBold.deriveFont(Font.PLAIN, 45));
 		contentPane.add(lblCadVenda, "cell 3 2");
 
-		JLabel lblFunc = new JLabel("Funcionário: ");
-		lblFunc.setFont(fontBold.deriveFont(Font.PLAIN, 22));
-		contentPane.add(lblFunc, "cell 20 2,alignx center,growy");
-
-		JLabel lblNomeFunc = new JLabel("Joao BlaBla");
-		lblNomeFunc.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
-		contentPane.add(lblNomeFunc, "cell 21 2,alignx left,aligny center");
 
 		JLabel lblProduto = new JLabel("Produto:");
 		lblProduto.setFont(fontBold.deriveFont(Font.PLAIN, 20));
@@ -133,9 +128,14 @@ public class CadastroVendas extends JFrame {
 		contentPane.add(txtCPFcliente, "cell 17 10 3 1,growx");
 		txtCPFcliente.setColumns(10);
 
-		JLabel lblNomeCliente = new JLabel("nome cliente adicionado ao ok");
+		JLabel lblNomeCliente = new JLabel("Nome do Cliente");
 		lblNomeCliente.setFont(fontRegular.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblNomeCliente, "cell 18 9,alignx left,growy");
+		contentPane.add(lblNomeCliente, "cell 17 11,alignx left");
+		
+		txtNomeCliente = new JTextField();
+        txtNomeCliente.setPreferredSize(new Dimension(200, 30));
+        txtNomeCliente.setEditable(false);
+        contentPane.add(txtNomeCliente, "cell 17 12 3 1,growx");
 
 		btnAdicionar = new JButton("Adicionar ao Carrinho");
 		btnAdicionar.setActionCommand("adicionarCarinhoAction");
@@ -149,9 +149,8 @@ public class CadastroVendas extends JFrame {
 		btnOK.setActionCommand("okAction");
 		btnOK.setPreferredSize(new Dimension(50, 30));
 		btnOK.setForeground(Color.RED);
-		btnOK.setFont(null);
-		btnOK.setBackground(Color.WHITE);
 		btnOK.setFont(fontBold.deriveFont(Font.PLAIN, 17));
+		btnOK.setBackground(Color.WHITE);
 		contentPane.add(btnOK, "cell 20 10,alignx left,growy");
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -189,12 +188,21 @@ public class CadastroVendas extends JFrame {
 
 		// cadastrar funcionario
 		JButton btnFinalizarVenda = new JButton("Finalizar Venda");
+		btnFinalizarVenda.addActionListener(VendaController.finalizarVenda());
 		btnFinalizarVenda.setForeground(new Color(255, 0, 0));
 		btnFinalizarVenda.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnFinalizarVenda.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnFinalizarVenda, "cell 21 79,grow");
 
 	}
+	
+	public void setNomeCliente(String nome) {
+        txtNomeCliente.setText(nome);
+    }
+
+    public void setTotalVenda(String total) {
+        lblPreco.setText(total);
+    }
 	
 	public JSpinner getSpinnerQntd() {
 	    return spinnerQntd;
@@ -212,6 +220,8 @@ public class CadastroVendas extends JFrame {
 	public String getCodProd() {
 		return txtCodProd.getText();
 	}
+
+
 
 
 }

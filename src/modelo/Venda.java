@@ -67,4 +67,14 @@ public class Venda {
     	carrinho.add(item);
         valorTotal += item.getPrecoTotal();
     }
+
+	public String getCodProduto() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int getQuantidade() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

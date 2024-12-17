@@ -29,6 +29,7 @@ public class FuncionarioController {
 	CadastroFuncionario janelaLoginCadastro = new CadastroFuncionario(this);
 	TelaInternaController telaInternaController = new TelaInternaController();
 
+	
 	public FuncionarioController() {
 		telaInternaController.setTela(janelaListagem);
 		janelaLoginCadastro.addCadastroFuncListener( new CadastroFuncListener());
@@ -40,7 +41,7 @@ public class FuncionarioController {
 			if ("voltar".equals(e.getActionCommand())) {
 				voltarLogin();
 			} else if ("cadastrar".equals(e.getActionCommand())){
-				iniciarCadastroFunc();
+				cadastrarFuncionarioLogin();
 			}
 		}
 	}
@@ -484,10 +485,7 @@ public class FuncionarioController {
 		return true;
 	}
 
-	public ActionListener cadastrarFuncionarioLogin() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+	public void cadastrarFuncionarioLogin() {
 				try {
 					if (validarCamposCadastroFuncionariosLogin()) {
 						Funcionario cadastro = new Funcionario();
@@ -516,8 +514,6 @@ public class FuncionarioController {
 					e1.printStackTrace();
 				}
 			}
-		};
-	}
 
 	public void janelaCadastro() {
 		// TODO Auto-generated method stub

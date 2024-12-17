@@ -112,4 +112,9 @@ public class VendaController {
 		};
 	}
 
+	public void abrirListagemVenda() {
+		janelaListagem.setVisible(true);
+		
+	}
+
 }

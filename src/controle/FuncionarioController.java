@@ -29,25 +29,62 @@ public class FuncionarioController {
 	CadastroFuncionario janelaLoginCadastro = new CadastroFuncionario(this);
 	TelaInternaController telaInternaController = new TelaInternaController();
 
-	
 	public FuncionarioController() {
 		telaInternaController.setTela(janelaListagem);
-		janelaLoginCadastro.addCadastroFuncListener( new CadastroFuncListener());
+		configurarListeners();
 	}
-	
+
 	private class CadastroFuncListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if ("voltar".equals(e.getActionCommand())) {
 				voltarLogin();
-			} else if ("cadastrar".equals(e.getActionCommand())){
+			} else if ("cadastrar".equals(e.getActionCommand())) {
 				cadastrarFuncionarioLogin();
+			} else if ("cadastrarFunc".equals(e.getActionCommand())) {
+				cadastrarFuncionario();
+			} else if ("LimparCampos".equals(e.getActionCommand())) {
+				limparCamposCadastroFuncionario();
+			} else if ("sair".equals(e.getActionCommand())) {
+				sairSistema();
+			}
+
+		}
+	}
+
+	private class EdicaoFuncListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if ("voltar".equals(e.getActionCommand())) {
+				voltarLogin();
+			} else if ("salvarEdi".equals(e.getActionCommand())) {
+				salvarEdicoes();
+			} else if ("LimparCamposEdita".equals(e.getActionCommand())) {
+				limparCamposEditarFuncionario();
+			}
+
+		}
+	}
+
+	private class ListagemFuncListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if ("excluirFunc".equals(e.getActionCommand())) {
+				excluirFuncionario();
+			} else if ("EditarFunc".equals(e.getActionCommand())) {
+				buscaFuncionario();
+			} else if ("sair".equals(e.getActionCommand())) {
+				sairSistema();
+			} else if ("AdicionarFunc".equals(e.getActionCommand())) {
+				iniciarCadastroFunc();
 			}
 		}
 	}
-	
+
 	private void configurarListeners() {
-		janelaLoginCadastro.addCadastroFuncListener(new CadastroFuncListener());		
+		janelaLoginCadastro.addCadastroFuncListener(new CadastroFuncListener());
+		janelaAlterar.addEdicaoFuncListener(new EdicaoFuncListener());
+		janelaListagem.addListagemFuncListener(new ListagemFuncListener());
 	}
 
 	public void iniciarCadastroFunc() {
@@ -67,81 +104,68 @@ public class FuncionarioController {
 		janelaCadastro.setVisible(true);
 	}
 
-	public ActionListener cadastrarFuncionario() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+	public void cadastrarFuncionario() {
 
+		try {
+			if (validarCamposCadastroFuncionario()) {
+
+				Funcionario cadastro = new Funcionario();
+				cadastro.setLogin(janelaCadastro.txtLogin.getText());
+				cadastro.setSenha(janelaCadastro.txtSenha.getText());
+				cadastro.setCelular(janelaCadastro.txtCelular.getText());
+				cadastro.setCpf(janelaCadastro.txtCPF.getText());
+				cadastro.setEmail_Funcionario(janelaCadastro.txtEmail.getText());
+				cadastro.setNomeFuncionario(janelaCadastro.txtNomeCompleto.getText());
+
+				FuncionarioDAO novoFuncionario = new FuncionarioDAO();
 				try {
-					if (validarCamposCadastroFuncionario()) {
+					novoFuncionario.inserir(cadastro);
+					janelaListagem.setVisible(true);
+					atualizarTabela("", "");
+					janelaCadastro.dispose();
 
-						Funcionario cadastro = new Funcionario();
-						cadastro.setLogin(janelaCadastro.txtLogin.getText());
-						cadastro.setSenha(janelaCadastro.txtSenha.getText());
-						cadastro.setCelular(janelaCadastro.txtCelular.getText());
-						cadastro.setCpf(janelaCadastro.txtCPF.getText());
-						cadastro.setEmail_Funcionario(janelaCadastro.txtEmail.getText());
-						cadastro.setNomeFuncionario(janelaCadastro.txtNomeCompleto.getText());
-
-						FuncionarioDAO novoFuncionario = new FuncionarioDAO();
-						try {
-							novoFuncionario.inserir(cadastro);
-							janelaListagem.setVisible(true);
-							atualizarTabela("", "");
-							janelaCadastro.dispose();
-
-						} catch (Exception ex) {
-							new MensagemView("Erro ao cadastrar funcionário.", "Erro de cadastro", 0);
-						}
-					}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (Exception ex) {
+					new MensagemView("Erro ao cadastrar funcionário.", "Erro de cadastro", 0);
 				}
 			}
-
-		};
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
-	public ActionListener excluirFuncionario() {
-		return new ActionListener() {
+	public void excluirFuncionario() {
 
-			public void actionPerformed(ActionEvent e) {
+		int posicaoSelecionada = janelaListagem.table.getSelectedRow();
 
-				int posicaoSelecionada = janelaListagem.table.getSelectedRow();
+		if (posicaoSelecionada >= 0) {
 
-				if (posicaoSelecionada >= 0) {
+			DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
+			int idFuncionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
 
-					DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
-					int idFuncionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+			MensagemViewOp mve = new MensagemViewOp("Você tem certeza que deseja excluir o funcionário?",
+					"Exclusão de Funcionário");
 
-					MensagemViewOp mve = new MensagemViewOp("Você tem certeza que deseja excluir o funcionário?",
-							"Exclusão de Funcionário");
+			int confirmacao = mve.getResposta();
 
-					int confirmacao = mve.getResposta();
+			if (confirmacao == 1) {
 
-					if (confirmacao == 1) {
+				FuncionarioDAO fdao = new FuncionarioDAO();
+				boolean certo = fdao.excluirFuncionario(idFuncionario);
 
-						FuncionarioDAO fdao = new FuncionarioDAO();
-						boolean certo = fdao.excluirFuncionario(idFuncionario);
+				if (certo) {
 
-						if (certo) {
+					modeloTabela.removeRow(posicaoSelecionada);
+					new MensagemView("Funcionário excluído com sucesso.", "Exclusão", 1);
+					atualizarTabela("", "");
 
-							modeloTabela.removeRow(posicaoSelecionada);
-							new MensagemView("Funcionário excluído com sucesso.", "Exclusão", 1);
-							atualizarTabela("", "");
-
-						} else {
-							new MensagemView("Erro ao excluir o funcionário", "Erro de exclusão", 0);
-						}
-					}
 				} else {
-					new MensagemView("Por favor, selecione um funcionário para excluir.", "Atenção", 0);
+					new MensagemView("Erro ao excluir o funcionário", "Erro de exclusão", 0);
 				}
 			}
-
-		};
-
+		} else {
+			new MensagemView("Por favor, selecione um funcionário para excluir.", "Atenção", 0);
+		}
 	}
 
 	//
@@ -177,9 +201,7 @@ public class FuncionarioController {
 		};
 	}
 
-	public ActionListener salvarEdicoes() {
-		return new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+	public void salvarEdicoes() {
 				int posicaoSelecionada = janelaListagem.table.getSelectedRow();
 
 				if (posicaoSelecionada >= 0) {
@@ -220,29 +242,20 @@ public class FuncionarioController {
 
 				}
 			}
-		};
-	}
 
-	public ActionListener sairSistema() {
-		return new ActionListener() {
+	public void sairSistema() {
+		MensagemViewOp mve = new MensagemViewOp("Você realmente deseja sair?", "Confirmação");
+		int resposta = mve.getResposta();
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				MensagemViewOp mve = new MensagemViewOp("Você realmente deseja sair?", "Confirmação");
-				int resposta = mve.getResposta();
+		// Verifica a resposta
+		if (resposta == 1) {
 
-				// Verifica a resposta
-				if (resposta == 1) {
+			// botar o controller login para abrir a tela
+			LoginController logController = new LoginController();
+			logController.iniciarLogin();
+			telaInternaController.fecharTela();
+		}
 
-					// botar o controller login para abrir a tela
-					LoginController logController = new LoginController();
-					logController.iniciarLogin();
-					telaInternaController.fecharTela();
-				}
-
-			}
-
-		};
 	}
 
 	public void limparCamposCadFuncionario() {
@@ -257,18 +270,13 @@ public class FuncionarioController {
 
 	}
 
-	public ActionListener limparCamposCadastroFuncionario() {
+	public void limparCamposCadastroFuncionario() {
 		// TODO Auto-generated method stub
-		return new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				limparCamposCadFuncionario();
-			}
-		};
+		limparCamposCadFuncionario();
+
 	}
 
-	public ActionListener limparCamposEditarFuncionario() {
-		return new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+	public void limparCamposEditarFuncionario() {
 				janelaAlterar.txtNomeCompleto.setText("");
 				janelaAlterar.txtEmail.setText("");
 				janelaAlterar.txtCelular.setText("");
@@ -276,8 +284,6 @@ public class FuncionarioController {
 				janelaAlterar.txtLogin.setText("");
 				janelaAlterar.txtSenha.setText("");
 			}
-		};
-	}
 
 	public void mostrarDados(Funcionario f) {
 		janelaAlterar.txtNomeCompleto.setText(f.getNomeFuncionario());
@@ -299,19 +305,14 @@ public class FuncionarioController {
 		};
 	}
 
-	public ActionListener voltarLogin() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+	public void voltarLogin() {
+
 				LoginController loginController = new LoginController();
 				// FuncionarioController funcionarioController = new FuncionarioController();
 				loginController.iniciarLogin();
 				telaInternaController.fecharTela();
 			}
 
-	
-		};
-	}
 
 	private void pesquisarPorCampo(String campo, String valor) {
 
@@ -389,7 +390,6 @@ public class FuncionarioController {
 		}
 		return true;
 	}
-	
 
 	private boolean cpfJaCadastradoFuncionario(String cpf) throws SQLException {
 		Funcionario funcionario = fdao.buscarCPF(cpf);
@@ -471,7 +471,7 @@ public class FuncionarioController {
 			new MensagemView("Celular inválido. Deve estar no formato (00)00000-0000.", "Erro de cadastro", 0);
 			return false;
 		}
-		
+
 		if (cpfJaCadastradoFuncionario(cpf)) {
 			new MensagemView("CPF já cadastrado no sistema! Informe o CPF corretamente.", "Erro de cadastro", 0);
 			return false;
@@ -486,34 +486,34 @@ public class FuncionarioController {
 	}
 
 	public void cadastrarFuncionarioLogin() {
+		try {
+			if (validarCamposCadastroFuncionariosLogin()) {
+				Funcionario cadastro = new Funcionario();
+
+				// Capturando os dados dos campos de texto
+				cadastro.setNomeFuncionario(janelaLoginCadastro.txtNomeCompleto.getText());
+				cadastro.setEmail_Funcionario(janelaLoginCadastro.txtEmail.getText());
+				cadastro.setCelular(janelaLoginCadastro.txtCelular.getText());
+				cadastro.setCpf(janelaLoginCadastro.txtCPF.getText());
+				cadastro.setLogin(janelaLoginCadastro.txtLogin.getText());
+				cadastro.setSenha(janelaLoginCadastro.txtSenha.getText());
+
+				FuncionarioDAO novoFuncionario = new FuncionarioDAO();
 				try {
-					if (validarCamposCadastroFuncionariosLogin()) {
-						Funcionario cadastro = new Funcionario();
+					novoFuncionario.inserir(cadastro);
+					LoginController loginController = new LoginController();
+					loginController.iniciarLogin();
 
-						// Capturando os dados dos campos de texto
-						cadastro.setNomeFuncionario(janelaLoginCadastro.txtNomeCompleto.getText());
-						cadastro.setEmail_Funcionario(janelaLoginCadastro.txtEmail.getText());
-						cadastro.setCelular(janelaLoginCadastro.txtCelular.getText());
-						cadastro.setCpf(janelaLoginCadastro.txtCPF.getText());
-						cadastro.setLogin(janelaLoginCadastro.txtLogin.getText());
-						cadastro.setSenha(janelaLoginCadastro.txtSenha.getText());
-
-						FuncionarioDAO novoFuncionario = new FuncionarioDAO();
-						try {
-							novoFuncionario.inserir(cadastro);
-							LoginController loginController = new LoginController();
-							loginController.iniciarLogin();
-
-							telaInternaController.fecharTela();
-						} catch (Exception ex) {
-							new MensagemView("Erro ao cadastrar funcionário.", "Erro", 0);
-						}
-					}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					telaInternaController.fecharTela();
+				} catch (Exception ex) {
+					new MensagemView("Erro ao cadastrar funcionário.", "Erro", 0);
 				}
 			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 
 	public void janelaCadastro() {
 		// TODO Auto-generated method stub

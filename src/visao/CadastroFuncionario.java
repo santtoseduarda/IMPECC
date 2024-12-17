@@ -133,6 +133,7 @@ public class CadastroFuncionario extends JFrame{
 
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.setActionCommand("voltar");
+		
 		btnVoltar.setForeground(new Color(225, 0, 0));
 		btnVoltar.setFont(fontBold.deriveFont(Font.PLAIN, 22));
 		contentPane.add(btnVoltar, "cell 1 17 1 2,alignx left,aligny bottom");

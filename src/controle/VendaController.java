@@ -17,17 +17,20 @@ import modelo.ItemVenda;
 import modelo.Produto;
 import modelo.Venda;
 import visao.CadastroVendas;
+import visao.FinalizarVenda;
 import visao.ListagemVendas;
 import visao.MensagemView;
 import visao.MensagemViewOp;
 
 public class VendaController {
 
+	public static ActionListener finalizarVenda;
 	Venda venda = new Venda();
 	VendaDAO novaVenda = new VendaDAO();
 	ListagemVendas janelaListagem = new ListagemVendas(this);
 	CadastroVendas janelaCadastro = new CadastroVendas(this);
 	TelaInternaController telaInternaController = new TelaInternaController();
+	FinalizarVenda janelaFinalizarVenda = new FinalizarVenda();
 
 	public VendaController() {
 		telaInternaController.setTela(janelaListagem);
@@ -37,28 +40,48 @@ public class VendaController {
 	private class VendasListeners implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if ("adicionarCarinhoAction".equals(e.getActionCommand())) {
-				String produto = janelaCadastro.getCodProd();
+		    if ("adicionarCarinhoAction".equals(e.getActionCommand())) {
+		        try {
+		            String produto = janelaCadastro.getCodProd();
+		            int codprod = Integer.parseInt(produto);
+		            
+		            ProdutoDAO produtobd = new ProdutoDAO();
+		            Produto p = produtobd.buscarProdutos(codprod);
+		            
+		            int quantidade = (int) janelaCadastro.spinnerQntd.getValue();
+		            double valorTotal = quantidade * p.getPreco();
 
-				int codprod = Integer.parseInt(produto);
-				ProdutoDAO produtobd = new ProdutoDAO();
-				Produto p = produtobd.buscarProdutos(codprod);
-				
-				int quantidade = (int) janelaCadastro.spinnerQntd.getValue();
-				
-				double valorTotal = quantidade * p.getPreco();
-				
-				DefaultTableModel modeloTabela = (DefaultTableModel) janelaCadastro.table.getModel();
-				
-				modeloTabela.addRow(new Object[] { p.getNomeProduto(), quantidade,p.getPreco(),
-						valorTotal});
-				
-			} else if ("okAction".equals(e.getActionCommand())) {
-			    String cpf = janelaCadastro.getCpfCliente(); // Pega o CPF digitado
-			    Cliente cliente = novaVenda.buscarCliente(cpf); // Busca o cliente no banco de dados
+		            DefaultTableModel modeloTabela = (DefaultTableModel) janelaCadastro.table.getModel();
+		            modeloTabela.addRow(new Object[] { p.getNomeProduto(), quantidade, p.getPreco(), valorTotal });
 
-			}
+		            atualizarTotalCarrinho(); // Atualiza o total do carrinho
+		        } catch (Exception ex) {
+		            JOptionPane.showMessageDialog(janelaCadastro, "Erro ao adicionar produto: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+		        }
+		    } else if ("okAction".equals(e.getActionCommand())) {
+		        String cpf = janelaCadastro.getCpfCliente();
+		        Cliente cliente = novaVenda.buscarCliente(cpf);
+		        if (cliente != null) {
+		            janelaCadastro.setNomeCliente(cliente.getNomeCliente());
+		        } else {
+		            JOptionPane.showMessageDialog(janelaCadastro, "Cliente não encontrado!", "Erro", JOptionPane.ERROR_MESSAGE);
+		        }
+		    }
 		}
+
+		private void atualizarTotalCarrinho() {
+			
+			DefaultTableModel modeloTabela = (DefaultTableModel) janelaCadastro.table.getModel();
+		    double total = 0.0;
+
+		    for (int i = 0; i < modeloTabela.getRowCount(); i++) {
+		        double valor = (double) modeloTabela.getValueAt(i, 3); // Coluna "Total"
+		        total += valor;
+		    }
+
+		    janelaCadastro.setTotalVenda(String.format("%.2f", total));
+		}
+
 
 	}
 	
@@ -119,48 +142,11 @@ public class VendaController {
 		janelaListagem.setVisible(true);
 		
 	}
-
-	public ActionListener finalizarvenda() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				try {
-					if (validarCamposCadastroClientes()) {
-
-						Cliente cadastro = new Cliente();
-
-						cadastro.setNomeCliente(janelaCadastro.txtNome.getText());
-						cadastro.setDataNasc(janelaCadastro.txtDataNsc.getText());
-						cadastro.setCpf_Cliente(janelaCadastro.txtCPF.getText());
-						cadastro.setTelefone(janelaCadastro.txtTelefone.getText());
-						cadastro.setEmail(janelaCadastro.txtEmail.getText());
-
-						ClienteDAO novoCliente = new ClienteDAO();
-
-						try {
-							novoCliente.inserir(cadastro);
-							janelaListagem.setVisible(true);
-							atualizarTabela("", "");
-							janelaCadastro.dispose();
-
-						} catch (Exception ex) {
-							new MensagemView("Erro ao cadastrar cliente.", "Erro de cadastro", 0);
-
-						}
-					}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-
-		};
+	
+	public void abrirFinalizarVenda() {
+		janelaFinalizarVenda.setVisible(true);
 	}
 
-	public static ActionListener finalizarVenda() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }

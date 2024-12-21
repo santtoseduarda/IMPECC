@@ -37,6 +37,7 @@ public class VendaDAO {
 
 		String inserir = "INSERT INTO vendas (Total, Mtd_Pagamento, id_Cliente, id_Funcionario) VALUES (?, ?)";
 
+
 		try {
 			pst = conn.prepareStatement(inserir);
 
@@ -80,61 +81,29 @@ public class VendaDAO {
 		return false;
 	}
 
-	// FINALIZAR VENDA
-	public boolean finalizarVenda(Venda v, ArrayList<ItemVenda> carrinho) {
-		try {
-			// Inserir venda na tabela 'vendas'
-			String inserirVenda = "INSERT INTO vendas (Total, Mtd_Pagamento, id_Cliente, id_Funcionario) VALUES (?, ?, ?, ?)";
-			pst = conn.prepareStatement(inserirVenda, Statement.RETURN_GENERATED_KEYS);
-			pst.setDouble(1, calcularTotal(carrinho));
-			pst.setString(2, v.getMtd_Pagamento());
-			pst.setInt(3, v.getIdCliente());
-			pst.setInt(4, v.getIdFuncionario());
-			pst.executeUpdate();
-
-			// Obter o ID da venda gerado automaticamente
-			ResultSet rs = pst.getGeneratedKeys();
-			int idVenda = 0;
-			if (rs.next()) {
-				idVenda = rs.getInt(1);
-			}
-			
-			String inserirItemVenda = "INSERT INTO venda_produtos (id_venda, id_produto, qntd, preco) VALUES (?, ?, ?, ?)";
-	        for (ItemVenda item : carrinho) {
-	            pst = conn.prepareStatement(inserirItemVenda);
-	            pst.setInt(1, idVenda);
-	            pst.setInt(2, item.getProduto().getId_Produto());
-	            pst.setInt(3, item.getQuantidade());
-	            pst.setDouble(4, item.getPrecoTotal());
-	            pst.executeUpdate();
-	   
-
-			String atualizarEstoque = "UPDATE produtos SET qntd_Estoque = qntd_Estoque - ? WHERE id_Produto = ?";
-			pst = conn.prepareStatement(atualizarEstoque);
-			pst.setInt(1, item.getQuantidade());
-			pst.setInt(2, item.getProduto().getId_Produto());
-			pst.executeUpdate();
-	        }
-	        
-
-			return true;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return false;
-	}
-
 
 	// CALCULA O TOTAL
+	
 	public double calcularTotal(ArrayList<ItemVenda> carrinho) {
-		double total = 0.0;
-		for (ItemVenda item : carrinho) {
-			total += item.getPrecoTotal();
-		}
-		return total;
+	    // Validar se o carrinho está vazio
+	    if (carrinho == null || carrinho.isEmpty()) {
+	        return 0.0; // Retorna 0 caso não existam itens no carrinho
+	    }
+
+	    double total = 0.0;
+
+	    // Itera por cada item e soma os valores totais
+	    for (ItemVenda item : carrinho) {
+	        if (item != null && item.getProduto() != null) {
+	            double precoUnitario = item.getProduto().getPreco(); // Obtém o preço do produto
+	            int quantidade = item.getQuantidade(); // Obtém a quantidade do item
+	            total += precoUnitario * quantidade; // Soma o total (preço * quantidade)
+	        }
+	    }
+
+	    return total; // Retorna o total calculado
 	}
+
 
 	// EXCLUIR VENDA
 	public boolean excluirVendas(int idVenda) {
@@ -155,6 +124,113 @@ public class VendaDAO {
 			return false;
 		}
 	}
+	
+	public boolean finalizarVenda(Venda v, ArrayList<ItemVenda> carrinho) {
+	    Connection conn = null;
+	    PreparedStatement pstVenda = null;
+	    PreparedStatement pstItemVenda = null;
+	    PreparedStatement pstAtualizarEstoque = null;
+
+	    try {
+	        conn = ConexaoBanco.getConexaoMySQL();
+	        conn.setAutoCommit(false); // Iniciar transação
+
+	        // Inserir venda
+	        String inserirVenda = "INSERT INTO vendas (Total, Mtd_Pagamento, id_Cliente, id_Funcionario) VALUES (?, ?, ?, ?)";
+	        pstVenda = conn.prepareStatement(inserirVenda, Statement.RETURN_GENERATED_KEYS);
+	        pstVenda.setDouble(1, calcularTotal(carrinho));
+	        pstVenda.setString(2, v.getMtd_Pagamento());
+	        pstVenda.setInt(3, v.getIdCliente());
+	        pstVenda.setInt(4, v.getIdFuncionario());
+	        pstVenda.executeUpdate();
+
+	        // Obter o ID da venda gerado
+	        ResultSet rs = pstVenda.getGeneratedKeys();
+	        int idVenda = 0;
+	        if (rs.next()) {
+	            idVenda = rs.getInt(1);
+	        }
+
+	        // Inserir itens da venda
+	        String inserirItemVenda = "INSERT INTO venda_produtos (id_venda, id_produto, qntd, preco) VALUES (?, ?, ?, ?)";
+	        pstItemVenda = conn.prepareStatement(inserirItemVenda);
+
+	        String atualizarEstoque = "UPDATE produtos SET qntd_Estoque = qntd_Estoque - ? WHERE id_Produto = ?";
+	        pstAtualizarEstoque = conn.prepareStatement(atualizarEstoque);
+
+	        for (ItemVenda item : carrinho) {
+	            // Inserir item
+	            pstItemVenda.setInt(1, idVenda);
+	            pstItemVenda.setInt(2, item.getProduto().getId_Produto());
+	            pstItemVenda.setInt(3, item.getQuantidade());
+	            pstItemVenda.setDouble(4, item.getPrecoTotal());
+	            pstItemVenda.addBatch();
+
+	            // Atualizar estoque
+	            pstAtualizarEstoque.setInt(1, item.getQuantidade());
+	            pstAtualizarEstoque.setInt(2, item.getProduto().getId_Produto());
+	            pstAtualizarEstoque.addBatch();
+	        }
+
+	        pstItemVenda.executeBatch();
+	        pstAtualizarEstoque.executeBatch();
+
+	        conn.commit(); // Confirmar transação
+	        return true;
+
+	    } catch (SQLException e) {
+	        try {
+	            if (conn != null) {
+	                conn.rollback(); // Reverter alterações em caso de erro
+	            }
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	        }
+	        e.printStackTrace();
+	        return false;
+	    } finally {
+	        try {
+	            if (pstVenda != null) pstVenda.close();
+	            if (pstItemVenda != null) pstItemVenda.close();
+	            if (pstAtualizarEstoque != null) pstAtualizarEstoque.close();
+	            if (conn != null) conn.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+
+	
+	public void salvarVenda(int idCliente, ArrayList<ItemVenda> itens, double totalVenda) throws SQLException {
+	    String sqlVenda = "INSERT INTO vendas (id_cliente, total) VALUES (?, ?)";
+	    String sqlItens = "INSERT INTO itens_venda (id_venda, id_produto, quantidade, preco_total) VALUES (?, ?, ?, ?)";
+
+	    try (Connection conn = ConexaoBanco.getConexaoMySQL();
+	         PreparedStatement psVenda = conn.prepareStatement(sqlVenda, Statement.RETURN_GENERATED_KEYS);
+	         PreparedStatement psItens = conn.prepareStatement(sqlItens)) {
+
+	        // Inserir a venda
+	        psVenda.setInt(1, idCliente);
+	        psVenda.setDouble(2, totalVenda);
+	        psVenda.executeUpdate();
+
+	        ResultSet rs = psVenda.getGeneratedKeys();
+	        if (rs.next()) {
+	            int idVenda = rs.getInt(1);
+
+	            // Inserir os itens da venda
+	            for (ItemVenda item : itens) {
+	                psItens.setInt(1, idVenda);
+	                psItens.setInt(2, item.getProduto().getId_Produto());
+	                psItens.setInt(3, item.getQuantidade());
+	                psItens.setDouble(4, item.getPrecoTotal());
+	                psItens.addBatch();
+	            }
+	            psItens.executeBatch();
+	        }
+	    }
+	}
+
 	
 	public Cliente buscarCliente(String cpf) {
 		String sql = "SELECT c.*  FROM clientes c WHERE cpf_Cliente = ?";

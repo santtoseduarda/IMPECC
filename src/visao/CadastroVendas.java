@@ -46,7 +46,7 @@ public class CadastroVendas extends JFrame {
 	private JButton btnAdicionar;
 	private JButton btnOK;
 	private JTextField txtCodProd;
-	private JLabel lblPreco;
+	public JLabel lblPreco;
 
 	public CadastroVendas(VendaController vendaController) {
 
@@ -188,7 +188,7 @@ public class CadastroVendas extends JFrame {
 
 		// cadastrar funcionario
 		JButton btnFinalizarVenda = new JButton("Finalizar Venda");
-		btnFinalizarVenda.addActionListener(VendaController.finalizarVenda());
+		btnFinalizarVenda.addActionListener(VendaController.finalizarVenda);
 		btnFinalizarVenda.setForeground(new Color(255, 0, 0));
 		btnFinalizarVenda.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnFinalizarVenda.setBackground(new Color(255, 255, 255));
@@ -220,8 +220,6 @@ public class CadastroVendas extends JFrame {
 	public String getCodProd() {
 		return txtCodProd.getText();
 	}
-
-
-
+	
 
 }

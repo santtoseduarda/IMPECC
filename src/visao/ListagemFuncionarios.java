@@ -318,7 +318,7 @@ public class ListagemFuncionarios extends JFrame implements TelaInterna{
 	public void addListagemFuncListener(ActionListener listener) {
 		btnSair.addActionListener(listener);
 		btnEditar.addActionListener(listener);
-		btnSair.addActionListener(listener);		
+		btnExcluir.addActionListener(listener);		
 		btnAdicionar.addActionListener(listener);
 
 	}

@@ -373,10 +373,11 @@ public class ClienteController {
 
 		}
 		
+		/*
 		if (cpfJaCadastrado(cpf)) {
 	        new MensagemView("CPF já cadastrado no sistema! Informe o CPF corretamente.", "Erro de cadastro", 0);
 	        return false;
-	    }
+	    }*/
 		return true;
 	}
 

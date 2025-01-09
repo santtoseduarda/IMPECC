@@ -34,17 +34,24 @@ public class FuncionarioController {
 		configurarListeners();
 	}
 
-	private class CadastroFuncListener implements ActionListener {
+	private class CadastroFuncListenerLogin implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if ("voltar".equals(e.getActionCommand())) {
 				voltarLogin();
 			} else if ("cadastrar".equals(e.getActionCommand())) {
 				cadastrarFuncionarioLogin();
-			} else if ("cadastrarFunc".equals(e.getActionCommand())) {
+			}
+		}
+	}
+	
+	private class CadastroFuncListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			 if ("cadastrarFunc".equals(e.getActionCommand())) {
 				cadastrarFuncionario();
 			} else if ("LimparCampos".equals(e.getActionCommand())) {
-				limparCamposCadastroFuncionario();
+				limparCamposCadFuncionario();
 			} else if ("sair".equals(e.getActionCommand())) {
 				sairSistema();
 			}
@@ -82,7 +89,8 @@ public class FuncionarioController {
 	}
 
 	private void configurarListeners() {
-		janelaLoginCadastro.addCadastroFuncListener(new CadastroFuncListener());
+		janelaLoginCadastro.addCadastroFuncListener(new CadastroFuncListenerLogin());
+		janelaCadastro.addCadastroFuncListener(new CadastroFuncListener());
 		janelaAlterar.addEdicaoFuncListener(new EdicaoFuncListener());
 		janelaListagem.addListagemFuncListener(new ListagemFuncListener());
 	}
@@ -169,79 +177,71 @@ public class FuncionarioController {
 	}
 
 	//
-	public ActionListener buscaFuncionario() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// Supondo que 'janelaListagem' é um JFrame que contém uma JTable chamada
-				// 'tabelaFuncionarios'
-				int selectedRow = janelaListagem.table.getSelectedRow();
+	public void buscaFuncionario() {
+		int selectedRow = janelaListagem.table.getSelectedRow();
 
-				if (selectedRow != -1) { // Verifica se alguma linha foi selecionada
-					// Supondo que a primeira coluna da tabela contém o ID do funcionário
-					int id_Funcionario = (int) janelaListagem.table.getValueAt(selectedRow, 0);
+		if (selectedRow != -1) { // Verifica se alguma linha foi selecionada
+			// Supondo que a primeira coluna da tabela contém o ID do funcionário
+			int id_Funcionario = (int) janelaListagem.table.getValueAt(selectedRow, 0);
 
-					// Busca o funcionário no banco de dados usando o DAO
-					Funcionario f = fdao.buscarFuncionario(id_Funcionario);
+			// Busca o funcionário no banco de dados usando o DAO
+			Funcionario f = fdao.buscarFuncionario(id_Funcionario);
 
-					if (f != null) {
-						// Preenche os campos da janela de alteração com os dados do funcionário
-						mostrarDados(f);
+			if (f != null) {
+				// Preenche os campos da janela de alteração com os dados do funcionário
+				mostrarDados(f);
 
-						// Exibe a janela de alteração
-						janelaAlterar.setVisible(true);
-						janelaListagem.dispose();
-					} else {
-						new MensagemView("Funcionário não encontrado", "Atenção", 0);
-					}
-				} else {
-					new MensagemView("Por favor, selecione um funcionário para alterar.", "Atenção", 0);
-				}
+				// Exibe a janela de alteração
+				janelaAlterar.setVisible(true);
+				janelaListagem.dispose();
+			} else {
+				new MensagemView("Funcionário não encontrado", "Atenção", 0);
 			}
-		};
+		} else {
+			new MensagemView("Por favor, selecione um funcionário para alterar.", "Atenção", 0);
+		}
 	}
 
 	public void salvarEdicoes() {
-				int posicaoSelecionada = janelaListagem.table.getSelectedRow();
+		int posicaoSelecionada = janelaListagem.table.getSelectedRow();
 
-				if (posicaoSelecionada >= 0) {
+		if (posicaoSelecionada >= 0) {
 
-					DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
-					int idFuncionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+			DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
+			int idFuncionario = (int) modeloTabela.getValueAt(posicaoSelecionada, 0);
+			try {
+				if (validarCamposEditarFuncionarios()) {
+					Funcionario funcionario = new Funcionario();
+
+					funcionario.setNomeFuncionario(janelaAlterar.txtNomeCompleto.getText());
+					funcionario.setEmail_Funcionario(janelaAlterar.txtEmail.getText());
+					funcionario.setCelular(janelaAlterar.txtCelular.getText());
+					funcionario.setCpf(janelaAlterar.txtCPF.getText());
+					funcionario.setLogin(janelaAlterar.txtLogin.getText());
+					funcionario.setSenha(janelaAlterar.txtSenha.getText());
+
 					try {
-						if (validarCamposEditarFuncionarios()) {
-							Funcionario funcionario = new Funcionario();
+						boolean sucesso = fdao.alterarFuncionario(funcionario, idFuncionario);
+						if (sucesso) {
+							janelaListagem.setVisible(true);
+							janelaAlterar.dispose();
+							atualizarTabela("", "");
+						} else {
+							new MensagemView("Erro ao alterar funcionário: Nenhuma linha foi afetada.", "Erro", 0);
 
-							funcionario.setNomeFuncionario(janelaAlterar.txtNomeCompleto.getText());
-							funcionario.setEmail_Funcionario(janelaAlterar.txtEmail.getText());
-							funcionario.setCelular(janelaAlterar.txtCelular.getText());
-							funcionario.setCpf(janelaAlterar.txtCPF.getText());
-							funcionario.setLogin(janelaAlterar.txtLogin.getText());
-							funcionario.setSenha(janelaAlterar.txtSenha.getText());
-
-							try {
-								boolean sucesso = fdao.alterarFuncionario(funcionario, idFuncionario);
-								if (sucesso) {
-									janelaListagem.setVisible(true);
-									janelaAlterar.dispose();
-									atualizarTabela("", "");
-								} else {
-									new MensagemView("Erro ao alterar funcionário: Nenhuma linha foi afetada.", "Erro",
-											0);
-
-								}
-							} catch (Exception ex) {
-								new MensagemView("Erro ao funcionário cliente.", "Erro", 0);
-
-							}
 						}
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					} catch (Exception ex) {
+						new MensagemView("Erro ao funcionário cliente.", "Erro", 0);
 
+					}
 				}
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
+
+		}
+	}
 
 	public void sairSistema() {
 		MensagemViewOp mve = new MensagemViewOp("Você realmente deseja sair?", "Confirmação");
@@ -277,13 +277,13 @@ public class FuncionarioController {
 	}
 
 	public void limparCamposEditarFuncionario() {
-				janelaAlterar.txtNomeCompleto.setText("");
-				janelaAlterar.txtEmail.setText("");
-				janelaAlterar.txtCelular.setText("");
-				janelaAlterar.txtCPF.setText("");
-				janelaAlterar.txtLogin.setText("");
-				janelaAlterar.txtSenha.setText("");
-			}
+		janelaAlterar.txtNomeCompleto.setText("");
+		janelaAlterar.txtEmail.setText("");
+		janelaAlterar.txtCelular.setText("");
+		janelaAlterar.txtCPF.setText("");
+		janelaAlterar.txtLogin.setText("");
+		janelaAlterar.txtSenha.setText("");
+	}
 
 	public void mostrarDados(Funcionario f) {
 		janelaAlterar.txtNomeCompleto.setText(f.getNomeFuncionario());
@@ -307,12 +307,11 @@ public class FuncionarioController {
 
 	public void voltarLogin() {
 
-				LoginController loginController = new LoginController();
-				// FuncionarioController funcionarioController = new FuncionarioController();
-				loginController.iniciarLogin();
-				telaInternaController.fecharTela();
-			}
-
+		LoginController loginController = new LoginController();
+		// FuncionarioController funcionarioController = new FuncionarioController();
+		loginController.iniciarLogin();
+		telaInternaController.fecharTela();
+	}
 
 	private void pesquisarPorCampo(String campo, String valor) {
 
@@ -384,10 +383,6 @@ public class FuncionarioController {
 			return false;
 		}
 
-		if (cpfJaCadastradoFuncionario(cpf)) {
-			new MensagemView("CPF já cadastrado no sistema! Informe o CPF corretamente.", "Erro de cadastro", 0);
-			return false;
-		}
 		return true;
 	}
 

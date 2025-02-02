@@ -30,7 +30,7 @@ public class ConexaoBanco {
 		
 		String username = "root";
 		
-		String password = "aluno123";
+		String password = "aluno";
 		
 		try {
 			connection = DriverManager.getConnection(url, username, password);

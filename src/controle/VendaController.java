@@ -25,6 +25,7 @@ import visao.MensagemViewOp;
 public class VendaController {
 
 	public static ActionListener finalizarVenda;
+	private double totalCarrinho = 0.0;
 	Venda venda = new Venda();
 	VendaDAO novaVenda = new VendaDAO();
 	ListagemVendas janelaListagem = new ListagemVendas(this);
@@ -50,15 +51,29 @@ public class VendaController {
 		            
 		            int quantidade = (int) janelaCadastro.spinnerQntd.getValue();
 		            double valorTotal = quantidade * p.getPreco();
+		         // Format the values to 2 decimal places
+	                String precoFormatado = String.format("%.2f", p.getPreco());
+	                String valorTotalFormatado = String.format("%.2f", valorTotal);
 
 		            DefaultTableModel modeloTabela = (DefaultTableModel) janelaCadastro.table.getModel();
-		            modeloTabela.addRow(new Object[] { p.getNomeProduto(), quantidade, p.getPreco(), valorTotal });
+		            modeloTabela.addRow(new Object[] { p.getNomeProduto(), quantidade, precoFormatado, valorTotalFormatado });
 
 		            atualizarTotalCarrinho(); // Atualiza o total do carrinho
 		        } catch (Exception ex) {
 		            JOptionPane.showMessageDialog(janelaCadastro, "Erro ao adicionar produto: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		        }
 		    } else if ("okAction".equals(e.getActionCommand())) {
+		    	String cpf = janelaCadastro.getCpfCliente();
+	            Cliente cliente = novaVenda.buscarCliente(cpf);
+	            if (cliente != null) {
+	                janelaCadastro.setNomeCliente(cliente.getNomeCliente());
+	            } else {
+	                JOptionPane.showMessageDialog(janelaCadastro, 
+	                    "Cliente não encontrado!", 
+	                    "Erro", 
+	                    JOptionPane.ERROR_MESSAGE);
+	            }
+	            /*
 		        String cpf = janelaCadastro.getCpfCliente();
 		        Cliente cliente = novaVenda.buscarCliente(cpf);
 		        if (cliente != null) {
@@ -66,11 +81,29 @@ public class VendaController {
 		        } else {
 		            JOptionPane.showMessageDialog(janelaCadastro, "Cliente não encontrado!", "Erro", JOptionPane.ERROR_MESSAGE);
 		        }
+		        */
 		    }
 		}
 
 		private void atualizarTotalCarrinho() {
-			
+			totalCarrinho = 0.0;
+	        DefaultTableModel modelo = (DefaultTableModel) janelaCadastro.table.getModel();
+	        
+	        for (int i = 0; i < modelo.getRowCount(); i++) {
+	            String valorStr = modelo.getValueAt(i, 3).toString();
+	            // Remove any existing formatting and parse the value
+	            valorStr = valorStr.replace(",", ".");
+	            totalCarrinho += Double.parseDouble(valorStr);
+	        }
+		
+	        // Format the total to 2 decimal places
+	        String totalFormatado = String.format("%.2f", totalCarrinho);
+	        janelaCadastro.setTotalVenda(totalFormatado);
+	        
+	}
+		
+	        
+	        /*
 			DefaultTableModel modeloTabela = (DefaultTableModel) janelaCadastro.table.getModel();
 		    double total = 0.0;
 
@@ -81,6 +114,7 @@ public class VendaController {
 
 		    janelaCadastro.setTotalVenda(String.format("%.2f", total));
 		}
+		*/
 
 
 	}

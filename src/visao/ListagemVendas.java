@@ -154,7 +154,7 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 
 
 		JLabel lupaCliente = new JLabel("");
-		lupaCliente.addMouseListener(vendaController.pesquisa("id_Cliente", txtCliente));
+		lupaCliente.addMouseListener(vendaController.pesquisa("nome_Cliente", txtCliente));
 		lupaCliente.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupaCliente, "cell 9 1");

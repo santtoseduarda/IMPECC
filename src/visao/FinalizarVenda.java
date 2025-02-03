@@ -215,14 +215,14 @@ public class FinalizarVenda extends JFrame {
 		contentPane.add(lblLinha5, "cell 1 15 2 1");
 
 		JButton btnSair = new JButton("Sair");
-		// btnSair.addActionListener(ClienteController.sairSistema());
+		btnSair.addActionListener(vendaController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnSair, "cell 2 83 1 4,aligny bottom");
 
 		btnCancelar = new JButton("Cancelar");
-		// btnLimparCampos.addActionListener(clienteController.limparCamposCadClientes());
+		btnCancelar.addActionListener(vendaController.cancelar());
 		btnCancelar.setForeground(Color.RED);
 		btnCancelar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnCancelar.setBackground(new Color(255, 255, 255));

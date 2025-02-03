@@ -318,27 +318,33 @@ public class VendaController {
 	    }
 	}
 	
+	// Método para pesquisar vendas por campo e valor
 	private void pesquisarPorCampo(String campo, String valor) {
+	    DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.getTable().getModel();
+	    modeloTabela.setRowCount(0); // Limpa a tabela antes de carregar os novos dados
 
-		DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
-		modeloTabela.setRowCount(0);
+	    ArrayList<Venda> listaVendas = novaVenda.buscarVendaLupa(campo, valor); // Chama o DAO para buscar as vendas
 
-		ArrayList<Venda> listaVenda = novaVenda.buscarVendaLupa(campo, valor);
-
-		for (Venda v : listaVenda) {
-
-			modeloTabela.addRow(new Object[] { v.getIdVenda(), v.getDataCompra(), v.getNomeCliente() });
-		}
+	    // Preenche a tabela com os resultados
+	    for (Venda v : listaVendas) {
+	        modeloTabela.addRow(new Object[] {
+	            v.getIdVenda(),
+	            String.format("R$ %.2f", v.getValorTotal()), // Formata o valor total
+	            v.getDataCompra(),
+	            v.getNomeCliente()
+	        });
+	    }
 	}
 
-	public MouseListener pesquisa(String campo, JTextField txtID) {
-		return new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				String valor = txtID.getText(); // Obter o valor atualizado do campo de texto no momento do clique
-				pesquisarPorCampo(campo, valor);
-			}
-		};
+	// Método para criar o MouseListener da lupa
+	public MouseListener pesquisa(String campo, JTextField textField) {
+	    return new MouseAdapter() {
+	        @Override
+	        public void mouseClicked(MouseEvent e) {
+	            String valor = textField.getText(); // Obtém o valor do campo de texto
+	            pesquisarPorCampo(campo, valor); // Chama o método de pesquisa
+	        }
+	    };
 	}
 
 

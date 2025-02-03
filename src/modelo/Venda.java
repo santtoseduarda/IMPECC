@@ -1,5 +1,6 @@
 package modelo;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class Venda {
@@ -9,6 +10,9 @@ public class Venda {
     private String Mtd_Pagamento;
     private int idCliente;
     private int idFuncionario;
+    private Date dataCompra; 
+    private String nomeCliente;
+    
 
     public int getIdCliente() {
 		return idCliente;
@@ -77,4 +81,20 @@ public class Venda {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	public Date getDataCompra() {
+        return dataCompra;
+    }
+
+    public void setDataCompra(Date dataCompra) {
+        this.dataCompra = dataCompra;
+    }
+
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
 }

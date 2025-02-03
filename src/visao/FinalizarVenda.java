@@ -1,54 +1,43 @@
 package visao;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controle.VendaController;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
 public class FinalizarVenda extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnCancelar;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FinalizarVenda frame = new FinalizarVenda();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JLabel lblNome;
+	private JLabel lblCpfValor;
+	private JLabel lblTotalValor;
+	private JComboBox<String> comboBox; // Adicionando referência ao JComboBox
+    private JButton btnFinalizarVenda;
 
 	/**
 	 * Create the frame.
 	 */
-	public FinalizarVenda() {
+	public FinalizarVenda(VendaController vendaController) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1261, 2499);
 		contentPane = new JPanel();
@@ -102,7 +91,7 @@ public class FinalizarVenda extends JFrame {
 		contentPane.add(lblLinha1, "cell 1 2 2 1");
 
 		JLabel lblCarrinho = new JLabel("");
-		lblCarrinho.setIcon(new ImageIcon("C:\\Users\\Aluno\\Downloads\\IMPECC\\src\\img\\carrinho.png"));
+		lblCarrinho.setIcon(new ImageIcon("src/img/carrinho.png"));
 		contentPane.add(lblCarrinho, "cell 1 3");
 
 		JLabel lblVendas = new JLabel("Vendas");
@@ -111,47 +100,54 @@ public class FinalizarVenda extends JFrame {
 		contentPane.add(lblVendas, "cell 2 3,alignx left,aligny center");
 
 		JPanel panel = new JPanel();
-		contentPane.add(panel, "cell 3 2 30 83,grow");
-		panel.setLayout(new MigLayout("", "[grow][][][][][][][][][][][][grow][grow][grow]", "[grow][][][][][][][][][][][][][][][][][][grow 25][][][][][][][][][][][][][][][][][][][grow][][][][]"));
+		panel.setBackground(new Color(255, 255, 255)); // Fundo branco para o painel
+		panel.setLayout(new MigLayout("", "[grow][grow][grow]",
+				"[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow]"));
 
-		JLabel lblvoltar = new JLabel("");
-	//	lblvoltar.addMouseListener(clienteController.voltarListagem());
-		lblvoltar.setIcon(new ImageIcon(
-				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 40, Image.SCALE_DEFAULT)));
-		panel.add(lblvoltar, "cell 0 0");
-																				
-																						JLabel lblNomeCliente = new JLabel("NomeCliente");
-																						lblNomeCliente.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
-																						panel.add(lblNomeCliente, "cell 5 2 6 1,alignx left,aligny center");
-																		
-																				JLabel lblNome = new JLabel("");
-																				lblNome.setPreferredSize(new Dimension(90, 30));
-																				panel.add(lblNome, "cell 5 4 6 1");
-																
-																		JLabel lblCpf1 = new JLabel("CPF");
-																		lblCpf1.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
-																		panel.add(lblCpf1, "cell 5 7 7 1,alignx left,aligny center");
-														
-																JLabel lblCpf = new JLabel("");
-																lblCpf.setPreferredSize(new Dimension(90, 30));
-																panel.add(lblCpf, "cell 5 9 7 1");
-												
-														JLabel lblTotal = new JLabel("Total(R$):");
-														lblTotal.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
-														panel.add(lblTotal, "cell 5 12 7 1,alignx left,aligny center");
-										
-												JLabel lblTotalPreco = new JLabel("");
-												lblTotalPreco.setPreferredSize(new Dimension(90, 30));
-												panel.add(lblTotalPreco, "cell 5 14 7 1");
-								
-										JLabel lblMetPag = new JLabel("Métodos De Pagamento");
-										lblMetPag.setFont(fontRegular.deriveFont(Font.PLAIN, 22));
-										panel.add(lblMetPag, "cell 5 17 7 1,alignx left,aligny center");
-										
-												JComboBox comboBox = new JComboBox();
-												comboBox.setPreferredSize(new Dimension(90, 30));
-												comboBox.setModel(new DefaultComboBoxModel(new String[] { "Cartão de Crédito", "Cartão de Débito", "Dinheiro\t", "Pix" }));
-												panel.add(comboBox, "cell 5 19 7 1,alignx left,aligny center");
+		// Título do painel
+		JLabel lblTitulo = new JLabel("Finalizar Venda");
+		lblTitulo.setFont(fontBold.deriveFont(Font.PLAIN, 30));
+		panel.add(lblTitulo, "cell 0 0 3 1,alignx center, gapy 20");
+
+		// Adicionar o painel ao contentPane
+		contentPane.add(panel, "cell 3 2 30 83,grow");
+
+		// Informações do Cliente
+		JLabel lblNomeCliente = new JLabel("Nome do Cliente:");
+		lblNomeCliente.setFont(fontRegular.deriveFont(Font.PLAIN, 20));
+		panel.add(lblNomeCliente, "cell 0 14,alignx left,gapx 10");
+
+		lblNome = new JLabel(""); // Campo para exibir o nome do cliente
+		lblNome.setFont(fontRegular.deriveFont(Font.PLAIN, 20));
+		panel.add(lblNome, "cell 1 14,width 200!,alignx left");
+
+		JLabel lblCpf = new JLabel("CPF:");
+		lblCpf.setFont(fontRegular.deriveFont(Font.PLAIN, 20));
+		panel.add(lblCpf, "cell 0 19,alignx left,gapx 10");
+
+		lblCpfValor = new JLabel(""); // Campo para exibir o CPF do cliente
+		lblCpfValor.setFont(fontRegular.deriveFont(Font.PLAIN, 20));
+		panel.add(lblCpfValor, "cell 1 19,width 200!,alignx left");
+
+		// Total da Venda
+		JLabel lblTotal = new JLabel("Total (R$):");
+		lblTotal.setFont(fontRegular.deriveFont(Font.PLAIN, 20));
+		panel.add(lblTotal, "cell 0 23,alignx left,gapx 10");
+
+		lblTotalValor = new JLabel(""); // Campo para exibir o total da venda
+		lblTotalValor.setFont(fontRegular.deriveFont(Font.PLAIN, 20));
+		panel.add(lblTotalValor, "cell 1 23,width 200!,alignx left");
+
+		// Método de Pagamento
+		JLabel lblMetPag = new JLabel("Método de Pagamento:");
+		lblMetPag.setFont(fontRegular.deriveFont(Font.PLAIN, 20));
+		panel.add(lblMetPag, "cell 0 27,alignx left,gapx 10");
+
+		comboBox = new JComboBox<>(); // Inicializando o JComboBox
+		comboBox.setModel(new DefaultComboBoxModel<>(
+				new String[] { "Cartão de Crédito", "Cartão de Débito", "Dinheiro", "Pix" }));
+		comboBox.setFont(fontRegular.deriveFont(Font.PLAIN, 20));
+		panel.add(comboBox, "cell 1 27,width 200!,alignx left");
 
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(
@@ -219,7 +215,7 @@ public class FinalizarVenda extends JFrame {
 		contentPane.add(lblLinha5, "cell 1 15 2 1");
 
 		JButton btnSair = new JButton("Sair");
-		//btnSair.addActionListener(ClienteController.sairSistema());
+		// btnSair.addActionListener(ClienteController.sairSistema());
 		btnSair.setForeground(new Color(255, 0, 0));
 		btnSair.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnSair.setBackground(new Color(255, 255, 255));
@@ -230,14 +226,31 @@ public class FinalizarVenda extends JFrame {
 		btnCancelar.setForeground(Color.RED);
 		btnCancelar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnCancelar.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnCancelar, "cell 25 85 1 4,aligny center");
+		contentPane.add(btnCancelar, "cell 22 85 1 4,aligny center");
 
-		JButton btnFinalizarVenda = new JButton("Finalizar");
-	//	btnFinalizarVenda.addActionListener(clienteController.cadastrarCliente());
+		btnFinalizarVenda = new JButton("Finalizar");
+		btnFinalizarVenda.addActionListener(vendaController.finalizarVenda());
 		btnFinalizarVenda.setForeground(Color.RED);
 		btnFinalizarVenda.setFont(fontBold.deriveFont(Font.PLAIN, 25));
 		btnFinalizarVenda.setBackground(new Color(255, 255, 255));
 		contentPane.add(btnFinalizarVenda, "cell 28 85 1 4,aligny center");
 
 	}
+
+	 public void setClienteInfo(String nomeCliente, String cpfCliente) {
+	        lblNome.setText(nomeCliente);
+	        lblCpfValor.setText(cpfCliente);
+	    }
+
+	    public void setTotalVenda(String totalVenda) {
+	        lblTotalValor.setText(totalVenda);
+	    }
+
+	    public String getFormaPagamento() {
+	        return (String) comboBox.getSelectedItem();
+	    }
+
+	    public void addFinalizarVendaListener(ActionListener listener) {
+	        btnFinalizarVenda.addActionListener(listener);
+	    }
 }

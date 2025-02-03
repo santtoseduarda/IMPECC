@@ -5,21 +5,16 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexao {
+    private static final String URL = "jdbc:mysql://localhost:3306/impecc"; // URL do banco
+    private static final String USUARIO = "root"; 
+    private static final String SENHA = "aluno";
 
-	public static void main(String[] args) {
-		String url = "jdbc:mysql://localhost:3306/impecc"; // formato do conctor que irá utilizar
-		// localhost: 3306 é o local da máquina = porta de comunicação
-		
-		String user = "root";
-		String passoword = "aluno";
-		
-		// try = tentar
-		try (Connection connection = DriverManager.getConnection(url, user, passoword)) {
-			System.out.println("Conexão bem sucedida");
-		} catch (SQLException e) {
-			e.printStackTrace(); // imprimi erro
-			System.out.println("Falha na conexão com o banco de dados");
-		}
-	}
-
+    // Método que retorna uma conexão com o banco de dados
+    public static Connection getConexao() {
+        try {
+            return DriverManager.getConnection(URL, USUARIO, SENHA);
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao conectar ao banco de dados: " + e.getMessage());
+        }
+    }
 }

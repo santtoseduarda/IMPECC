@@ -6,12 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
+import BancodeDados.Conexao;
 import BancodeDados.ConexaoBanco;
 import modelo.Cliente;
-import modelo.Funcionario;
 import modelo.ItemVenda;
-import modelo.Produto;
 import modelo.Venda;
 
 public class VendaDAO {
@@ -135,13 +135,13 @@ public class VendaDAO {
 	        conn = ConexaoBanco.getConexaoMySQL();
 	        conn.setAutoCommit(false); // Iniciar transação
 
-	        // Inserir venda
-	        String inserirVenda = "INSERT INTO vendas (Total, Mtd_Pagamento, id_Cliente, id_Funcionario) VALUES (?, ?, ?, ?)";
+	        // Inserir venda - removido id_Funcionario
+	        String inserirVenda = "INSERT INTO vendas (Total, Mtd_Pagamento, id_Cliente, DataCompra) VALUES (?, ?, ?, ?)";
 	        pstVenda = conn.prepareStatement(inserirVenda, Statement.RETURN_GENERATED_KEYS);
 	        pstVenda.setDouble(1, calcularTotal(carrinho));
 	        pstVenda.setString(2, v.getMtd_Pagamento());
 	        pstVenda.setInt(3, v.getIdCliente());
-	        pstVenda.setInt(4, v.getIdFuncionario());
+	        pstVenda.setDate(4, v.getDataCompra());
 	        pstVenda.executeUpdate();
 
 	        // Obter o ID da venda gerado
@@ -199,7 +199,6 @@ public class VendaDAO {
 	        }
 	    }
 	}
-
 	
 	public void salvarVenda(int idCliente, ArrayList<ItemVenda> itens, double totalVenda) throws SQLException {
 	    String sqlVenda = "INSERT INTO vendas (id_cliente, total) VALUES (?, ?)";
@@ -233,31 +232,56 @@ public class VendaDAO {
 
 	
 	public Cliente buscarCliente(String cpf) {
-		String sql = "SELECT c.*  FROM clientes c WHERE cpf_Cliente = ?";
-		Cliente c =null;
-		
-		try {
-			pst = conn.prepareStatement(sql);
-			pst.setString(1, cpf);
+	    String sql = "SELECT * FROM clientes WHERE cpf_Cliente = ?"; // Consulta SQL para buscar o cliente pelo CPF
+	    Cliente cliente = null; // Inicializa o objeto Cliente como null
 
-			ResultSet rs = pst.executeQuery();
+	    try (PreparedStatement pst = conn.prepareStatement(sql)) {
+	        pst.setString(1, cpf); // Define o parâmetro CPF na consulta
 
-			if (rs.next()) {
-				
-				c = new Cliente();
-				c.setId_Cliente(rs.getInt("id_Cliente"));
-				c.setNomeCliente(rs.getString("nome_Cliente"));
-				c.setDataNasc(rs.getString("data_Nasc"));
-				c.setCpf_Cliente(rs.getString("cpf_Cliente"));
-				c.setTelefone(rs.getString("telefone_Cliente"));
-				c.setEmail(rs.getString("email_Cliente"));
-			}
-				
-		
-		
-	}catch (SQLException e1) {
-		e1.printStackTrace();
+	        try (ResultSet rs = pst.executeQuery()) {
+	            if (rs.next()) { // Verifica se há resultados
+	                cliente = new Cliente(); // Cria uma nova instância de Cliente
+	                cliente.setId_Cliente(rs.getInt("id_Cliente")); // Define o ID do cliente
+	                cliente.setNomeCliente(rs.getString("nome_Cliente")); // Define o nome do cliente
+	                cliente.setDataNasc(rs.getString("data_Nasc")); // Define a data de nascimento
+	                cliente.setCpf_Cliente(rs.getString("cpf_Cliente")); // Define o CPF do cliente
+	                cliente.setTelefone(rs.getString("telefone_Cliente")); // Define o telefone do cliente
+	                cliente.setEmail(rs.getString("email_Cliente")); // Define o e-mail do cliente
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace(); // Trata exceções de SQL
+	        System.out.println("Erro ao buscar cliente: " + e.getMessage());
+	    }
+
+	    return cliente; // Retorna o cliente encontrado (ou null se não encontrado)
 	}
-		return c;
+	
+	
+	public List<Venda> listarVendas() {
+	    List<Venda> vendas = new ArrayList<>();
+	    String sql = "SELECT v.id_venda, v.total, v.DataCompra, c.nome_Cliente " +
+	                 "FROM vendas v " +
+	                 "JOIN clientes c ON v.id_cliente = c.id_Cliente"; // Fazendo a junção com clientes
+
+	    try (Connection conn = Conexao.getConexao();
+	         PreparedStatement stmt = conn.prepareStatement(sql);
+	         ResultSet rs = stmt.executeQuery()) {
+
+	        while (rs.next()) {
+	            Venda venda = new Venda();
+	            venda.setIdVenda(rs.getInt("id_venda"));
+	            venda.setValorTotal(rs.getDouble("total"));
+	            
+	            venda.setDataCompra(rs.getDate("DataCompra")); // Obtendo a data da compra
+	            venda.setNomeCliente(rs.getString("nome_Cliente")); // Obtendo o nome do cliente
+	            vendas.add(venda);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return vendas;
 	}
+
+	
 }

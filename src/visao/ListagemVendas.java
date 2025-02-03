@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -171,7 +172,7 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] {"ID Venda", "Total", "Data Compra", "Cliente", "Funcionario" }));
+				new String[] {"ID Venda", "Total", "Data Compra", "Cliente"}));
 		scrollPane.setViewportView(table);
 		JLabel lblLinha = new JLabel("");
 		lblLinha.setIcon(new ImageIcon(
@@ -282,6 +283,10 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 	public JLabel getLabelProduto() {
 		// TODO Auto-generated method stub
 		return lblProdutos;
+	}
+
+	public JTable getTable() {
+	    return table;
 	}
 
 }

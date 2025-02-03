@@ -29,6 +29,11 @@ public class ItemVenda {
 public float getprecoProduto() {
 	return produto.getPreco();
 }
+
+public void setPrecoTotal(double valorTotal) {
+	// TODO Auto-generated method stub
+	
+}
     
 
 

@@ -10,9 +10,6 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -27,158 +24,147 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import controle.ProdutoController;
 import controle.VendaController;
-import modelo.Fornecedor;
-import modelo.Produto;
 import net.miginfocom.swing.MigLayout;
 
 public class CadastroVendas extends JFrame {
-	
-	
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField txtCPFcliente;
-	public JTable table;
-	public JComboBox<Object> comboBoxProd;
-	public JSpinner spinnerQntd;
-	private JButton btnAdicionar;
-	private JButton btnOK;
-	private JTextField txtCodProd;
-	public JLabel lblPreco;
 
-	public CadastroVendas(VendaController vendaController) {
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private JTextField txtCPFcliente;
+    public JTable table;
+    public JComboBox<Object> comboBoxProd;
+    public JSpinner spinnerQntd;
+    private JButton btnAdicionar;
+    private JButton btnOK;
+    private JTextField txtCodProd;
+    public JLabel lblPreco;
+    public JLabel lblcliente;
+    static VendaController vendaController;
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1199, 1607);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(69, 69, 69, 35));
-		contentPane.setForeground(new Color(255, 0, 0));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+    public CadastroVendas(VendaController vendaController) {
+    	this.vendaController = vendaController;
 
-		Font fontRegular = null;
-		Font fontBold = null;
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 1199, 1607);
+        contentPane = new JPanel();
+        contentPane.setBackground(new Color(69, 69, 69, 35));
+        contentPane.setForeground(new Color(255, 0, 0));
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-		BufferedInputStream fontRegulaFile = null;
-		BufferedInputStream fontBoldFile = null;
+        Font fontRegular = null;
+        Font fontBold = null;
 
-		try {
-			fontRegulaFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Regular.TTF"));
-			fontBoldFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Bold.TTF"));
+        BufferedInputStream fontRegulaFile = null;
+        BufferedInputStream fontBoldFile = null;
 
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			fontRegular = Font.createFont(Font.TRUETYPE_FONT, fontRegulaFile);
-			fontBold = Font.createFont(Font.TRUETYPE_FONT, fontBoldFile);
+        try {
+            fontRegulaFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Regular.TTF"));
+            fontBoldFile = new BufferedInputStream(new FileInputStream("src/fontes/Carlito-Bold.TTF"));
 
-		} catch (FontFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            fontRegular = Font.createFont(Font.TRUETYPE_FONT, fontRegulaFile);
+            fontBold = Font.createFont(Font.TRUETYPE_FONT, fontBoldFile);
 
-		setContentPane(contentPane);
-        // Simplificar o layout para ter menos células vazias
-        contentPane.setLayout(new MigLayout("", 
-            "[][][grow][grow][][grow][][grow]", // colunas
-            "[][30px][grow][30px][grow][]"      // linhas
-        ));
-        
-        
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
+
+        setContentPane(contentPane);
+        contentPane.setLayout(new MigLayout("", "[][][grow][grow][][grow][][grow]", "[][30px][grow][30px][grow][]"));
+
         JLabel lblvoltar = new JLabel("");
-        lblvoltar.addMouseListener(vendaController.voltarListagem());
         lblvoltar.setIcon(new ImageIcon(
                 new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 50, Image.SCALE_DEFAULT)));
         contentPane.add(lblvoltar, "cell 0 0");
+        lblvoltar.addMouseListener(vendaController.voltarListagem());
+
 
         JLabel lblCadVenda = new JLabel("Cadastro de Vendas");
         lblCadVenda.setForeground(new Color(0, 0, 0));
         lblCadVenda.setFont(fontBold.deriveFont(Font.PLAIN, 45));
         contentPane.add(lblCadVenda, "cell 2 0");
-        
-        /*
-		JLabel lblvoltar = new JLabel("");
-		lblvoltar.addMouseListener(vendaController.voltarListagem());
-		lblvoltar.setIcon(new ImageIcon(
-				new ImageIcon("src/img/voltar1.png").getImage().getScaledInstance(60, 50, Image.SCALE_DEFAULT)));
-		contentPane.add(lblvoltar, "cell 0 1");
 
-		JLabel lblCadVenda = new JLabel("Cadastro de Vendas");
-		lblCadVenda.setForeground(new Color(0, 0, 0));
-		lblCadVenda.setFont(fontBold.deriveFont(Font.PLAIN, 45));
-		contentPane.add(lblCadVenda, "cell 3 2");
-		*/
-        
-JPanel inputPanel = new JPanel(new MigLayout("", "[][grow][][grow][][grow]", "[][]"));
-        
-        // Produto
+        JPanel inputPanel = new JPanel(new MigLayout("", "[][grow][][grow][][grow]", "[][]"));
+
         JLabel lblProduto = new JLabel("Produto:");
         lblProduto.setFont(fontBold.deriveFont(Font.PLAIN, 20));
         inputPanel.add(lblProduto, "cell 0 0");
-        
+
         txtCodProd = new JTextField();
         txtCodProd.setPreferredSize(new Dimension(100, 30));
         inputPanel.add(txtCodProd, "cell 1 0,growx");
-        
-        // Quantidade
+
         JLabel lblQntd = new JLabel("Quantidade:");
         lblQntd.setFont(fontBold.deriveFont(Font.PLAIN, 20));
         inputPanel.add(lblQntd, "cell 2 0");
-        
+
         spinnerQntd = new JSpinner();
         spinnerQntd.setPreferredSize(new Dimension(100, 30));
         inputPanel.add(spinnerQntd, "cell 3 0");
-        
-        // CPF Cliente
+
         JLabel cpfCliente = new JLabel("CPF Cliente:");
         cpfCliente.setFont(fontBold.deriveFont(Font.PLAIN, 20));
         inputPanel.add(cpfCliente, "cell 4 0");
-        
+
         txtCPFcliente = new JTextField();
         txtCPFcliente.setPreferredSize(new Dimension(150, 30));
-        inputPanel.add(txtCPFcliente, "cell 5 0,growx");
-        
-        // Botões da primeira linha
+        inputPanel.add(txtCPFcliente, "flowx,cell 5 0,growx");
+
         btnAdicionar = new JButton("Adicionar ao Carrinho");
         btnAdicionar.setActionCommand("adicionarCarinhoAction");
         btnAdicionar.setForeground(Color.RED);
         btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 17));
         btnAdicionar.setBackground(Color.WHITE);
         inputPanel.add(btnAdicionar, "cell 1 1");
-        
+
+        contentPane.add(inputPanel, "cell 0 1 8 1,growx");
+
+        JLabel lblCliente = new JLabel("Cliente:");
+        inputPanel.add(lblCliente, "cell 4 1");
+
+        lblcliente = new JLabel("");
+        inputPanel.add(lblcliente, "cell 5 1");
+
         btnOK = new JButton("OK");
         btnOK.setActionCommand("okAction");
         btnOK.setForeground(Color.RED);
         btnOK.setFont(fontBold.deriveFont(Font.PLAIN, 17));
         btnOK.setBackground(Color.WHITE);
-        inputPanel.add(btnOK, "cell 5 1");
-        
-        contentPane.add(inputPanel, "cell 0 1 8 1,growx");
+        inputPanel.add(btnOK, "cell 5 0");
 
-        // Tabela
         JScrollPane scrollPane = new JScrollPane();
         table = new JTable();
         table.setModel(new DefaultTableModel(new Object[][] {},
-                new String[] {"Produto", "Quantidade", "Preço Un.", "Total" }));
+                new String[] { "Produto", "Quantidade", "Preço Un.", "Total" }));
         scrollPane.setViewportView(table);
         contentPane.add(scrollPane, "cell 0 2 8 1,grow");
 
-        // Um único botão Excluir Produto
         JButton btnExcluir = new JButton("Excluir Produto");
         btnExcluir.setForeground(Color.RED);
         btnExcluir.setFont(fontBold.deriveFont(Font.PLAIN, 22));
         btnExcluir.setBackground(Color.WHITE);
+        btnExcluir.addActionListener(e -> {
+            int selectedRow = table.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Selecione um produto para excluir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else {
+                int confirm = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir este produto?", "Confirmação", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    DefaultTableModel model = (DefaultTableModel) table.getModel();
+                    model.removeRow(selectedRow);
+                    atualizarTotalVenda();
+                }
+            }
+        });
         contentPane.add(btnExcluir, "cell 0 3,growx");
 
-        // Painel inferior
         JPanel bottomPanel = new JPanel(new MigLayout("", "[grow][][]", "[]"));
-        
+
         JLabel lblTotal = new JLabel("Total (R$): ");
         lblTotal.setFont(fontBold.deriveFont(Font.PLAIN, 25));
         bottomPanel.add(lblTotal, "cell 0 0");
@@ -188,147 +174,98 @@ JPanel inputPanel = new JPanel(new MigLayout("", "[][grow][][grow][][grow]", "[]
         bottomPanel.add(lblPreco, "cell 0 0");
 
         JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.addActionListener(vendaController.cancelar());
         btnCancelar.setForeground(Color.RED);
         btnCancelar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
         btnCancelar.setBackground(Color.WHITE);
         bottomPanel.add(btnCancelar, "cell 1 0");
 
         JButton btnFinalizarVenda = new JButton("Finalizar Venda");
-        btnFinalizarVenda.addActionListener(VendaController.finalizarVenda);
+        btnFinalizarVenda.addActionListener(vendaController.abrirFinalizarVenda());
         btnFinalizarVenda.setForeground(Color.RED);
         btnFinalizarVenda.setFont(fontBold.deriveFont(Font.PLAIN, 25));
         btnFinalizarVenda.setBackground(Color.WHITE);
         bottomPanel.add(btnFinalizarVenda, "cell 2 0");
-        
+
         contentPane.add(bottomPanel, "cell 0 4 8 1,growx");
+
+        btnOK.addActionListener(e -> {
+            String cpf = txtCPFcliente.getText().trim();
+            
+            if (cpf.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Digite o CPF do cliente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Remove formatação do CPF
+            cpf = cpf.replace(".", "").replace("-", "");
+
+            // Se o nome já estiver preenchido, evita busca desnecessária
+            if (!lblcliente.getText().isEmpty()) {
+                return;
+            }
+
+            String nomeCliente = buscarNomeClientePorCPF(cpf);
+
+            if (nomeCliente != null) {
+                lblcliente.setText(nomeCliente);
+            } else {
+                JOptionPane.showMessageDialog(this, "Cliente não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
     }
 
-        /*JLabel lblProduto = new JLabel("Produto:");
-		lblProduto.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblProduto, "cell 2 9");
+    private String buscarNomeClientePorCPF(String cpf) {
+        // Simulação de busca do nome do cliente (substitua por uma chamada real ao banco de dados)
+        if (cpf.equals("123.456.789-00")) {
+            return "João Silva";
+        } else if (cpf.equals("987.654.321-00")) {
+            return "Maria Oliveira";
+        } else {
+            return null;
+        }
+    }
 
-		
-		txtCodProd = new JTextField();
-		txtCodProd.setPreferredSize(new Dimension(100, 30));
-		contentPane.add(txtCodProd, "cell 2 10 2 1,growx");
-		txtCodProd.setColumns(10);
-		
-		
-		JLabel lblQntd = new JLabel("Quantidade:");
-		lblQntd.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(lblQntd, "cell 7 9");
+    private void atualizarTotalVenda() {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        double total = 0;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            double precoUn = Double.parseDouble(model.getValueAt(i, 2).toString().replace(",", "."));
+            int quantidade = Integer.parseInt(model.getValueAt(i, 1).toString());
+            total += precoUn * quantidade;
+        }
+        setTotalVenda(String.format("%.2f", total));
+    }
 
-		spinnerQntd = new JSpinner();
-		spinnerQntd.setPreferredSize(new Dimension(100, 30));
-		contentPane.add(spinnerQntd, "cell 7 10");
-
-		JLabel cpfCliente = new JLabel("CPF Cliente:");
-		cpfCliente.setFont(fontBold.deriveFont(Font.PLAIN, 20));
-		contentPane.add(cpfCliente, "cell 17 9,alignx left");
-
-		txtCPFcliente = new JTextField();
-		txtCPFcliente.setPreferredSize(new Dimension(100, 30));
-		contentPane.add(txtCPFcliente, "cell 17 10 3 1,growx");
-		txtCPFcliente.setColumns(10);
-
-		btnAdicionar = new JButton("Adicionar ao Carrinho");
-		btnAdicionar.setActionCommand("adicionarCarinhoAction");
-		btnAdicionar.setPreferredSize(new Dimension(100, 30));
-		btnAdicionar.setForeground(Color.RED);
-		btnAdicionar.setFont(fontBold.deriveFont(Font.PLAIN, 17));
-		btnAdicionar.setBackground(Color.WHITE);
-		contentPane.add(btnAdicionar, "cell 12 10,grow");
-
-		btnOK = new JButton("OK");
-		btnOK.setActionCommand("okAction");
-		btnOK.setPreferredSize(new Dimension(50, 30));
-		btnOK.setForeground(Color.RED);
-		btnOK.setFont(fontBold.deriveFont(Font.PLAIN, 17));
-		btnOK.setBackground(Color.WHITE);
-		contentPane.add(btnOK, "cell 20 10,alignx left,growy");
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(800, 400)); // Tamanho
-		contentPane.add(scrollPane, "cell 2 12 19 25, grow");
-
-		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] {"Produto", "Quantidade", "Preço Un.", "Total" }));
-		table.setPreferredScrollableViewportSize(new Dimension(800, 400));// Tamanho
-		scrollPane.setViewportView(table);
-
-		JButton btnExcluir = new JButton("Excluir Produto");
-		btnExcluir.setForeground(Color.RED);
-		btnExcluir.setFont(null);
-		btnExcluir.setBackground(Color.WHITE);
-		btnExcluir.setFont(fontBold.deriveFont(Font.PLAIN, 22));
-		contentPane.add(btnExcluir, "cell 2 37,grow");
-
-		JLabel lblTotal = new JLabel("Total (R$): ");
-        lblTotal.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-        contentPane.add(lblTotal, "cell 2 79,alignx left");
-
-        // Inicializar o lblPreco como campo da classe, não como variável local
-        lblPreco = new JLabel("0,00"); // Usar vírgula para formato brasileiro
-        lblPreco.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-        contentPane.add(lblPreco, "cell 3 79,alignx left");
-        
-        /*
-		
-		JLabel lblTotal = new JLabel("Total (R$): ");
-		lblTotal.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		contentPane.add(lblTotal, "cell 2 79,alignx left");
-
-		JLabel lblPreco = new JLabel("00.00");
-		lblPreco.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		contentPane.add(lblPreco, "cell 3 79,alignx left");
-		btnAdicionar.setPreferredSize(new Dimension(100, 30));
-
-		*/
-		/*
-		JButton btnCancelar = new JButton("Cancelar");
-		// btnExcluir.addActionListener(clienteController.excluirCliente());
-		btnCancelar.setForeground(new Color(255, 0, 0));
-		btnCancelar.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnCancelar.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnCancelar, "cell 20 79,grow");
-
-		// cadastrar funcionario
-		JButton btnFinalizarVenda = new JButton("Finalizar Venda");
-		btnFinalizarVenda.addActionListener(VendaController.finalizarVenda);
-		btnFinalizarVenda.setForeground(new Color(255, 0, 0));
-		btnFinalizarVenda.setFont(fontBold.deriveFont(Font.PLAIN, 25));
-		btnFinalizarVenda.setBackground(new Color(255, 255, 255));
-		contentPane.add(btnFinalizarVenda, "cell 21 79,grow");
-		*/
-		
-	public void setTotalVenda(String total) {
-        // Garantir que estamos usando o formato brasileiro
+    public void setTotalVenda(String total) {
         String valorFormatado = total.replace(".", ",");
         lblPreco.setText(valorFormatado);
     }
-	
-	public JSpinner getSpinnerQntd() {
-	    return spinnerQntd;
-	}
-	
-	public void addcadastroVendasListener(ActionListener listener) {
-		btnAdicionar.addActionListener(listener);
-		btnOK.addActionListener(listener);
-	}
 
-	public String getCpfCliente() {
-		return txtCPFcliente.getText();
-	}
-	
-	public String getCodProd() {
-		return txtCodProd.getText();
-	}
+    public JSpinner getSpinnerQntd() {
+        return spinnerQntd;
+    }
 
-	public void setNomeCliente(String nomeCliente) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+    public void addcadastroVendasListener(ActionListener listener) {
+        btnAdicionar.addActionListener(listener);
+        btnOK.addActionListener(listener);
+    }
 
+    public String getCpfCliente() {
+        return txtCPFcliente.getText();
+    }
+
+    public String getCodProd() {
+        return txtCodProd.getText();
+    }
+
+    public void setNomeCliente(String nomeCliente) {
+        lblcliente.setText(nomeCliente);
+    }
+
+    public static void main(String[] args) {
+        CadastroVendas frame = new CadastroVendas(vendaController);
+        frame.setVisible(true);
+    }
 }

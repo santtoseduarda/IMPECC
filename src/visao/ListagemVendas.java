@@ -123,9 +123,6 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 		lblClienteCompra.setFont(fontBold.deriveFont(Font.PLAIN, 15));
 		panel.add(lblClienteCompra, "cell 8 0");
 
-		JLabel lblFunc = new JLabel("Funcionario"); // BUSCA POR CPF
-		lblFunc.setFont(fontBold.deriveFont(Font.PLAIN, 15));
-		panel.add(lblFunc, "cell 11 0");
 
 		JLabel lblPesquisar = new JLabel("Pesquisar por : ");
 		lblPesquisar.setFont(fontBold.deriveFont(Font.PLAIN, 20));
@@ -136,15 +133,17 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 		txtId.setColumns(10);
 
 		JLabel lupaId = new JLabel("");
+		lupaId.addMouseListener(vendaController.pesquisa("id_Venda", txtId));
 		lupaId.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupaId, "cell 3 1,alignx trailing");
 
-		JTextField txtNome = new JTextField();
-		panel.add(txtNome, "cell 5 1,growx");
-		txtNome.setColumns(10);
+		JTextField txtData = new JTextField();
+		panel.add(txtData, "cell 5 1,growx");
+		txtData.setColumns(10);
 
 		JLabel lupaData = new JLabel("");
+		lupaData.addMouseListener(vendaController.pesquisa("DataCompra", txtData));
 		lupaData.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupaData, "cell 6 1");
@@ -153,16 +152,9 @@ public class ListagemVendas extends JFrame implements TelaInterna {
 		panel.add(txtCliente, "cell 8 1,growx");
 		txtCliente.setColumns(10);
 
-		JTextField txtFunc = new JTextField();
-		panel.add(txtFunc, "cell 11 1,growx");
-		txtFunc.setColumns(10);
-
-		JLabel lupaFunc = new JLabel("");
-		lupaFunc.setIcon(new ImageIcon(
-				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
-		panel.add(lupaFunc, "cell 12 1");
 
 		JLabel lupaCliente = new JLabel("");
+		lupaCliente.addMouseListener(vendaController.pesquisa("id_Cliente", txtCliente));
 		lupaCliente.setIcon(new ImageIcon(
 				new ImageIcon("src/img/procurar.png").getImage().getScaledInstance(15, 16, Image.SCALE_DEFAULT)));
 		panel.add(lupaCliente, "cell 9 1");

@@ -229,6 +229,76 @@ public class VendaDAO {
 	        }
 	    }
 	}
+	
+	public ArrayList<Venda> buscarVendaLupa(String campo, String valor) {
+
+	    ArrayList<Venda> listaVendas = new ArrayList<>();
+	    Connection conn = ConexaoBanco.getConexaoMySQL();
+
+	    try {
+	        // 1. Se o campo for "nome_Cliente", buscamos primeiro o id_Cliente
+	        String sql;
+	        if (campo.equals("nome_Cliente") && !valor.isEmpty()) {
+	            // 2. Primeiro, buscamos o id_Cliente pelo nome
+	            sql = "SELECT id_Cliente FROM clientes WHERE nome_Cliente LIKE ?";
+	            PreparedStatement pst = conn.prepareStatement(sql);
+	            pst.setString(1, "%" + valor + "%");
+	            ResultSet rs = pst.executeQuery();
+
+	            // 3. Se houver resultados (clientes encontrados), pegamos os ids e fazemos a busca na tabela vendas
+	            while (rs.next()) {
+	                int idCliente = rs.getInt("id_Cliente");
+
+	                // 4. Agora, buscamos as vendas associadas a esse id_Cliente
+	                String sqlVendas = "SELECT v.id_Venda, v.id_Cliente, v.dataCompra, c.nome_Cliente "
+	                                  + "FROM vendas v "
+	                                  + "JOIN clientes c ON v.id_Cliente = c.id_Cliente "
+	                                  + "WHERE v.id_Cliente = ?";
+	                PreparedStatement pstVendas = conn.prepareStatement(sqlVendas);
+	                pstVendas.setInt(1, idCliente);
+	                ResultSet rsVendas = pstVendas.executeQuery();
+
+	                // 5. Iterando sobre os resultados e adicionando à lista de Vendas
+	                while (rsVendas.next()) {
+	                    Venda v = new Venda();
+	                    v.setIdVenda(rsVendas.getInt("id_Venda"));
+	                    v.setIdCliente(rsVendas.getInt("id_Cliente"));
+	                    v.setDataCompra(rsVendas.getDate("dataCompra"));
+	                    v.setNomeCliente(rsVendas.getString("nome_Cliente"));  // O nome do cliente vem da tabela clientes
+	                    listaVendas.add(v);
+	                }
+	            }
+
+	        } else {
+	            // 6. Caso o filtro seja por id_Venda, id_Cliente ou dataCompra
+	            sql = "SELECT v.id_Venda, v.id_Cliente, v.dataCompra, c.nome_Cliente "
+	                 + "FROM vendas v "
+	                 + "JOIN clientes c ON v.id_Cliente = c.id_Cliente "
+	                 + "WHERE v." + campo + " LIKE ?";
+	            PreparedStatement pst = conn.prepareStatement(sql);
+	            pst.setString(1, "%" + valor + "%");
+	            ResultSet rs = pst.executeQuery();
+
+	            // 7. Iterando sobre o resultado e adicionando à lista de Vendas
+	            while (rs.next()) {
+	                Venda v = new Venda();
+	                v.setIdVenda(rs.getInt("id_Venda"));
+	                v.setIdCliente(rs.getInt("id_Cliente"));
+	                v.setDataCompra(rs.getDate("dataCompra"));
+	                v.setNomeCliente(rs.getString("nome_Cliente"));
+	                listaVendas.add(v);
+	            }
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return listaVendas;
+	}
+
+
+
 
 	
 	public Cliente buscarCliente(String cpf) {

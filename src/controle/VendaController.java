@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Cliente;
@@ -315,6 +316,29 @@ public class VendaController {
 	            "" // Coluna de Funcionário vazia
 	        });
 	    }
+	}
+	
+	private void pesquisarPorCampo(String campo, String valor) {
+
+		DefaultTableModel modeloTabela = (DefaultTableModel) janelaListagem.table.getModel();
+		modeloTabela.setRowCount(0);
+
+		ArrayList<Venda> listaVenda = novaVenda.buscarVendaLupa(campo, valor);
+
+		for (Venda v : listaVenda) {
+
+			modeloTabela.addRow(new Object[] { v.getIdVenda(), v.getDataCompra(), v.getNomeCliente() });
+		}
+	}
+
+	public MouseListener pesquisa(String campo, JTextField txtID) {
+		return new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String valor = txtID.getText(); // Obter o valor atualizado do campo de texto no momento do clique
+				pesquisarPorCampo(campo, valor);
+			}
+		};
 	}
 
 
